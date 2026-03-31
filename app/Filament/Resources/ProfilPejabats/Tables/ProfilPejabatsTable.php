@@ -15,7 +15,8 @@ class ProfilPejabatsTable
     {
         return $table
             ->columns([
-                ImageColumn::make('foto'),
+                ImageColumn::make('foto')
+                    ->disk('public'),
                 TextColumn::make('nama')
                     ->searchable(),
                 TextColumn::make('jabatan')

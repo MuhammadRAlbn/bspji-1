@@ -15,7 +15,9 @@ class ProfilPejabatForm
             ->components([
                 FileUpload::make('foto')
                     ->image()
+                    ->disk('public')
                     ->directory('profil-pejabat')
+                    ->visibility('public')
                     ->columnSpanFull(),
                 TextInput::make('nama')
                     ->required()
