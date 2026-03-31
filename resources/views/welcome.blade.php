@@ -48,57 +48,75 @@
             </div>
 
             <!-- Navigation Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl">
                 <!-- Sejarah Singkat -->
-                <a href="{{ route('sejarah-singkat.index') }}" class="group relative bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-blue-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
-                    <div class="relative">
-                        <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <svg class="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('sejarah-singkat.index') }}" class="group relative bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+                    <div class="absolute top-0 right-0 w-24 h-24 -mr-6 -mt-6 bg-blue-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
+                    <div class="relative flex-grow">
+                        <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Sejarah Singkat</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-4">Mengenal lebih dekat perjalanan dan latar belakang berdirinya instansi kami.</p>
-                        <span class="inline-flex items-center text-blue-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                            Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">Sejarah Singkat</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-4">Mengenal lebih dekat perjalanan dan latar belakang berdirinya instansi kami.</p>
                     </div>
+                    <span class="relative inline-flex items-center text-blue-600 font-semibold text-xs group-hover:gap-2 transition-all mt-auto">
+                        Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
                 </a>
 
                 <!-- Visi dan Misi -->
-                <a href="{{ route('visi-misi.index') }}" class="group relative bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-indigo-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
-                    <div class="relative">
-                        <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('visi-misi.index') }}" class="group relative bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+                    <div class="absolute top-0 right-0 w-24 h-24 -mr-6 -mt-6 bg-indigo-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
+                    <div class="relative flex-grow">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Visi dan Misi</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-4">Cita-cita dan landasan operasional kami dalam memberikan pelayanan terbaik.</p>
-                        <span class="inline-flex items-center text-blue-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                            Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">Visi dan Misi</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-4">Cita-cita dan landasan operasional kami dalam memberikan pelayanan terbaik.</p>
                     </div>
+                    <span class="relative inline-flex items-center text-blue-600 font-semibold text-xs group-hover:gap-2 transition-all mt-auto">
+                        Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
                 </a>
 
                 <!-- Tugas dan Fungsi -->
-                <a href="{{ route('tugas-fungsi.index') }}" class="group relative bg-white p-8 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-emerald-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
-                    <div class="relative">
-                        <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <a href="{{ route('tugas-fungsi.index') }}" class="group relative bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+                    <div class="absolute top-0 right-0 w-24 h-24 -mr-6 -mt-6 bg-emerald-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
+                    <div class="relative flex-grow">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                             </svg>
                         </div>
-                        <h3 class="text-2xl font-bold text-slate-800 mb-2">Tugas dan Fungsi</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-4">Uraian tugas pokok dan fungsi strategis kami dalam standardisasi industri.</p>
-                        <span class="inline-flex items-center text-blue-600 font-semibold text-sm group-hover:gap-2 transition-all">
-                            Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                        </span>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">Tugas dan Fungsi</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-4">Uraian tugas pokok dan fungsi strategis kami dalam standardisasi industri.</p>
                     </div>
+                    <span class="relative inline-flex items-center text-blue-600 font-semibold text-xs group-hover:gap-2 transition-all mt-auto">
+                        Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
+                </a>
+
+                <!-- Struktur Organisasi -->
+                <a href="{{ route('struktur-organisasi.index') }}" class="group relative bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+                    <div class="absolute top-0 right-0 w-24 h-24 -mr-6 -mt-6 bg-pink-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
+                    <div class="relative flex-grow">
+                        <div class="w-12 h-12 bg-pink-100 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">Struktur Organisasi</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-4">Bagan susunan organisasi dan tata kerja instansi kami secara visual.</p>
+                    </div>
+                    <span class="relative inline-flex items-center text-blue-600 font-semibold text-xs group-hover:gap-2 transition-all mt-auto">
+                        Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
                 </a>
             </div>
         </main>
