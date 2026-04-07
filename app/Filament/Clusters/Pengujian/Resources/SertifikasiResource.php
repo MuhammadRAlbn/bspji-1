@@ -10,10 +10,10 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Support\Icons\Heroicon;
 
 class SertifikasiResource extends Resource
 {
@@ -56,7 +56,8 @@ class SertifikasiResource extends Resource
             ])
             ->bulkActions([
                 //
-            ]);
+            ])
+            ->paginated(false);
     }
 
     public static function getPages(): array
@@ -70,6 +71,6 @@ class SertifikasiResource extends Resource
 
     public static function canCreate(): bool
     {
-        return Sertifikasi::count() < 1;
+        return false;
     }
 }
