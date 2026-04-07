@@ -6,11 +6,13 @@ use App\Filament\Clusters\Kalibrasi\KalibrasiCluster;
 use App\Models\RuangLingkupKalibrasi;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -27,10 +29,20 @@ class RuangLingkupKalibrasiResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            TextInput::make('komoditi')
+            TextInput::make('title')
                 ->required(),
-            Textarea::make('ruang_lingkup')
-                ->required(),
+            FileUpload::make('image')
+                ->image()
+                ->disk('public')
+                ->directory('kalibrasi-scope')
+                ->visibility('public'),
+            Repeater::make('details')
+                ->simple(
+                    TextInput::make('item')
+                        ->required(),
+                )
+                ->label('Detail Daftar')
+                ->columnSpanFull(),
         ]);
     }
 
@@ -38,11 +50,12 @@ class RuangLingkupKalibrasiResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('komoditi')
+                ImageColumn::make('image')
+                    ->disk('public')
+                    ->square(),
+                TextColumn::make('title')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('ruang_lingkup')
-                    ->limit(50),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

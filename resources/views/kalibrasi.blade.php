@@ -103,50 +103,39 @@
 
             {{-- Tab Ruang Lingkup --}}
             <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
-                    <div class="p-8 border-b border-gray-100 flex items-center justify-between">
-                        <h2 class="text-2xl font-bold text-indigo-900 flex items-center">
-                            <svg class="w-7 h-7 mr-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.618.308a3 3 0 01-1.286.308H9.75a3 3 0 00-1.302.308l-.618.308a6 6 0 01-3.86.517l-2.388-.477a2 2 0 00-1.022.547l-.23.23a2 2 0 00-.547 1.022l-.477 2.387a2 2 0 00.547 1.022l.23.23a2 2 0 001.022.547l2.387.477a6 6 0 003.86-.517l.618-.308a3 3 0 011.286-.308h2.121a3 3 0 001.302-.308l.618-.308a6 6 0 003.86-.517l2.388.477a2 2 0 001.022-.547l.23-.23a2 2 0 00.547-1.022l.477-2.387a2 2 0 00-.547-1.022l-.23-.23z"></path>
-                            </svg>
-                            Ruang Lingkup Kalibrasi
-                        </h2>
-                        <span class="px-4 py-1 bg-green-50 text-green-700 text-xs font-bold rounded-full uppercase tracking-wider">
-                            {{ $ruangLingkupan->count() }} Komoditi
-                        </span>
-                    </div>
-
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-gray-50/50">
-                                    <th class="px-8 py-5 text-sm font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">Komoditi</th>
-                                    <th class="px-8 py-5 text-sm font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100">Ruang Lingkup Kalibrasi</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-50">
-                                @forelse($ruangLingkupan as $item)
-                                    <tr class="hover:bg-indigo-50/30 transition duration-150">
-                                        <td class="px-8 py-6 font-semibold text-gray-900 align-top w-1/3">
-                                            <div class="flex items-center">
-                                                <div class="w-2 h-2 rounded-full bg-indigo-500 mr-3"></div>
-                                                {{ $item->komoditi }}
-                                            </div>
-                                        </td>
-                                        <td class="px-8 py-6 text-gray-600 leading-relaxed whitespace-pre-line">
-                                            {!! $item->ruang_lingkup !!}
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="2" class="px-8 py-12 text-center text-gray-400">
-                                            Data ruang lingkup belum tersedia.
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @forelse($ruangLingkupan as $item)
+                        <div class="bg-white rounded-3xl shadow-lg overflow-hidden border border-gray-100 flex flex-col transition duration-300 hover:shadow-2xl hover:-translate-y-1">
+                            @if($item->image)
+                                <div class="h-48 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                                </div>
+                            @else
+                                <div class="h-48 bg-indigo-50 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                            @endif
+                            <div class="p-6 flex-grow">
+                                <h3 class="text-xl font-bold text-indigo-900 mb-4">{{ $item->title }}</h3>
+                                <ul class="space-y-2">
+                                    @foreach($item->details ?? [] as $detail)
+                                        <li class="flex items-start">
+                                            <svg class="w-5 h-5 text-indigo-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                            <span class="text-gray-600 text-sm leading-relaxed">{{ $detail }}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    @empty
+                        <div class="col-span-full bg-white rounded-3xl shadow-xl p-12 text-center border border-gray-100">
+                            <p class="text-gray-400">Data ruang lingkup belum tersedia.</p>
+                        </div>
+                    @endforelse
                 </div>
             </div>
         </div>

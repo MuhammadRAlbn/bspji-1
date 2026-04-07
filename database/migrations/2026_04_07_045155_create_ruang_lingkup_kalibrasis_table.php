@@ -12,8 +12,9 @@ return new class extends Migration {
     {
         Schema::create('ruang_lingkup_kalibrasis', function (Blueprint $table) {
             $table->id();
-            $table->string('komoditi')->nullable();
-            $table->text('ruang_lingkup')->nullable();
+            $table->string('title')->nullable();
+            $table->string('image')->nullable();
+            $table->json('details')->nullable();
             $table->timestamps();
         });
     }

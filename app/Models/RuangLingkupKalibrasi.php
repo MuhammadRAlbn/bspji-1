@@ -10,5 +10,9 @@ class RuangLingkupKalibrasi extends Model
     /** @use HasFactory<\Database\Factories\RuangLingkupKalibrasiFactory> */
     use HasFactory;
 
-    protected $fillable = ['komoditi', 'ruang_lingkup'];
+    protected $fillable = ['title', 'image', 'details'];
+
+    protected $casts = [
+        'details' => 'array',
+    ];
 }
