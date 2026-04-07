@@ -11,9 +11,5 @@ class RuangLingkupProduk extends Model
     /** @use HasFactory<RuangLingkupProdukFactory> */
     use HasFactory;
 
-    protected $fillable = ['title', 'image', 'details'];
-
-    protected $casts = [
-        'details' => 'array',
-    ];
+    protected $fillable = ['image'];
 }

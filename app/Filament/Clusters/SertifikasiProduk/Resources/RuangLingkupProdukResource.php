@@ -7,8 +7,6 @@ use App\Models\RuangLingkupProduk;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -29,26 +27,12 @@ class RuangLingkupProdukResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->schema([
-            TextInput::make('title')
-                ->required(),
             FileUpload::make('image')
                 ->image()
                 ->disk('public')
                 ->directory('produk-scope')
-                ->visibility('public'),
-            Repeater::make('details')
-                ->schema([
-                    TextInput::make('name')
-                        ->label('Nama Produk/Detail')
-                        ->required(),
-                    TextInput::make('price')
-                        ->label('Tarif')
-                        ->numeric()
-                        ->prefix('Rp')
-                        ->required(),
-                ])
-                ->label('Detail Daftar & Tarif')
-                ->columnSpanFull(),
+                ->visibility('public')
+                ->required(),
         ]);
     }
 
@@ -59,9 +43,6 @@ class RuangLingkupProdukResource extends Resource
                 ImageColumn::make('image')
                     ->disk('public')
                     ->square(),
-                TextColumn::make('title')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
