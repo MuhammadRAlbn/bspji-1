@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlurProduk;
+use App\Models\DokumenProduk;
 use App\Models\RuangLingkupProduk;
 use App\Models\SertifikatProduk;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SertifikasiProdukController extends Controller
 {
@@ -17,7 +20,20 @@ class SertifikasiProdukController extends Controller
         $sertifikats = SertifikatProduk::all();
         $ruangLingkup = RuangLingkupProduk::all();
         $alurProduk = AlurProduk::first();
+        $dokumens = DokumenProduk::all();
 
-        return view('sertifikasi-produk', compact('sertifikats', 'ruangLingkup', 'alurProduk'));
+        return view('sertifikasi-produk', compact('sertifikats', 'ruangLingkup', 'alurProduk', 'dokumens'));
+    }
+
+    /**
+     * Download a product document with its original or formatted name.
+     */
+    public function download(DokumenProduk $dokumenProduk): BinaryFileResponse
+    {
+        $path = Storage::disk('public')->path($dokumenProduk->file_path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $filename = $dokumenProduk->nama_dokumen.'.'.$extension;
+
+        return response()->download($path, $filename);
     }
 }

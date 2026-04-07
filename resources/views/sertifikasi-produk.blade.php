@@ -43,6 +43,13 @@
                 >
                     Ruang Lingkup
                 </button>
+                <button 
+                    @click="tab = 'dokumen'" 
+                    :class="tab === 'dokumen' ? 'bg-white text-green-900 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
+                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
+                >
+                    Dokumen
+                </button>
             </nav>
         </div>
 
@@ -113,6 +120,54 @@
                             <p class="text-gray-400 font-medium italic">Data ruang lingkup belum tersedia.</p>
                         </div>
                     @endforelse
+                </div>
+            </div>
+
+            {{-- Tab Dokumen --}}
+            <div x-show="tab === 'dokumen'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Dokumen Sertifikasi Produk</h2>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-separate border-spacing-y-3">
+                            <thead>
+                                <tr class="text-gray-400 text-xs uppercase tracking-widest font-bold">
+                                    <th class="px-6 py-3">No</th>
+                                    <th class="px-6 py-3">Nama Dokumen</th>
+                                    <th class="px-6 py-3 text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($dokumens as $index => $dokumen)
+                                    <tr class="bg-gray-50/50 hover:bg-green-50 transition duration-300 group rounded-2xl shadow-sm">
+                                        <td class="px-6 py-4 text-sm font-bold text-gray-400 w-16 rounded-l-2xl border-y border-l border-gray-100">
+                                            {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-bold text-green-950 border-y border-gray-100">
+                                            {{ $dokumen->nama_dokumen }}
+                                        </td>
+                                        <td class="px-6 py-4 text-right rounded-r-2xl border-y border-r border-gray-100">
+                                            <a href="{{ route('dokumen-produk.download', $dokumen) }}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-green-200 hover:bg-green-700 hover:shadow-green-300 transition duration-300 group">
+                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                                Download
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="px-6 py-12 text-center text-gray-400 font-medium italic bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200">
+                                            Belum ada dokumen yang tersedia saat ini.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
