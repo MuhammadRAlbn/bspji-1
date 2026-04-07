@@ -73,6 +73,6 @@ class SertifikasiKalibrasiResource extends Resource
 
     public static function canCreate(): bool
     {
-        return SertifikasiKalibrasi::count() === 0;
+        return SertifikasiKalibrasi::count() < 4;
     }
 }

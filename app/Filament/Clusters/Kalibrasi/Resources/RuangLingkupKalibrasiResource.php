@@ -37,11 +37,17 @@ class RuangLingkupKalibrasiResource extends Resource
                 ->directory('kalibrasi-scope')
                 ->visibility('public'),
             Repeater::make('details')
-                ->simple(
-                    TextInput::make('item')
+                ->schema([
+                    TextInput::make('name')
+                        ->label('Nama Alat/Detail')
                         ->required(),
-                )
-                ->label('Detail Daftar')
+                    TextInput::make('price')
+                        ->label('Tarif')
+                        ->numeric()
+                        ->prefix('Rp')
+                        ->required(),
+                ])
+                ->label('Detail Daftar & Tarif')
                 ->columnSpanFull(),
         ]);
     }

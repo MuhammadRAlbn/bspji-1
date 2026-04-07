@@ -14,10 +14,10 @@ class KalibrasiController extends Controller
      */
     public function index(): View
     {
-        $sertifikasi = SertifikasiKalibrasi::first();
+        $sertifikasis = SertifikasiKalibrasi::all();
         $ruangLingkupan = RuangLingkupKalibrasi::all();
         $alurKalibrasi = AlurKalibrasi::first();
 
-        return view('kalibrasi', compact('sertifikasi', 'ruangLingkupan', 'alurKalibrasi'));
+        return view('kalibrasi', compact('sertifikasis', 'ruangLingkupan', 'alurKalibrasi'));
     }
 }
