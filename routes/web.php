@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\KalibrasiController;
 use App\Http\Controllers\PengujianController;
 use App\Http\Controllers\ProfilPejabatController;
 use App\Http\Controllers\SejarahSingkatController;
@@ -18,3 +19,4 @@ Route::get('/tugas-fungsi', [TugasFungsiController::class, 'index'])->name('tuga
 Route::get('/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi.index');
 Route::get('/profil-pejabat', [ProfilPejabatController::class, 'index'])->name('profil-pejabat.index');
 Route::get('/pengujian', [PengujianController::class, 'index'])->name('pengujian.index');
+Route::get('/kalibrasi', [KalibrasiController::class, 'index'])->name('kalibrasi.index');
