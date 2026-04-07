@@ -30,6 +30,7 @@ class SertifikasiResource extends Resource
         return $schema->schema([
             FileUpload::make('image')
                 ->image()
+                ->disk('public')
                 ->directory('sertifikasi')
                 ->visibility('public')
                 ->required(),
@@ -41,6 +42,7 @@ class SertifikasiResource extends Resource
         return $table
             ->columns([
                 ImageColumn::make('image')
+                    ->disk('public')
                     ->square(),
                 TextColumn::make('created_at')
                     ->dateTime()

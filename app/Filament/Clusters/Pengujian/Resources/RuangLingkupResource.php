@@ -11,9 +11,9 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Filament\Support\Icons\Heroicon;
 
 class RuangLingkupResource extends Resource
 {
@@ -73,6 +73,6 @@ class RuangLingkupResource extends Resource
 
     public static function canCreate(): bool
     {
-        return RuangLingkup::count() < 1;
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PengujianController;
 use App\Http\Controllers\ProfilPejabatController;
 use App\Http\Controllers\SejarahSingkatController;
 use App\Http\Controllers\StrukturOrganisasiController;
@@ -16,3 +17,4 @@ Route::get('/visi-misi', [VisiMisiController::class, 'index'])->name('visi-misi.
 Route::get('/tugas-fungsi', [TugasFungsiController::class, 'index'])->name('tugas-fungsi.index');
 Route::get('/struktur-organisasi', [StrukturOrganisasiController::class, 'index'])->name('struktur-organisasi.index');
 Route::get('/profil-pejabat', [ProfilPejabatController::class, 'index'])->name('profil-pejabat.index');
+Route::get('/pengujian', [PengujianController::class, 'index'])->name('pengujian.index');
