@@ -12,12 +12,19 @@
     <div class="max-w-6xl mx-auto px-4 py-12" x-data="{ tab: 'sertifikasi' }">
         <div class="text-center mb-12">
             <h1 class="text-4xl font-extrabold text-blue-900 mb-2">Layanan Pengujian</h1>
-            <p class="text-lg text-gray-600">Informasi lengkap mengenai sertifikasi dan ruang lingkup pengujian kami.</p>
+            <p class="text-lg text-gray-600">Informasi lengkap mengenai alur, sertifikasi, dan ruang lingkup pengujian kami.</p>
         </div>
 
         {{-- Navigasi Tab --}}
         <div class="flex justify-center mb-8">
             <div class="inline-flex p-1 bg-gray-200 rounded-xl">
+                <button 
+                    @click="tab = 'alur-pengujian'" 
+                    :class="tab === 'alur-pengujian' ? 'bg-white text-blue-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
+                    class="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 focus:outline-none"
+                >
+                    Alur Pengujian
+                </button>
                 <button 
                     @click="tab = 'sertifikasi'" 
                     :class="tab === 'sertifikasi' ? 'bg-white text-blue-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'"
@@ -38,8 +45,36 @@
         {{-- Konten Tab --}}
         <div class="mt-8 transition-all duration-300">
             
+            {{-- Tab Alur Pengujian --}}
+            <div x-show="tab === 'alur-pengujian'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 p-8">
+                    <h2 class="text-2xl font-bold text-blue-900 mb-6 flex items-center">
+                        <svg class="w-7 h-7 mr-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                        Alur Layanan Pengujian
+                    </h2>
+                    
+                    @if($alurPengujian && $alurPengujian->image)
+                        <div class="flex justify-center">
+                            <div class="relative group">
+                                <img 
+                                    src="{{ asset('storage/' . $alurPengujian->image) }}" 
+                                    alt="Alur Layanan Pengujian" 
+                                    class="max-w-full h-auto rounded-2xl shadow-2xl border-4 border-white transition duration-500 group-hover:scale-[1.02]"
+                                >
+                            </div>
+                        </div>
+                    @else
+                        <div class="text-center py-20 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                            <p class="text-gray-400">Gambar alur layanan belum tersedia.</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
             {{-- Tab Sertifikasi --}}
-            <div x-show="tab === 'sertifikasi'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100">
+            <div x-show="tab === 'sertifikasi'" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95" x-transition:enter-end="opacity-100 transform scale-100" style="display: none;">
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 p-8">
                     <h2 class="text-2xl font-bold text-blue-900 mb-6 flex items-center">
                         <svg class="w-7 h-7 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -56,7 +91,6 @@
                                     alt="Sertifikat Akreditasi" 
                                     class="max-w-full h-auto rounded-2xl shadow-2xl border-4 border-white transition duration-500 group-hover:scale-[1.02]"
                                 >
-                                <div class="absolute inset-0 rounded-2xl bg-blue-900 opacity-0 group-hover:opacity-10 transition duration-500 pointer-events-none"></div>
                             </div>
                         </div>
                     @else
