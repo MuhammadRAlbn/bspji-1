@@ -14,5 +14,5 @@ class SertifikasiProdukCluster extends Cluster
 
     protected static ?string $navigationLabel = 'Sertifikasi Produk';
 
-    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?SubNavigationPosition $subNavigationPosition = SubNavigationPosition::End;
 }
