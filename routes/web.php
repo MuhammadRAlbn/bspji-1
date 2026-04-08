@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KalibrasiController;
+use App\Http\Controllers\LphController;
 use App\Http\Controllers\PengujianController;
 use App\Http\Controllers\ProfilPejabatController;
 use App\Http\Controllers\SejarahSingkatController;
@@ -25,3 +26,4 @@ Route::get('/sertifikasi-produk', [SertifikasiProdukController::class, 'index'])
 Route::get('/sertifikasi-produk/download/{dokumenProduk}', [SertifikasiProdukController::class, 'download'])->name('dokumen-produk.download');
 Route::get('/sertifikasi-produk/informasi-publik/download/{informasi}', [SertifikasiProdukController::class, 'downloadInformasi'])->name('informasi-publik-produk.download');
 Route::get('/sertifikasi-produk/hak-kewajiban/download/{hakKewajiban}', [SertifikasiProdukController::class, 'downloadHakKewajiban'])->name('hak-kewajiban-produk.download');
+Route::get('/lembaga-pemeriksa-halal', [LphController::class, 'index'])->name('lph.index');

@@ -14,6 +14,8 @@ class RuangLingkupLphForm
             ->components([
                 FileUpload::make('gambar')
                     ->image()
+                    ->disk('public')
+                    ->visibility('public')
                     ->directory('lph/ruang-lingkup')
                     ->label('Gambar (Opsional)'),
                 TextInput::make('nama')
