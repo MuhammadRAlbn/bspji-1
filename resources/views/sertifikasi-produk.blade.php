@@ -57,6 +57,13 @@
                 >
                     Tarif
                 </button>
+                <button 
+                    @click="tab = 'sdm'" 
+                    :class="tab === 'sdm' ? 'bg-white text-green-900 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
+                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
+                >
+                    SDM
+                </button>
             </nav>
         </div>
 
@@ -207,6 +214,80 @@
                                 <p class="text-gray-400 font-medium italic">Informasi tarif belum tersedia.</p>
                             </div>
                         @endforelse
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tab SDM --}}
+            <div x-show="tab === 'sdm'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
+                    <div class="flex items-center mb-10">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Sumber Daya Manusia (SDM)</h2>
+                            <p class="text-gray-500 font-medium">Auditor Sertifikasi Produk yang kompeten dan berpengalaman.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {{-- Card Ahli Madya --}}
+                        <div class="group relative bg-gradient-to-br from-indigo-600 to-blue-700 rounded-[2.5rem] p-8 text-white shadow-xl shadow-indigo-100/50 hover:shadow-indigo-200/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                            <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                                <div class="bg-white/20 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20">
+                                    <span class="text-3xl font-black">{{ $countAhliMadya }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest ml-2 opacity-80">Auditor</span>
+                                </div>
+                                
+                                <h3 class="text-4xl font-extrabold tracking-tighter group-hover:scale-110 transition-transform duration-500">AMMI</h3>
+                                
+                                <div class="w-full space-y-1">
+                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
+                                    <p class="text-lg font-bold tracking-tight uppercase">Ahli Madya</p>
+                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Card Ahli Muda --}}
+                        <div class="group relative bg-gradient-to-br from-amber-500 to-orange-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-amber-100/50 hover:shadow-amber-200/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                            <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                                <div class="bg-white/20 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20">
+                                    <span class="text-3xl font-black">{{ $countAhliMuda }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest ml-2 opacity-80">Auditor</span>
+                                </div>
+                                
+                                <h3 class="text-4xl font-extrabold tracking-tighter group-hover:scale-110 transition-transform duration-500">AMMI</h3>
+                                
+                                <div class="w-full space-y-1">
+                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
+                                    <p class="text-lg font-bold tracking-tight uppercase">Ahli Muda</p>
+                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Card Ahli Pertama --}}
+                        <div class="group relative bg-gradient-to-br from-emerald-500 to-teal-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-emerald-100/50 hover:shadow-emerald-200/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+                            <div class="relative z-10 flex flex-col items-center text-center space-y-6">
+                                <div class="bg-white/20 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20">
+                                    <span class="text-3xl font-black">{{ $countAhliPertama }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest ml-2 opacity-80">Auditor</span>
+                                </div>
+                                
+                                <h3 class="text-4xl font-extrabold tracking-tighter group-hover:scale-110 transition-transform duration-500">AMMI</h3>
+                                
+                                <div class="w-full space-y-1">
+                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
+                                    <p class="text-lg font-bold tracking-tight uppercase">Ahli Pertama</p>
+                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

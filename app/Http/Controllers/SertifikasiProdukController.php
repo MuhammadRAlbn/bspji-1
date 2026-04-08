@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AlurProduk;
 use App\Models\DokumenProduk;
 use App\Models\RuangLingkupProduk;
+use App\Models\SdmSertifikasiProduk;
 use App\Models\SertifikatProduk;
 use App\Models\TarifProduk;
 use Illuminate\Support\Facades\Storage;
@@ -23,8 +24,20 @@ class SertifikasiProdukController extends Controller
         $alurProduk = AlurProduk::first();
         $dokumens = DokumenProduk::all();
         $tarifs = TarifProduk::all();
+        $countAhliMadya = SdmSertifikasiProduk::where('kategori', 'ahli_madya')->count();
+        $countAhliMuda = SdmSertifikasiProduk::where('kategori', 'ahli_muda')->count();
+        $countAhliPertama = SdmSertifikasiProduk::where('kategori', 'ahli_pertama')->count();
 
-        return view('sertifikasi-produk', compact('sertifikats', 'ruangLingkup', 'alurProduk', 'dokumens', 'tarifs'));
+        return view('sertifikasi-produk', compact(
+            'sertifikats',
+            'ruangLingkup',
+            'alurProduk',
+            'dokumens',
+            'tarifs',
+            'countAhliMadya',
+            'countAhliMuda',
+            'countAhliPertama'
+        ));
     }
 
     /**

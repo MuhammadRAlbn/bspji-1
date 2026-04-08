@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ruang_lingkup_kalibrasis', function (Blueprint $table) {
+        Schema::create('sdm_sertifikasi_produks', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->string('image')->nullable();
-            $table->json('details')->nullable();
+            $table->string('nama');
+            $table->enum('kategori', ['ahli_madya', 'ahli_muda', 'ahli_pertama']);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ruang_lingkup_kalibrasis');
+        Schema::dropIfExists('sdm_sertifikasi_produks');
     }
 };
