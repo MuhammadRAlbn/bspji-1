@@ -21,6 +21,12 @@ class LphStrukturVisiMisiResource extends Resource
 
     protected static ?string $model = LphStrukturVisiMisi::class;
 
+    protected static ?string $navigationLabel = 'Struktur, Visi & Misi';
+
+    protected static ?string $pluralLabel = 'Struktur, Visi & Misi';
+
+    protected static ?string $modelLabel = 'Struktur, Visi & Misi';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     public static function form(Schema $schema): Schema

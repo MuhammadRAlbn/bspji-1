@@ -21,6 +21,12 @@ class LphAlurDanKelengkapanResource extends Resource
 
     protected static ?string $model = LphAlurDanKelengkapan::class;
 
+    protected static ?string $navigationLabel = 'Alur dan Kelengkapan';
+
+    protected static ?string $pluralLabel = 'Alur dan Kelengkapan';
+
+    protected static ?string $modelLabel = 'Alur dan Kelengkapan';
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
     public static function form(Schema $schema): Schema
