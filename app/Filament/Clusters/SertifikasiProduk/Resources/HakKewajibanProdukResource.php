@@ -74,7 +74,7 @@ class HakKewajibanProdukResource extends Resource
 
                         return response()->download(
                             $path,
-                            $record->nama_dokumen.'.'.$extension
+                            $record->nama_dokumen . '.' . $extension
                         );
                     }),
                 EditAction::make(),
