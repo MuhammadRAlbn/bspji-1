@@ -6,6 +6,7 @@ use App\Models\AlurProduk;
 use App\Models\DokumenProduk;
 use App\Models\RuangLingkupProduk;
 use App\Models\SertifikatProduk;
+use App\Models\TarifProduk;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -21,8 +22,9 @@ class SertifikasiProdukController extends Controller
         $ruangLingkup = RuangLingkupProduk::all();
         $alurProduk = AlurProduk::first();
         $dokumens = DokumenProduk::all();
+        $tarifs = TarifProduk::all();
 
-        return view('sertifikasi-produk', compact('sertifikats', 'ruangLingkup', 'alurProduk', 'dokumens'));
+        return view('sertifikasi-produk', compact('sertifikats', 'ruangLingkup', 'alurProduk', 'dokumens', 'tarifs'));
     }
 
     /**

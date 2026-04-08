@@ -50,6 +50,13 @@
                 >
                     Dokumen
                 </button>
+                <button 
+                    @click="tab = 'tarif'" 
+                    :class="tab === 'tarif' ? 'bg-white text-green-900 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
+                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
+                >
+                    Tarif
+                </button>
             </nav>
         </div>
 
@@ -167,6 +174,39 @@
                                 @endforelse
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tab Tarif --}}
+            <div x-show="tab === 'tarif'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
+                    <div class="flex items-center mb-8">
+                        <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Tarif Layanan Sertifikasi Produk</h2>
+                    </div>
+                    
+                    <div class="space-y-12">
+                        @forelse($tarifs as $tarif)
+                            <div class="space-y-4">
+                                <h3 class="text-lg font-bold text-green-900 px-2 border-l-4 border-amber-500">{{ $tarif->nama_dokumen }}</h3>
+                                <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-inner bg-gray-50 aspect-[3/4] md:aspect-video">
+                                    <iframe 
+                                        src="{{ asset('storage/' . $tarif->file_path) }}" 
+                                        class="w-full h-full border-none"
+                                        title="{{ $tarif->nama_dokumen }}"
+                                    >
+                                        Browser Anda tidak mendukung iframe. Silakan download dokumen.
+                                    </iframe>
+                                </div>
+                            </div>
+                        @empty
+                            <div class="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 py-24 text-center">
+                                <p class="text-gray-400 font-medium italic">Informasi tarif belum tersedia.</p>
+                            </div>
+                        @endforelse
                     </div>
                 </div>
             </div>
