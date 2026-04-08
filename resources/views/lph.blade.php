@@ -54,6 +54,14 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 002 2h2a2 2 0 002-2z"></path></svg>
                     Struktur, Visi & Misi
                 </button>
+                <button 
+                    @click="tab = 'mutu'" 
+                    :class="tab === 'mutu' ? 'bg-white text-green-900 shadow-md ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
+                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
+                >
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Kebijakan & Sasaran Mutu
+                </button>
             </nav>
         </div>
 
@@ -178,6 +186,38 @@
                     @empty
                         <div class="bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
                             <p class="text-gray-400 font-medium italic">Data struktur, visi & misi belum tersedia.</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+
+            {{-- Tab Kebijakan & Sasaran Mutu --}}
+            <div x-show="tab === 'mutu'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="grid grid-cols-1 gap-12">
+                    @forelse($kebijakanSasaranMutu as $item)
+                        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 group p-8">
+                            @if($item->kebijakan)
+                                <div class="mb-8 p-6 bg-green-50/50 rounded-2xl border border-green-100">
+                                    <h3 class="text-xl font-extrabold text-green-950 tracking-tight mb-4 flex items-center">
+                                        <svg class="w-6 h-6 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Kebijakan
+                                    </h3>
+                                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $item->kebijakan }}</p>
+                                </div>
+                            @endif
+                            @if($item->sasaran_mutu)
+                                <div class="p-6 bg-blue-50/50 rounded-2xl border border-blue-100">
+                                    <h3 class="text-xl font-extrabold text-blue-950 tracking-tight mb-4 flex items-center">
+                                        <svg class="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                                        Sasaran Mutu
+                                    </h3>
+                                    <p class="text-gray-700 leading-relaxed whitespace-pre-line">{{ $item->sasaran_mutu }}</p>
+                                </div>
+                            @endif
+                        </div>
+                    @empty
+                        <div class="bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
+                            <p class="text-gray-400 font-medium italic">Data kebijakan dan sasaran mutu belum tersedia.</p>
                         </div>
                     @endforelse
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\LphAlurDanKelengkapan;
+use App\Models\LphKebijakanSasaranMutu;
 use App\Models\LphStrukturVisiMisi;
 use App\Models\RuangLingkupLph;
 use App\Models\SdmLph;
@@ -20,7 +21,8 @@ class LphController extends Controller
         $sdmPembina = SdmLph::where('kategori', 'Dewan Pembina Syariah')->get();
         $alurKelengkapan = LphAlurDanKelengkapan::orderBy('urutan')->get();
         $strukturVisiMisi = LphStrukturVisiMisi::orderBy('urutan')->get();
+        $kebijakanSasaranMutu = LphKebijakanSasaranMutu::orderBy('urutan')->get();
 
-        return view('lph', compact('ruangLingkup', 'sdmAuditor', 'sdmPembina', 'alurKelengkapan', 'strukturVisiMisi'));
+        return view('lph', compact('ruangLingkup', 'sdmAuditor', 'sdmPembina', 'alurKelengkapan', 'strukturVisiMisi', 'kebijakanSasaranMutu'));
     }
 }
