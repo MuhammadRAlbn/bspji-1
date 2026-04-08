@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AlurProduk;
 use App\Models\DokumenProduk;
+use App\Models\HakKewajibanProduk;
 use App\Models\InformasiPublikProduk;
 use App\Models\RuangLingkupProduk;
 use App\Models\SdmSertifikasiProduk;
@@ -26,6 +27,7 @@ class SertifikasiProdukController extends Controller
         $dokumens = DokumenProduk::all();
         $informasiPubliks = InformasiPublikProduk::all();
         $tarifs = TarifProduk::all();
+        $hakKewajibans = HakKewajibanProduk::all();
         $countAhliMadya = SdmSertifikasiProduk::where('kategori', 'ahli_madya')->count();
         $countAhliMuda = SdmSertifikasiProduk::where('kategori', 'ahli_muda')->count();
         $countAhliPertama = SdmSertifikasiProduk::where('kategori', 'ahli_pertama')->count();
@@ -37,6 +39,7 @@ class SertifikasiProdukController extends Controller
             'dokumens',
             'informasiPubliks',
             'tarifs',
+            'hakKewajibans',
             'countAhliMadya',
             'countAhliMuda',
             'countAhliPertama'
@@ -63,6 +66,18 @@ class SertifikasiProdukController extends Controller
         $path = Storage::disk('public')->path($informasi->file_path);
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $filename = $informasi->nama.'.'.$extension;
+
+        return response()->download($path, $filename);
+    }
+
+    /**
+     * Download a hak dan kewajiban document.
+     */
+    public function downloadHakKewajiban(HakKewajibanProduk $hakKewajiban): BinaryFileResponse
+    {
+        $path = Storage::disk('public')->path($hakKewajiban->file_path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $filename = $hakKewajiban->nama_dokumen.'.'.$extension;
 
         return response()->download($path, $filename);
     }
