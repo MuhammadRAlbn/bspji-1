@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AlurProduk;
 use App\Models\DokumenProduk;
+use App\Models\InformasiPublikProduk;
 use App\Models\RuangLingkupProduk;
 use App\Models\SdmSertifikasiProduk;
 use App\Models\SertifikatProduk;
@@ -23,6 +24,7 @@ class SertifikasiProdukController extends Controller
         $ruangLingkup = RuangLingkupProduk::all();
         $alurProduk = AlurProduk::first();
         $dokumens = DokumenProduk::all();
+        $informasiPubliks = InformasiPublikProduk::all();
         $tarifs = TarifProduk::all();
         $countAhliMadya = SdmSertifikasiProduk::where('kategori', 'ahli_madya')->count();
         $countAhliMuda = SdmSertifikasiProduk::where('kategori', 'ahli_muda')->count();
@@ -33,6 +35,7 @@ class SertifikasiProdukController extends Controller
             'ruangLingkup',
             'alurProduk',
             'dokumens',
+            'informasiPubliks',
             'tarifs',
             'countAhliMadya',
             'countAhliMuda',
@@ -48,6 +51,18 @@ class SertifikasiProdukController extends Controller
         $path = Storage::disk('public')->path($dokumenProduk->file_path);
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         $filename = $dokumenProduk->nama_dokumen.'.'.$extension;
+
+        return response()->download($path, $filename);
+    }
+
+    /**
+     * Download an informasi publik file.
+     */
+    public function downloadInformasi(InformasiPublikProduk $informasi): BinaryFileResponse
+    {
+        $path = Storage::disk('public')->path($informasi->file_path);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        $filename = $informasi->nama.'.'.$extension;
 
         return response()->download($path, $filename);
     }

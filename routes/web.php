@@ -23,3 +23,4 @@ Route::get('/pengujian', [PengujianController::class, 'index'])->name('pengujian
 Route::get('/kalibrasi', [KalibrasiController::class, 'index'])->name('kalibrasi.index');
 Route::get('/sertifikasi-produk', [SertifikasiProdukController::class, 'index'])->name('sertifikasi-produk.index');
 Route::get('/sertifikasi-produk/download/{dokumenProduk}', [SertifikasiProdukController::class, 'download'])->name('dokumen-produk.download');
+Route::get('/sertifikasi-produk/informasi-publik/download/{informasi}', [SertifikasiProdukController::class, 'downloadInformasi'])->name('informasi-publik-produk.download');
