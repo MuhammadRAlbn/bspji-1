@@ -48,6 +48,14 @@
                     <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     Visi & Misi
                 </button>
+                <button 
+                    @click="tab = 'sop-formulir'" 
+                    :class="tab === 'sop-formulir' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
+                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
+                >
+                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    SOP & Formulir
+                </button>
             </nav>
         </div>
 
@@ -194,6 +202,78 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            {{-- Tab SOP & Formulir --}}
+            <div x-show="tab === 'sop-formulir'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="max-w-6xl mx-auto space-y-16">
+                    
+                    {{-- Section SOP (Images) --}}
+                    @if(isset($sopFormulir['sop']) && count($sopFormulir['sop']) > 0)
+                        <div>
+                            <div class="flex items-center mb-10">
+                                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
+                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Standard Operating Procedures (SOP)</h2>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                @foreach($sopFormulir['sop'] as $sop)
+                                    <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 p-4 border border-slate-100 group">
+                                        <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-[4/3] bg-slate-50">
+                                            <img src="{{ asset('storage/' . $sop->path) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex items-end p-6">
+                                                <a href="{{ asset('storage/' . $sop->path) }}" target="_blank" class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider border border-white/30 hover:bg-white hover:text-slate-900 transition duration-300">Lihat Detail</a>
+                                            </div>
+                                        </div>
+                                        <h3 class="text-lg font-extrabold text-slate-900 px-2 line-clamp-2 leading-tight">{{ $sop->name }}</h3>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    {{-- Section Formulir (PDFs) --}}
+                    @if(isset($sopFormulir['formulir']) && count($sopFormulir['formulir']) > 0)
+                        <div>
+                            <div class="flex items-center mb-10">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
+                                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                </div>
+                                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Formulir Layanan</h2>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                @foreach($sopFormulir['formulir'] as $form)
+                                    <div class="bg-white rounded-3xl shadow-lg shadow-slate-200/40 p-6 border border-slate-100 flex items-center group hover:border-emerald-200 transition duration-300">
+                                        <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mr-6 group-hover:bg-emerald-50 transition duration-300 shadow-inner">
+                                            <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z"></path><path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"></path></svg>
+                                        </div>
+                                        <div class="flex-1">
+                                            <h3 class="font-bold text-slate-900 mb-1 leading-snug">{{ $form->name }}</h3>
+                                            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Format: PDF</p>
+                                        </div>
+                                        <a href="{{ asset('storage/' . $form->path) }}" target="_blank" class="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-400 hover:bg-emerald-600 hover:text-white transition duration-300 shadow-sm border border-slate-100 group-hover:border-transparent">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path></svg>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    @if(!isset($sopFormulir['sop']) && !isset($sopFormulir['formulir']))
+                        <div class="py-24 text-center">
+                            <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                                <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-2">Belum Ada Dokumen</h3>
+                            <p class="text-slate-500 font-medium">SOP dan Formulir akan ditampilkan di sini setelah diunggah oleh admin.</p>
+                        </div>
+                    @endif
+
                 </div>
             </div>
         </div>

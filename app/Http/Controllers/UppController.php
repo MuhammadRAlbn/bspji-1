@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProfilUpp;
 use App\Models\UppVisiMisi;
 use App\Models\UppMaklumatPelayanan;
+use App\Models\UppSopFormulir;
 use Illuminate\View\View;
 
 class UppController extends Controller
@@ -17,7 +18,8 @@ class UppController extends Controller
         $profil = ProfilUpp::first();
         $visiMisi = UppVisiMisi::first();
         $maklumat = UppMaklumatPelayanan::first();
+        $sopFormulir = UppSopFormulir::all()->groupBy('type');
 
-        return view('upp', compact('profil', 'visiMisi', 'maklumat'));
+        return view('upp', compact('profil', 'visiMisi', 'maklumat', 'sopFormulir'));
     }
 }
