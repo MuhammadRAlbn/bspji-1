@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\KalibrasiController;
+use App\Http\Controllers\KonsultasiPendampinganController;
 use App\Http\Controllers\LphController;
 use App\Http\Controllers\LsihController;
 use App\Http\Controllers\PelatihanTeknisController;
@@ -33,3 +34,4 @@ Route::get('/lembaga-pemeriksa-halal', [LphController::class, 'index'])->name('l
 Route::get('/lsih', [LsihController::class, 'index'])->name('lsih.index');
 Route::get('/verifikasi-tkdn', [TkdnController::class, 'index'])->name('tkdn.index');
 Route::get('/pelatihan-teknis', [PelatihanTeknisController::class, 'index'])->name('pelatihan-teknis.index');
+Route::get('/konsultasi-pendampingan', [KonsultasiPendampinganController::class, 'index'])->name('konsultasi-pendampingan.index');
