@@ -32,6 +32,14 @@
                     <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                     Profil UPP
                 </button>
+                <button 
+                    @click="tab = 'visi-misi'" 
+                    :class="tab === 'visi-misi' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
+                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
+                >
+                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    Visi & Misi
+                </button>
             </nav>
         </div>
 
@@ -118,6 +126,57 @@
                             
                             <div class="mt-8 p-5 bg-blue-50 border border-blue-100 rounded-2xl">
                                 <p class="text-xs text-blue-800 font-semibold leading-relaxed">Penyelenggaraan pelayanan publik mengikuti hari kerja efektif.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tab Visi & Misi --}}
+            <div x-show="tab === 'visi-misi'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="max-w-5xl mx-auto space-y-12">
+                    
+                    {{-- Moto Highlight --}}
+                    @if($visiMisi && $visiMisi->moto)
+                        <div class="bg-blue-600 rounded-[2.5rem] shadow-2xl shadow-blue-200/50 p-12 text-center relative overflow-hidden">
+                            <div class="absolute top-0 right-0 p-12 opacity-10">
+                                <svg class="w-64 h-64 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <div class="relative z-10">
+                                <span class="text-blue-100 text-xs font-bold uppercase tracking-[0.3em] mb-4 block">Moto Pelayanan</span>
+                                <h2 class="text-3xl md:text-5xl font-black text-white italic tracking-tight leading-tight">"{{ $visiMisi->moto }}"</h2>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        {{-- Visi --}}
+                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 p-12 border border-slate-100 relative group hover:-translate-y-2 transition duration-500">
+                            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500 shadow-sm">
+                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Visi</h3>
+                            <div class="prose prose-slate prose-lg max-w-none text-slate-600 leading-relaxed">
+                                @if($visiMisi && $visiMisi->visi)
+                                    {!! $visiMisi->visi !!}
+                                @else
+                                    <p class="text-slate-400 font-medium italic">Visi belum ditetapkan.</p>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Misi --}}
+                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 p-12 border border-slate-100 relative group hover:-translate-y-2 transition duration-500">
+                            <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500 shadow-sm">
+                                <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Misi</h3>
+                            <div class="prose prose-slate prose-lg max-w-none text-slate-600 leading-relaxed">
+                                @if($visiMisi && $visiMisi->misi)
+                                    {!! $visiMisi->misi !!}
+                                @else
+                                    <p class="text-slate-400 font-medium italic">Misi belum ditetapkan.</p>
+                                @endif
                             </div>
                         </div>
                     </div>
