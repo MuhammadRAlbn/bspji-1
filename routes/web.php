@@ -10,6 +10,7 @@ use App\Http\Controllers\SertifikasiProdukController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\TugasFungsiController;
 use App\Http\Controllers\VisiMisiController;
+use App\Http\Controllers\TkdnController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,3 +30,4 @@ Route::get('/sertifikasi-produk/informasi-publik/download/{informasi}', [Sertifi
 Route::get('/sertifikasi-produk/hak-kewajiban/download/{hakKewajiban}', [SertifikasiProdukController::class, 'downloadHakKewajiban'])->name('hak-kewajiban-produk.download');
 Route::get('/lembaga-pemeriksa-halal', [LphController::class, 'index'])->name('lph.index');
 Route::get('/lsih', [LsihController::class, 'index'])->name('lsih.index');
+Route::get('/verifikasi-tkdn', [TkdnController::class, 'index'])->name('tkdn.index');
