@@ -39,6 +39,7 @@ class LsihRuangLingkupResource extends Resource
                         FileUpload::make('image')
                             ->image()
                             ->directory('lsih/ruang-lingkup')
+                            ->disk('public')
                             ->visibility('public')
                             ->required(),
                     ]),
@@ -49,7 +50,8 @@ class LsihRuangLingkupResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->disk('public'),
             ])
             ->filters([
                 //

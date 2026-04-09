@@ -39,6 +39,7 @@ class LsihTarifResource extends Resource
                         FileUpload::make('image')
                             ->image()
                             ->directory('lsih/tarif')
+                            ->disk('public')
                             ->visibility('public')
                             ->required(),
                     ]),
@@ -49,7 +50,8 @@ class LsihTarifResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('image'),
+                ImageColumn::make('image')
+                    ->disk('public'),
             ])
             ->filters([
                 //
