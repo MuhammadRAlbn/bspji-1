@@ -12,6 +12,7 @@ use App\Http\Controllers\SertifikasiProdukController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\TugasFungsiController;
+use App\Http\Controllers\UppController;
 use App\Http\Controllers\VisiMisiController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,3 +36,4 @@ Route::get('/lsih', [LsihController::class, 'index'])->name('lsih.index');
 Route::get('/verifikasi-tkdn', [TkdnController::class, 'index'])->name('tkdn.index');
 Route::get('/pelatihan-teknis', [PelatihanTeknisController::class, 'index'])->name('pelatihan-teknis.index');
 Route::get('/konsultasi-pendampingan', [KonsultasiPendampinganController::class, 'index'])->name('konsultasi-pendampingan.index');
+Route::get('/upp', [UppController::class, 'index'])->name('upp.index');
