@@ -28,7 +28,7 @@
                     class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
                 >
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                    Ruang Lingkup
+                    Ruang Lingkup dan Tarif
                 </button>
                 <button 
                     @click="tab = 'alur'" 
@@ -50,12 +50,12 @@
                     @if($ruangLingkup && $ruangLingkup->image)
                         <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 group">
                             <div class="p-8 flex justify-center bg-white">
-                                <img src="{{ asset('storage/' . $ruangLingkup->image) }}" alt="Ruang Lingkup Pelatihan Teknis" class="max-w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition duration-700">
+                                <img src="{{ asset('storage/' . $ruangLingkup->image) }}" alt="Ruang Lingkup dan Tarif Pelatihan Teknis" class="max-w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition duration-700">
                             </div>
                         </div>
                     @else
                         <div class="bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
-                            <p class="text-gray-400 font-medium italic">Data ruang lingkup Pelatihan Teknis belum tersedia.</p>
+                            <p class="text-gray-400 font-medium italic">Data ruang lingkup dan tarif Pelatihan Teknis belum tersedia.</p>
                         </div>
                     @endif
                 </div>
