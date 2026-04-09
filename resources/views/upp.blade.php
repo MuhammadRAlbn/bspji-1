@@ -33,6 +33,14 @@
                     Profil UPP
                 </button>
                 <button 
+                    @click="tab = 'maklumat'" 
+                    :class="tab === 'maklumat' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
+                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
+                >
+                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    Maklumat
+                </button>
+                <button 
                     @click="tab = 'visi-misi'" 
                     :class="tab === 'visi-misi' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
                     class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
@@ -47,35 +55,9 @@
         <div class="mt-8">
             {{-- Tab Profil UPP --}}
             <div x-show="tab === 'profil'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="max-w-5xl mx-auto space-y-12">
-                    
-                    {{-- Section 1: Maklumat Pelayanan --}}
-                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
-                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            </div>
-                            <div>
-                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Maklumat Pelayanan</h2>
-                                <p class="text-slate-500 font-medium">Standar pelayanan yang kami berikan kepada publik.</p>
-                            </div>
-                        </div>
-
-                        @if($profil && $profil->moto_pelayanan_path)
-                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-100 group p-2">
-                                <div class="relative overflow-hidden rounded-[1.25rem]">
-                                    <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto group-hover:scale-[1.01] transition duration-700">
-                                </div>
-                            </div>
-                        @else
-                            <div class="py-12 text-center border-2 border-dashed border-slate-100 rounded-3xl">
-                                <p class="text-slate-400 font-medium italic">Gambar maklumat belum tersedia.</p>
-                            </div>
-                        @endif
-                    </div>
-
+                <div class="max-w-5xl mx-auto">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        {{-- Section 2: Tupoksi (Left/Large Col) --}}
+                        {{-- Section: Tupoksi (Left/Large Col) --}}
                         <div class="lg:col-span-2 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12 relative">
                             <div class="absolute top-0 right-0 p-8 opacity-5">
                                 <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
@@ -100,7 +82,7 @@
                             </div>
                         </div>
 
-                        {{-- Section 3: Jadwal Operasional (Right/Small Col) --}}
+                        {{-- Section: Jadwal Operasional (Right/Small Col) --}}
                         <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8">
                             <div class="flex items-center mb-8 pb-6 border-b border-slate-100">
                                 <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mr-4 shadow-sm">
@@ -128,6 +110,38 @@
                                 <p class="text-xs text-blue-800 font-semibold leading-relaxed">Penyelenggaraan pelayanan publik mengikuti hari kerja efektif.</p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tab Maklumat Pelayanan --}}
+            <div x-show="tab === 'maklumat'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="max-w-5xl mx-auto">
+                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
+                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
+                            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
+                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Maklumat Pelayanan</h2>
+                                <p class="text-slate-500 font-medium">Standar pelayanan yang kami berikan kepada publik.</p>
+                            </div>
+                        </div>
+
+                        @if($maklumat && $maklumat->path)
+                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-100 group p-2">
+                                <div class="relative overflow-hidden rounded-[1.25rem]">
+                                    <img src="{{ asset('storage/' . $maklumat->path) }}" class="w-full h-auto group-hover:scale-[1.01] transition duration-700">
+                                </div>
+                            </div>
+                        @else
+                            <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
+                                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <p class="text-slate-400 font-medium italic text-lg">Maklumat pelayanan belum diunggah.</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

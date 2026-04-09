@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProfilUpp;
 use App\Models\UppVisiMisi;
+use App\Models\UppMaklumatPelayanan;
 use Illuminate\View\View;
 
 class UppController extends Controller
@@ -15,7 +16,8 @@ class UppController extends Controller
     {
         $profil = ProfilUpp::first();
         $visiMisi = UppVisiMisi::first();
+        $maklumat = UppMaklumatPelayanan::first();
 
-        return view('upp', compact('profil', 'visiMisi'));
+        return view('upp', compact('profil', 'visiMisi', 'maklumat'));
     }
 }
