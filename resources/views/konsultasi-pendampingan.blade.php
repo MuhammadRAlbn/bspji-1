@@ -39,6 +39,14 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     Alur Proses
                 </button>
+                <button 
+                    @click="tab = 'tarif'" 
+                    :class="tab === 'tarif' ? 'bg-white text-blue-900 shadow-lg ring-1 ring-black/5' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-300/50'"
+                    class="px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
+                >
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Tarif Layanan
+                </button>
             </nav>
         </div>
 
@@ -95,6 +103,33 @@
                             <p class="text-slate-400 font-medium italic text-lg">Informasi alur proses belum tersedia saat ini.</p>
                         </div>
                     @endforelse
+                </div>
+            </div>
+
+            {{-- Tab Tarif --}}
+            <div x-show="tab === 'tarif'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" style="display: none;">
+                <div class="grid grid-cols-1 gap-12">
+                    @if($tarif && $tarif->file_pdf)
+                        <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 group mb-8">
+                            <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+                                <h3 class="text-xl font-bold text-slate-900 px-4">Dokumen Tarif Resmi</h3>
+                                <a href="{{ asset('storage/' . $tarif->file_pdf) }}" target="_blank" class="flex items-center px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg hover:bg-blue-700 transition duration-300">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                    Unduh PDF
+                                </a>
+                            </div>
+                            <div class="bg-slate-800">
+                                <iframe src="{{ asset('storage/' . $tarif->file_pdf) }}" class="w-full h-[800px] border-0"></iframe>
+                            </div>
+                        </div>
+                    @else
+                        <div class="bg-white rounded-[2.5rem] shadow-xl p-24 text-center border border-slate-100">
+                            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <p class="text-slate-400 font-medium italic text-lg">Informasi tarif belum tersedia saat ini.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
