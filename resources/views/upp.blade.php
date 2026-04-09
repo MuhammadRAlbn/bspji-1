@@ -12,7 +12,7 @@
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
 
-    <div class="max-w-6xl mx-auto px-6 py-16" x-data="{ tab: 'maklumat' }">
+    <div class="max-w-6xl mx-auto px-6 py-16" x-data="{ tab: 'profil' }">
         <!-- Hero Section -->
         <div class="text-center mb-16 relative">
             <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-50 -z-10"></div>
@@ -25,114 +25,99 @@
         <div class="flex justify-center mb-16">
             <nav class="inline-flex p-1.5 bg-white rounded-2xl shadow-sm border border-slate-200 backdrop-blur-xl">
                 <button 
-                    @click="tab = 'maklumat'" 
-                    :class="tab === 'maklumat' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
+                    @click="tab = 'profil'" 
+                    :class="tab === 'profil' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
+                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
                 >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Maklumat Pelayanan
-                </button>
-                <button 
-                    @click="tab = 'tupoksi'" 
-                    :class="tab === 'tupoksi' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                    Tugas & Fungsi
-                </button>
-                <button 
-                    @click="tab = 'waktu'" 
-                    :class="tab === 'waktu' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-6 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Waktu Pelayanan
+                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Profil UPP
                 </button>
             </nav>
         </div>
 
         {{-- Konten Tab --}}
         <div class="mt-8">
-            
-            {{-- Tab Maklumat Pelayanan --}}
-            <div x-show="tab === 'maklumat'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="max-w-4xl mx-auto">
-                    @if($profil && $profil->moto_pelayanan_path)
-                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 group p-2">
-                            <div class="relative overflow-hidden rounded-[2.25rem]">
-                                <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto group-hover:scale-[1.02] transition duration-700">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent pointer-events-none"></div>
-                            </div>
-                        </div>
-                    @else
-                        <div class="bg-white rounded-[2.5rem] shadow-xl p-24 text-center border border-slate-100 border-dashed">
-                             <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                            </div>
-                            <p class="text-slate-400 font-medium italic text-lg">Maklumat pelayanan belum diunggah.</p>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            {{-- Tab Tupoksi --}}
-            <div x-show="tab === 'tupoksi'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-4xl mx-auto">
-                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-12 relative">
-                        <div class="absolute top-0 right-0 p-8 opacity-5">
-                            <svg class="w-48 h-48" fill="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                        </div>
-                        <div class="relative prose prose-slate max-w-none prose-headings:text-slate-900 prose-headings:font-extrabold prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600">
-                            @if($profil && $profil->tupoksi)
-                                {!! $profil->tupoksi !!}
-                            @else
-                                <div class="text-center py-12">
-                                    <p class="text-slate-400 font-medium italic text-lg">Data Tugas Pokok dan Fungsi belum tersedia.</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Tab Waktu Pelayanan --}}
-            <div x-show="tab === 'waktu'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-2xl mx-auto">
-                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-10">
+            {{-- Tab Profil UPP --}}
+            <div x-show="tab === 'profil'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
+                <div class="max-w-5xl mx-auto space-y-12">
+                    
+                    {{-- Section 1: Maklumat Pelayanan --}}
+                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
                         <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                            <div class="w-14 h-14 bg-amber-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                                <svg class="w-7 h-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
+                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                             </div>
                             <div>
-                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Jadwal Operasional</h2>
-                                <p class="text-slate-500 font-medium">Jam kerja pelayanan Unit Pelayanan Publik</p>
+                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Maklumat Pelayanan</h2>
+                                <p class="text-slate-500 font-medium">Standar pelayanan yang kami berikan kepada publik.</p>
                             </div>
                         </div>
 
-                        <div class="space-y-4">
-                            @if($profil && $profil->waktu_pelayanan)
-                                @foreach($profil->waktu_pelayanan as $jadwal)
-                                    <div class="flex items-center justify-between p-6 bg-slate-50 rounded-2xl border border-slate-100/80 hover:bg-blue-50/50 hover:border-blue-100 transition duration-300 group">
-                                        <div class="flex items-center">
-                                            <div class="w-2 h-2 bg-blue-500 rounded-full mr-4 group-hover:scale-150 transition-transform"></div>
-                                            <span class="text-lg font-bold text-slate-800">{{ $jadwal['hari'] }}</span>
-                                        </div>
-                                        <div class="px-6 py-2 bg-white rounded-xl shadow-sm border border-slate-200 text-blue-700 font-bold text-sm tracking-wide">
-                                            {{ $jadwal['waktu'] }}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            @else
-                                <div class="text-center py-12">
-                                    <p class="text-slate-400 font-medium italic text-lg">Informasi waktu pelayanan belum tersedia.</p>
+                        @if($profil && $profil->moto_pelayanan_path)
+                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-100 group p-2">
+                                <div class="relative overflow-hidden rounded-[1.25rem]">
+                                    <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto group-hover:scale-[1.01] transition duration-700">
                                 </div>
-                            @endif
+                            </div>
+                        @else
+                            <div class="py-12 text-center border-2 border-dashed border-slate-100 rounded-3xl">
+                                <p class="text-slate-400 font-medium italic">Gambar maklumat belum tersedia.</p>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                        {{-- Section 2: Tupoksi (Left/Large Col) --}}
+                        <div class="lg:col-span-2 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12 relative">
+                            <div class="absolute top-0 right-0 p-8 opacity-5">
+                                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            
+                            <div class="flex items-center mb-10 pb-6 border-b border-slate-100 relative z-10">
+                                <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
+                                    <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                </div>
+                                <div>
+                                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Tugas & Fungsi</h2>
+                                    <p class="text-slate-500 font-medium">Tugas Pokok dan Fungsi UPP.</p>
+                                </div>
+                            </div>
+
+                            <div class="relative prose prose-slate max-w-none prose-headings:text-slate-900 prose-headings:font-extrabold prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600">
+                                @if($profil && $profil->tupoksi)
+                                    {!! $profil->tupoksi !!}
+                                @else
+                                    <p class="text-slate-400 font-medium italic text-center py-8">Data Tupoksi belum tersedia.</p>
+                                @endif
+                            </div>
                         </div>
-                        
-                        <div class="mt-10 p-6 bg-blue-50 border border-blue-100 rounded-2xl">
-                            <div class="flex gap-4">
-                                <svg class="w-6 h-6 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <p class="text-sm text-blue-800 font-medium leading-relaxed">Penyelenggaraan pelayanan publik mengikuti hari kerja efektif. Harap perhatikan waktu istirahat pada jam siang.</p>
+
+                        {{-- Section 3: Jadwal Operasional (Right/Small Col) --}}
+                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8">
+                            <div class="flex items-center mb-8 pb-6 border-b border-slate-100">
+                                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mr-4 shadow-sm">
+                                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                                <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Jam Kerja</h2>
+                            </div>
+
+                            <div class="space-y-3">
+                                @if($profil && $profil->waktu_pelayanan)
+                                    @foreach($profil->waktu_pelayanan as $jadwal)
+                                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 group transition duration-300">
+                                            <div class="text-sm font-bold text-slate-500 mb-1 uppercase tracking-wider">{{ $jadwal['hari'] }}</div>
+                                            <div class="text-slate-900 font-extrabold">{{ $jadwal['waktu'] }}</div>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="text-center py-6">
+                                        <p class="text-slate-400 font-medium italic">Jadwal belum tersedia.</p>
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            <div class="mt-8 p-5 bg-blue-50 border border-blue-100 rounded-2xl">
+                                <p class="text-xs text-blue-800 font-semibold leading-relaxed">Penyelenggaraan pelayanan publik mengikuti hari kerja efektif.</p>
                             </div>
                         </div>
                     </div>
