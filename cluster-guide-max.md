@@ -274,6 +274,12 @@ Jika tidak didaftarkan:
 
 ---
 
+## kunci sukses : 
+buat resource seperti biasa lalu pindahkan ia ke cluster tujuan dengan mengikuti arahan dari @pemindahan-resource-cluster.md
+.ingat bahwa kita menggunakan powershell sehingga jangan gunakan perintah linux !
+
+---
+
 ```
 
 Kalau mau, langkah selanjutnya kita bisa naik level lagi: saya bisa bantu ubah ini jadi **prompt khusus untuk AI agent (Cursor / Copilot / GPT)** supaya dia otomatis tidak mengulangi error-error ini 👍
