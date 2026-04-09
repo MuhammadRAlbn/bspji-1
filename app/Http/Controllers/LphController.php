@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\LphAlurDanKelengkapan;
+use App\Models\LphInfrastruktur;
 use App\Models\LphKebijakanSasaranMutu;
 use App\Models\LphStrukturVisiMisi;
 use App\Models\RuangLingkupLph;
 use App\Models\SdmLph;
+use App\Models\TarifHalal;
 use Illuminate\View\View;
 
 class LphController extends Controller
@@ -22,7 +24,9 @@ class LphController extends Controller
         $alurKelengkapan = LphAlurDanKelengkapan::orderBy('urutan')->get();
         $strukturVisiMisi = LphStrukturVisiMisi::orderBy('urutan')->get();
         $kebijakanSasaranMutu = LphKebijakanSasaranMutu::orderBy('urutan')->get();
+        $tarifHalal = TarifHalal::all();
+        $infrastruktur = LphInfrastruktur::orderBy('urutan')->get();
 
-        return view('lph', compact('ruangLingkup', 'sdmAuditor', 'sdmPembina', 'alurKelengkapan', 'strukturVisiMisi', 'kebijakanSasaranMutu'));
+        return view('lph', compact('ruangLingkup', 'sdmAuditor', 'sdmPembina', 'alurKelengkapan', 'strukturVisiMisi', 'kebijakanSasaranMutu', 'tarifHalal', 'infrastruktur'));
     }
 }
