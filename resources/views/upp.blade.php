@@ -56,6 +56,22 @@
                     <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     SOP & Formulir
                 </button>
+                <button 
+                    @click="tab = 'sarana'" 
+                    :class="tab === 'sarana' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
+                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
+                >
+                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    Sarana & Prasarana
+                </button>
+                <button 
+                    @click="tab = 'sk-spm'" 
+                    :class="tab === 'sk-spm' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
+                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
+                >
+                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    SK SPM
+                </button>
             </nav>
         </div>
 
@@ -274,6 +290,66 @@
                         </div>
                     @endif
 
+                </div>
+            </div>
+
+            {{-- Tab Sarana & Prasarana --}}
+            <div x-show="tab === 'sarana'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
+                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
+                            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
+                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Sarana & Prasarana</h2>
+                                <p class="text-slate-500 font-medium">Fasilitas dan infrastruktur pendukung pelayanan.</p>
+                            </div>
+                        </div>
+
+                        @if($saranaPrasarana && $saranaPrasarana->pdf)
+                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-200 group">
+                                <iframe src="{{ asset('storage/' . $saranaPrasarana->pdf) }}" class="w-full h-[800px] border-none"></iframe>
+                            </div>
+                        @else
+                            <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
+                                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                </div>
+                                <p class="text-slate-400 font-medium italic text-lg">Data Sarana & Prasarana belum diunggah.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            {{-- Tab SK SPM --}}
+            <div x-show="tab === 'sk-spm'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="max-w-6xl mx-auto">
+                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
+                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
+                            <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
+                                <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            </div>
+                            <div>
+                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">SK Standar Pelayanan Minimal (SPM)</h2>
+                                <p class="text-slate-500 font-medium">Keputusan penetapan standar pelayanan minimal.</p>
+                            </div>
+                        </div>
+
+                        @if($skSpm && $skSpm->pdf)
+                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-200 group">
+                                <iframe src="{{ asset('storage/' . $skSpm->pdf) }}" class="w-full h-[800px] border-none"></iframe>
+                            </div>
+                        @else
+                            <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
+                                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                </div>
+                                <p class="text-slate-400 font-medium italic text-lg">Data SK SPM belum diunggah.</p>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
