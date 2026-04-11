@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\DetailInformasiController;
+use App\Http\Controllers\InformasiPublikController;
 use App\Http\Controllers\KalibrasiController;
 use App\Http\Controllers\KonsultasiPendampinganController;
 use App\Http\Controllers\LphController;
 use App\Http\Controllers\LsihController;
 use App\Http\Controllers\PelatihanTeknisController;
 use App\Http\Controllers\PengujianController;
+use App\Http\Controllers\PpidController;
 use App\Http\Controllers\ProfilPejabatController;
 use App\Http\Controllers\SejarahSingkatController;
 use App\Http\Controllers\SertifikasiProdukController;
@@ -14,8 +17,6 @@ use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\TugasFungsiController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\VisiMisiController;
-use App\Http\Controllers\PpidController;
-use App\Http\Controllers\InformasiPublikController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,3 +42,4 @@ Route::get('/konsultasi-pendampingan', [KonsultasiPendampinganController::class,
 Route::get('/upp', [UppController::class, 'index'])->name('upp.index');
 Route::get('/ppid', [PpidController::class, 'index'])->name('ppid.index');
 Route::get('/informasi-publik', [InformasiPublikController::class, 'index'])->name('informasi-publik.index');
+Route::get('/informasi-publik/detail/{tipe}', [DetailInformasiController::class, 'show'])->name('detail-informasi.show');

@@ -54,8 +54,46 @@
                         </div>
                         <div>
                             <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Daftar Informasi Publik</h2>
-                            <p class="text-slate-500 font-medium">Dokumen resmi daftar informasi yang dapat diakses oleh publik.</p>
+                            <p class="text-slate-500 font-medium">Akses informasi berdasarkan kategori yang tersedia.</p>
                         </div>
+                    </div>
+
+                    {{-- Menu 4 Kategori --}}
+                    <div class="space-y-3 mb-10">
+                        @php
+                            $kategoriMenu = [
+                                ['tipe' => 'berkala', 'label' => 'Informasi Berkala', 'desc' => 'Informasi yang wajib disediakan dan diumumkan secara berkala', 'color' => 'emerald', 'icon' => 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'],
+                                ['tipe' => 'setiap_saat', 'label' => 'Informasi Setiap Saat', 'desc' => 'Informasi yang wajib tersedia setiap saat', 'color' => 'blue', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
+                                ['tipe' => 'serta_merta', 'label' => 'Informasi Serta Merta', 'desc' => 'Informasi yang wajib diumumkan serta merta', 'color' => 'amber', 'icon' => 'M13 10V3L4 14h7v7l9-11h-7z'],
+                                ['tipe' => 'dikecualikan', 'label' => 'Informasi Dikecualikan', 'desc' => 'Informasi yang dikecualikan dari akses publik', 'color' => 'rose', 'icon' => 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z'],
+                            ];
+                        @endphp
+
+                        @foreach($kategoriMenu as $item)
+                            <a href="{{ route('detail-informasi.show', $item['tipe']) }}"
+                               class="group flex items-center justify-between p-5 bg-{{ $item['color'] }}-50/50 hover:bg-{{ $item['color'] }}-50 border border-{{ $item['color'] }}-100 rounded-2xl transition-all duration-300 hover:shadow-lg hover:shadow-{{ $item['color'] }}-100/50 hover:-translate-y-0.5">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-{{ $item['color'] }}-100 rounded-xl flex items-center justify-center mr-4 group-hover:scale-110 transition-transform duration-300">
+                                        <svg class="w-6 h-6 text-{{ $item['color'] }}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-800 group-hover:text-{{ $item['color'] }}-700 transition">{{ $item['label'] }}</h3>
+                                        <p class="text-sm text-slate-400">{{ $item['desc'] }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center text-{{ $item['color'] }}-600 font-semibold text-sm group-hover:translate-x-1 transition-transform duration-300">
+                                    <span class="mr-2">Lihat</span>
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    {{-- Divider --}}
+                    <div class="flex items-center mb-8">
+                        <div class="flex-1 border-t border-slate-100"></div>
+                        <span class="px-4 text-xs font-bold text-slate-400 uppercase tracking-widest">Dokumen Daftar Informasi</span>
+                        <div class="flex-1 border-t border-slate-100"></div>
                     </div>
 
                     @if($daftarInformasi && $daftarInformasi->pdf_file)
