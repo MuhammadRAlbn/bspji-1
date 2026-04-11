@@ -135,6 +135,23 @@
                         Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                     </span>
                 </a>
+
+                <!-- PPID -->
+                <a href="{{ route('ppid.index') }}" class="group relative bg-white p-6 rounded-3xl border border-slate-200 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col">
+                    <div class="absolute top-0 right-0 w-24 h-24 -mr-6 -mt-6 bg-emerald-50 rounded-full scale-0 group-hover:scale-100 transition-transform duration-500 origin-top-right"></div>
+                    <div class="relative flex-grow">
+                        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">PPID</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-4">Pejabat Pengelola Informasi dan Dokumentasi BSPJI Pekanbaru.</p>
+                    </div>
+                    <span class="relative inline-flex items-center text-blue-600 font-semibold text-xs group-hover:gap-2 transition-all mt-auto">
+                        Lihat Selanjutnya <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
+                </a>
             </div>
         </main>
 
