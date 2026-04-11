@@ -15,6 +15,7 @@ use App\Http\Controllers\TugasFungsiController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\PpidController;
+use App\Http\Controllers\InformasiPublikController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -39,3 +40,4 @@ Route::get('/pelatihan-teknis', [PelatihanTeknisController::class, 'index'])->na
 Route::get('/konsultasi-pendampingan', [KonsultasiPendampinganController::class, 'index'])->name('konsultasi-pendampingan.index');
 Route::get('/upp', [UppController::class, 'index'])->name('upp.index');
 Route::get('/ppid', [PpidController::class, 'index'])->name('ppid.index');
+Route::get('/informasi-publik', [InformasiPublikController::class, 'index'])->name('informasi-publik.index');
