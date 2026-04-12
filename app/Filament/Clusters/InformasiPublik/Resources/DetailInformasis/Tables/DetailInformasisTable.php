@@ -6,6 +6,7 @@ use App\Models\DetailInformasi;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class DetailInformasisTable
@@ -50,7 +51,9 @@ class DetailInformasisTable
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                SelectFilter::make('tipe')
+                    ->label('Tipe Informasi')
+                    ->options(DetailInformasi::TIPE_OPTIONS),
             ])
             ->actions([
                 EditAction::make(),
