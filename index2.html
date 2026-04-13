@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Pelayanan Publik - BSPJI Banda Aceh</title>
+    <!-- Google Fonts: Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e293b', // Slate 800
+                        accent: '#3b82f6',  // Blue 500
+                        'brand-orange': '#f97316', // Orange 500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Modern Utilities */
+        .tab-content {
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-sipintu {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-sipintu:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #f97316;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover { color: #f97316; }
+    </style>
+</head>
+
+<body class="bg-white text-slate-800 antialiased font-sans pt-20" 
+    x-data="{ 
+        mobileMenuOpen: false, 
+        activeTab: 'layanan-A',
+        lightbox: { open: false, src: '' }
+    }">
+
+    <!-- NAVBAR -->
+    <nav class="fixed top-0 left-0 right-0 z-[100] nav-glass">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Left: Logo -->
+            <div class="flex items-center gap-3">
+                <img src="logo-bspji.png" alt="Logo BSPJI" class="h-10 w-auto">
+                <div class="hidden sm:block">
+                    <span class="block text-lg font-extrabold text-primary leading-tight">BSPJI</span>
+                    <span class="block text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Banda Aceh</span>
+                </div>
+            </div>
+
+            <!-- Middle: Desktop Nav -->
+            <div class="hidden md:flex items-center gap-8 text-slate-600">
+                <a href="#" class="nav-link text-base font-bold">Beranda</a>
+                <a href="#" class="nav-link text-base font-bold">Profil</a>
+                <a href="#" class="nav-link text-base font-bold">Pelayanan</a>
+                <a href="#" class="nav-link text-base font-bold text-brand-orange">Informasi Publik</a>
+                <a href="#" class="nav-link text-base font-bold">Tautan</a>
+            </div>
+
+            <!-- Right: Action Button -->
+            <div class="hidden md:block">
+                <a href="#" class="btn-sipintu px-6 py-2.5 rounded-full text-base font-bold text-white inline-flex items-center gap-2">
+                    <span>sipintu</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="md:hidden">
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="p-2 text-slate-600 hover:text-brand-orange transition-colors">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div x-show="mobileMenuOpen" x-transition 
+            class="md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-100 shadow-xl overflow-hidden" style="display: none;">
+            <div class="px-6 py-6 flex flex-col gap-4">
+                <a href="#" class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Beranda</a>
+                <a href="#" class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Profil</a>
+                <a href="#" class="text-base font-bold text-slate-600 py-2 border-b border-slate-50 text-brand-orange">Pelayanan</a>
+                <a href="#" class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Informasi Publik</a>
+                <a href="#" class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Tautan</a>
+                <a href="#" class="btn-sipintu mt-4 px-6 py-3 rounded-xl text-center text-base font-bold text-white flex items-center justify-center gap-2">
+                    <span>sipintu</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-6xl mx-auto px-6 py-20">
+
+        <!-- HEADER SECTION -->
+        <header class="mb-10 p-4">
+            <h1 class="text-4xl md:text-5xl tracking-tight text-primary font-bold">
+                Unit Pelayanan Publik
+            </h1>
+        </header>
+
+        <!-- NAVIGATION TABS -->
+        <nav class="flex flex-wrap justify-center mb-16 gap-2 sm:gap-3 bg-slate-50 rounded-[2rem] p-2">
+            <template x-for="tab in [
+                { id: 'layanan-A', label: 'Profil UPP' },
+                { id: 'layanan-B', label: 'Visi & Misi UPP' },
+                { id: 'layanan-C', label: 'Maklumat Pelayanan' },
+                { id: 'layanan-D', label: 'Daftar SOP & Formulir' },
+                { id: 'layanan-E', label: 'Pengaduan' },
+                { id: 'layanan-F', label: 'Informasi Publik' }
+            ]">
+                <button 
+                    @click="activeTab = tab.id"
+                    :class="activeTab === tab.id ? 'bg-brand-orange text-white shadow-lg' : 'bg-transparent text-slate-600 hover:bg-white/80'"
+                    class="px-5 py-3 rounded-2xl text-xs sm:text-sm md:text-base font-semibold transition-all duration-300 grow md:grow-0"
+                    x-text="tab.label">
+                </button>
+            </template>
+        </nav>
+
+        <!-- CONTENT AREA -->
+        <div class="relative rounded-[2.5rem]">
+
+            <!-- TAB 1: PROFIL UPP -->
+            <div x-show="activeTab === 'layanan-A'" class="tab-content" x-transition>
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="relative group cursor-pointer" @click="lightbox.open = true; lightbox.src = 'petugas.webp'">
+                        <div class="absolute -inset-4 bg-brand-orange/20 rounded-[2.5rem] transform -rotate-2"></div>
+                        <img src="petugas.webp" alt="Waktu Layanan" class="relative rounded-[2rem] shadow-xl w-full h-80 object-cover border-4 border-white transition-transform duration-500 group-hover:scale-[1.02]">
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                            <span class="w-8 h-8 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center text-sm">🕒</span>
+                            Waktu Layanan
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="bg-white py-4 px-6 rounded-2xl shadow-sm border border-orange-100 border-l-4 border-l-brand-orange">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Senin s.d Kamis</p>
+                                <p class="text-slate-800 font-bold">08.00 - 12.00 WIB & 13.00 - 16.00 WIB</p>
+                            </div>
+                            <div class="bg-white py-4 px-6 rounded-2xl shadow-sm border border-orange-100 border-l-4 border-l-brand-orange">
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Jumat</p>
+                                <p class="text-slate-800 font-bold">08.00 - 12.00 WIB & 14.00 - 16.30 WIB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="w-8 h-8 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center text-sm">📋</span>
+                        Tupoksi
+                    </h3>
+                    <div class="text-slate-600 leading-relaxed text-justify space-y-4 text-lg">
+                        <p>Unit Pelayanan Publik (UPP BSPJI Banda Aceh) merupakan unit kerja non-struktural di bawah BSKJI yang menyelenggarakan pelayanan publik di lingkungan Balai Standardisasi dan Pelayanan Jasa Industri Banda Aceh.</p>
+                        <p>Tugas utama UPP adalah memberikan pelayanan informasi, konsultansi, dan jasa teknis kepada masyarakat atau badan hukum sesuai tugas pokok dan fungsi BSPJI Banda Aceh.</p>
+                    </div>
+                    <div class="mt-8">
+                        <img src="profil.png" @click="lightbox.open = true; lightbox.src = 'profil.png'" class="w-full h-auto rounded-[2rem] shadow-lg border border-slate-100 cursor-zoom-in hover:brightness-95 transition-all">
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: VISI & MISI -->
+            <div x-show="activeTab === 'layanan-B'" class="tab-content" x-transition style="display: none;">
+                <div class="max-w-5xl space-y-10">
+                    <div class="relative overflow-hidden bg-slate-900 text-white p-10 md:p-14 rounded-[3rem] shadow-2xl border border-slate-800">
+                        <div class="relative z-10">
+                            <h3 class="text-brand-orange font-black text-xs uppercase tracking-[0.3em] mb-4">Visi Kami</h3>
+                            <p class="text-2xl md:text-4xl font-extrabold leading-tight italic">
+                                "Menjadi Unit Pelayanan Publik yang profesional dalam memberikan layanan kepada pelanggan."
+                            </p>
+                        </div>
+                        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-brand-orange opacity-5 rounded-full blur-3xl"></div>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm relative overflow-hidden">
+                            <h3 class="text-xl font-bold text-primary mb-8 flex items-center gap-3">
+                                <span class="w-8 h-8 bg-slate-900 text-white rounded-full flex items-center justify-center text-xs">M</span>
+                                Misi Utama
+                            </h3>
+                            <ul class="space-y-6">
+                                <template x-for="misi in [
+                                    'Meningkatkan profesionalisme aparatur dan kualitas pelayanan.',
+                                    'Membantu sistem pelayanan secara online.',
+                                    'Menciptakan kepercayaan pelanggan terhadap penyelenggara pelayanan.'
+                                ]">
+                                    <li class="flex items-start gap-4">
+                                        <span class="mt-1 flex-shrink-0 w-5 h-5 bg-brand-orange/10 text-brand-orange rounded-full flex items-center justify-center text-[10px]">✓</span>
+                                        <p class="text-slate-600 font-medium" x-text="misi"></p>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                        <div class="bg-brand-orange/5 p-8 rounded-[2.5rem] border border-brand-orange/10 flex flex-col justify-center items-center text-center">
+                            <h3 class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 mb-4">Motto Layanan</h3>
+                            <p class="text-2xl font-bold text-slate-800 italic leading-relaxed">
+                                "Cepat, Tepat, dan Akurat berorientasi pada kepuasan pelanggan."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: MAKLUMAT -->
+            <div x-show="activeTab === 'layanan-C'" class="tab-content" style="display: none;">
+                <div class="bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100 flex justify-center">
+                    <img src="maklumat.png" @click="lightbox.open = true; lightbox.src = 'maklumat.png'" 
+                        class="w-full max-w-2xl rounded-2xl cursor-zoom-in hover:scale-[1.01] transition-transform">
+                </div>
+            </div>
+
+            <!-- TAB 4: SOP CARDS (TEMPLATE READY) -->
+            <div x-show="activeTab === 'layanan-D'" class="tab-content grid sm:grid-cols-2 lg:grid-cols-3 gap-8" style="display: none;">
+                <!-- START: LOOP DATA -->
+                <template x-for="item in [
+                    { title: 'SOP Pengujian Laboratorium', img: 'Pengujian.jpeg', desc: 'Prosedur standar pengujian mutu komoditi unggulan daerah.' },
+                    { title: 'SOP Kalibrasi Alat', img: 'pelaporan.png', desc: 'Langkah teknis penjaminan ketelusuran alat ukur Anda.' },
+                    { title: 'SOP Sertifikasi (SPPT SNI)', img: 'komplain.png', desc: 'Panduan pengurusan sertifikasi produk industri.' },
+                    { title: 'Formulir Layanan', img: 'permohonan.jpg', desc: 'Unduh formulir permohonan jasa industri lengkap.' },
+                    { title: 'SOP Penanganan Pengaduan', img: 'sengketa.jpg', desc: 'Mekanisme resmi penyampaian aspirasi pelanggan.' },
+                    { title: 'Survey Kepuasan', img: 'sengketa2.jpg', desc: 'Partisipasi dalam penilaian kinerja pelayanan kami.' }
+                ]">
+                    <article class="flex flex-col group bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+                        <div class="aspect-[16/10] bg-slate-200 overflow-hidden cursor-pointer" @click="lightbox.open = true; lightbox.src = item.img">
+                            <img :src="item.img" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-slate-800 mb-3 leading-tight" x-text="item.title"></h3>
+                            <p class="text-slate-500 text-sm mb-6 leading-relaxed" x-text="item.desc"></p>
+                            <a href="#" class="mt-auto inline-flex items-center gap-2 text-xs font-black uppercase text-brand-orange group-hover:gap-3 transition-all">
+                                Selengkapnya <span class="text-lg">→</span>
+                            </a>
+                        </div>
+                    </article>
+                </template>
+                <!-- END: LOOP DATA -->
+            </div>
+
+            <!-- TAB 5: PENGADUAN -->
+            <div x-show="activeTab === 'layanan-E'" class="tab-content bg-slate-50 p-10 rounded-[2.5rem]" style="display: none;">
+                <h2 class="text-3xl font-bold mb-6 text-primary">Pengaduan Masyarakat</h2>
+                <div class="max-w-2xl text-slate-600 space-y-4">
+                    <p class="text-lg">Sampaikan keluhan atau aspirasi Anda melalui sistem <strong>SP4N-LAPOR!</strong> Kami berkomitmen untuk merespon dalam waktu maksimal 2x24 jam kerja.</p>
+                    <a href="#" class="inline-block bg-brand-orange text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-brand-orange/30 hover:shadow-xl transition-all">Kirim Pengaduan</a>
+                </div>
+            </div>
+
+            <!-- TAB 6: INFORMASI PUBLIK -->
+            <div x-show="activeTab === 'layanan-F'" class="tab-content bg-slate-50 p-10 rounded-[2.5rem]" style="display: none;">
+                <h2 class="text-3xl font-bold mb-6 text-primary">Informasi Publik</h2>
+                <p class="text-slate-600 text-lg">Akses keterbukaan informasi meliputi anggaran, regulasi terbaru, dan laporan kinerja instansi sesuai standar pelayanan keterbukaan informasi publik.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- LIGHTBOX MODAL (GLOBAL) -->
+    <div x-show="lightbox.open" 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-6 cursor-zoom-out"
+        @click="lightbox.open = false" 
+        @keydown.escape.window="lightbox.open = false"
+        style="display: none;">
+        
+        <button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
+        <img :src="lightbox.src" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl" @click.stop>
+    </div>
+
+</body>
+</html>

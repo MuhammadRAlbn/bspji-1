@@ -18,6 +18,9 @@ class ProfilUppsTable
                 ImageColumn::make('moto_pelayanan_path')
                     ->label('Motto Pelayanan')
                     ->disk('public'),
+                ImageColumn::make('foto_petugas_path')
+                    ->label('Foto Petugas')
+                    ->disk('public'),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

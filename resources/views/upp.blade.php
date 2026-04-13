@@ -106,8 +106,24 @@
                             </div>
                         </div>
 
-                        {{-- Section: Jadwal Operasional (Right/Small Col) --}}
-                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8">
+                        <div>
+                            {{-- Section: Foto Petugas --}}
+                            @if($profil && $profil->foto_petugas_path)
+                                <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-6 mb-8">
+                                    <div class="flex items-center mb-6 pb-4 border-b border-slate-100">
+                                        <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 shadow-sm">
+                                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                        </div>
+                                        <h2 class="text-lg font-extrabold text-slate-900 tracking-tight">Petugas Layanan</h2>
+                                    </div>
+                                    <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-slate-50 border border-slate-100">
+                                        <img src="{{ asset('storage/' . $profil->foto_petugas_path) }}" class="w-full h-full object-cover" alt="Petugas Layanan UPP">
+                                    </div>
+                                </div>
+                            @endif
+
+                            {{-- Section: Jadwal Operasional (Right/Small Col) --}}
+                            <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8">
                             <div class="flex items-center mb-8 pb-6 border-b border-slate-100">
                                 <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mr-4 shadow-sm">
                                     <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -135,17 +151,18 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- Moto Pelayanan Image at the Bottom --}}
-                    @if($profil && $profil->moto_pelayanan_path)
-                        <div class="mt-12 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-4">
-                            <div class="relative overflow-hidden rounded-[2rem]">
-                                <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto" alt="Motto Pelayanan">
-                            </div>
-                        </div>
-                    @endif
                 </div>
+
+                {{-- Moto Pelayanan Image at the Bottom --}}
+                @if($profil && $profil->moto_pelayanan_path)
+                    <div class="mt-12 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-4">
+                        <div class="relative overflow-hidden rounded-[2rem]">
+                            <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto" alt="Motto Pelayanan">
+                        </div>
+                    </div>
+                @endif
             </div>
+        </div>
 
             {{-- Tab Maklumat Pelayanan --}}
             <div x-show="tab === 'maklumat'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">

@@ -9,6 +9,7 @@ class ProfilUpp extends Model
     /** @var array<int, string> */
     protected $fillable = [
         'moto_pelayanan_path',
+        'foto_petugas_path',
         'tupoksi',
         'waktu_pelayanan',
     ];
