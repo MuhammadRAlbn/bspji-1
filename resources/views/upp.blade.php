@@ -135,6 +135,15 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Moto Pelayanan Image at the Bottom --}}
+                    @if($profil && $profil->moto_pelayanan_path)
+                        <div class="mt-12 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-4">
+                            <div class="relative overflow-hidden rounded-[2rem]">
+                                <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto" alt="Motto Pelayanan">
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 

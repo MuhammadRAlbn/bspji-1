@@ -16,6 +16,18 @@ class ProfilUppForm
         return $schema
             ->components([
 
+                Section::make('Motto Pelayanan')
+                    ->description('Gambar/Poster Motto Pelayanan UPP.')
+                    ->schema([
+                        FileUpload::make('moto_pelayanan_path')
+                            ->label('Banner Motto Pelayanan')
+                            ->image()
+                            ->imageEditor()
+                            ->directory('upp/profil')
+                            ->visibility('public')
+                            ->columnSpanFull(),
+                    ]),
+
                 Section::make('Tupoksi')
                     ->description('Tugas Pokok dan Fungsi UPP.')
                     ->schema([
