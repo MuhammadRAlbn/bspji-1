@@ -1,393 +1,521 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Pelayanan Publik - BSPJI Pekanbaru</title>
+    <title>Unit Pelayanan Publik - BSPJI Banda Aceh</title>
+    <!-- Google Fonts: Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Outfit', sans-serif; }
+        /* Custom Smooth Transition */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navbar Glassmorphism */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gradient Button */
+        .btn-sipintu {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-sipintu:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        /* Nav Link Hover */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #f97316;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #f97316;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
 
-    <div class="max-w-6xl mx-auto px-6 py-16" x-data="{ tab: 'profil' }">
-        <!-- Hero Section -->
-        <div class="text-center mb-16 relative">
-            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-50 -z-10"></div>
-            <span class="px-4 py-1.5 bg-blue-100/50 text-blue-700 text-xs font-bold rounded-full uppercase tracking-widest mb-4 inline-block backdrop-blur-sm border border-blue-200">Informasi Layanan</span>
-            <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">Unit Pelayanan Publik <br><span class="text-blue-600">(UPP)</span></h1>
-            <p class="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">Berkomitmen memberikan pelayanan publik yang transparan, akuntabel, dan berorientasi pada kepuasan masyarakat industri.</p>
+<body class="bg-white text-slate-800 antialiased font-sans pt-20" x-data="{ 
+        mobileMenuOpen: false, 
+        activeTab: 'profil',
+        lightbox: { open: false, src: '' }
+    }">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 right-0 z-[100] nav-glass">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Left: Logo (Text-based) -->
+            <div class="flex items-center gap-2">
+                <div
+                    class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                    <span class="text-white font-bold text-xl leading-none">B</span>
+                </div>
+                <div class="hidden sm:block">
+                    <span class="block text-lg font-extrabold text-primary leading-tight">BSPJI</span>
+                    <span class="block text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Banda
+                        Aceh</span>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8">
+                <a href="{{ url('/') }}" class="nav-link text-base font-bold text-slate-600">Beranda</a>
+                <a href="{{ route('sejarah-singkat.index') }}"
+                    class="nav-link text-base font-bold text-slate-600">Profil</a>
+                <a href="{{ route('pengujian.index') }}"
+                    class="nav-link text-base font-bold text-slate-600">Pelayanan</a>
+                <a href="{{ route('informasi-publik.index') }}"
+                    class="nav-link text-base font-bold text-slate-600">Informasi Publik</a>
+            </div>
+
+            <!-- Right: Action Button -->
+            <div class="hidden md:block">
+                <a href="#"
+                    class="btn-sipintu px-6 py-2.5 rounded-full text-base font-bold text-white inline-flex items-center gap-2">
+                    <span>sipintu</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="md:hidden">
+                <button @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="p-2 text-slate-600 hover:text-brand-orange transition-colors">
+                    <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                    <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="display: none;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
         </div>
 
-        {{-- Navigasi Tab --}}
-        <div class="flex justify-center mb-16">
-            <nav class="inline-flex p-1.5 bg-white rounded-2xl shadow-sm border border-slate-200 backdrop-blur-xl">
-                <button 
-                    @click="tab = 'profil'" 
-                    :class="tab === 'profil' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    Profil UPP
-                </button>
-                <button 
-                    @click="tab = 'maklumat'" 
-                    :class="tab === 'maklumat' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    Maklumat
-                </button>
-                <button 
-                    @click="tab = 'visi-misi'" 
-                    :class="tab === 'visi-misi' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    Visi & Misi
-                </button>
-                <button 
-                    @click="tab = 'sop-formulir'" 
-                    :class="tab === 'sop-formulir' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    SOP & Formulir
-                </button>
-                <button 
-                    @click="tab = 'sarana'" 
-                    :class="tab === 'sarana' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                    Sarana & Prasarana
-                </button>
-                <button 
-                    @click="tab = 'sk-spm'" 
-                    :class="tab === 'sk-spm' ? 'bg-blue-600 text-white shadow-lg shadow-blue-200 ring-1 ring-blue-500' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'"
-                    class="px-8 py-3 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center group"
-                >
-                    <svg class="w-4 h-4 mr-2.5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    SK SPM
-                </button>
-            </nav>
+        <!-- Mobile Menu (Drawer) -->
+        <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-4"
+            class="md:hidden bg-white/95 backdrop-blur-lg border-t border-slate-100 shadow-xl overflow-hidden"
+            style="display: none;">
+            <div class="px-6 py-6 flex flex-col gap-4">
+                <a href="{{ url('/') }}"
+                    class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Beranda</a>
+                <a href="{{ route('sejarah-singkat.index') }}"
+                    class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Profil</a>
+                <a href="{{ route('pengujian.index') }}"
+                    class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Pelayanan</a>
+                <a href="{{ route('informasi-publik.index') }}"
+                    class="text-base font-bold text-slate-600 py-2 border-b border-slate-50">Informasi Publik</a>
+                <a href="#"
+                    class="btn-sipintu mt-4 px-6 py-3 rounded-xl text-center text-base font-bold text-white flex items-center justify-center gap-2">
+                    <span>sipintu</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <section class="max-w-6xl mx-auto px-6 pt-6 md:pt-20 pb-20">
+
+        <!-- Header -->
+        <div class="mb-6 md:mb-10 p-2 md:p-4 rounded-lg">
+            <h1 class="text-4xl md:text-5xl tracking-tight text-primary">
+                Unit Pelayanan Publik
+            </h1>
         </div>
 
-        {{-- Konten Tab --}}
-        <div class="mt-8">
-            {{-- Tab Profil UPP --}}
-            <div x-show="tab === 'profil'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="max-w-5xl mx-auto">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                        {{-- Section: Tupoksi (Left/Large Col) --}}
-                        <div class="lg:col-span-2 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12 relative">
-                            <div class="absolute top-0 right-0 p-8 opacity-5">
-                                <svg class="w-32 h-32" fill="currentColor" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                            </div>
-                            
-                            <div class="flex items-center mb-10 pb-6 border-b border-slate-100 relative z-10">
-                                <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                                    <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                                </div>
-                                <div>
-                                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Tugas & Fungsi</h2>
-                                    <p class="text-slate-500 font-medium">Tugas Pokok dan Fungsi UPP.</p>
-                                </div>
-                            </div>
+        <!-- Navigation Tabs (6 Menus) -->
+        <div class="flex flex-wrap justify-center mb-16 gap-2 sm:gap-3 bg-white rounded-full p-1.5 sm:p-2">
+            @php
+                $tabs = [
+                    ['id' => 'profil', 'label' => 'Profil UPP'],
+                    ['id' => 'maklumat', 'label' => 'Maklumat Pelayanan'],
+                    ['id' => 'visi-misi', 'label' => 'Visi & Misi UPP'],
+                    ['id' => 'sop-formulir', 'label' => 'Daftar SOP & Formulir'],
+                    ['id' => 'sarana', 'label' => 'Sarana & Prasarana'],
+                    ['id' => 'sk-spm', 'label' => 'SK SPM Pelayanan'],
+                ];
+            @endphp
+            @foreach($tabs as $tab)
+                <button @click="activeTab = '{{ $tab['id'] }}'"
+                    :class="activeTab === '{{ $tab['id'] }}' ? 'bg-brand-orange text-white' : 'bg-slate-100 text-slate-700'"
+                    class="px-3 sm:px-3 py-2 sm:py-3 rounded-full text-xs sm:text-sm md:text-[16px] font-semibold whitespace-nowrap transition-all duration-300 grow">
+                    {{ $tab['label'] }}
+                </button>
+            @endforeach
+        </div>
 
-                            <div class="relative prose prose-slate max-w-none prose-headings:text-slate-900 prose-headings:font-extrabold prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600">
-                                @if($profil && $profil->tupoksi)
-                                    {!! $profil->tupoksi !!}
-                                @else
-                                    <p class="text-slate-400 font-medium italic text-center py-8">Data Tupoksi belum tersedia.</p>
-                                @endif
-                            </div>
-                        </div>
+        <!-- Content Area -->
+        <div class="relative rounded-[2.5rem] px-3">
 
-                        <div>
-                            {{-- Section: Foto Petugas --}}
+            <!-- Tab 1: Profil UPP -->
+            <div x-show="activeTab === 'profil'" class="tab-content" :class="{ 'active': activeTab === 'profil' }">
+                <div class="mb-2">
+                    <!-- Waktu Layanan Section -->
+                    <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                        <!-- Kolom Kiri: Gambar -->
+                        <div class="relative group">
                             @if($profil && $profil->foto_petugas_path)
-                                <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-6 mb-8">
-                                    <div class="flex items-center mb-6 pb-4 border-b border-slate-100">
-                                        <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center mr-3 shadow-sm">
-                                            <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                                        </div>
-                                        <h2 class="text-lg font-extrabold text-slate-900 tracking-tight">Petugas Layanan</h2>
-                                    </div>
-                                    <div class="relative overflow-hidden rounded-2xl aspect-[4/3] bg-slate-50 border border-slate-100">
-                                        <img src="{{ asset('storage/' . $profil->foto_petugas_path) }}" class="w-full h-full object-cover" alt="Petugas Layanan UPP">
-                                    </div>
+                                <div class="absolute -inset-4 bg-brand-orange/30 rounded-[2.5rem] transform -rotate-2">
+                                </div>
+                                <img src="{{ asset('storage/' . $profil->foto_petugas_path) }}" alt="Petugas Layanan"
+                                    class="relative rounded-[2rem] shadow-xl w-full h-80 object-cover border-4 border-white cursor-pointer hover:scale-[1.02] transition-transform duration-500"
+                                    @click="lightbox.open = true; lightbox.src = '{{ asset('storage/' . $profil->foto_petugas_path) }}'">
+                            @else
+                                <div
+                                    class="relative bg-slate-100 rounded-[2rem] h-80 flex items-center justify-center border-2 border-dashed border-slate-200">
+                                    <p class="text-slate-400 italic">Foto petugas belum tersedia</p>
                                 </div>
                             @endif
+                        </div>
 
-                            {{-- Section: Jadwal Operasional (Right/Small Col) --}}
-                            <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8">
-                            <div class="flex items-center mb-8 pb-6 border-b border-slate-100">
-                                <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center mr-4 shadow-sm">
-                                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                </div>
-                                <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">Jam Kerja</h2>
-                            </div>
-
-                            <div class="space-y-3">
+                        <!-- Kolom Kanan: Info Waktu -->
+                        <div>
+                            <h3 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Waktu Layanan
+                            </h3>
+                            <div class="space-y-4">
                                 @if($profil && $profil->waktu_pelayanan)
                                     @foreach($profil->waktu_pelayanan as $jadwal)
-                                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 group transition duration-300">
-                                            <div class="text-sm font-bold text-slate-500 mb-1 uppercase tracking-wider">{{ $jadwal['hari'] }}</div>
-                                            <div class="text-slate-900 font-extrabold">{{ $jadwal['waktu'] }}</div>
+                                        <div
+                                            class="bg-white py-4 px-6 rounded-2xl shadow-sm border border-orange-300 border-l-4 border-l-brand-orange">
+                                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                                                {{ $jadwal['hari'] }}</p>
+                                            <p class="text-slate-800 font-semibold">{{ $jadwal['waktu'] }}</p>
                                         </div>
                                     @endforeach
                                 @else
-                                    <div class="text-center py-6">
-                                        <p class="text-slate-400 font-medium italic">Jadwal belum tersedia.</p>
-                                    </div>
+                                    <p class="text-slate-400 italic font-medium">Jadwal belum tersedia</p>
                                 @endif
-                            </div>
-                            
-                            <div class="mt-8 p-5 bg-blue-50 border border-blue-100 rounded-2xl">
-                                <p class="text-xs text-blue-800 font-semibold leading-relaxed">Penyelenggaraan pelayanan publik mengikuti hari kerja efektif.</p>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {{-- Moto Pelayanan Image at the Bottom --}}
-                @if($profil && $profil->moto_pelayanan_path)
-                    <div class="mt-12 bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-4">
-                        <div class="relative overflow-hidden rounded-[2rem]">
-                            <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" class="w-full h-auto" alt="Motto Pelayanan">
+                    <!-- Tupoksi & Image Section -->
+                    <div class="">
+                        <div class="space-y-6">
+                            <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-brand-orange" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+                                    </path>
+                                </svg>
+                                Tugas & Fungsi
+                            </h3>
+                            <div
+                                class="prose prose-slate max-w-none text-slate-600 leading-relaxed space-y-4 text-justify text-lg">
+                                @if($profil && $profil->tupoksi)
+                                    {!! $profil->tupoksi !!}
+                                @else
+                                    <p class="text-slate-400 italic">Data Tugas & Fungsi belum tersedia.</p>
+                                @endif
+                            </div>
+                        </div>
+
+                        @if($profil && $profil->moto_pelayanan_path)
+                            <div class="mt-12">
+                                <img src="{{ asset('storage/' . $profil->moto_pelayanan_path) }}" alt="Moto Pelayanan"
+                                    class="w-full h-auto rounded-[2rem] shadow-lg border border-slate-100 bg-slate-200 cursor-pointer hover:opacity-95 transition-opacity"
+                                    @click="lightbox.open = true; lightbox.src = '{{ asset('storage/' . $profil->moto_pelayanan_path) }}'">
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Maklumat -->
+            <div x-show="activeTab === 'maklumat'" class="tab-content" :class="{ 'active': activeTab === 'maklumat' }">
+                <div class="bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100 flex justify-center">
+                    @if($maklumat && $maklumat->path)
+                        <img src="{{ asset('storage/' . $maklumat->path) }}"
+                            class="object-cover w-full sm:w-[80%] rounded-2xl cursor-pointer hover:scale-[1.01] transition-transform mx-auto shadow-lg"
+                            @click="lightbox.open = true; lightbox.src = '{{ asset('storage/' . $maklumat->path) }}'">
+                    @else
+                        <div class="py-20 text-center">
+                            <p class="text-slate-400 italic font-medium text-lg">Maklumat pelayanan belum tersedia</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Tab 3: Visi & Misi -->
+            <div x-show="activeTab === 'visi-misi'" class="tab-content"
+                :class="{ 'active': activeTab === 'visi-misi' }">
+                <div class="max-w-5xl space-y-10">
+
+                    <!-- Visi Card -->
+                    <div
+                        class="relative overflow-hidden bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-400">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-brand-orange/5 rounded-full -mr-16 -mt-16">
+                        </div>
+                        <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+                            <div class="bg-brand-orange/10 p-5 rounded-3xl">
+                                <svg class="w-10 h-10 text-brand-orange" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="text-center md:text-left">
+                                <h3 class="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-orange mb-3">
+                                    Visi</h3>
+                                <div class="text-2xl md:text-3xl font-bold text-primary leading-tight">
+                                    @if($visiMisi && $visiMisi->visi)
+                                        {!! $visiMisi->visi !!}
+                                    @else
+                                        <p class="text-slate-400 italic">Visi belum tersedia</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-10">
+                        <!-- Misi Card -->
+                        <div
+                            class="relative overflow-hidden bg-white p-8 rounded-[2.5rem] border border-slate-400 shadow-xl">
+                            <div
+                                class="absolute bottom-0 left-0 w-24 h-24 bg-brand-orange/10 rounded-full -ml-12 -mb-12">
+                            </div>
+                            <div class="relative z-10">
+                                <h3 class="text-xl font-extrabold text-primary mb-8 flex items-center gap-3">
+                                    <span
+                                        class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm">M</span>
+                                    Misi Kami
+                                </h3>
+                                <div
+                                    class="prose prose-slate max-w-none prose-ul:space-y-4 prose-li:text-slate-600 prose-li:font-medium">
+                                    @if($visiMisi && $visiMisi->misi)
+                                        {!! $visiMisi->misi !!}
+                                    @else
+                                        <p class="text-slate-400 italic">Misi belum tersedia</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Motto Card -->
+                        <div
+                            class="relative overflow-hidden bg-white p-8 rounded-[2.5rem] border border-slate-400 shadow-xl flex flex-col justify-center items-center text-center">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-brand-orange/10 rounded-full -mr-12 -mt-12">
+                            </div>
+                            <div class="absolute bottom-0 left-0 w-20 h-20 bg-slate-100/50 rounded-full -ml-10 -mb-10">
+                            </div>
+                            <div class="relative z-10">
+                                <div class="mb-6 opacity-20">
+                                    <svg class="w-12 h-12 text-brand-orange" fill="currentColor" viewBox="0 0 24 24">
+                                        <path
+                                            d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C15.4647 8 15.017 8.44772 15.017 9V12C15.017 12.5523 14.5693 13 14.017 13H12.017C11.4647 13 11.017 12.5523 11.017 12V9C11.017 7.34315 12.3602 6 14.017 6H19.017C20.6739 6 22.017 7.34315 22.017 9V15C22.017 16.6569 20.6739 18 19.017 18H17.017L14.017 21ZM5.017 21L5.017 18C5.017 16.8954 5.91243 16 7.017 16H10.017C10.5693 16 11.017 15.5523 11.017 15V9C11.017 8.44772 10.5693 8 10.017 8H7.017C6.46472 8 6.017 8.44772 6.017 9V12C6.017 12.5523 5.56928 13 5.017 13H3.017C2.46472 13 2.017 12.5523 2.017 12V9C2.017 7.34315 3.36015 6 5.017 6H10.017C11.6739 6 13.017 7.34315 13.017 9V15C13.017 16.6569 11.6739 18 10.017 18H8.017L5.017 21Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xs font-extrabold uppercase tracking-[0.2em] text-slate-400 mb-4">Motto
+                                    Kami</h3>
+                                <p class="text-xl font-bold text-slate-800 italic leading-relaxed">
+                                    @if($visiMisi && $visiMisi->moto)
+                                        "{{ $visiMisi->moto }}"
+                                    @else
+                                        "Memberikan pelayanan dengan cepat, tepat dan akurat yang berorientasi pada kepuasan
+                                        pelanggan."
+                                    @endif
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Tab 4: SOP & Formulir -->
+            <div x-show="activeTab === 'sop-formulir'" class="tab-content"
+                :class="{ 'active': activeTab === 'sop-formulir' }">
+                {{-- SOP Cards --}}
+                @if(isset($sopFormulir['sop']) && count($sopFormulir['sop']) > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
+                        @foreach($sopFormulir['sop'] as $sop)
+                            <div
+                                class="flex flex-col group h-full bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all overflow-hidden">
+                                <div class="aspect-[16/10] bg-slate-200 overflow-hidden cursor-pointer"
+                                    @click="lightbox.open = true; lightbox.src = '{{ asset('storage/' . $sop->path) }}'">
+                                    <img src="{{ asset('storage/' . $sop->path) }}" alt="{{ $sop->name }}"
+                                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                </div>
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-4 leading-tight">{{ $sop->name }}</h3>
+                                    <a href="{{ asset('storage/' . $sop->path) }}" target="_blank"
+                                        class="mt-auto inline-flex items-center justify-between w-fit px-6 py-2.5 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-600 hover:bg-white hover:border-brand-orange hover:text-brand-orange transition-all gap-2">
+                                        Selengkapnya
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+
+                {{-- Formulir List --}}
+                @if(isset($sopFormulir['formulir']) && count($sopFormulir['formulir']) > 0)
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
+                            <span
+                                class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm">📝</span>
+                            Formulir Layanan
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            @foreach($sopFormulir['formulir'] as $form)
+                                <a href="{{ asset('storage/' . $form->path) }}" target="_blank"
+                                    class="flex items-center justify-between p-6 bg-slate-50 border border-slate-100 rounded-2xl group hover:bg-white hover:shadow-lg hover:border-blue-200 transition-all">
+                                    <div class="flex items-center gap-4">
+                                        <div
+                                            class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-blue-500">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                        <span class="font-bold text-slate-700">{{ $form->name }}</span>
+                                    </div>
+                                    <svg class="w-5 h-5 text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </a>
+                            @endforeach
                         </div>
                     </div>
                 @endif
             </div>
+
+            <!-- Tab 5: Sarana & Prasarana -->
+            <div x-show="activeTab === 'sarana'" class="tab-content" :class="{ 'active': activeTab === 'sarana' }">
+                @if($saranaPrasarana && $saranaPrasarana->pdf)
+                    <div class="bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100">
+                        <iframe src="{{ asset('storage/' . $saranaPrasarana->pdf) }}"
+                            class="w-full h-[800px] rounded-2xl border-none"></iframe>
+                    </div>
+                @else
+                    <div class="bg-slate-50 p-20 rounded-[2.5rem] text-center border-2 border-dashed border-slate-200">
+                        <p class="text-slate-400 italic text-lg font-medium">Data Sarana & Prasarana belum diunggah.</p>
+                    </div>
+                @endif
+            </div>
+
+            <!-- Tab 6: SK SPM -->
+            <div x-show="activeTab === 'sk-spm'" class="tab-content" :class="{ 'active': activeTab === 'sk-spm' }">
+                @if($skSpm && $skSpm->pdf)
+                    <div class="bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100">
+                        <iframe src="{{ asset('storage/' . $skSpm->pdf) }}"
+                            class="w-full h-[800px] rounded-2xl border-none"></iframe>
+                    </div>
+                @else
+                    <div class="bg-slate-50 p-20 rounded-[2.5rem] text-center border-2 border-dashed border-slate-200">
+                        <p class="text-slate-400 italic text-lg font-medium">Data SK Standar Pelayanan Minimal belum
+                            diunggah.</p>
+                    </div>
+                @endif
+            </div>
+
         </div>
 
-            {{-- Tab Maklumat Pelayanan --}}
-            <div x-show="tab === 'maklumat'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-5xl mx-auto">
-                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
-                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            </div>
-                            <div>
-                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Maklumat Pelayanan</h2>
-                                <p class="text-slate-500 font-medium">Standar pelayanan yang kami berikan kepada publik.</p>
-                            </div>
-                        </div>
-
-                        @if($maklumat && $maklumat->path)
-                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-100 group p-2">
-                                <div class="relative overflow-hidden rounded-[1.25rem]">
-                                    <img src="{{ asset('storage/' . $maklumat->path) }}" class="w-full h-auto group-hover:scale-[1.01] transition duration-700">
-                                </div>
-                            </div>
-                        @else
-                            <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
-                                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                </div>
-                                <p class="text-slate-400 font-medium italic text-lg">Maklumat pelayanan belum diunggah.</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            {{-- Tab Visi & Misi --}}
-            <div x-show="tab === 'visi-misi'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-5xl mx-auto space-y-12">
-                    
-                    {{-- Moto Highlight --}}
-                    @if($visiMisi && $visiMisi->moto)
-                        <div class="bg-blue-600 rounded-[2.5rem] shadow-2xl shadow-blue-200/50 p-12 text-center relative overflow-hidden">
-                            <div class="absolute top-0 right-0 p-12 opacity-10">
-                                <svg class="w-64 h-64 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
-                            <div class="relative z-10">
-                                <span class="text-blue-100 text-xs font-bold uppercase tracking-[0.3em] mb-4 block">Moto Pelayanan</span>
-                                <h2 class="text-3xl md:text-5xl font-black text-white italic tracking-tight leading-tight">"{{ $visiMisi->moto }}"</h2>
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                        {{-- Visi --}}
-                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 p-12 border border-slate-100 relative group hover:-translate-y-2 transition duration-500">
-                            <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500 shadow-sm">
-                                <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                            </div>
-                            <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Visi</h3>
-                            <div class="prose prose-slate prose-lg max-w-none text-slate-600 leading-relaxed">
-                                @if($visiMisi && $visiMisi->visi)
-                                    {!! $visiMisi->visi !!}
-                                @else
-                                    <p class="text-slate-400 font-medium italic">Visi belum ditetapkan.</p>
-                                @endif
-                            </div>
-                        </div>
-
-                        {{-- Misi --}}
-                        <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 p-12 border border-slate-100 relative group hover:-translate-y-2 transition duration-500">
-                            <div class="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition duration-500 shadow-sm">
-                                <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                            </div>
-                            <h3 class="text-3xl font-black text-slate-900 mb-6 tracking-tight">Misi</h3>
-                            <div class="prose prose-slate prose-lg max-w-none text-slate-600 leading-relaxed">
-                                @if($visiMisi && $visiMisi->misi)
-                                    {!! $visiMisi->misi !!}
-                                @else
-                                    <p class="text-slate-400 font-medium italic">Misi belum ditetapkan.</p>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- Tab SOP & Formulir --}}
-            <div x-show="tab === 'sop-formulir'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-6xl mx-auto space-y-16">
-                    
-                    {{-- Section SOP (Images) --}}
-                    @if(isset($sopFormulir['sop']) && count($sopFormulir['sop']) > 0)
-                        <div>
-                            <div class="flex items-center mb-10">
-                                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
-                                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                </div>
-                                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Standard Operating Procedures (SOP)</h2>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                @foreach($sopFormulir['sop'] as $sop)
-                                    <div class="bg-white rounded-[2rem] shadow-xl shadow-slate-200/50 p-4 border border-slate-100 group">
-                                        <div class="relative overflow-hidden rounded-[1.5rem] mb-6 aspect-[4/3] bg-slate-50">
-                                            <img src="{{ asset('storage/' . $sop->path) }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
-                                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition duration-500 flex items-end p-6">
-                                                <a href="{{ asset('storage/' . $sop->path) }}" target="_blank" class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider border border-white/30 hover:bg-white hover:text-slate-900 transition duration-300">Lihat Detail</a>
-                                            </div>
-                                        </div>
-                                        <h3 class="text-lg font-extrabold text-slate-900 px-2 line-clamp-2 leading-tight">{{ $sop->name }}</h3>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- Section Formulir (PDFs) --}}
-                    @if(isset($sopFormulir['formulir']) && count($sopFormulir['formulir']) > 0)
-                        <div>
-                            <div class="flex items-center mb-10">
-                                <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mr-4 shadow-sm">
-                                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                </div>
-                                <h2 class="text-3xl font-black text-slate-900 tracking-tight">Formulir Layanan</h2>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                @foreach($sopFormulir['formulir'] as $form)
-                                    <div class="bg-white rounded-3xl shadow-lg shadow-slate-200/40 p-6 border border-slate-100 flex items-center group hover:border-emerald-200 transition duration-300">
-                                        <div class="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center mr-6 group-hover:bg-emerald-50 transition duration-300 shadow-inner">
-                                            <svg class="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z"></path><path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"></path></svg>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="font-bold text-slate-900 mb-1 leading-snug">{{ $form->name }}</h3>
-                                            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Format: PDF</p>
-                                        </div>
-                                        <a href="{{ asset('storage/' . $form->path) }}" target="_blank" class="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-400 hover:bg-emerald-600 hover:text-white transition duration-300 shadow-sm border border-slate-100 group-hover:border-transparent">
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"></path></svg>
-                                        </a>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endif
-
-                    @if(!isset($sopFormulir['sop']) && !isset($sopFormulir['formulir']))
-                        <div class="py-24 text-center">
-                            <div class="w-24 h-24 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
-                                <svg class="w-12 h-12 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
-                            </div>
-                            <h3 class="text-2xl font-black text-slate-900 mb-2">Belum Ada Dokumen</h3>
-                            <p class="text-slate-500 font-medium">SOP dan Formulir akan ditampilkan di sini setelah diunggah oleh admin.</p>
-                        </div>
-                    @endif
-
-                </div>
-            </div>
-
-            {{-- Tab Sarana & Prasarana --}}
-            <div x-show="tab === 'sarana'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-6xl mx-auto">
-                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
-                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                            <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                            </div>
-                            <div>
-                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Sarana & Prasarana</h2>
-                                <p class="text-slate-500 font-medium">Fasilitas dan infrastruktur pendukung pelayanan.</p>
-                            </div>
-                        </div>
-
-                        @if($saranaPrasarana && $saranaPrasarana->pdf)
-                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-200 group">
-                                <iframe src="{{ asset('storage/' . $saranaPrasarana->pdf) }}" class="w-full h-[800px] border-none"></iframe>
-                            </div>
-                        @else
-                            <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
-                                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                </div>
-                                <p class="text-slate-400 font-medium italic text-lg">Data Sarana & Prasarana belum diunggah.</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            {{-- Tab SK SPM --}}
-            <div x-show="tab === 'sk-spm'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-8" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="max-w-6xl mx-auto">
-                    <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12">
-                        <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                            <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                                <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            </div>
-                            <div>
-                                <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">SK Standar Pelayanan Minimal (SPM)</h2>
-                                <p class="text-slate-500 font-medium">Keputusan penetapan standar pelayanan minimal.</p>
-                            </div>
-                        </div>
-
-                        @if($skSpm && $skSpm->pdf)
-                            <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-200 group">
-                                <iframe src="{{ asset('storage/' . $skSpm->pdf) }}" class="w-full h-[800px] border-none"></iframe>
-                            </div>
-                        @else
-                            <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
-                                <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                </div>
-                                <p class="text-slate-400 font-medium italic text-lg">Data SK SPM belum diunggah.</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        {{-- Footer/Back Link --}}
-        <div class="mt-20 text-center">
-            <a href="{{ url('/') }}" class="inline-flex items-center px-10 py-4 bg-white text-slate-800 font-bold rounded-2xl shadow-lg border border-slate-100 hover:bg-slate-50 hover:-translate-y-1 transition duration-300 group"> 
-                <svg class="w-5 h-5 mr-3 transition group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Kembali ke Beranda 
+        <!-- Footer Action -->
+        <div class="mt-24 text-center">
+            <a href="{{ url('/') }}"
+                class="inline-flex items-center gap-3 px-8 py-4 bg-white border border-slate-200 text-slate-600 font-bold rounded-2xl shadow-sm hover:shadow-xl hover:text-brand-orange hover:border-brand-orange/20 transition-all duration-300 group">
+                <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span>Kembali ke Beranda</span>
             </a>
         </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div x-show="lightbox.open" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        class="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-6 cursor-zoom-out"
+        @click="lightbox.open = false" @keydown.escape.window="lightbox.open = false" style="display: none;">
+
+        <button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
+            @click="lightbox.open = false">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <img :src="lightbox.src" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl" @click.stop>
     </div>
 
 </body>
+
 </html>
