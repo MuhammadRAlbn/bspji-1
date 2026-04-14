@@ -284,7 +284,7 @@
 
             <!-- Tab 2: Maklumat -->
             <div x-show="activeTab === 'maklumat'" class="tab-content" :class="{ 'active': activeTab === 'maklumat' }">
-                <div class="bg-white p-4 rounded-[2.5rem] shadow-xl border border-slate-100 flex justify-center">
+                <div class="flex justify-center">
                     @if($maklumat && $maklumat->path)
                         <img src="{{ asset('storage/' . $maklumat->path) }}"
                             class="object-cover w-full sm:w-[80%] rounded-2xl cursor-pointer hover:scale-[1.01] transition-transform mx-auto shadow-lg"
@@ -345,8 +345,7 @@
                                         class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm">M</span>
                                     Misi Kami
                                 </h3>
-                                <div
-                                    class="prose prose-slate max-w-none prose-ul:space-y-4 prose-li:text-slate-600 prose-li:font-medium">
+                                <div class="misi-list text-slate-600 font-medium">
                                     @if($visiMisi && $visiMisi->misi)
                                         {!! $visiMisi->misi !!}
                                     @else
