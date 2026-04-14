@@ -390,21 +390,25 @@
             <!-- Tab 4: SOP & Formulir -->
             <div x-show="activeTab === 'sop-formulir'" class="tab-content"
                 :class="{ 'active': activeTab === 'sop-formulir' }">
-                {{-- SOP Cards --}}
+                
+                {{-- SOP Section --}}
                 @if(isset($sopFormulir['sop']) && count($sopFormulir['sop']) > 0)
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16">
                         @foreach($sopFormulir['sop'] as $sop)
-                            <div
-                                class="flex flex-col group h-full bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl transition-all overflow-hidden">
-                                <div class="aspect-[16/10] bg-slate-200 overflow-hidden cursor-pointer"
-                                    @click="lightbox.open = true; lightbox.src = '{{ asset('storage/' . $sop->path) }}'">
+                            <div class="flex flex-col group h-full">
+                                <div
+                                    class="aspect-[16/10] bg-slate-200 rounded-2xl overflow-hidden mb-6 border border-black/10">
                                     <img src="{{ asset('storage/' . $sop->path) }}" alt="{{ $sop->name }}"
-                                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                        class="w-full h-full object-cover cursor-pointer group-hover:scale-110 transition-transform duration-500"
+                                        @click="lightbox.open = true; lightbox.src = '{{ asset('storage/' . $sop->path) }}'">
                                 </div>
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <h3 class="text-2xl font-bold text-slate-800 mb-4 leading-tight">{{ $sop->name }}</h3>
+                                <div class="flex flex-col flex-grow p-2">
+                                    <h3 class="text-2xl font-bold text-slate-800 mb-3 leading-tight">{{ $sop->name }}</h3>
+                                    <p class="text-slate-600 mb-6 leading-relaxed">
+                                        Unduh dokumen prosedural standar untuk memastikan kualitas serta efisiensi pelayanan kami guna kepuasan seluruh pelanggan industri.
+                                    </p>
                                     <a href="{{ asset('storage/' . $sop->path) }}" target="_blank"
-                                        class="mt-auto inline-flex items-center justify-between w-fit px-6 py-2.5 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-600 hover:bg-white hover:border-brand-orange hover:text-brand-orange transition-all gap-2">
+                                        class="mt-auto inline-flex items-center justify-between w-fit px-6 py-2.5 bg-white border border-black/35 rounded-full text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors gap-2">
                                         Selengkapnya
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -417,37 +421,35 @@
                     </div>
                 @endif
 
-                {{-- Formulir List --}}
+                {{-- Formulir Section --}}
                 @if(isset($sopFormulir['formulir']) && count($sopFormulir['formulir']) > 0)
-                    <div class="space-y-4">
-                        <h3 class="text-2xl font-bold text-slate-800 mb-8 flex items-center gap-3">
-                            <span
-                                class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm">📝</span>
-                            Formulir Layanan
-                        </h3>
-                        <div class="grid md:grid-cols-2 gap-4">
+                    <div class="mt-8">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                             @foreach($sopFormulir['formulir'] as $form)
-                                <a href="{{ asset('storage/' . $form->path) }}" target="_blank"
-                                    class="flex items-center justify-between p-6 bg-slate-50 border border-slate-100 rounded-2xl group hover:bg-white hover:shadow-lg hover:border-blue-200 transition-all">
-                                    <div class="flex items-center gap-4">
-                                        <div
-                                            class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-blue-500">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <span class="font-bold text-slate-700">{{ $form->name }}</span>
+                                <div class="group flex flex-col items-center text-center p-6 bg-white border border-slate-200 rounded-[2rem] hover:border-blue-300 hover:shadow-xl hover:shadow-blue-50/50 transition-all gap-4">
+                                    <div class="w-16 h-16 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                        </svg>
                                     </div>
-                                    <svg class="w-5 h-5 text-slate-300 group-hover:text-blue-500 group-hover:translate-x-1 transition-all"
-                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </a>
+                                    
+                                    <div class="min-w-0 flex-grow">
+                                        <h4 class="text-sm font-bold text-slate-800 leading-tight mb-1">{{ $form->name }}</h4>
+                                    </div>
+                                    
+                                    <a href="{{ asset('storage/' . $form->path) }}" target="_blank"
+                                        class="w-full inline-flex items-center justify-center px-4 py-2 bg-slate-900 text-white text-xs font-bold rounded-xl hover:bg-blue-600 transition-colors shadow-lg shadow-slate-200">
+                                        Lihat
+                                    </a>
+                                </div>
                             @endforeach
                         </div>
+                    </div>
+                @endif
+
+                @if((!isset($sopFormulir['sop']) || count($sopFormulir['sop']) == 0) && (!isset($sopFormulir['formulir']) || count($sopFormulir['formulir']) == 0))
+                    <div class="py-20 text-center">
+                        <p class="text-slate-400 italic font-medium text-lg">Data SOP & Formulir belum tersedia</p>
                     </div>
                 @endif
             </div>
