@@ -105,7 +105,7 @@
     @endpush
 
     <!-- Main Container -->
-    <section class="max-w-6xl mx-auto px-6 pt-6 md:pt-20 pb-20">
+    <section class="max-w-6xl mx-auto px-6 pt-6 md:pt-14 pb-20">
 
         <!-- Header -->
         <div class="mb-6 md:mb-10 p-2 md:p-4 rounded-lg">
