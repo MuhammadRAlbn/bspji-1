@@ -72,7 +72,8 @@
             @if($structureImage)
                 <img src="{{ $structureImage }}" alt="Struktur PPID" class="w-[70%] h-auto rounded-2xl shadow-sm">
             @else
-                <div class="w-[70%] aspect-[4/3] rounded-2xl bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center">
+                <div
+                    class="w-[70%] aspect-4/3 rounded-2xl bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center">
                     <p class="text-slate-500 italic">Struktur PPID belum diunggah.</p>
                 </div>
             @endif
@@ -122,15 +123,18 @@
                 </li>
                 <li class="flex items-start gap-4">
                     <span class="text-orange-500 font-bold">&bull;</span>
-                    <span>Penetapan Informasi yang Dikecualikan yang telah habis jangka waktu pengecualiannya sebagai Informasi Publik yang dapat diakses; dan</span>
+                    <span>Penetapan Informasi yang Dikecualikan yang telah habis jangka waktu pengecualiannya sebagai
+                        Informasi Publik yang dapat diakses; dan</span>
                 </li>
                 <li class="flex items-start gap-4">
                     <span class="text-orange-500 font-bold">&bull;</span>
-                    <span>Penetapan pertimbangan tertulis atas setiap kebijakan yang diambil untuk memenuhi hak setiap orang atas Informasi Publik.</span>
+                    <span>Penetapan pertimbangan tertulis atas setiap kebijakan yang diambil untuk memenuhi hak setiap
+                        orang atas Informasi Publik.</span>
                 </li>
                 <li class="flex items-start gap-4">
                     <span class="text-orange-500 font-bold">&bull;</span>
-                    <span>PPID dapat menjalankan tugas dan tanggung jawabnya sesuai ketentuan peraturan perundang-undangan mengenai kepegawaian.</span>
+                    <span>PPID dapat menjalankan tugas dan tanggung jawabnya sesuai ketentuan peraturan
+                        perundang-undangan mengenai kepegawaian.</span>
                 </li>
             </ul>
             <p>
@@ -142,7 +146,8 @@
                 <li class="flex items-start gap-4">
                     <span class="text-orange-500 font-bold">&bull;</span>
                     <div>
-                        <span>Mengkoordinasikan pengumpulan seluruh Informasi Publik secara fisik dari setiap unit/satuan kerja meliputi:</span>
+                        <span>Mengkoordinasikan pengumpulan seluruh Informasi Publik secara fisik dari setiap
+                            unit/satuan kerja meliputi:</span>
                         <ul class="list-none mt-3 space-y-2 pl-6 text-slate-500 italic">
                             <li>- Informasi yang wajib disediakan dan diumumkan secara berkala;</li>
                             <li>- Informasi yang wajib tersedia setiap saat;</li>
@@ -152,11 +157,15 @@
                 </li>
                 <li class="flex items-start gap-4">
                     <span class="text-orange-500 font-bold">&bull;</span>
-                    <span>Mengkoordinasikan pendataan Informasi Publik yang dikuasai oleh setiap unit/satuan kerja di Badan Publik dalam rangka pembuatan dan pemutakhiran Daftar Informasi Publik setelah dimutakhirkan oleh pimpinan masing-masing unit/satuan kerja sekurang-kurangnya 1 (satu) kali dalam sebulan;</span>
+                    <span>Mengkoordinasikan pendataan Informasi Publik yang dikuasai oleh setiap unit/satuan kerja di
+                        Badan Publik dalam rangka pembuatan dan pemutakhiran Daftar Informasi Publik setelah
+                        dimutakhirkan oleh pimpinan masing-masing unit/satuan kerja sekurang-kurangnya 1 (satu) kali
+                        dalam sebulan;</span>
                 </li>
                 <li class="flex items-start gap-4">
                     <span class="text-orange-500 font-bold">&bull;</span>
-                    <span>Mengkoordinasikan penyediaan dan pelayanan Informasi Publik melalui pengumuman (media yang menjangkau seluruh pemangku kepentingan) dan/atau permohonan.</span>
+                    <span>Mengkoordinasikan penyediaan dan pelayanan Informasi Publik melalui pengumuman (media yang
+                        menjangkau seluruh pemangku kepentingan) dan/atau permohonan.</span>
                 </li>
             </ul>
         </div>
@@ -167,7 +176,8 @@
             <h2 class="text-2xl font-bold text-slate-800 mb-4 md:mb-6">Dokumen PPID</h2>
 
             @if($ppidPdf)
-                <iframe src="{{ $ppidPdf }}" class="w-full h-[70vh] md:h-[900px] border-0 rounded-2xl" title="Dokumen PPID"></iframe>
+                <iframe src="{{ $ppidPdf }}" class="w-full h-[70vh] md:h-[900px] border-0 rounded-2xl"
+                    title="Dokumen PPID"></iframe>
             @else
                 <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-16 text-center">
                     <p class="text-slate-500 italic">Dokumen PDF PPID belum diunggah dari admin panel.</p>
