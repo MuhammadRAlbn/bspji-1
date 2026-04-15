@@ -1,96 +1,178 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPID - BSPJI Pekanbaru</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Outfit', sans-serif; }
-    </style>
-</head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+<x-layouts.app title="PPID - BSPJI Banda Aceh" x-data="{ mobileMenuOpen: false }">
+    @push('styles')
+        <style>
+            .nav-glass {
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            }
 
-    <div class="max-w-6xl mx-auto px-6 py-16">
-        <!-- Hero Section -->
-        <div class="text-center mb-16 relative">
-            <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-50 -z-10"></div>
-            <span class="px-4 py-1.5 bg-blue-100/50 text-blue-700 text-xs font-bold rounded-full uppercase tracking-widest mb-4 inline-block backdrop-blur-sm border border-blue-200">Informasi Publik</span>
-            <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight leading-tight">Pejabat Pengelola <br> Informasi & Dokumentasi <span class="text-blue-600">(PPID)</span></h1>
-            <p class="text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">Transparansi informasi sebagai perwujudan tata kelola pemerintahan yang baik dan akuntabel di lingkungan BSPJI Pekanbaru.</p>
-        </div>
+            .btn-sipintu {
+                background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+                box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+                transition: all 0.3s ease;
+            }
 
-        <div class="space-y-16">
-            {{-- Section: Struktur Organisasi PPID --}}
-            <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12 transition duration-51 hover:shadow-blue-500/5">
-                <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                    <div class="w-14 h-14 bg-indigo-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                        <svg class="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Struktur Organisasi PPID</h2>
-                        <p class="text-slate-500 font-medium">Bagan susunan pengelola informasi dan dokumentasi.</p>
-                    </div>
+            .btn-sipintu:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+            }
+
+            .nav-link {
+                position: relative;
+                transition: color 0.3s ease;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -4px;
+                left: 0;
+                background-color: #f97316;
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            .nav-link:hover {
+                color: #f97316;
+            }
+        </style>
+    @endpush
+
+    @php
+        $heroImage = asset('images/ppid/gbrppid.webp');
+        $structureImage = $ppid && $ppid->structure_image ? asset('storage/' . $ppid->structure_image) : null;
+        $ppidPdf = $ppid && $ppid->pdf_file ? asset('storage/' . $ppid->pdf_file) : null;
+    @endphp
+
+    <section class="bg-slate-100 max-w-6xl mx-auto rounded-3xl pt-4 mt-6">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-12 gap-8 items-center">
+                <div class="md:col-span-7 pl-6">
+                    <h1 class="text-4xl md:text-5xl tracking-tight text-slate-800 leading-relaxed md:leading-snug">
+                        Pejabat Pengelola Informasi Dan Dokumentasi (PPID)
+                    </h1>
                 </div>
 
-                @if($ppid && $ppid->structure_image)
-                    <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-100 group p-2">
-                        <div class="relative overflow-hidden rounded-[1.25rem]">
-                            <img src="{{ asset('storage/' . $ppid->structure_image) }}" class="w-full h-auto group-hover:scale-[1.01] transition duration-700" alt="Struktur PPID">
-                        </div>
-                    </div>
-                @else
-                    <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
-                        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                            <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        </div>
-                        <p class="text-slate-400 font-medium italic text-lg">Gambar struktur belum diunggah.</p>
-                    </div>
-                @endif
-            </div>
-
-            {{-- Section: Dokumen PPID --}}
-            <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100 p-8 md:p-12 transition duration-51 hover:shadow-blue-500/5">
-                <div class="flex items-center mb-10 pb-6 border-b border-slate-100">
-                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mr-5 shadow-sm">
-                        <svg class="w-7 h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Dokumen Informasi Publik</h2>
-                        <p class="text-slate-500 font-medium">Laporan dan dokumen pendukung keterbukaan informasi.</p>
-                    </div>
+                <div class="md:col-span-5 flex justify-center">
+                    <img src="{{ $heroImage }}" alt="Ilustrasi PPID" class="w-full max-w-md">
                 </div>
-
-                @if($ppid && $ppid->pdf_file)
-                    <div class="bg-slate-50 rounded-[1.5rem] overflow-hidden border border-slate-200 group">
-                        <iframe src="{{ asset('storage/' . $ppid->pdf_file) }}" class="w-full h-[800px] border-none"></iframe>
-                    </div>
-                    <div class="mt-8 flex justify-end">
-                         <a href="{{ asset('storage/' . $ppid->pdf_file) }}" target="_blank" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 transition duration-300">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                            Download PDF
-                        </a>
-                    </div>
-                @else
-                    <div class="py-24 text-center border-2 border-dashed border-slate-100 rounded-[2.5rem]">
-                        <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                            <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <p class="text-slate-400 font-medium italic text-lg">Dokumen PDF belum diunggah.</p>
-                    </div>
-                @endif
             </div>
         </div>
+    </section>
 
-        <!-- Footer/Back Link -->
-        <div class="mt-20 text-center">
-            <a href="{{ url('/') }}" class="inline-flex items-center px-10 py-4 bg-white text-slate-800 font-bold rounded-2xl shadow-lg border border-slate-100 hover:bg-slate-50 hover:-translate-y-1 transition duration-300 group"> 
-                <svg class="w-5 h-5 mr-3 transition group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Kembali ke Beranda 
-            </a>
+    <section class="max-w-6xl mx-auto px-6 py-8">
+        <div class="flex justify-center">
+            @if($structureImage)
+                <img src="{{ $structureImage }}" alt="Struktur PPID" class="w-[70%] h-auto rounded-2xl shadow-sm">
+            @else
+                <div class="w-[70%] aspect-[4/3] rounded-2xl bg-slate-100 border border-dashed border-slate-300 flex items-center justify-center">
+                    <p class="text-slate-500 italic">Struktur PPID belum diunggah.</p>
+                </div>
+            @endif
         </div>
-    </div>
+    </section>
 
-</body>
-</html>
+    <section class="max-w-6xl mx-auto px-12 py-12">
+        <div class="text-slate-600 text-lg leading-relaxed space-y-8 text-justify">
+            <p>
+                <strong>Dasar Hukum</strong> <br>
+                UUD 1945 Pasal 28 F menyebutkan bahwa setiap orang berhak untuk berkomunikasi dan memperoleh informasi
+                untuk mengembangkan pribadi dan lingkungan sosialnya, serta berhak untuk mencari, memperoleh, memiliki,
+                menyimpan, mengolah dan menyampaikan informasi dengan menggunakan segala jenis saluran yang tersedia.
+            </p>
+            <p>
+                Undang-Undang Nomor 14 Tahun 2008 pasal 13 tentang Keterbukaan Informasi Publik, menyebutkan bahwa
+                untuk mewujudkan pelayanan cepat, tepat, dan sederhana setiap Badan Publik wajib menunjuk Pejabat
+                Pengelola Informasi dan Dokumentasi (PPID), membuat dan mengembangkan sistem penyediaan pelayanan
+                informasi secara cepat, mudah, dan wajar sesuai petunjuk teknis standar layanan informasi publik yang
+                berlaku secara nasional.
+            </p>
+            <p>
+                <strong>Tugas dan Tanggung Jawab</strong> <br>
+                Tugas dan tanggung jawab PPID berdasarkan Peraturan Pemerintah Nomor 61 Tahun 2010 tentang Pelaksanaan
+                Undang Undang Nomor 14 tahun 2008 tentang Keterbukaan Informasi Publik, pasal 14 adalah :
+            </p>
+            <ul class="list-none space-y-3 pl-6">
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Penyediaan, penyimpanan, pendokumentasian, dan pengamanan informasi;</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Pelayanan Informasi Publik sesuai dengan aturan yang berlaku;</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Pelayanan Informasi Publik yang cepat, tepat, dan sederhana;</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Penetapan prosedur operasional dalam penyebarluasan Informasi Publik;</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Pengujian konsekuensi;</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Penetapan Informasi yang Dikecualikan yang telah habis jangka waktu pengecualiannya sebagai Informasi Publik yang dapat diakses; dan</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Penetapan pertimbangan tertulis atas setiap kebijakan yang diambil untuk memenuhi hak setiap orang atas Informasi Publik.</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>PPID dapat menjalankan tugas dan tanggung jawabnya sesuai ketentuan peraturan perundang-undangan mengenai kepegawaian.</span>
+                </li>
+            </ul>
+            <p>
+                Berdasarkan Peraturan Komisi Informasi No. 1 Tahun 2010 tentang Standar Layanan Informasi Publik, PPID
+                bertanggung jawab mengkoordinasikan penyimpanan dan pendokumentasian seluruh Informasi Publik yang
+                berada di Badan Publik antara lain:
+            </p>
+            <ul class="list-none space-y-5 pl-6">
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <div>
+                        <span>Mengkoordinasikan pengumpulan seluruh Informasi Publik secara fisik dari setiap unit/satuan kerja meliputi:</span>
+                        <ul class="list-none mt-3 space-y-2 pl-6 text-slate-500 italic">
+                            <li>- Informasi yang wajib disediakan dan diumumkan secara berkala;</li>
+                            <li>- Informasi yang wajib tersedia setiap saat;</li>
+                            <li>- Informasi terbuka lainnya yang diminta Pemohon Informasi Publik.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Mengkoordinasikan pendataan Informasi Publik yang dikuasai oleh setiap unit/satuan kerja di Badan Publik dalam rangka pembuatan dan pemutakhiran Daftar Informasi Publik setelah dimutakhirkan oleh pimpinan masing-masing unit/satuan kerja sekurang-kurangnya 1 (satu) kali dalam sebulan;</span>
+                </li>
+                <li class="flex items-start gap-4">
+                    <span class="text-orange-500 font-bold">&bull;</span>
+                    <span>Mengkoordinasikan penyediaan dan pelayanan Informasi Publik melalui pengumuman (media yang menjangkau seluruh pemangku kepentingan) dan/atau permohonan.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="max-w-6xl mx-auto px-6 pb-16">
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-sm p-4 md:p-6">
+            <h2 class="text-2xl font-bold text-slate-800 mb-4 md:mb-6">Dokumen PPID</h2>
+
+            @if($ppidPdf)
+                <iframe src="{{ $ppidPdf }}" class="w-full h-[70vh] md:h-[900px] border-0 rounded-2xl" title="Dokumen PPID"></iframe>
+            @else
+                <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 py-16 text-center">
+                    <p class="text-slate-500 italic">Dokumen PDF PPID belum diunggah dari admin panel.</p>
+                </div>
+            @endif
+        </div>
+    </section>
+</x-layouts.app>
