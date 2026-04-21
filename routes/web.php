@@ -17,10 +17,22 @@ use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\TugasFungsiController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\VisiMisiController;
+use App\Models\SectionProfil;
+use App\Models\SectionSipintu;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $sectionProfils = SectionProfil::query()
+        ->select(['foto'])
+        ->latest('id')
+        ->limit(3)
+        ->get();
+
+    $sectionSipintu = SectionSipintu::query()
+        ->select(['gambar_mobile', 'gambar_desktop'])
+        ->first();
+
+    return view('welcome', compact('sectionProfils', 'sectionSipintu'));
 });
 
 Route::get('/sejarah-singkat', [SejarahSingkatController::class, 'index'])->name('sejarah-singkat.index');
