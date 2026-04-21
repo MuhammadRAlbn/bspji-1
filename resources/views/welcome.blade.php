@@ -11,8 +11,9 @@
         'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=900',
     ];
 
-    $profileImages = collect(range(0, 2))->map(function (int $index) use ($sectionProfils, $profileFallbacks) {
-        $item = $sectionProfils->get($index);
+    $profils = $sectionProfils ?? collect();
+    $profileImages = collect(range(0, 2))->map(function (int $index) use ($profils, $profileFallbacks) {
+        $item = $profils->get($index);
         return $item?->foto ? Storage::url($item->foto) : $profileFallbacks[$index];
     });
 
@@ -85,6 +86,7 @@
     <title>BSPJI Banda Aceh - Mendorong Inovasi</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
@@ -102,6 +104,20 @@
                 linear-gradient(to right, rgba(148, 163, 184, 0.2) 1px, transparent 1px),
                 linear-gradient(to bottom, rgba(148, 163, 184, 0.2) 1px, transparent 1px);
             background-size: 28px 28px;
+        }
+
+        .section-title-identic {
+            font-family: 'Inter', sans-serif;
+            font-size: 32px;
+            line-height: 1.1;
+            font-weight: 300;
+            letter-spacing: -0.025em;
+        }
+
+        @media (min-width: 768px) {
+            .section-title-identic {
+                font-size: 48px;
+            }
         }
 
         .logo-marquee {
@@ -301,11 +317,11 @@
 
     <main>
         <div class="relative flex h-screen w-full flex-col">
-            <header class="relative h-full w-full flex-grow overflow-hidden bg-black group">
+            <header class="relative h-full w-full grow overflow-hidden bg-black group">
                 <video class="absolute inset-0 h-full w-full object-cover opacity-80" autoplay muted loop playsinline>
                     <source src="{{ asset('video/videocrop.webm') }}" type="video/webm">
                 </video>
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/10"></div>
+                <div class="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/10"></div>
 
                 <div class="relative z-20 mx-auto flex h-full w-full max-w-[1430px] flex-col justify-end px-6 pb-24 lg:px-0">
                     <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
@@ -403,7 +419,7 @@
                 <div class="relative flex h-full flex-col items-center lg:flex-row">
                     <div class="z-20 w-full py-12 lg:w-5/12 lg:py-0" data-aos="fade-right">
                         <h2 class="mb-4 text-3xl font-medium leading-tight tracking-tight text-white/95 sm:text-4xl lg:text-5xl">
-                            <span class="bg-clip-text text-white text-transparent">SIPINTU</span>
+                            <span class="text-white">SIPINTU</span>
                         </h2>
 
                         <p class="mb-8 max-w-md text-base font-light text-white/80 sm:text-lg">
@@ -422,7 +438,7 @@
                             </a>
                         </div>
 
-                        <div class="mt-5 max-w-md rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md">
+                        <div class="mt-8 max-w-md rounded-2xl backdrop-blur-md">
                             <p class="mb-3 text-xs uppercase tracking-[0.2em] text-white/65">Cek Order</p>
                             <form class="flex flex-col gap-2.5 sm:flex-row">
                                 <input type="text" name="nomor-berita-acara" placeholder="Masukkan nomor berita acara"
@@ -440,7 +456,7 @@
                         data-aos="fade-up" data-aos-delay="200">
                         <div class="group relative z-10 w-[400px] translate-y-8 sm:w-[500px] lg:w-[550px] lg:-translate-x-12 lg:translate-y-0">
                             <div
-                                class="relative aspect-[16/10] overflow-hidden rounded-t-2xl border-[6px] border-gray-700 bg-gray-800 shadow-2xl">
+                                class="relative aspect-16/10 overflow-hidden rounded-t-2xl border-[6px] border-gray-700 bg-gray-800 shadow-2xl">
                                 <div class="h-full w-full overflow-hidden bg-white">
                                     <img src="{{ $sipintuDesktopImage }}" alt="Preview aplikasi SIPINTU pada layar laptop"
                                         class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]">
@@ -475,7 +491,7 @@
                             <span class="text-[10px] text-orange-600">■</span>
                             <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Solusi Industri</span>
                         </div>
-                        <h2 class="text-4xl font-ultra-light leading-tight text-gray-900 md:text-5xl">
+                        <h2 class="section-title-identic text-gray-900">
                             Layanan Jasa Industri Kami
                         </h2>
                     </div>
@@ -502,12 +518,12 @@
                                             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     @else
                                         <div
-                                            class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-200 via-slate-100 to-slate-200 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                                            class="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-200 via-slate-100 to-slate-200 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
                                             {{ Str::limit($layanan->nama_layanan, 18, '') }}
                                         </div>
                                     @endif
                                 </div>
-                                <div class="flex flex-grow flex-col px-1">
+                                <div class="flex grow flex-col px-1">
                                     <div class="mb-3 flex items-center gap-3">
                                         <div class="text-orange-600">
                                             <i data-lucide="{{ $serviceIcon }}" class="h-6 w-6 text-orange-600"></i>
@@ -516,7 +532,7 @@
                                             {{ $layanan->nama_layanan }}
                                         </h3>
                                     </div>
-                                    <p class="mb-6 ml-1 flex-grow text-sm font-light leading-relaxed text-gray-500">
+                                    <p class="mb-6 ml-1 grow text-sm font-light leading-relaxed text-gray-500">
                                         {{ $serviceSummary ?: 'Detail layanan akan segera diperbarui.' }}
                                     </p>
                                     <div class="mt-auto">
@@ -534,7 +550,7 @@
             </div>
         </section>
 
-        <section id="logo-pelanggan" class="overflow-hidden rounded-bl-3xl rounded-br-3xl border-b bg-white py-16 md:py-24">
+        <section id="logo-pelanggan" class="overflow-hidden rounded-bl-3xl rounded-br-3xl border-b border-gray-200 bg-white py-16 md:py-24">
             <div class="mx-auto max-w-7xl px-6 lg:px-0">
                 <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
                     <div class="order-2 lg:order-1" data-aos="fade-right">
@@ -600,7 +616,7 @@
                             <div class="relative overflow-hidden rounded-[40px] border-4 border-slate-50/50 shadow-[0_20px_50px_rgba(0,0,0,0.15)]">
                                 <img src="{{ $showcaseImage }}" alt="Modern Industrial Facility Showcase"
                                     class="h-[400px] w-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                                <div class="absolute inset-0 bg-linear-to-t from-black/40 to-transparent"></div>
                             </div>
                         </div>
                     </div>
@@ -615,7 +631,7 @@
                         <span class="text-[10px] text-orange-600">■</span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Sertifikat</span>
                     </div>
-                    <h2 class="mb-6 text-4xl font-ultra-light leading-tight text-gray-900 md:text-5xl">
+                    <h2 class="section-title-identic mb-6 text-gray-900">
                         Sertifikat Akreditasi Layanan Kami
                     </h2>
                 </div>
@@ -636,7 +652,7 @@
                                     data-title="{{ $title }}"
                                     class="certificate-card group text-left transition-all duration-300 hover:-translate-y-1"
                                     data-aos="fade-up" data-aos-delay="{{ 50 + ($index % 8) * 50 }}">
-                                    <div class="certificate-media relative aspect-[4/3]">
+                                    <div class="certificate-media relative aspect-4/3">
                                         <img src="{{ $image }}" alt="{{ $title }}"
                                             class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
                                     </div>
@@ -650,7 +666,7 @@
                 @endif
             </div>
 
-            <div id="certificateLightbox" class="fixed inset-0 z-[120] hidden" aria-hidden="true">
+            <div id="certificateLightbox" class="fixed inset-0 z-120 hidden" aria-hidden="true">
                 <div id="certificateLightboxBackdrop" class="absolute inset-0 bg-black/90"></div>
                 <div class="relative z-10 flex min-h-full items-center justify-center p-2 md:p-6">
                     <p id="certificateLightboxTitle" class="sr-only">Sertifikat</p>
@@ -673,7 +689,7 @@
                             <span class="text-[10px] text-orange-600">■</span>
                             <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Data Kinerja</span>
                         </div>
-                        <h2 class="text-4xl font-ultra-light leading-tight text-gray-900 md:text-5xl">
+                        <h2 class="section-title-identic text-gray-900">
                             Perusahaan dalam Angka
                         </h2>
                     </div>
@@ -773,7 +789,7 @@
                                 <span class="text-[10px] text-orange-600">■</span>
                                 <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Customer Intelligence</span>
                             </div>
-                            <h2 class="text-4xl font-ultra-light leading-tight text-gray-900 md:text-5xl">Peta Penyebaran Pelanggan</h2>
+                            <h2 class="section-title-identic text-gray-900">Peta Penyebaran Pelanggan</h2>
                         </div>
                         <div class="lg:col-span-5">
                             <p class="text-base font-light leading-relaxed text-gray-800 md:text-lg lg:pt-2">
@@ -790,12 +806,12 @@
 
                     <aside class="map-distribution-card flex flex-col gap-6 p-5 md:p-6" data-aos="fade-up" data-aos-delay="90">
                         <div class="grid grid-cols-2 gap-3">
-                            <article class="rounded-2xl border-none bg-gradient-to-br from-orange-500 to-orange-600 p-5 shadow-lg shadow-orange-200/50">
+                            <article class="rounded-2xl border-none bg-linear-to-br from-orange-500 to-orange-600 p-5 shadow-lg shadow-orange-200/50">
                                 <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Total Dummy</p>
                                 <p id="map-total-customers" class="mt-1 text-4xl font-bold text-white">0</p>
                                 <p class="mt-1 text-xs text-white/70">Pelanggan Terdaftar</p>
                             </article>
-                            <article class="rounded-2xl border-none bg-gradient-to-br from-blue-500 to-blue-600 p-5 shadow-lg shadow-blue-200/50">
+                            <article class="rounded-2xl border-none bg-linear-to-br from-blue-500 to-blue-600 p-5 shadow-lg shadow-blue-200/50">
                                 <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Coverage</p>
                                 <p id="map-total-coverage" class="mt-1 text-4xl font-bold text-white">0</p>
                                 <p class="mt-1 text-xs text-white/70">Kota & Kabupaten</p>
@@ -847,10 +863,10 @@
                 scrollPrev() { if (this.currentIndex > 0) this.currentIndex--; }
             }">
             <div class="relative z-20 flex flex-col gap-10 lg:flex-row lg:gap-20">
-                <div class="w-full flex-shrink-0 pr-6 lg:w-[380px] lg:pr-0">
+                <div class="w-full shrink-0 pr-6 lg:w-[380px] lg:pr-0">
                     <div class="flex flex-col pt-12">
                         <div>
-                            <h2 class="mb-6 text-[40px] font-light leading-[1.1] tracking-tight text-[#1c1e21] md:text-[58px] lg:mb-8">
+                            <h2 class="section-title-identic mb-6 text-[#1c1e21] lg:mb-8">
                                 Testimoni Pelanggan
                             </h2>
                             <p class="max-w-sm text-[16px] leading-relaxed text-gray-600 md:text-[17px]">
@@ -876,7 +892,7 @@
                     </div>
                 </div>
 
-                <div x-ref="sliderViewport" class="flex-grow overflow-hidden">
+                <div x-ref="sliderViewport" class="grow overflow-hidden">
                     <div x-ref="track" :style="'transform: translateX(' + getTranslateX() + ')'"
                         class="flex gap-6 pb-12 pt-12 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]">
                         @forelse ($testimonis as $testimoni)
@@ -917,14 +933,14 @@
             </div>
         </section>
 
-        <section id="zona-integritas" class="bg-gradient-to-b from-slate-50 via-white to-white py-16 md:pb-20 md:pt-8">
+        <section id="zona-integritas" class="bg-linear-to-b from-slate-50 via-white to-white py-16 md:pb-20 md:pt-8">
             <div class="mx-auto max-w-7xl px-6 lg:px-0">
                 <div class="mx-auto mb-14 max-w-2xl text-center" data-aos="fade-up">
                     <div class="mb-4 flex items-center justify-center gap-2">
                         <span class="text-[10px] text-orange-600">■</span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Komitmen Kami</span>
                     </div>
-                    <h2 class="mb-4 text-3xl font-normal text-gray-900 md:text-4xl">Zona Integritas</h2>
+                    <h2 class="section-title-identic mb-4 text-gray-900">Zona Integritas</h2>
                 </div>
 
                 <div class="grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-7 md:gap-6">
@@ -957,7 +973,7 @@
                         <span class="text-[10px] text-orange-600">■</span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">FAQ</span>
                     </div>
-                    <h2 class="mb-6 text-3xl font-ultra-light leading-tight text-gray-900 md:text-5xl">Pertanyaan yang Sering Diajukan</h2>
+                    <h2 class="section-title-identic mb-6 text-gray-900">Pertanyaan yang Sering Diajukan</h2>
                 </div>
                 <div class="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
                     <div class="space-y-0">
@@ -972,9 +988,13 @@
                                     <h3 :class="activeItems.includes({{ $faq['id'] }}) ? 'text-[#00a19c]' : 'text-[#333333]'" class="pr-8 text-xl font-semibold transition-colors duration-300">
                                         {{ $faq['q'] }}
                                     </h3>
-                                    <div :class="activeItems.includes({{ $faq['id'] }}) ? 'bg-[#1a3a8a]' : 'bg-[#00a19c]'" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white transition-colors duration-300">
-                                        <span x-show="!activeItems.includes({{ $faq['id'] }})">+</span>
-                                        <span x-show="activeItems.includes({{ $faq['id'] }})">−</span>
+                                    <div :class="activeItems.includes({{ $faq['id'] }}) ? 'bg-[#1a3a8a]' : 'bg-[#00a19c]'" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white transition-colors duration-300">
+                                        <span x-show="!activeItems.includes({{ $faq['id'] }})" class="flex items-center justify-center">
+                                            <i data-lucide="plus" class="h-3 w-3" stroke-width="2.5"></i>
+                                        </span>
+                                        <span x-show="activeItems.includes({{ $faq['id'] }})" class="flex items-center justify-center">
+                                            <i data-lucide="minus" class="h-3 w-3" stroke-width="2.5"></i>
+                                        </span>
                                     </div>
                                 </button>
                                 <div x-show="activeItems.includes({{ $faq['id'] }})" class="mt-4 pr-12 text-gray-600">
@@ -990,7 +1010,7 @@
                             <img src="{{ $faqDisplayImages[1] }}" x-show="currentImage === 2" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 2">
                             <img src="{{ $faqDisplayImages[2] }}" x-show="currentImage === 3" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 3">
                             <img src="{{ $faqDisplayImages[3] }}" x-show="currentImage === 4" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 4">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                            <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
                         </div>
                     </div>
                 </div>
