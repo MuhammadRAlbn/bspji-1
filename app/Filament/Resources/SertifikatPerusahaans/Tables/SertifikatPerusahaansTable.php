@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Filament\Resources\SertifikatPerusahaans\Tables;
+
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+
+class SertifikatPerusahaansTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ImageColumn::make('gambar')
+                    ->label('Gambar')
+                    ->disk('public'),
+                TextColumn::make('nama_sertifikat')
+                    ->label('Nama Sertifikat')
+                    ->searchable(),
+                TextColumn::make('updated_at')
+                    ->label('Diubah')
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}

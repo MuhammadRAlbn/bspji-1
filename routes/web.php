@@ -17,9 +17,11 @@ use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\TugasFungsiController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\VisiMisiController;
+use App\Models\LogoMitra;
 use App\Models\SectionLayanan;
 use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
+use App\Models\SertifikatPerusahaan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -37,7 +39,28 @@ Route::get('/', function () {
         ->select(['gambar', 'nama_layanan', 'detail'])
         ->get();
 
-    return view('welcome', compact('sectionProfils', 'sectionSipintu', 'sectionLayanans'));
+    $logos = LogoMitra::query()
+        ->where('tipe', LogoMitra::TYPE_LOGO)
+        ->select(['gambar'])
+        ->get();
+
+    $pelengkaps = LogoMitra::query()
+        ->where('tipe', LogoMitra::TYPE_PELENGKAP)
+        ->select(['gambar'])
+        ->get();
+
+    $sertifikats = SertifikatPerusahaan::query()
+        ->select(['gambar', 'nama_sertifikat'])
+        ->get();
+
+    return view('welcome', compact(
+        'sectionProfils',
+        'sectionSipintu',
+        'sectionLayanans',
+        'logos',
+        'pelengkaps',
+        'sertifikats'
+    ));
 });
 
 Route::get('/sejarah-singkat', [SejarahSingkatController::class, 'index'])->name('sejarah-singkat.index');
