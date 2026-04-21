@@ -166,6 +166,43 @@
                 </div>
             @endif
         </section>
+
+        <section>
+            <h1 class="text-3xl font-bold mb-6">dummy section testimoni</h1>
+
+            @if ($testimonis->isEmpty())
+                <div class="bg-white border rounded-lg p-6">
+                    <p>Belum ada data Testimoni dari admin panel.</p>
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach ($testimonis as $testimoni)
+                        <article class="bg-white border rounded-xl p-6 shadow-sm flex flex-col">
+                            <div class="flex items-center gap-4 mb-6">
+                                @if ($testimoni->gambar_pelanggan)
+                                    <img 
+                                        src="{{ Storage::url($testimoni->gambar_pelanggan) }}" 
+                                        alt="{{ $testimoni->nama }}"
+                                        class="w-14 h-14 rounded-full object-cover border-2 border-primary/10"
+                                    >
+                                @else
+                                    <div class="w-14 h-14 rounded-full bg-primary/5 flex items-center justify-center font-bold text-primary">
+                                        {{ substr($testimoni->nama, 0, 1) }}
+                                    </div>
+                                @endif
+                                <div>
+                                    <h3 class="font-bold text-gray-900 leading-tight">{{ $testimoni->nama }}</h3>
+                                    <p class="text-sm text-gray-500">{{ $testimoni->jabatan }} @ {{ $testimoni->nama_perusahaan }}</p>
+                                </div>
+                            </div>
+                            <blockquote class="text-gray-600 italic leading-relaxed grow">
+                                &ldquo;{{ $testimoni->pesan }}&rdquo;
+                            </blockquote>
+                        </article>
+                    @endforeach
+                </div>
+            @endif
+        </section>
     </main>
 </body>
 </html>

@@ -21,6 +21,7 @@ use App\Models\LogoMitra;
 use App\Models\SectionLayanan;
 use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
+use App\Models\SectionTestimoni;
 use App\Models\SertifikatPerusahaan;
 use Illuminate\Support\Facades\Route;
 
@@ -53,13 +54,18 @@ Route::get('/', function () {
         ->select(['gambar', 'nama_sertifikat'])
         ->get();
 
+    $testimonis = SectionTestimoni::query()
+        ->latest()
+        ->get();
+
     return view('welcome', compact(
         'sectionProfils',
         'sectionSipintu',
         'sectionLayanans',
         'logos',
         'pelengkaps',
-        'sertifikats'
+        'sertifikats',
+        'testimonis'
     ));
 });
 
