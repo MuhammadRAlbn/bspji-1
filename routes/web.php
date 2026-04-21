@@ -17,6 +17,7 @@ use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\TugasFungsiController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\VisiMisiController;
+use App\Models\SectionLayanan;
 use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
 use Illuminate\Support\Facades\Route;
@@ -32,7 +33,11 @@ Route::get('/', function () {
         ->select(['gambar_mobile', 'gambar_desktop'])
         ->first();
 
-    return view('welcome', compact('sectionProfils', 'sectionSipintu'));
+    $sectionLayanans = SectionLayanan::query()
+        ->select(['gambar', 'nama_layanan', 'detail'])
+        ->get();
+
+    return view('welcome', compact('sectionProfils', 'sectionSipintu', 'sectionLayanans'));
 });
 
 Route::get('/sejarah-singkat', [SejarahSingkatController::class, 'index'])->name('sejarah-singkat.index');

@@ -69,6 +69,34 @@
                 </div>
             @endif
         </section>
+
+        <section>
+            <h1 class="text-3xl font-bold mb-6">dummy section layanan</h1>
+
+            @if ($sectionLayanans->isEmpty())
+                <div class="bg-white border rounded-lg p-6">
+                    <p>Belum ada data Section Layanan dari admin panel.</p>
+                </div>
+            @else
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    @foreach ($sectionLayanans as $layanan)
+                        <article class="bg-white border rounded-lg p-4">
+                            @if ($layanan->gambar)
+                                <img
+                                    src="{{ Storage::url($layanan->gambar) }}"
+                                    alt="{{ $layanan->nama_layanan }}"
+                                    class="w-full h-48 object-cover bg-gray-50 rounded mb-4"
+                                >
+                            @endif
+                            <h2 class="text-xl font-semibold mb-2 capitalize">{{ $layanan->nama_layanan }}</h2>
+                            <div class="text-gray-600 prose prose-sm max-w-none">
+                                {!! $layanan->detail !!}
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+            @endif
+        </section>
     </main>
 </body>
 </html>
