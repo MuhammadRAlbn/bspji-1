@@ -654,7 +654,7 @@
                                     data-aos="fade-up" data-aos-delay="{{ 50 + ($index % 8) * 50 }}">
                                     <div class="certificate-media relative aspect-4/3">
                                         <img src="{{ $image }}" alt="{{ $title }}"
-                                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                            class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
                                     </div>
                                     <div class="certificate-title-wrap">
                                         <h3 class="certificate-title text-base font-semibold text-slate-900">{{ $title }}</h3>
@@ -994,13 +994,9 @@
                                     <h3 :class="activeItems.includes({{ $faq['id'] }}) ? 'text-[#00a19c]' : 'text-[#333333]'" class="pr-8 text-xl font-semibold transition-colors duration-300">
                                         {{ $faq['q'] }}
                                     </h3>
-                                    <div :class="activeItems.includes({{ $faq['id'] }}) ? 'bg-[#1a3a8a]' : 'bg-[#00a19c]'" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white transition-colors duration-300">
-                                        <span x-show="!activeItems.includes({{ $faq['id'] }})" class="flex items-center justify-center">
-                                            <i data-lucide="plus" class="h-3 w-3" stroke-width="2.5"></i>
-                                        </span>
-                                        <span x-show="activeItems.includes({{ $faq['id'] }})" class="flex items-center justify-center">
-                                            <i data-lucide="minus" class="h-3 w-3" stroke-width="2.5"></i>
-                                        </span>
+                                    <div :class="activeItems.includes({{ $faq['id'] }}) ? 'bg-[#1a3a8a] rotate-180' : 'bg-[#00a19c]'" class="grid h-8 w-8 shrink-0 place-items-center rounded-full text-white transition-all duration-500">
+                                        <i x-show="!activeItems.includes({{ $faq['id'] }})" data-lucide="plus" class="h-4 w-4" stroke-width="3"></i>
+                                        <i x-show="activeItems.includes({{ $faq['id'] }})" data-lucide="minus" class="h-4 w-4" stroke-width="3"></i>
                                     </div>
                                 </button>
                                 <div x-show="activeItems.includes({{ $faq['id'] }})" class="mt-4 pr-12 text-gray-600">
