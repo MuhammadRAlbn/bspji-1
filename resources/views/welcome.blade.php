@@ -807,7 +807,7 @@
                     <aside class="map-distribution-card flex flex-col gap-6 p-5 md:p-6" data-aos="fade-up" data-aos-delay="90">
                         <div class="grid grid-cols-2 gap-3">
                             <article class="rounded-2xl border-none bg-linear-to-br from-orange-500 to-orange-600 p-5 shadow-lg shadow-orange-200/50">
-                                <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Total Dummy</p>
+                                <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Total</p>
                                 <p id="map-total-customers" class="mt-1 text-4xl font-bold text-white">0</p>
                                 <p class="mt-1 text-xs text-white/70">Pelanggan Terdaftar</p>
                             </article>
@@ -817,6 +817,12 @@
                                 <p class="mt-1 text-xs text-white/70">Kota & Kabupaten</p>
                             </article>
                         </div>
+
+                        <article class="rounded-2xl border-none bg-linear-to-br from-slate-600 to-slate-700 p-5 shadow-lg shadow-slate-200/60">
+                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Tanpa Lokasi</p>
+                            <p id="map-total-no-location" class="mt-1 text-4xl font-bold text-white">{{ number_format((int) ($customerWithoutLocation ?? 0), 0, ',', '.') }}</p>
+                            <p class="mt-1 text-xs text-white/70">Pelanggan Belum Terpetakan</p>
+                        </article>
 
                         <div class="rounded-2xl border border-slate-200 p-4">
                             <h3 class="mb-3 text-sm font-semibold text-slate-900">Legend Jumlah Pelanggan</h3>
@@ -1109,28 +1115,8 @@
                 certificateLightboxBackdrop?.addEventListener('click', closeCertificateLightbox);
             }
 
-            const customerDistributionDummyData = [
-                { region: 'Banda Aceh, Aceh', lat: 5.5483, lng: 95.3238, customers: 180 },
-                { region: 'Jantho (Aceh Besar), Aceh', lat: 5.1050, lng: 95.5880, customers: 140 },
-                { region: 'Lhokseumawe, Aceh', lat: 5.1801, lng: 97.1507, customers: 120 },
-                { region: 'Langsa, Aceh', lat: 4.4683, lng: 97.9683, customers: 98 },
-                { region: 'Sabang, Aceh', lat: 5.8906, lng: 95.3197, customers: 42 },
-                { region: 'Bireuen, Aceh', lat: 5.2046, lng: 96.7042, customers: 95 },
-                { region: 'Sigli (Pidie), Aceh', lat: 5.3822, lng: 95.9587, customers: 90 },
-                { region: 'Meureudu (Pidie Jaya), Aceh', lat: 5.2487, lng: 96.2672, customers: 74 },
-                { region: 'Lhoksukon (Aceh Utara), Aceh', lat: 5.0482, lng: 97.3039, customers: 82 },
-                { region: 'Idi Rayeuk (Aceh Timur), Aceh', lat: 4.9875, lng: 97.7833, customers: 76 },
-                { region: 'Karang Baru (Aceh Tamiang), Aceh', lat: 4.2800, lng: 98.0600, customers: 70 },
-                { region: 'Takengon (Aceh Tengah), Aceh', lat: 4.6289, lng: 96.8364, customers: 88 },
-                { region: 'Simpang Tiga Redelong (Bener Meriah), Aceh', lat: 4.7230, lng: 96.8480, customers: 64 },
-                { region: 'Meulaboh (Aceh Barat), Aceh', lat: 4.1449, lng: 96.1284, customers: 79 },
-                { region: 'Suka Makmue (Nagan Raya), Aceh', lat: 4.1360, lng: 96.3400, customers: 58 },
-                { region: 'Calang (Aceh Jaya), Aceh', lat: 4.7270, lng: 95.6010, customers: 46 },
-                { region: 'Tapaktuan (Aceh Selatan), Aceh', lat: 3.2573, lng: 97.1812, customers: 60 },
-                { region: 'Singkil (Aceh Singkil), Aceh', lat: 2.2894, lng: 97.7889, customers: 44 },
-                { region: 'Subulussalam, Aceh', lat: 2.6420, lng: 98.0010, customers: 52 },
-                { region: 'Medan, Sumatera Utara', lat: 3.5952, lng: 98.6722, customers: 32 }
-            ];
+            const customerDistributionData = @json($customerDistribution ?? []);
+            const customerWithoutLocation = Number(@json($customerWithoutLocation ?? 0));
 
             const formatIndonesiaNumber = (value) => new Intl.NumberFormat('id-ID').format(value);
             const markerColorByCustomerCount = (count) => {
@@ -1169,7 +1155,7 @@
                 });
                 preferredBasemap.addTo(map);
 
-                customerDistributionDummyData.forEach((point) => {
+                customerDistributionData.forEach((point) => {
                     L.circleMarker([point.lat, point.lng], {
                         radius: Math.max(7, Math.min(18, 7 + (point.customers / 18))),
                         weight: 1.4,
@@ -1188,13 +1174,21 @@
                     ).addTo(map);
                 });
 
-                map.setView([4.6951, 96.8205], 8);
-                const totalCustomers = customerDistributionDummyData.reduce((total, point) => total + point.customers, 0);
-                const totalCoverage = customerDistributionDummyData.length;
+                if (customerDistributionData.length > 0) {
+                    const mapBounds = L.latLngBounds(customerDistributionData.map((point) => [point.lat, point.lng]));
+                    map.fitBounds(mapBounds, { padding: [30, 30], maxZoom: 7 });
+                } else {
+                    map.setView([4.6951, 96.8205], 8);
+                }
+
+                const totalCustomers = customerDistributionData.reduce((total, point) => total + point.customers, 0);
+                const totalCoverage = customerDistributionData.length;
                 const totalCustomersElement = document.getElementById('map-total-customers');
                 const totalCoverageElement = document.getElementById('map-total-coverage');
+                const totalNoLocationElement = document.getElementById('map-total-no-location');
                 if (totalCustomersElement) totalCustomersElement.textContent = formatIndonesiaNumber(totalCustomers);
                 if (totalCoverageElement) totalCoverageElement.textContent = formatIndonesiaNumber(totalCoverage);
+                if (totalNoLocationElement) totalNoLocationElement.textContent = formatIndonesiaNumber(customerWithoutLocation);
             }
 
             const formatChartTick = (value, maxValue) => {

@@ -23,6 +23,7 @@ use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
 use App\Models\SectionTestimoni;
 use App\Models\SertifikatPerusahaan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -58,6 +59,50 @@ Route::get('/', function () {
         ->latest()
         ->get();
 
+    $customerDistribution = DB::table('legacy_users as users')
+        ->join('tbl_kabupaten as kabupaten', 'kabupaten.kode_kabupaten', '=', 'users.kode_kabupaten')
+        ->join('tbl_provinsi as provinsi', 'provinsi.kode_provinsi', '=', 'kabupaten.id_provinsi')
+        ->whereNotNull('kabupaten.latitude')
+        ->whereNotNull('kabupaten.longitude')
+        ->whereNotNull('users.kode_kabupaten')
+        ->where('users.kode_kabupaten', '!=', '')
+        ->selectRaw('
+            users.kode_kabupaten,
+            kabupaten.nama_kabupaten,
+            provinsi.nama_provinsi,
+            kabupaten.latitude,
+            kabupaten.longitude,
+            COUNT(*) as total
+        ')
+        ->groupBy(
+            'users.kode_kabupaten',
+            'kabupaten.nama_kabupaten',
+            'provinsi.nama_provinsi',
+            'kabupaten.latitude',
+            'kabupaten.longitude'
+        )
+        ->orderByDesc('total')
+        ->get()
+        ->map(function ($row) {
+            return [
+                'region' => "{$row->nama_kabupaten}, {$row->nama_provinsi}",
+                'lat' => (float) $row->latitude,
+                'lng' => (float) $row->longitude,
+                'customers' => (int) $row->total,
+            ];
+        });
+
+    $customerWithoutLocation = DB::table('legacy_users as users')
+        ->leftJoin('tbl_kabupaten as kabupaten', 'kabupaten.kode_kabupaten', '=', 'users.kode_kabupaten')
+        ->where(function ($query) {
+            $query
+                ->whereNull('users.kode_kabupaten')
+                ->orWhere('users.kode_kabupaten', '')
+                ->orWhereNull('kabupaten.latitude')
+                ->orWhereNull('kabupaten.longitude');
+        })
+        ->count();
+
     return view('welcome', compact(
         'sectionProfils',
         'sectionSipintu',
@@ -65,7 +110,9 @@ Route::get('/', function () {
         'logos',
         'pelengkaps',
         'sertifikats',
-        'testimonis'
+        'testimonis',
+        'customerDistribution',
+        'customerWithoutLocation'
     ));
 });
 
