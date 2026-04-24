@@ -611,12 +611,9 @@
 
                     <div class="order-1 lg:order-2" data-aos="fade-left">
                         <div class="relative">
-                            <div class="absolute -right-4 -top-4 h-24 w-24 animate-pulse rounded-full bg-blue-500/10 blur-2xl"></div>
-                            <div class="absolute -bottom-6 -left-6 h-32 w-32 animate-pulse rounded-full bg-orange-500/10 blur-3xl"></div>
-                            <div class="relative overflow-hidden rounded-[40px] border-4 border-slate-50/50 shadow-[0_20px_50px_rgba(0,0,0,0.15)]">
+                            <div class="relative overflow-hidden rounded-[40px]">
                                 <img src="{{ $showcaseImage }}" alt="Modern Industrial Facility Showcase"
                                     class="h-[400px] w-full object-cover">
-                                <div class="absolute inset-0 bg-linear-to-t from-black/40 to-transparent"></div>
                             </div>
                         </div>
                     </div>
@@ -951,21 +948,21 @@
 
                 <div class="grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-7 md:gap-6">
                     @foreach ([
-                        ['label' => 'ZI', 'icon' => 'shield'],
-                        ['label' => 'WBS', 'icon' => 'megaphone'],
-                        ['label' => 'Pengaduan', 'icon' => 'message-square-warning'],
-                        ['label' => 'Gratifikasi', 'icon' => 'handshake'],
-                        ['label' => 'Benturan', 'icon' => 'scale'],
-                        ['label' => 'Persepsi Korupsi', 'icon' => 'circle-alert'],
-                        ['label' => 'IKM', 'icon' => 'bar-chart-3'],
+                        ['label' => 'ZI', 'image' => 'zi.png'],
+                        ['label' => 'WBS', 'image' => 'wbs.png'],
+                        ['label' => 'Pengaduan', 'image' => 'pengaduan.png'],
+                        ['label' => 'Gratifikasi', 'image' => 'gratifikasi.png'],
+                        ['label' => 'Benturan', 'image' => 'benturan.png'],
+                        ['label' => 'Persepsi Korupsi', 'image' => 'persepsi-korupsi.png'],
+                        ['label' => 'IKM', 'image' => 'IKM.png'],
                     ] as $item)
                         <a href="#"
-                            class="group flex flex-col items-center justify-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition duration-500 hover:-translate-y-1 hover:shadow-lg"
+                            class="group flex flex-col items-center justify-center transition duration-500 hover:-translate-y-2"
                             data-aos="zoom-in">
-                            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 text-sky-700">
-                                <i data-lucide="{{ $item['icon'] }}" class="h-5 w-5"></i>
+                            <div class="flex h-40 w-40 items-center justify-center">
+                                <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
+                                    class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110">
                             </div>
-                            <p class="text-center text-xs font-semibold text-slate-700">{{ $item['label'] }}</p>
                         </a>
                     @endforeach
                 </div>
