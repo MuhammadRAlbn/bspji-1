@@ -119,8 +119,3 @@ $clusterBreadcrumb
 * URL resource akan otomatis mendapatkan awalan (prefix) nama cluster
 
 ---
-
-```
-
-Kalau mau, saya juga bisa bantu ubah ini jadi format dokumentasi internal (lebih formal seperti SRS/SPBE) atau jadi panduan tim 👌
-```
