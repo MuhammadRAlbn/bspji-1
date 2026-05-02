@@ -15,6 +15,8 @@
         rel="stylesheet"
     >
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
+    @livewireScriptConfig
 </head>
 <body
     x-data="{
@@ -308,40 +310,7 @@
                         </p>
                     </div>
 
-                    <div class="space-y-5 rounded-[24px] border border-black/20 bg-[#fbfbfd] p-5 sm:rounded-[30px] sm:p-8">
-                        <label class="block text-sm font-bold uppercase tracking-wider text-[#1d1d1f]">
-                            Cari berdasarkan komoditi/produk
-                        </label>
-                        <div class="flex flex-col gap-4 md:flex-row">
-                            <div class="relative flex-1">
-                                <select
-                                    disabled
-                                    class="w-full cursor-not-allowed appearance-none rounded-2xl border border-black/20 bg-white px-5 py-4 font-medium text-slate-400 opacity-80 focus:outline-none"
-                                >
-                                    <option>Data tarif pengujian belum tersedia</option>
-                                </select>
-                                <div class="pointer-events-none absolute inset-y-0 right-5 flex items-center text-slate-300">
-                                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <button
-                                type="button"
-                                disabled
-                                class="flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-2xl bg-slate-400 px-10 py-4 font-bold text-white opacity-70 md:w-auto"
-                            >
-                                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m1.85-5.15a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
-                                </svg>
-                                Cari
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="rounded-[24px] border-2 border-dashed border-black/5 py-10 text-center sm:rounded-[30px]">
-                        <p class="font-medium text-slate-400">Informasi tarif pengujian akan ditampilkan di sini saat data tersedia.</p>
-                    </div>
+                    @livewire('tarif-pengujian')
                 </div>
             </section>
         </article>

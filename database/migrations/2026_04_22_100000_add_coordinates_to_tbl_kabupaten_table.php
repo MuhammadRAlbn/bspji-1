@@ -11,9 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (! Schema::hasTable('tbl_kabupaten')) {
+            return;
+        }
+
         Schema::table('tbl_kabupaten', function (Blueprint $table) {
-            $table->decimal('latitude', 10, 7)->nullable()->after('nama_kabupaten');
-            $table->decimal('longitude', 10, 7)->nullable()->after('latitude');
+            if (! Schema::hasColumn('tbl_kabupaten', 'latitude')) {
+                $table->decimal('latitude', 10, 7)->nullable()->after('nama_kabupaten');
+            }
+
+            if (! Schema::hasColumn('tbl_kabupaten', 'longitude')) {
+                $table->decimal('longitude', 10, 7)->nullable()->after('latitude');
+            }
         });
     }
 
@@ -22,8 +31,18 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (! Schema::hasTable('tbl_kabupaten')) {
+            return;
+        }
+
         Schema::table('tbl_kabupaten', function (Blueprint $table) {
-            $table->dropColumn(['latitude', 'longitude']);
+            if (Schema::hasColumn('tbl_kabupaten', 'latitude')) {
+                $table->dropColumn('latitude');
+            }
+
+            if (Schema::hasColumn('tbl_kabupaten', 'longitude')) {
+                $table->dropColumn('longitude');
+            }
         });
     }
 };
