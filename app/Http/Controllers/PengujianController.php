@@ -15,9 +15,12 @@ class PengujianController extends Controller
     public function index(): View
     {
         $sertifikasi = Sertifikasi::first();
-        $ruangLingkupan = RuangLingkup::all();
+        $ruangLingkupan = RuangLingkup::query()
+            ->orderedByLab()
+            ->get();
         $alurPengujian = AlurPengujian::first();
+        $labOptions = RuangLingkup::labOptions();
 
-        return view('pengujian', compact('sertifikasi', 'ruangLingkupan', 'alurPengujian'));
+        return view('pengujian', compact('sertifikasi', 'ruangLingkupan', 'alurPengujian', 'labOptions'));
     }
 }

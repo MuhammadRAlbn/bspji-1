@@ -4,270 +4,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informasi Publik - BSPJI Banda Aceh</title>
+    <title>Pengujian - Tailwind Version</title>
+    <meta name="description"
+        content="Halaman layanan pengujian profesional dengan standar internasional (Tailwind Version).">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Google: Manrope -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap"
+
+    <!-- Google Fonts: Manrope -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Manrope', sans-serif;
-        }
 
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        manrope: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1d1d1f',
+                        secondary: '#86868b',
+                        appleBg: '#f5f5f7',
+                        appleLight: '#fbfbfd',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        fadeInUp: 'fadeInUp 0.8s forwards',
+                        fadeIn: 'fadeIn 0.5s ease',
+                    }
+                }
+            }
         }
+    </script>
 
-        .active-tab {
-            background-color: #ff7300 !important;
-            /* orange-400 */
-            color: white !important;
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-section {
+                display: none;
+            }
+            .content-section.active {
+                display: block;
+            }
+            .nav-item.active {
+                @apply bg-slate-800 text-white border-gray-400 shadow-[0_8px_20px_rgba(0,0,0,0.06)];
+            }
+            .nav-item.active i {
+                @apply text-white !important;
+            }
         }
     </style>
 </head>
 
-<body class="bg-white text-gray-800 antialiased">
+<body class="font-manrope bg-white text-primary antialiased leading-relaxed">
 
-    <!-- Top Navbar -->
-    <nav class="bg-white py-4">
-        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center">
-                <div
-                    class="bg-orange-500 text-white w-10 h-10 rounded-xl flex items-center justify-center font-bold text-2xl shadow-sm">
-                    B
-                </div>
+    <!-- Hero Section -->
+    <header
+        class="relative h-[300px] w-full mx-auto mb-8 flex items-center text-white overflow-hidden rounded-none sm:h-[360px] sm:w-[96%] sm:mt-5 sm:mb-10 sm:rounded-[25px] md:mt-[20px] md:h-[400px]">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
+            alt="Pengujian Hero" class="absolute inset-0 w-full h-full object-cover -z-10 brightness-[0.7]">
+        <div class="w-full max-w-[1400px] mx-auto px-5 sm:px-8 md:px-[80px] text-left">
+            <h1
+                class="text-[2.25rem] sm:text-[3rem] md:text-[4.5rem] font-bold tracking-[-0.03em] mb-4 sm:mb-6 opacity-0 animate-fadeInUp">
+                Pengujian</h1>
+        </div>
+    </header>
+
+    <main
+        class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-8 lg:gap-[60px] max-w-[1400px] mx-auto px-4 sm:px-5 md:px-10 items-start">
+        <!-- Navigation Menus -->
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 lg:sticky lg:top-10">
+            <div class="nav-item group flex flex-row items-center gap-[15px] bg-white p-[16px_20px] rounded-[12px] cursor-pointer border border-black/30 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02] active"
+                onclick="showSection('sertifikasi')">
+                <i class="fas fa-certificate text-[20px] text-slate-500"></i>
+                <span class="font-semibold text-base sm:text-[1.05rem]">Sertifikasi</span>
             </div>
-            <!-- Dummy Menus -->
-            <div class="hidden md:flex items-center gap-8">
-                <a href="#" class="text-slate-600 font-medium hover:text-orange-500 transition-colors">Home</a>
-                <a href="#" class="text-slate-600 font-medium hover:text-orange-500 transition-colors">Profil</a>
-                <a href="#" class="text-slate-600 font-medium hover:text-orange-500 transition-colors">Layanan</a>
-                <a href="#" class="text-slate-600 font-medium hover:text-orange-500 transition-colors">Berita</a>
-                <a href="#" class="text-slate-600 font-medium hover:text-orange-500 transition-colors">Kontak</a>
+            <div class="nav-item group flex flex-row items-center gap-[15px] bg-white p-[16px_20px] rounded-[12px] cursor-pointer border border-black/30 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]  hover:scale-[1.02]"
+                onclick="showSection('ruang-lingkup')">
+                <i class="fas fa-microscope text-[20px] text-slate-500"></i>
+                <span class="font-semibold text-base sm:text-[1.05rem]">Ruang Lingkup</span>
             </div>
-            <!-- Mobile Menu Toggle (Optional Visual) -->
-            <div class="md:hidden text-slate-600">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
+            <div class="nav-item group flex flex-row items-center gap-[15px] bg-white p-[16px_20px] rounded-[12px] cursor-pointer border border-black/30 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]  hover:scale-[1.02]"
+                onclick="showSection('alur')">
+                <i class="fas fa-route text-[20px] text-slate-500"></i>
+                <span class="font-semibold text-base sm:text-[1.05rem]">Alur</span>
+            </div>
+            <div class="nav-item group flex flex-row items-center gap-[15px] bg-white p-[16px_20px] rounded-[12px] cursor-pointer border border-black/30 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]  hover:scale-[1.02]"
+                onclick="showSection('tarif')">
+                <i class="fas fa-tags text-[20px] text-slate-500"></i>
+                <span class="font-semibold text-base sm:text-[1.05rem]">Tarif</span>
             </div>
         </div>
-    </nav>
 
-    <!-- Header & Navigation Section (Full Width White) -->
-    <section class="bg-slate-100 max-w-6xl mx-auto rounded-3xl pt-4">
-        <div class="max-w-6xl mx-auto px-6">
-            <!-- Header Two Column -->
-            <div class="grid md:grid-cols-2 gap-2 items-center">
-                <!-- Left Column: Title -->
-                <div class="pl-6">
-                    <h1 class="text-4xl md:text-5xl tracking-tight text-slate-800">
-                        Informasi Publik
-                    </h1>
-                    <p class="text-slate-600 mt-4 text-lg max-w-sm">
-                        Balai Standardisasi dan Pelayanan Jasa Industri Banda Aceh
-                    </p>
-                    <!-- Navigation Tabs -->
-                    <div class="flex justify-start overflow-x-auto no-scrollbar gap-3 py-2 mt-4">
-                        <button
-                            class="tab-btn px-6 py-3 rounded-full text-md font-semibold whitespace-nowrap active-tab bg-slate-200/80">
-                            Daftar Informasi Publik
-                        </button>
-                        <button
-                            class="tab-btn px-6 py-3 rounded-full text-md font-semibold whitespace-nowrap bg-slate-200/80 text-slate-700">
-                            Permohonan Informasi
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Right Column: Hero Image -->
-                <div class="flex justify-center md:justify-center">
-                    <img src="dok.png" alt="Dokumen Informasi Publik" class="w-full max-w-md">
-                </div>
-            </div>
-
-
-        </div>
-    </section>
-
-    <!-- Main Content Area Area -->
-    <section class="max-w-6xl mx-auto px-6 py-8">
-        <div id="tab-content">
-            <!-- Tab 1: Daftar Informasi -->
-            <div id="content-daftar">
-                <!-- Section Content -->
-                <div class="mb-8 px-4">
-                    <div>
-                        <h2 class="text-2xl text-slate-800">Daftar Informasi Publik</h2>
-                        <p class="text-slate-600 mt-1">Balai Standardisasi dan Pelayanan Jasa Industri Banda Aceh</p>
-                    </div>
-                </div>
-
-                <!-- List Content (Rounded Concept) -->
-                <div class="bg-white rounded-2xl shadow-sm border px-2 border-slate-300 overflow-hidden mx-4">
-
-                    <!-- Item 1 -->
-                    <div class="flex items-center justify-between p-3 md:px-10 border-b border-slate-50">
-                        <span class="font-semibold text-slate-700 text-lg">Informasi Berkala</span>
-                        <a href="#" class="flex items-center text-orange-500 font-bold group">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                                </path>
-                            </svg>
-                            LIHAT
+        <!-- Content Area -->
+        <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
+            <!-- Sertifikasi Section -->
+            <section id="sertifikasi" class="content-section animate-fadeIn active">
+                <div class="max-w-4xl mx-auto space-y-6">
+                    <div class="flex justify-start">
+                        <a href="#"
+                            class="inline-flex items-center gap-2 text-slate-800 px-4 py-2 rounded-xl text-sm font-semibold transition-all active:scale-95 border border-black/25">
+                            <i class="fas fa-download text-xs text-slate-800"></i>
+                            Download Lampiran Akreditasi
                         </a>
                     </div>
-
-                    <!-- Item 2 -->
-                    <div class="flex items-center justify-between p-3 md:px-10 border-b border-slate-50 bg-slate-100">
-                        <span class="font-semibold text-slate-700 text-lg">Informasi Setiap Saat</span>
-                        <a href="#" class="flex items-center text-orange-500 font-bold group">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                                </path>
-                            </svg>
-                            LIHAT
-                        </a>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="flex items-center justify-between p-3 md:px-10 border-b border-slate-50">
-                        <span class="font-semibold text-slate-700 text-lg">Informasi Serta Merta</span>
-                        <a href="#" class="flex items-center text-orange-500 font-bold group">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                                </path>
-                            </svg>
-                            LIHAT
-                        </a>
-                    </div>
-
-                    <!-- Item 4 -->
-                    <div class="flex items-center justify-between p-3 md:px-10 border-b border-slate-50 bg-slate-100">
-                        <span class="font-semibold text-slate-700 text-lg">Informasi Dikecualikan</span>
-                        <a href="#" class="flex items-center text-orange-500 font-bold group">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                                </path>
-                            </svg>
-                            LIHAT
-                        </a>
-                    </div>
-
-                    <!-- Item 5 -->
-                    <div class="flex items-center justify-between p-3 md:px-10">
-                        <span class="font-semibold text-slate-700 text-lg">Standar Biaya Pelayanan</span>
-                        <a href="#" class="flex items-center text-orange-500 font-bold group">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1">
-                                </path>
-                            </svg>
-                            LIHAT
-                        </a>
-                    </div>
-                </div>
-
-                <!-- PDF View Section (Independent) -->
-                <div class="mt-12 mx-4">
-                    <div class="mb-6 px-4">
-                        <h3 class="text-xl font-bold text-slate-800">Dokumen Daftar Informasi Publik</h3>
-                        <p class="text-slate-500 text-sm mt-1 uppercase tracking-wider">File: informasi.pdf</p>
-                    </div>
-                    <div class="bg-white rounded-2xl shadow-lg border border-slate-300 overflow-hidden h-[800px]">
-                        <iframe src="informasi.pdf" class="w-full h-full" frameborder="0"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tab 2: Permohonan Informasi -->
-            <div id="content-permohonan" class="hidden">
-                <div class="px-4"></div>
-                <p class="text-slate-600 mb-10 text-lg">
-                    Pelanggan dan Masyarakat dapat mengajukan Permohonan Informasi dengan mengunduh form di bawah ini.
-                </p>
-
-                <div class="grid md:grid-cols-2 gap-8 items-start">
-                    <!-- Left Column -->
-                    <div class="flex flex-col gap-6">
-                        <!-- Download Section -->
+                    <div class="relative group overflow-hidden rounded-[24px] cursor-pointer"
+                        onclick="openLightbox('sertifikat.png')">
+                        <img src="sertifikat.png" alt="Sertifikat Akreditasi"
+                            class="w-full sm:w-[85%] lg:w-[70%] h-auto object-cover transform transition-transform duration-700 group-hover:scale-105">
                         <div
-                            class="bg-white p-8 rounded-2xl shadow-sm border border-slate-400 flex items-center justify-between">
-                            <div class="flex items-center gap-4">
-                                <div class="bg-orange-50 p-4 rounded-xl text-orange-500">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-slate-800 text-lg">Form Permohonan Informasi</h4>
-                                    <p class="text-slate-500 text-sm">File PDF • 1.2 MB</p>
+                            class="absolute bottom-6 left-6 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                            <span
+                                class="bg-slate-800 backdrop-blur-md text-white px-4 py-2 rounded-full text-sm font-bold shadow-sm">
+                                <i class="fas fa-search-plus mr-2"></i> Klik untuk memperbesar
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ruang Lingkup Section -->
+            <section id="ruang-lingkup" class="content-section animate-fadeIn">
+                <div class="max-w-5xl mx-auto space-y-6">
+                    <!-- Teks Pembuka -->
+                    <p class="text-sm md:text-base text-slate-600 leading-relaxed max-w-2xl">
+                        BSPJI Banda Aceh memiliki 5 Laboratorium yaitu Laboratorium Limbah, Lab Udara, Lab Kimia, Lab
+                        Mikrobiologi dan Lab Proses (Bahan Bangungan)
+                    </p>
+
+                    <!-- Filter Area -->
+                    <div class="bg-appleLight p-4 sm:p-6 rounded-2xl border border-black/20 space-y-4">
+                        <label class="block text-sm font-bold text-primary uppercase tracking-wider">Cari ruang lingkup
+                            berdasarkan laboratorium</label>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="relative flex-1">
+                                <select
+                                    class="w-full appearance-none bg-white border border-black/20 rounded-xl px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-slate-200 transition-all cursor-pointer">
+                                    <option value="">Semua Laboratorium</option>
+                                    <option value="limbah">Laboratorium Limbah</option>
+                                    <option value="udara">Lab Udara</option>
+                                    <option value="kimia">Lab Kimia</option>
+                                    <option value="mikrobiologi">Lab Mikrobiologi</option>
+                                    <option value="proses">Lab Proses (Bahan Bangunan)</option>
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fas fa-chevron-down text-xs"></i>
                                 </div>
                             </div>
                             <button
-                                class="bg-orange-500 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-md shadow-orange-100 active:scale-95 transition-all">
-                                DOWNLOAD
+                                class="w-full md:w-auto text-white px-8 py-3 rounded-xl font-bold bg-slate-800 transition-all active:scale-95 flex items-center justify-center gap-2">
+                                <i class="fas fa-search text-sm"></i>
+                                Cari
                             </button>
-                        </div>
-
-                        <!-- Decorative Image -->
-                        <div class="flex justify-center">
-                            <img src="nunjuk.png" alt="" class="w-full max-w-sm h-auto">
                         </div>
                     </div>
 
-                    <!-- Right Column: Example Section -->
-                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-400">
-                        <h4 class="font-bold text-slate-800 text-lg mb-6">Contoh formulir Permohonan Informasi</h4>
-                        <div
-                            class="bg-slate-50 rounded-xl overflow-hidden border border-slate-100 flex items-center justify-center min-h-[400px]">
-                            <img src="form.png" alt="Contoh Formulir" class="max-w-full h-auto">
+                    <!-- Table Data -->
+                    <div class="bg-white rounded-2xl border border-black/20 shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 border-b border-black/20">
+                                        <th class="px-4 sm:px-6 py-4 text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">No
+                                        </th>
+                                        <th class="px-4 sm:px-6 py-4 text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">
+                                            Komoditi / Produk</th>
+                                        <th class="px-4 sm:px-6 py-4 text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">
+                                            Parameter Uji</th>
+                                        <th class="px-4 sm:px-6 py-4 text-xs sm:text-sm font-bold text-primary uppercase tracking-wider">
+                                            Metode Uji</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-black/20">
+                                    <tr class="hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">1</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm font-medium text-primary">Air Limbah Industri</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">pH (Derajat Keasaman)</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">SNI 6989.11:2019</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">2</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm font-medium text-primary">Udara Ambien</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">Sulfur Dioksida (SO2)</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">SNI 7119.7:2017</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">3</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm font-medium text-primary">Pupuk NPK padat</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">Kadar Nitrogen Total</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">SNI 2803:2010</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">4</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm font-medium text-primary">Makanan Ringan</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">Angka Lempeng Total</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">SNI 01-2332.3.2006</td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">5</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm font-medium text-primary">Batu Bata Merah</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">Kuat Tekan</td>
+                                        <td class="px-4 sm:px-6 py-4 text-sm text-secondary">SNI 15-2094-2000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </div>
-    </section>
+            </section>
+
+            <!-- Alur Section -->
+            <section id="alur" class="content-section animate-fadeIn">
+                <div class="max-w-5xl mx-auto space-y-6">
+                    <div class="relative group overflow-hidden rounded-[30px] border border-black/15 shadow-xl cursor-pointer"
+                        onclick="openLightbox('alur.jpg')">
+                        <img src="alur.jpg" alt="Alur Pelayanan Pengujian"
+                            class="w-full h-auto object-cover transform transition-transform duration-700">
+                        <div
+                            class="absolute bottom-6 left-6 z-20 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tarif Section -->
+            <section id="tarif" class="content-section animate-fadeIn">
+                <div class="max-w-5xl mx-auto space-y-8">
+                    <!-- Deskripsi Regulasi -->
+                    <div class="bg-slate-50 p-5 sm:p-8 rounded-[24px] sm:rounded-[30px] border border-black/10">
+                        <p class="text-sm md:text-base text-slate-700 leading-relaxed text-justify">
+                            BSPJI Banda Aceh menggunakan standar biaya yang mengacu pada <strong>Peraturan Pemerintah
+                                Republik Indonesia Nomor 54 Tahun 2021</strong> tentang Jenis dan Tarif atas Jenis
+                            Penerimaan Negara Bukan Pajak yang berlaku pada Kementerian Perindustrian, <strong>Peraturan
+                                Menteri Keuangan Nomor 108/PMK.02/2022 Tahun 2022</strong> tentang Jenis dan Tarif atas
+                            Jenis Penerimaan Negara Bukan Pajak yang bersifat volatil yang Berlaku pada Kementerian
+                            Perindustrian dan <strong>Peraturan Menteri Perindustrian Republik Indonesia Nomor 19 Tahun
+                                2021</strong> Tentang Besaran, Persyaratan, dan Tata Cara Pengenaan Tarif Tertentu atas
+                            Jenis Penerimaan Negara Bukan Pajak yang Berlaku pada Kementerian Perindustrian.
+                        </p>
+                    </div>
+
+                    <!-- Filter Area -->
+                    <div class="bg-appleLight p-5 sm:p-8 rounded-[24px] sm:rounded-[30px] border border-black/20 space-y-5">
+                        <label class="block text-sm font-bold text-primary uppercase tracking-wider">Cari berdasarkan
+                            komoditi/produk</label>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="relative flex-1">
+                                <select
+                                    class="w-full appearance-none bg-white border border-black/20 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-slate-200 transition-all font-medium cursor-pointer">
+                                    <option value="" disabled selected hidden>Pilih Komoditi/Produk</option>
+                                    <option value="pupuk">Pupuk</option>
+                                    <option value="garam">Garam</option>
+                                    <option value="semen">Semen</option>
+                                </select>
+                                <div
+                                    class="absolute inset-y-0 right-5 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fas fa-chevron-down text-sm"></i>
+                                </div>
+                            </div>
+                            <button
+                                class="w-full md:w-auto text-white px-10 py-4 rounded-2xl font-bold bg-slate-800 hover:bg-black transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-black/10">
+                                <i class="fas fa-search text-sm"></i>
+                                Cari
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Placeholder untuk hasil (opsional, untuk mempercantik tampilan) -->
+                    <div class="py-10 text-center border-2 border-dashed border-black/5 rounded-[24px] sm:rounded-[30px]">
+                        <p class="text-slate-400 font-medium">Hasil pencarian akan muncul di sini</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox"
+        class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm items-center justify-center p-4 md:p-10 transition-all duration-300 opacity-0"
+        onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white text-3xl hover:text-gray-300 transition-colors z-[110]">
+            <i class="fas fa-times"></i>
+        </button>
+        <img id="lightbox-img" src=""
+            class="max-w-full max-h-full rounded-lg shadow-2xl transform scale-95 transition-transform duration-300"
+            onclick="event.stopPropagation()">
+    </div>
 
     <script>
-        const tabs = document.querySelectorAll('.tab-btn');
-        const contentDaftar = document.getElementById('content-daftar');
-        const contentPermohonan = document.getElementById('content-permohonan');
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
 
-        tabs.forEach((btn, index) => {
-            btn.addEventListener('click', function () {
-                // Update button styles
-                tabs.forEach(b => {
-                    b.classList.remove('active-tab');
-                    b.classList.add('bg-slate-100', 'text-slate-700');
-                });
-                this.classList.add('active-tab');
-                this.classList.remove('bg-slate-100', 'text-slate-700');
+            lightbox.classList.remove('hidden');
+            lightbox.classList.add('flex');
 
-                // Switch content
-                if (index === 0) {
-                    contentDaftar.classList.remove('hidden');
-                    contentPermohonan.classList.add('hidden');
-                } else {
-                    contentDaftar.classList.add('hidden');
-                    contentPermohonan.classList.remove('hidden');
-                }
+            // Trigger animation
+            setTimeout(() => {
+                lightbox.classList.add('opacity-100');
+                img.classList.remove('scale-95');
+                img.classList.add('scale-100');
+            }, 10);
+
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+
+            lightbox.classList.remove('opacity-100');
+            img.classList.remove('scale-100');
+            img.classList.add('scale-95');
+
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
             });
-        });
+
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+
+            // Add active class to clicked nav item
+            event.currentTarget.classList.add('active');
+
+            // Scroll to content if on mobile
+            if (window.innerWidth < 768) {
+                document.querySelector('article').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
     </script>
 </body>
 
