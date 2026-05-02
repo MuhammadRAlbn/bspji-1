@@ -2,7 +2,7 @@
     <div
         x-data="{
             open: false,
-            query: @js($selectedKomoditi?->nama ?? ''),
+            query: @js($this->selectedKomoditi?->nama ?? ''),
             hasMatch: true,
             filterItems() {
                 const term = this.query.trim().toLowerCase();
@@ -61,15 +61,17 @@
                 class="absolute z-30 mt-2 max-h-72 w-full overflow-y-auto rounded-2xl border border-black/10 bg-white py-2 shadow-xl"
                 style="display: none;"
             >
-                @foreach($komoditis as $komoditi)
+                @foreach($this->komoditis as $komoditi)
                     <button
                         type="button"
                         wire:key="tarif-komoditi-{{ $komoditi->id }}"
                         wire:click="selectKomoditi({{ $komoditi->id }})"
+                        @disabled($komoditiId === $komoditi->id)
+                        aria-current="{{ $komoditiId === $komoditi->id ? 'true' : 'false' }}"
                         data-komoditi-option
                         data-nama="{{ str($komoditi->nama)->lower() }}"
                         @click="choose(@js($komoditi->nama))"
-                        class="block w-full px-5 py-3 text-left text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+                        class="block w-full px-5 py-3 text-left text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50 disabled:cursor-default disabled:bg-slate-100 disabled:text-slate-900"
                     >
                         {{ $komoditi->nama }}
                     </button>
@@ -83,15 +85,26 @@
             </div>
         </div>
 
-        @if($selectedKomoditi)
+        @if($this->selectedKomoditi)
             <p class="text-sm font-medium text-slate-500">
-                Menampilkan parameter untuk <span class="font-bold text-slate-800">{{ $selectedKomoditi->nama }}</span>.
+                Menampilkan parameter untuk <span class="font-bold text-slate-800">{{ $this->selectedKomoditi->nama }}</span>.
             </p>
         @endif
     </div>
 
-    @if($komoditiId && $parameters->isNotEmpty())
-        <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
+    <div wire:loading wire:target="selectKomoditi" class="w-full">
+        <div class="flex items-center justify-center space-x-3 rounded-[24px] border-2 border-dashed border-black/5 py-10 sm:rounded-[30px]">
+            <svg class="h-6 w-6 animate-spin text-slate-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="font-medium text-slate-500">Sedang memuat data parameter...</p>
+        </div>
+    </div>
+
+    <div wire:loading.remove wire:target="selectKomoditi">
+        @if($komoditiId && $this->parameters->isNotEmpty())
+            <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
             <div class="overflow-x-auto">
                 <table class="w-full border-collapse text-left">
                     <thead>
@@ -104,7 +117,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/10">
-                        @foreach($parameters as $parameter)
+                        @foreach($this->parameters as $parameter)
                             <tr wire:key="parameter-{{ $parameter->id }}" class="transition-colors hover:bg-slate-50/50">
                                 <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $loop->iteration }}</td>
                                 <td class="px-4 py-4 text-sm font-semibold text-[#1d1d1f] sm:px-6">{{ $parameter->nama }}</td>
@@ -119,13 +132,14 @@
                 </table>
             </div>
         </div>
-    @elseif($komoditiId)
-        <div class="rounded-[24px] border-2 border-dashed border-black/5 py-10 text-center sm:rounded-[30px]">
-            <p class="font-medium text-slate-400">Parameter untuk komoditi ini belum tersedia.</p>
-        </div>
-    @else
-        <div class="rounded-[24px] border-2 border-dashed border-black/5 py-10 text-center sm:rounded-[30px]">
-            <p class="font-medium text-slate-400">Pilih komoditi untuk melihat daftar parameter dan tarif pengujian.</p>
-        </div>
-    @endif
+        @elseif($komoditiId)
+            <div class="rounded-[24px] border-2 border-dashed border-black/5 py-10 text-center sm:rounded-[30px]">
+                <p class="font-medium text-slate-400">Parameter untuk komoditi ini belum tersedia.</p>
+            </div>
+        @else
+            <div class="rounded-[24px] border-2 border-dashed border-black/5 py-10 text-center sm:rounded-[30px]">
+                <p class="font-medium text-slate-400">Pilih komoditi untuk melihat daftar parameter dan tarif pengujian.</p>
+            </div>
+        @endif
+    </div>
 </div>

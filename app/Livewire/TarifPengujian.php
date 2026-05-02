@@ -6,6 +6,7 @@ use App\Models\Komoditi;
 use App\Models\Parameter;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class TarifPengujian extends Component
@@ -14,25 +15,30 @@ class TarifPengujian extends Component
 
     public function selectKomoditi(int $komoditiId): void
     {
-        $this->komoditiId = $komoditiId;
+        if ($this->komoditiId === $komoditiId) {
+            return;
+        }
+
+        $selectedKomoditiId = Komoditi::query()
+            ->whereKey($komoditiId)
+            ->value('id');
+
+        $this->komoditiId = $selectedKomoditiId ? (int) $selectedKomoditiId : null;
+
+        unset($this->parameters, $this->selectedKomoditi);
     }
 
-    public function render(): View
+    #[Computed]
+    public function komoditis(): Collection
     {
-        $komoditis = Komoditi::query()
+        return Komoditi::query()
             ->select(['id', 'nama'])
             ->orderBy('nama')
             ->get();
-
-        $parameters = $this->parameters();
-        $selectedKomoditi = $this->komoditiId
-            ? $komoditis->firstWhere('id', $this->komoditiId)
-            : null;
-
-        return view('livewire.tarif-pengujian', compact('komoditis', 'parameters', 'selectedKomoditi'));
     }
 
-    private function parameters(): Collection
+    #[Computed]
+    public function parameters(): Collection
     {
         if (! $this->komoditiId) {
             return collect();
@@ -43,5 +49,18 @@ class TarifPengujian extends Component
             ->select(['id', 'nama', 'metode_uji', 'satuan', 'harga'])
             ->orderBy('nama')
             ->get();
+    }
+
+    #[Computed]
+    public function selectedKomoditi(): ?Komoditi
+    {
+        return $this->komoditiId
+            ? $this->komoditis->firstWhere('id', $this->komoditiId)
+            : null;
+    }
+
+    public function render(): View
+    {
+        return view('livewire.tarif-pengujian');
     }
 }
