@@ -242,7 +242,13 @@ class ImportParameters extends Command
 
         $digits = preg_replace('/\D+/', '', $value);
 
-        return $digits === '' ? null : (int) $digits;
+        if ($digits === '') {
+            return null;
+        }
+
+        $price = (int) $digits;
+
+        return $price === 0 ? null : $price;
     }
 
     private function syncAutoIncrement(): void

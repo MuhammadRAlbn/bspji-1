@@ -47,7 +47,7 @@ class ParameterRelationManager extends RelationManager
                 ->numeric()
                 ->prefix('Rp')
                 ->minValue(0)
-                ->dehydrateStateUsing(fn (mixed $state): ?int => blank($state) ? null : (int) $state),
+                ->dehydrateStateUsing(fn (mixed $state): ?int => blank($state) || (int) $state === 0 ? null : (int) $state),
         ]);
     }
 
@@ -73,7 +73,7 @@ class ParameterRelationManager extends RelationManager
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('harga')
                     ->alignEnd()
-                    ->formatStateUsing(fn (int|string|null $state): string => blank($state) ? '-' : Number::currency((int) $state, 'IDR', 'id')),
+                    ->formatStateUsing(fn (int|string|null $state): string => blank($state) || (int) $state === 0 ? '-' : Number::currency((int) $state, 'IDR', 'id')),
             ])
             ->headerActions([
                 CreateAction::make(),
