@@ -124,7 +124,7 @@
                                 <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $parameter->metode_uji ?: '-' }}</td>
                                 <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $parameter->satuan ?: '-' }}</td>
                                 <td class="px-4 py-4 text-right text-sm font-bold text-slate-800 sm:px-6">
-                                    {{ \Illuminate\Support\Number::currency($parameter->harga, 'IDR', 'id') }}
+                                    {{ $parameter->harga === null ? '-' : \Illuminate\Support\Number::currency($parameter->harga, 'IDR', 'id') }}
                                 </td>
                             </tr>
                         @endforeach
