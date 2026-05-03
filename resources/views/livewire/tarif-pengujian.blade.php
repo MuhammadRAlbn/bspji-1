@@ -103,26 +103,28 @@
     </div>
 
     <div wire:loading.remove wire:target="selectKomoditi">
-        @if($komoditiId && $this->parameters->isNotEmpty())
-            <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
-            <div class="overflow-x-auto">
+        @if($komoditiId && $this->parameters->count() > 0)
+            <div class="relative overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
+            <div
+                wire:loading.class="opacity-50"
+                wire:target="nextPage, previousPage, gotoPage"
+                class="overflow-x-auto transition-opacity duration-150"
+            >
                 <table class="w-full border-collapse text-left">
                     <thead>
                         <tr class="border-b border-black/20 bg-slate-50">
                             <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">No</th>
                             <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Parameter</th>
                             <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Metode Uji</th>
-                            <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Satuan</th>
                             <th class="px-4 py-4 text-right text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Harga</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/10">
                         @foreach($this->parameters as $parameter)
                             <tr wire:key="parameter-{{ $parameter->id }}" class="transition-colors hover:bg-slate-50/50">
-                                <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $loop->iteration }}</td>
+                                <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $this->parameters->firstItem() + $loop->index }}</td>
                                 <td class="px-4 py-4 text-sm font-semibold text-[#1d1d1f] sm:px-6">{{ $parameter->nama }}</td>
                                 <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $parameter->metode_uji ?: '-' }}</td>
-                                <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $parameter->satuan ?: '-' }}</td>
                                 <td class="px-4 py-4 text-right text-sm font-bold text-slate-800 sm:px-6">
                                     {{ blank($parameter->harga) || (int) $parameter->harga === 0 ? '-' : \Illuminate\Support\Number::currency($parameter->harga, 'IDR', 'id') }}
                                 </td>
@@ -130,6 +132,26 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <div class="border-t border-black/10 px-4 py-4 sm:px-6">
+                {{ $this->parameters->links(data: ['scrollTo' => false]) }}
+            </div>
+
+            <div
+                wire:loading.delay.shorter.flex
+                wire:target="nextPage, previousPage, gotoPage"
+                class="pointer-events-none absolute inset-0 z-10 hidden items-center justify-center bg-white/60 backdrop-blur-[1px]"
+                aria-live="polite"
+                aria-label="Sedang memuat halaman parameter"
+            >
+                <div class="flex items-center gap-3 rounded-full border border-black/10 bg-white px-4 py-2 text-sm font-semibold text-slate-600 shadow-sm">
+                    <svg class="h-4 w-4 animate-spin text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Memuat data...
+                </div>
             </div>
         </div>
         @elseif($komoditiId)

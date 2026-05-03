@@ -6,6 +6,7 @@ use App\Livewire\TarifPengujian;
 use App\Models\Komoditi;
 use App\Models\Lab;
 use App\Models\Parameter;
+use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Number;
 use Livewire\Livewire;
@@ -37,7 +38,7 @@ class TarifPengujianTest extends TestCase
         $parameter = Parameter::factory()->for($lab)->for($komoditi)->create([
             'nama' => 'pH',
             'metode_uji' => 'SNI 6989',
-            'satuan' => 'pH',
+            'satuan' => 'mg/L',
             'harga' => 50000,
         ]);
 
@@ -45,7 +46,29 @@ class TarifPengujianTest extends TestCase
             ->set('komoditiId', $komoditi->id)
             ->assertSee($parameter->nama)
             ->assertSee($parameter->metode_uji)
+            ->assertDontSee($parameter->satuan)
             ->assertSee(Number::currency($parameter->harga, 'IDR', 'id'));
+    }
+
+    public function test_parameters_are_paginated(): void
+    {
+        $lab = Lab::factory()->create();
+        $komoditi = Komoditi::factory()->for($lab)->create();
+
+        Parameter::factory()
+            ->count(11)
+            ->sequence(fn (Sequence $sequence): array => ['nama' => 'Parameter '.str_pad((string) ($sequence->index + 1), 2, '0', STR_PAD_LEFT)])
+            ->for($lab)
+            ->for($komoditi)
+            ->create();
+
+        Livewire::test(TarifPengujian::class)
+            ->set('komoditiId', $komoditi->id)
+            ->assertSee('Parameter 01')
+            ->assertSee('Parameter 10')
+            ->assertDontSee('Parameter 11')
+            ->call('nextPage')
+            ->assertSee('Parameter 11');
     }
 
     public function test_only_shows_parameters_for_selected_komoditi(): void

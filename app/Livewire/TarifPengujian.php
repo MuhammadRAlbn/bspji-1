@@ -5,13 +5,19 @@ namespace App\Livewire;
 use App\Models\Komoditi;
 use App\Models\Parameter;
 use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TarifPengujian extends Component
 {
+    use WithPagination;
+
     public ?int $komoditiId = null;
+
+    private const PARAMETERS_PER_PAGE = 10;
 
     public function selectKomoditi(int $komoditiId): void
     {
@@ -24,6 +30,8 @@ class TarifPengujian extends Component
             ->value('id');
 
         $this->komoditiId = $selectedKomoditiId ? (int) $selectedKomoditiId : null;
+
+        $this->resetPage();
 
         unset($this->parameters, $this->selectedKomoditi);
     }
@@ -38,17 +46,13 @@ class TarifPengujian extends Component
     }
 
     #[Computed]
-    public function parameters(): Collection
+    public function parameters(): LengthAwarePaginator
     {
-        if (! $this->komoditiId) {
-            return collect();
-        }
-
         return Parameter::query()
             ->where('komoditi_id', $this->komoditiId)
-            ->select(['id', 'nama', 'metode_uji', 'satuan', 'harga'])
+            ->select(['id', 'nama', 'metode_uji', 'harga'])
             ->orderBy('nama')
-            ->get();
+            ->paginate(self::PARAMETERS_PER_PAGE);
     }
 
     #[Computed]
