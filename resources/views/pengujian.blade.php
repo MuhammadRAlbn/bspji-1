@@ -72,7 +72,7 @@
     :class="lightboxOpen ? 'overflow-hidden' : 'overflow-x-hidden'"
     class="overflow-x-hidden bg-white font-sans text-[#1d1d1f] antialiased leading-relaxed"
 >
-    <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
+    <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
             alt="Pengujian Hero"
@@ -156,12 +156,12 @@
                         <button
                             type="button"
                             @click="openLightbox('{{ asset('storage/' . $sertifikasi->image) }}', 'Sertifikat Akreditasi')"
-                            class="group relative block cursor-pointer overflow-hidden rounded-[24px] text-left"
+                            class="group relative block w-full max-w-[720px] cursor-pointer overflow-hidden rounded-[24px] text-left sm:w-[85%] lg:w-[70%]"
                         >
                             <img
                                 src="{{ asset('storage/' . $sertifikasi->image) }}"
                                 alt="Sertifikat Akreditasi"
-                                class="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105 sm:w-[85%] lg:w-[70%]"
+                                class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-105"
                             >
                             <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                 <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
