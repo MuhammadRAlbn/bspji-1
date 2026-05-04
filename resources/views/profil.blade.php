@@ -2,8 +2,8 @@
     use Illuminate\Support\Facades\Storage;
     use Illuminate\Support\Str;
 
-    $featuredPejabats = $pejabats->take(2);
-    $supportPejabats = $pejabats->slice(2)->values();
+    $featuredPejabats = collect($pejabats)->take(2);
+    $supportPejabats = collect($pejabats)->slice(2)->values();
     $sectionTitles = collect([
         'sejarah' => 'Tonggak Sejarah',
         'motto' => 'Moto, Visi, & Misi',
@@ -11,8 +11,8 @@
         'struktur' => 'Struktur Organisasi',
         'profil' => 'Profil Pejabat',
     ]);
-    $pathTabs = $tabs->mapWithKeys(fn ($tab, $key) => [parse_url(route($tab['route']), PHP_URL_PATH) => $key]);
-    $profileModalData = $pejabats->mapWithKeys(function ($pejabat) {
+    $pathTabs = collect($tabs)->mapWithKeys(fn ($tab, $key) => [parse_url(route($tab['route']), PHP_URL_PATH) => $key]);
+    $profileModalData = collect($pejabats)->mapWithKeys(function ($pejabat) {
         return [
             $pejabat->id => [
                 'image' => $pejabat->foto ? Storage::url($pejabat->foto) : null,
@@ -35,10 +35,10 @@
     <script type="application/json" id="profile-page-profiles">@json($profileModalData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)</script>
 
     <section
-        class="relative mx-auto mt-8 flex h-[360px] w-[95%] flex-col justify-center overflow-hidden rounded-[2rem] shadow-2xl md:h-[450px] md:w-[96%] md:rounded-[2.5rem]">
+        class="relative mx-auto mt-8 flex h-[360px] w-[95%] flex-col justify-center overflow-hidden rounded-4xl shadow-2xl md:h-[450px] md:w-[96%] md:rounded-[2.5rem]">
         <div class="absolute inset-0">
             <img src="{{ $heroImage }}" alt="BSPJI Banda Aceh" class="h-full w-full object-cover object-[center_65%]" fetchpriority="high">
-            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/60 to-black/10"></div>
+            <div class="absolute inset-0 bg-linear-to-r from-black/75 via-black/60 to-black/10"></div>
         </div>
 
         <div class="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
@@ -86,7 +86,7 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if ($sejarahSingkats->isEmpty())
-                    <div class="rounded-[2rem] border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Belum ada data sejarah singkat yang ditambahkan.
                     </div>
                 @else
@@ -120,7 +120,7 @@
                                         <img src="{{ Storage::url($sejarah->gambar) }}" alt="{{ $sejarah->judul }}" loading="lazy" decoding="async"
                                             class="h-full w-full object-cover">
                                     @else
-                                        <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-slate-900 via-slate-700 to-red-700 px-6 text-center text-sm font-bold uppercase tracking-[0.22em] text-white">
+                                        <div class="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-900 via-slate-700 to-red-700 px-6 text-center text-sm font-bold uppercase tracking-[0.22em] text-white">
                                             {{ $sejarah->tahun }}
                                         </div>
                                     @endif
@@ -136,7 +136,7 @@
                 role="tabpanel">
                 <div class="grid gap-8 lg:grid-cols-12">
                     <div class="lg:col-span-5 xl:col-span-4">
-                        <article class="relative flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#d7f1f4] bg-white p-6 shadow-md">
+                        <article class="relative flex h-full flex-col overflow-hidden rounded-4xl border border-[#d7f1f4] bg-white p-6 shadow-md">
                             <div class="absolute -left-14 -top-14 h-40 w-40 rounded-full border border-[#d7f1f4]"></div>
                             <div class="absolute -left-10 -top-10 h-32 w-32 rounded-full border border-[#d7f1f4]"></div>
                             <div class="absolute -right-16 -top-12 h-44 w-44 rounded-full border border-[#d7f1f4]"></div>
@@ -199,14 +199,14 @@
                     </div>
 
                     <div class="space-y-6 lg:col-span-7 xl:col-span-8">
-                        <article class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-md md:p-10">
+                        <article class="rounded-4xl border border-slate-200 bg-white p-8 shadow-md md:p-10">
                             <p class="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-red-600">Visi</p>
                             <div class="text-sm leading-relaxed text-slate-600 md:text-lg md:font-light [&_p]:mb-3">
                                 {!! $visiMisi?->visi ?: '<p>Data visi belum tersedia.</p>' !!}
                             </div>
                         </article>
 
-                        <article class="rounded-[2rem] border border-slate-200 bg-white p-8 shadow-md md:p-10">
+                        <article class="rounded-4xl border border-slate-200 bg-white p-8 shadow-md md:p-10">
                             <p class="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-red-600">Misi</p>
                             <div
                                 class="text-sm leading-relaxed text-slate-600 md:text-lg md:font-light [&_li]:mb-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5">
@@ -221,12 +221,12 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if (! $tugasFungsi)
-                    <div class="rounded-[2rem] border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Data Tugas dan Fungsi belum tersedia.
                     </div>
                 @else
                     <div class="grid gap-6 lg:grid-cols-2">
-                        <article class="rounded-[2rem] border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+                        <article class="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
                             <p class="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-red-600">Tugas</p>
                             <div
                                 class="text-sm leading-relaxed text-slate-600 md:text-base [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5">
@@ -234,7 +234,7 @@
                             </div>
                         </article>
 
-                        <article class="rounded-[2rem] border border-slate-200 bg-slate-900 p-6 text-white shadow-sm md:p-8">
+                        <article class="rounded-4xl border border-slate-200 bg-slate-900 p-6 text-white shadow-sm md:p-8">
                             <p class="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-red-300">Fungsi</p>
                             <div
                                 class="text-sm leading-relaxed text-slate-200 md:text-base [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5">
@@ -249,11 +249,11 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if (! $strukturOrganisasi || ! $strukturOrganisasi->image_path)
-                    <div class="rounded-[2rem] border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Data Struktur Organisasi belum tersedia.
                     </div>
                 @else
-                    <div class="rounded-[2rem] overflow-hidden border border-slate-200 bg-white shadow-sm">
+                    <div class="rounded-4xl overflow-hidden border border-slate-200 bg-white shadow-sm">
                         <img src="{{ Storage::url($strukturOrganisasi->image_path) }}" alt="Struktur Organisasi" loading="lazy" decoding="async"
                             class="w-full h-auto object-cover">
                     </div>
@@ -264,13 +264,13 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if ($pejabats->isEmpty())
-                    <div class="rounded-[2rem] border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Data profil pejabat belum tersedia.
                     </div>
                 @else
                     <div class="mb-8 grid gap-6 md:mb-10 xl:grid-cols-2">
                         @foreach ($featuredPejabats as $pejabat)
-                            <article class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
+                            <article class="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-sm">
                                 <div class="grid md:grid-cols-[0.95fr_1.05fr]">
                                     <button type="button"
                                         class="group relative min-h-[280px] bg-slate-100 text-left sm:min-h-[340px] md:min-h-[360px]"
@@ -287,7 +287,7 @@
                                                 </svg>
                                             </div>
                                         @endif
-                                        <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/35 to-transparent"></div>
+                                        <div class="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-slate-950/35 to-transparent"></div>
                                     </button>
 
                                     <div class="p-5 sm:p-6 md:p-8">
@@ -309,7 +309,7 @@
                                 <article class="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm">
                                     <div class="flex items-start gap-4 sm:block">
                                         <button type="button"
-                                            class="group mb-0 aspect-[4/5] w-28 shrink-0 overflow-hidden rounded-[1.25rem] bg-slate-100 sm:mb-4 sm:w-full"
+                                            class="group mb-0 aspect-4/5 w-28 shrink-0 overflow-hidden rounded-[1.25rem] bg-slate-100 sm:mb-4 sm:w-full"
                                             @click="openProfile({{ $pejabat->id }})"
                                             aria-label="Lihat profil {{ $pejabat->nama }}">
                                             @if ($pejabat->foto)
@@ -344,12 +344,12 @@
     </main>
 
     <div x-show="lightboxOpen" x-cloak x-transition.opacity @keydown.escape.window="closeProfile()"
-        class="fixed inset-0 z-[120] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+        class="fixed inset-0 z-120 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
         style="display: none;" role="dialog" aria-modal="true">
         <button type="button" class="absolute inset-0 cursor-default" @click="closeProfile()" aria-label="Tutup modal"></button>
 
         <section
-            class="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-[2rem] bg-white shadow-2xl md:grid-cols-[0.9fr_1.1fr]">
+            class="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-4xl bg-white shadow-2xl md:grid-cols-[0.9fr_1.1fr]">
             <button type="button"
                 class="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-900 shadow transition hover:bg-white"
                 @click="closeProfile()" aria-label="Tutup profil">

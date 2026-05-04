@@ -32,7 +32,7 @@
                                 </div>
                             @endif
                         </div>
-                        <div class="p-6 text-center w-full flex-grow">
+                        <div class="p-6 text-center w-full grow">
                             <h2 class="text-xl font-bold text-gray-900 mb-1">{{ $pejabat->nama }}</h2>
                             <p class="text-blue-600 font-medium mb-4">{{ $pejabat->jabatan }}</p>
                             

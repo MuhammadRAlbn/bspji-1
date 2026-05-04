@@ -33,7 +33,7 @@
                 type="button"
                 @click="tab = 'ruang-lingkup'"
                 :class="tab === 'ruang-lingkup' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'ruang-lingkup' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.75h4.5m-7.386 2.25h10.272c.53 0 1.02.28 1.286.736l2.226 3.818a1.5 1.5 0 0 1 0 1.51l-2.226 3.818a1.5 1.5 0 0 1-1.286.736H6.864a1.5 1.5 0 0 1-1.286-.736l-2.226-3.818a1.5 1.5 0 0 1 0-1.51l2.226-3.818A1.5 1.5 0 0 1 6.864 6ZM9 9.75h6m-6 3h3" />
@@ -45,7 +45,7 @@
                 type="button"
                 @click="tab = 'alur'"
                 :class="tab === 'alur' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'alur' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 15.75 19.5 19.5m0 0-3.75 3.75M19.5 19.5H9A6.75 6.75 0 0 1 2.25 12.75V10.5A6.75 6.75 0 0 1 9 3.75h3" />
@@ -57,7 +57,7 @@
                 type="button"
                 @click="tab = 'tarif'"
                 :class="tab === 'tarif' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'tarif' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14.25 6.75 12m0 0L9 9.75M6.75 12h10.5m3.75-6.75v13.5A2.25 2.25 0 0 1 18.75 21H5.25A2.25 2.25 0 0 1 3 18.75V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />
@@ -92,10 +92,10 @@
                     @if($ruangLingkupImages->count() > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             @foreach($ruangLingkupImages as $item)
-                                <div class="bg-white p-4 rounded-[2rem] shadow-lg border border-slate-100 hover:-translate-y-2 transition duration-500 group">
+                                <div class="bg-white p-4 rounded-4xl shadow-lg border border-slate-100 hover:-translate-y-2 transition duration-500 group">
                                     <div class="aspect-square rounded-2xl overflow-hidden relative bg-slate-50">
                                         <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full object-contain group-hover:scale-110 transition duration-700" alt="Gambar Ruang Lingkup">
-                                        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
+                                        <div class="absolute inset-0 bg-linear-to-t from-blue-900/20 to-transparent opacity-0 group-hover:opacity-100 transition duration-500"></div>
                                     </div>
                                 </div>
                             @endforeach
@@ -108,7 +108,7 @@
             <div x-show="tab === 'alur'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" style="display: none;">
                 <div class="grid grid-cols-1 gap-12">
                     @forelse($alur as $item)
-                        <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 group p-2 bg-gradient-to-br from-white to-slate-50">
+                        <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 group p-2 bg-linear-to-br from-white to-slate-50">
                             <div class="p-8 md:p-12 flex justify-center items-center">
                                 <img src="{{ asset('storage/' . $item->image) }}" class="max-w-full h-auto rounded-2xl shadow-sm group-hover:scale-[1.02] transition duration-1000" alt="Alur Proses">
                             </div>
