@@ -19,6 +19,14 @@
     }
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
 @utility no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
