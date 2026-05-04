@@ -1,4 +1,5 @@
-<x-layouts.app title="Unit Pelayanan Publik - BSPJI Banda Aceh" x-data="{ 
+<x-layouts.app title="Unit Pelayanan Publik - BSPJI Banda Aceh">
+<div x-data="{ 
         mobileMenuOpen: false, 
         activeTab: 'profil',
         lightbox: { open: false, src: '' }
@@ -463,4 +464,5 @@
         <img :src="lightbox.src" alt="Enlarged view" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl" @click.stop>
     </div>
 
+</div>
 </x-layouts.app>

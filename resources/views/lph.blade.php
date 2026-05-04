@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lembaga Pemeriksa Halal - BSPJI Pekanbaru</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body
-    x-data="{ tab: 'ruang-lingkup' }"
-    class="overflow-x-hidden bg-white font-sans text-[#1d1d1f] antialiased leading-relaxed"
->
+<x-layouts.app title="Lembaga Pemeriksa Halal - BSPJI Banda Aceh">
+<div x-data="{ tab: 'ruang-lingkup' }">
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&q=80&w=2074"
@@ -28,7 +14,7 @@
     </header>
 
     <main class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-10 lg:grid-cols-1">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-24 lg:grid-cols-1">
             <button
                 type="button"
                 @click="tab = 'ruang-lingkup'"
@@ -77,7 +63,7 @@
                 </svg>
                 <span class="text-base font-semibold sm:text-[1.05rem]">Struktur, Visi & Misi</span>
             </button>
-            
+
             <button
                 type="button"
                 @click="tab = 'mutu'"
@@ -101,7 +87,7 @@
                 </svg>
                 <span class="text-base font-semibold sm:text-[1.05rem]">Tarif</span>
             </button>
-            
+
             <button
                 type="button"
                 @click="tab = 'infrastruktur'"
@@ -116,7 +102,7 @@
         </div>
 
         <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
-            
+
             {{-- Tab Ruang Lingkup --}}
             <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -143,7 +129,7 @@
             {{-- Tab SDM --}}
             <div x-show="tab === 'sdm'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    
+
                     {{-- Auditor Halal --}}
                     <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-8">
                         <div class="flex items-center mb-8">
@@ -152,7 +138,7 @@
                             </div>
                             <h2 class="text-2xl font-extrabold text-green-950 tracking-tight">Auditor Halal</h2>
                         </div>
-                        
+
                         <div class="space-y-4">
                             @forelse($sdmAuditor as $sdm)
                                 <div class="flex items-center p-4 bg-gray-50/50 rounded-2xl border border-gray-100 hover:bg-indigo-50 transition duration-300">
@@ -175,7 +161,7 @@
                             </div>
                             <h2 class="text-2xl font-extrabold text-green-950 tracking-tight">Dewan Pembina Syariah</h2>
                         </div>
-                        
+
                         <div class="space-y-4">
                             @forelse($sdmPembina as $sdm)
                                 <div class="flex items-center p-4 bg-gray-50/50 rounded-2xl border border-gray-100 hover:bg-amber-50 transition duration-300">
@@ -353,6 +339,5 @@
             </div>
         </article>
     </main>
-
-</body>
-</html>
+</div>
+</x-layouts.app>

@@ -1,4 +1,4 @@
-<x-layouts.app title="PPID - BSPJI Banda Aceh" x-data="{ mobileMenuOpen: false }">
+<x-layouts.app title="PPID - BSPJI Banda Aceh">
     @push('styles')
         <style>
             .nav-glass {

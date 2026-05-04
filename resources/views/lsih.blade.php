@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorium Sentral Ilmu Hayati - BSPJI Pekanbaru</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body
-    x-data="{ tab: 'ruang-lingkup' }"
-    class="overflow-x-hidden bg-white font-sans text-[#1d1d1f] antialiased leading-relaxed"
->
+<x-layouts.app title="Laboratorium Sentral Ilmu Hayati - BSPJI Banda Aceh">
+<div x-data="{ tab: 'ruang-lingkup' }">
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&q=80&w=2070"
@@ -28,7 +14,7 @@
     </header>
 
     <main class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-10 lg:grid-cols-1">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-24 lg:grid-cols-1">
             <button
                 type="button"
                 @click="tab = 'ruang-lingkup'"
@@ -67,7 +53,7 @@
         </div>
 
         <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
-            
+
             {{-- Tab Ruang Lingkup --}}
             <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="grid grid-cols-1 gap-12">
@@ -126,6 +112,5 @@
             </div>
         </article>
     </main>
-
-</body>
-</html>
+</div>
+</x-layouts.app>

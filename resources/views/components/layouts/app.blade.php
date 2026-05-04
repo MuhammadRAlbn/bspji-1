@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
 
+    @livewireScriptConfig
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
@@ -25,6 +26,8 @@
     <main>
         {{ $slot }}
     </main>
+
+    <x-layouts.partials.footer />
 
     @stack('scripts')
 </body>

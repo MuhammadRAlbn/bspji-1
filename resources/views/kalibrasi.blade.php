@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Layanan Kalibrasi - BSPJI Pekanbaru</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
-</head>
-<body
-    x-data="{ tab: 'sertifikasi' }"
-    class="overflow-x-hidden bg-white font-sans text-[#1d1d1f] antialiased leading-relaxed"
->
+<x-layouts.app title="Layanan Kalibrasi">
+<div x-data="{ tab: 'sertifikasi' }">
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070"
@@ -27,8 +13,8 @@
         </div>
     </header>
 
-    <main class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-10 lg:grid-cols-1">
+    <div class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-24 lg:grid-cols-1">
             <button
                 type="button"
                 @click="tab = 'sertifikasi'"
@@ -197,7 +183,6 @@
                 </div>
             </div>
         </article>
-    </main>
-
-</body>
-</html>
+    </div>
+</div>
+</x-layouts.app>

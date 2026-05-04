@@ -1,24 +1,5 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengujian</title>
-    <meta
-        name="description"
-        content="Halaman layanan pengujian profesional dengan standar internasional."
-    >
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-    @livewireScriptConfig
-</head>
-<body
+<x-layouts.app title="Pengujian">
+<div
     x-data="{
         tab: 'sertifikasi',
         scopeQuery: '',
@@ -91,8 +72,7 @@
             this.currentPage = 1;
         }
     }"
-    :class="lightboxOpen ? 'overflow-hidden' : 'overflow-x-hidden'"
-    class="overflow-x-hidden bg-white font-sans text-[#1d1d1f] antialiased leading-relaxed"
+    x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)"
 >
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
@@ -107,8 +87,8 @@
         </div>
     </header>
 
-    <main class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-10 lg:grid-cols-1">
+    <div class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-24 lg:grid-cols-1">
             <button
                 type="button"
                 @click="tab = 'sertifikasi'"
@@ -324,7 +304,7 @@
                                                 </button>
                                             </template>
 
-                                            <button @click="nextPage()" :disabled="currentPage === totalPages" :class="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-500'" class="relative -ml-px inline-flex items-center rounded-r-md border border-black/10 bg-white px-2 py-2 text-sm font-medium text-slate-500 transition active:bg-slate-100 active:text-slate-500" aria-label="Next">
+                                            <button @click="nextPage()" :disabled="currentPage === totalPages" :class="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-500'" class="relative -ml-px inline-flex items-center rounded-r-md border border-black/10 bg-white px-2 py-2 text-sm font-medium text-slate-500 transition active:bg-slate-100 active:text-slate-700" aria-label="Next">
                                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
                                                     <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                                                 </svg>
@@ -385,7 +365,7 @@
                 </div>
             </section>
         </article>
-    </main>
+    </div>
 
     <div
         x-show="lightboxOpen"
@@ -412,5 +392,5 @@
             class="max-h-full max-w-full rounded-lg shadow-2xl"
         >
     </div>
-</body>
-</html>
+</div>
+</x-layouts.app>
