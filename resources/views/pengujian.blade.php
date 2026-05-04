@@ -23,6 +23,8 @@
         tab: 'sertifikasi',
         scopeQuery: '',
         selectedLab: '',
+        currentPage: 1,
+        perPage: 10,
         lightboxOpen: false,
         lightboxImage: '',
         lightboxAlt: '',
@@ -67,6 +69,26 @@
                     .toLowerCase()
                     .includes(query);
             });
+        },
+        get paginatedScopeItems() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.filteredScopeItems.slice(start, end);
+        },
+        get totalPages() {
+            return Math.ceil(this.filteredScopeItems.length / this.perPage);
+        },
+        nextPage() {
+            if (this.currentPage < this.totalPages) this.currentPage++;
+        },
+        prevPage() {
+            if (this.currentPage > 1) this.currentPage--;
+        },
+        gotoPage(page) {
+            this.currentPage = page;
+        },
+        resetPagination() {
+            this.currentPage = 1;
         }
     }"
     :class="lightboxOpen ? 'overflow-hidden' : 'overflow-x-hidden'"
@@ -192,7 +214,7 @@
                             <div class="flex flex-wrap gap-3">
                                 <button
                                     type="button"
-                                    @click="selectedLab = ''"
+                                    @click="selectedLab = ''; resetPagination()"
                                     :class="selectedLab === '' ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-700 border-black/15'"
                                     class="rounded-full border px-4 py-2 text-sm font-semibold transition-all"
                                 >
@@ -202,7 +224,7 @@
                                 <template x-for="lab in labMenuItems" :key="lab.value">
                                     <button
                                         type="button"
-                                        @click="selectedLab = lab.value"
+                                        @click="selectedLab = lab.value; resetPagination()"
                                         :class="selectedLab === lab.value ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-700 border-black/15'"
                                         class="rounded-full border px-4 py-2 text-sm font-semibold transition-all"
                                         x-text="lab.label"
@@ -218,6 +240,7 @@
                             <div class="relative flex-1">
                                 <input
                                     x-model="scopeQuery"
+                                    @input="resetPagination()"
                                     type="text"
                                     placeholder="Masukkan lab, komoditi, atau kata kunci ruang lingkup"
                                     class="w-full rounded-xl border border-black/20 bg-white px-4 py-3 pr-10 transition-all focus:outline-none focus:ring-2 focus:ring-slate-200"
@@ -246,22 +269,70 @@
                                 <thead>
                                     <tr class="border-b border-black/20 bg-slate-50">
                                         <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">No</th>
-                                        <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Lab</th>
                                         <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Komoditi / Produk</th>
                                         <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Ruang Lingkup Pengujian</th>
+                                        <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Lab</th>
                                     </tr>
                                 </thead>
-                                <tbody class="divide-y divide-black/10" x-show="filteredScopeItems.length">
-                                    <template x-for="(item, index) in filteredScopeItems" :key="`${item.komoditi}-${index}`">
+                                <tbody class="divide-y divide-black/10" x-show="paginatedScopeItems.length">
+                                    <template x-for="(item, index) in paginatedScopeItems" :key="`${item.komoditi}-${index}`">
                                         <tr class="transition-colors hover:bg-slate-50/50">
-                                            <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6" x-text="index + 1"></td>
-                                            <td class="px-4 py-4 text-sm font-medium text-[#1d1d1f] sm:px-6" x-text="item.lab_label"></td>
+                                            <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6" x-text="(currentPage - 1) * perPage + index + 1"></td>
                                             <td class="px-4 py-4 text-sm font-medium text-[#1d1d1f] sm:px-6" x-text="item.komoditi || '-'"></td>
                                             <td class="px-4 py-4 text-sm leading-relaxed text-[#86868b] sm:px-6" x-html="item.ruang_lingkup_html || '-'"></td>
+                                            <td class="px-4 py-4 text-sm font-medium text-[#1d1d1f] sm:px-6" x-text="item.lab_label"></td>
                                         </tr>
                                     </template>
                                 </tbody>
                             </table>
+                        </div>
+
+                        <div x-show="totalPages > 1" class="border-t border-black/10 px-4 py-4 sm:px-6">
+                            <nav role="navigation" aria-label="Pagination Navigation" class="flex items-center justify-between">
+                                <div class="flex flex-1 justify-between sm:hidden">
+                                    <button @click="prevPage()" :disabled="currentPage === 1" :class="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-500'" class="relative inline-flex items-center rounded-md border border-black/10 bg-white px-4 py-2 text-sm font-medium text-slate-700 leading-5 transition active:bg-slate-100 active:text-slate-700">
+                                        &laquo; Sebelumnya
+                                    </button>
+                                    <button @click="nextPage()" :disabled="currentPage === totalPages" :class="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-500'" class="relative ml-3 inline-flex items-center rounded-md border border-black/10 bg-white px-4 py-2 text-sm font-medium text-slate-700 leading-5 transition active:bg-slate-100 active:text-slate-700">
+                                        Berikutnya &raquo;
+                                    </button>
+                                </div>
+
+                                <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                                    <div>
+                                        <p class="text-sm text-slate-700 leading-5">
+                                            Menampilkan
+                                            <span class="font-medium" x-text="(currentPage - 1) * perPage + 1"></span>
+                                            hingga
+                                            <span class="font-medium" x-text="Math.min(currentPage * perPage, filteredScopeItems.length)"></span>
+                                            dari
+                                            <span class="font-medium" x-text="filteredScopeItems.length"></span>
+                                            hasil
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <span class="relative z-0 inline-flex rounded-md shadow-sm">
+                                            <button @click="prevPage()" :disabled="currentPage === 1" :class="currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-500'" class="relative inline-flex items-center rounded-l-md border border-black/10 bg-white px-2 py-2 text-sm font-medium text-slate-500 transition active:bg-slate-100 active:text-slate-500" aria-label="Previous">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+
+                                            <template x-for="page in totalPages" :key="page">
+                                                <button @click="gotoPage(page)" :aria-current="currentPage === page ? 'page' : null" :class="currentPage === page ? 'relative -ml-px inline-flex items-center border px-4 py-2 text-sm font-medium leading-5 transition z-10 bg-slate-800 text-white border-slate-800 cursor-default' : 'relative -ml-px inline-flex items-center border px-4 py-2 text-sm font-medium leading-5 transition bg-white text-slate-700 border-black/10 hover:text-slate-500 active:bg-slate-100 active:text-slate-700'" x-text="page">
+                                                </button>
+                                            </template>
+
+                                            <button @click="nextPage()" :disabled="currentPage === totalPages" :class="currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:text-slate-500'" class="relative -ml-px inline-flex items-center rounded-r-md border border-black/10 bg-white px-2 py-2 text-sm font-medium text-slate-500 transition active:bg-slate-100 active:text-slate-500" aria-label="Next">
+                                                <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </nav>
                         </div>
 
                         <div x-show="!filteredScopeItems.length" class="px-6 py-16 text-center">

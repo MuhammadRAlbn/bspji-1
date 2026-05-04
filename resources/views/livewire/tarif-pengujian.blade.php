@@ -115,8 +115,8 @@
                         <tr class="border-b border-black/20 bg-slate-50">
                             <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">No</th>
                             <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Parameter</th>
+                            <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Harga</th>
                             <th class="px-4 py-4 text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Metode Uji</th>
-                            <th class="px-4 py-4 text-right text-xs font-bold uppercase tracking-wider text-[#1d1d1f] sm:px-6 sm:text-sm">Harga</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-black/10">
@@ -124,10 +124,10 @@
                             <tr wire:key="parameter-{{ $parameter->id }}" class="transition-colors hover:bg-slate-50/50">
                                 <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $this->parameters->firstItem() + $loop->index }}</td>
                                 <td class="px-4 py-4 text-sm font-semibold text-[#1d1d1f] sm:px-6">{{ $parameter->nama }}</td>
-                                <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $parameter->metode_uji ?: '-' }}</td>
-                                <td class="px-4 py-4 text-right text-sm font-bold text-slate-800 sm:px-6">
+                                <td class="px-4 py-4 text-sm font-bold text-slate-800 sm:px-6">
                                     {{ blank($parameter->harga) || (int) $parameter->harga === 0 ? '-' : \Illuminate\Support\Number::currency($parameter->harga, 'IDR', 'id') }}
                                 </td>
+                                <td class="px-4 py-4 text-sm text-[#86868b] sm:px-6">{{ $parameter->metode_uji ?: '-' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
