@@ -103,7 +103,7 @@
     </div>
 
     <div wire:loading.remove wire:target="selectKomoditi">
-        @if($komoditiId && $this->parameters->count() > 0)
+        @if($komoditiId && count($this->parameters) > 0)
             <div class="relative overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
             <div
                 wire:loading.class="opacity-50"

@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Komoditi;
 use App\Models\Parameter;
 use Illuminate\Contracts\View\View;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
