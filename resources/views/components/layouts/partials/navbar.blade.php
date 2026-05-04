@@ -27,9 +27,15 @@
     ];
 
     $tautanMenu = [
-        ['label' => 'Berita', 'url' => '#'],
-        ['label' => 'SIPPN', 'url' => '#'],
-        ['label' => 'Lapor', 'url' => '#'],
+        ['label' => 'SIPPN Menpan RB', 'url' => 'https://sippn.menpan.go.id'],
+        ['label' => 'Lapor (Layanan Aspirasi dan Pengaduan Online Rakyat) Kemenpan RB', 'url' => 'https://www.lapor.go.id'],
+        ['label' => 'Kementerian Perindustrian', 'url' => 'https://kemenperin.go.id'],
+        ['label' => 'Badan Standardisasi dan Kebijakan Jasa Industri', 'url' => 'https://bskji.kemenperin.go.id'],
+        ['label' => 'Sistem Informasi Industri Nasional (SIINas)', 'url' => 'https://siinas.kemenperin.go.id'],
+        ['label' => 'Online Single Submission', 'url' => 'https://oss.go.id/id'],
+        ['label' => 'Jaringan Dokumentasi dan Informasi Hukum', 'url' => 'https://jdih.kemenperin.go.id'],
+        ['label' => 'Login Pegawai BSPJI Banda Aceh', 'url' => 'https://pintu.bspjiaceh.id/login'],
+        ['label' => 'Jejak Pendapat', 'url' => '#'],
     ];
 
     $mainMenu = [
@@ -81,7 +87,7 @@
                                 x-transition:leave="transition ease-in duration-100"
                                 x-transition:leave-start="opacity-100 translate-y-0"
                                 x-transition:leave-end="opacity-0 translate-y-1"
-                                class="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
+                                class="absolute left-1/2 top-full mt-2 w-80 sm:w-[450px] -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
                                 style="display: none;">
                                 <div class="p-2">
                                     @foreach ($menu['items'] as $item)

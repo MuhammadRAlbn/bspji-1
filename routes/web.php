@@ -13,14 +13,18 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SertifikasiProdukController;
 use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\UppController;
+use App\Http\Controllers\ZonaIntegritasDokumenController;
 use App\Models\LogoMitra;
 use App\Models\SectionLayanan;
 use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
 use App\Models\SectionTestimoni;
 use App\Models\SertifikatPerusahaan;
+use App\Models\ZonaIntegritasDokumen;
+use App\Models\ZonaIntegritasGrafikIkm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 Route::get('/', function () {
     $sectionProfils = SectionProfil::query()
@@ -55,49 +59,68 @@ Route::get('/', function () {
         ->latest()
         ->get();
 
-    $customerDistribution = DB::table('legacy_users as users')
-        ->join('tbl_kabupaten as kabupaten', 'kabupaten.kode_kabupaten', '=', 'users.kode_kabupaten')
-        ->join('tbl_provinsi as provinsi', 'provinsi.kode_provinsi', '=', 'kabupaten.id_provinsi')
-        ->whereNotNull('kabupaten.latitude')
-        ->whereNotNull('kabupaten.longitude')
-        ->whereNotNull('users.kode_kabupaten')
-        ->where('users.kode_kabupaten', '!=', '')
-        ->selectRaw('
-            users.kode_kabupaten,
-            kabupaten.nama_kabupaten,
-            provinsi.nama_provinsi,
-            kabupaten.latitude,
-            kabupaten.longitude,
-            COUNT(*) as total
-        ')
-        ->groupBy(
-            'users.kode_kabupaten',
-            'kabupaten.nama_kabupaten',
-            'provinsi.nama_provinsi',
-            'kabupaten.latitude',
-            'kabupaten.longitude'
-        )
-        ->orderByDesc('total')
+    $zonaIntegritasDokumens = ZonaIntegritasDokumen::query()
+        ->select(['id', 'jenis_dokumen_id', 'nama_dokumen', 'file_path', 'urutan', 'is_active'])
+        ->active()
+        ->ordered()
+        ->with(['jenisDokumen:id,kode,nama'])
         ->get()
-        ->map(function ($row) {
-            return [
-                'region' => "{$row->nama_kabupaten}, {$row->nama_provinsi}",
-                'lat' => (float) $row->latitude,
-                'lng' => (float) $row->longitude,
-                'customers' => (int) $row->total,
-            ];
-        });
+        ->groupBy(fn (ZonaIntegritasDokumen $dokumen): string => $dokumen->jenisDokumen->kode);
 
-    $customerWithoutLocation = DB::table('legacy_users as users')
-        ->leftJoin('tbl_kabupaten as kabupaten', 'kabupaten.kode_kabupaten', '=', 'users.kode_kabupaten')
-        ->where(function ($query) {
-            $query
-                ->whereNull('users.kode_kabupaten')
-                ->orWhere('users.kode_kabupaten', '')
-                ->orWhereNull('kabupaten.latitude')
-                ->orWhereNull('kabupaten.longitude');
-        })
-        ->count();
+    $zonaIntegritasGrafikIkms = ZonaIntegritasGrafikIkm::query()
+        ->select(['id', 'judul', 'gambar', 'urutan', 'is_active'])
+        ->active()
+        ->ordered()
+        ->get();
+
+    if (Schema::hasTable('legacy_users') && Schema::hasTable('tbl_kabupaten') && Schema::hasTable('tbl_provinsi')) {
+        $customerDistribution = DB::table('legacy_users as users')
+            ->join('tbl_kabupaten as kabupaten', 'kabupaten.kode_kabupaten', '=', 'users.kode_kabupaten')
+            ->join('tbl_provinsi as provinsi', 'provinsi.kode_provinsi', '=', 'kabupaten.id_provinsi')
+            ->whereNotNull('kabupaten.latitude')
+            ->whereNotNull('kabupaten.longitude')
+            ->whereNotNull('users.kode_kabupaten')
+            ->where('users.kode_kabupaten', '!=', '')
+            ->selectRaw('
+                users.kode_kabupaten,
+                kabupaten.nama_kabupaten,
+                provinsi.nama_provinsi,
+                kabupaten.latitude,
+                kabupaten.longitude,
+                COUNT(*) as total
+            ')
+            ->groupBy(
+                'users.kode_kabupaten',
+                'kabupaten.nama_kabupaten',
+                'provinsi.nama_provinsi',
+                'kabupaten.latitude',
+                'kabupaten.longitude'
+            )
+            ->orderByDesc('total')
+            ->get()
+            ->map(function ($row) {
+                return [
+                    'region' => "{$row->nama_kabupaten}, {$row->nama_provinsi}",
+                    'lat' => (float) $row->latitude,
+                    'lng' => (float) $row->longitude,
+                    'customers' => (int) $row->total,
+                ];
+            });
+
+        $customerWithoutLocation = DB::table('legacy_users as users')
+            ->leftJoin('tbl_kabupaten as kabupaten', 'kabupaten.kode_kabupaten', '=', 'users.kode_kabupaten')
+            ->where(function ($query) {
+                $query
+                    ->whereNull('users.kode_kabupaten')
+                    ->orWhere('users.kode_kabupaten', '')
+                    ->orWhereNull('kabupaten.latitude')
+                    ->orWhereNull('kabupaten.longitude');
+            })
+            ->count();
+    } else {
+        $customerDistribution = collect();
+        $customerWithoutLocation = 0;
+    }
 
     return view('welcome', compact(
         'sectionProfils',
@@ -107,10 +130,15 @@ Route::get('/', function () {
         'pelengkaps',
         'sertifikats',
         'testimonis',
+        'zonaIntegritasDokumens',
+        'zonaIntegritasGrafikIkms',
         'customerDistribution',
         'customerWithoutLocation'
     ));
 });
+
+Route::get('/zona-integritas/dokumen/{dokumen}/download', [ZonaIntegritasDokumenController::class, 'download'])
+    ->name('zona-integritas.dokumen.download');
 
 Route::get('/sejarah-singkat', [ProfilController::class, 'index'])->defaults('activeTab', 'sejarah')->name('sejarah-singkat.index');
 Route::get('/visi-misi', [ProfilController::class, 'index'])->defaults('activeTab', 'motto')->name('visi-misi.index');

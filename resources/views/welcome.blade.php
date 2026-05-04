@@ -936,38 +936,9 @@
             </div>
         </section>
 
-        <section id="zona-integritas" class="bg-linear-to-b from-slate-50 via-white to-white py-16 md:pb-20 md:pt-8">
-            <div class="mx-auto max-w-7xl px-6 lg:px-0">
-                <div class="mx-auto mb-14 max-w-2xl text-center" data-aos="fade-up">
-                    <div class="mb-4 flex items-center justify-center gap-2">
-                        <span class="text-[10px] text-orange-600">■</span>
-                        <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Komitmen Kami</span>
-                    </div>
-                    <h2 class="section-title-identic mb-4 text-gray-900">Zona Integritas</h2>
-                </div>
-
-                <div class="grid grid-cols-2 gap-5 sm:grid-cols-4 lg:grid-cols-7 md:gap-6">
-                    @foreach ([
-                        ['label' => 'ZI', 'image' => 'zi.png'],
-                        ['label' => 'WBS', 'image' => 'wbs.png'],
-                        ['label' => 'Pengaduan', 'image' => 'pengaduan.png'],
-                        ['label' => 'Gratifikasi', 'image' => 'gratifikasi.png'],
-                        ['label' => 'Benturan', 'image' => 'benturan.png'],
-                        ['label' => 'Persepsi Korupsi', 'image' => 'persepsi-korupsi.png'],
-                        ['label' => 'IKM', 'image' => 'IKM.png'],
-                    ] as $item)
-                        <a href="#"
-                            class="group flex flex-col items-center justify-center transition duration-500 hover:-translate-y-2"
-                            data-aos="zoom-in">
-                            <div class="flex h-40 w-40 items-center justify-center">
-                                <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
-                                    class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-110">
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        </section>
+        <x-zona-integritas.section
+            :dokumens-by-kode="$zonaIntegritasDokumens"
+            :grafik-ikms="$zonaIntegritasGrafikIkms" />
 
         <section id="faq" class="border-t border-gray-50 bg-white py-24">
             <div class="mx-auto max-w-7xl px-6" x-data="{ activeItems: [1], currentImage: 1, toggle(id) { if (this.activeItems.includes(id)) { this.activeItems = this.activeItems.filter(i => i !== id); } else { this.activeItems.push(id); this.currentImage = id; }}}">
