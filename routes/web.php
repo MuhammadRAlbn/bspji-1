@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SertifikasiProdukController;
 use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\UppController;
+use App\Http\Controllers\ZonaIntegritasController;
 use App\Http\Controllers\ZonaIntegritasDokumenController;
 use App\Models\LogoMitra;
 use App\Models\SectionLayanan;
@@ -20,8 +21,6 @@ use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
 use App\Models\SectionTestimoni;
 use App\Models\SertifikatPerusahaan;
-use App\Models\ZonaIntegritasDokumen;
-use App\Models\ZonaIntegritasGrafikIkm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -57,20 +56,6 @@ Route::get('/', function () {
 
     $testimonis = SectionTestimoni::query()
         ->latest()
-        ->get();
-
-    $zonaIntegritasDokumens = ZonaIntegritasDokumen::query()
-        ->select(['id', 'jenis_dokumen_id', 'nama_dokumen', 'file_path', 'urutan', 'is_active'])
-        ->active()
-        ->ordered()
-        ->with(['jenisDokumen:id,kode,nama'])
-        ->get()
-        ->groupBy(fn (ZonaIntegritasDokumen $dokumen): string => $dokumen->jenisDokumen->kode);
-
-    $zonaIntegritasGrafikIkms = ZonaIntegritasGrafikIkm::query()
-        ->select(['id', 'judul', 'gambar', 'urutan', 'is_active'])
-        ->active()
-        ->ordered()
         ->get();
 
     if (Schema::hasTable('legacy_users') && Schema::hasTable('tbl_kabupaten') && Schema::hasTable('tbl_provinsi')) {
@@ -130,12 +115,13 @@ Route::get('/', function () {
         'pelengkaps',
         'sertifikats',
         'testimonis',
-        'zonaIntegritasDokumens',
-        'zonaIntegritasGrafikIkms',
         'customerDistribution',
         'customerWithoutLocation'
     ));
 });
+
+Route::get('/zona-integritas', [ZonaIntegritasController::class, 'index'])
+    ->name('zona-integritas.index');
 
 Route::get('/zona-integritas/dokumen/{dokumen}/download', [ZonaIntegritasDokumenController::class, 'download'])
     ->name('zona-integritas.dokumen.download');

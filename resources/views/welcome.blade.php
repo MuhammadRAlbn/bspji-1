@@ -936,9 +936,7 @@
             </div>
         </section>
 
-        <x-zona-integritas.section
-            :dokumens-by-kode="$zonaIntegritasDokumens"
-            :grafik-ikms="$zonaIntegritasGrafikIkms" />
+        <x-zona-integritas.section :show-content="false" />
 
         <section id="faq" class="border-t border-gray-50 bg-white py-24">
             <div class="mx-auto max-w-7xl px-6" x-data="{ activeItems: [1], currentImage: 1, toggle(id) { if (this.activeItems.includes(id)) { this.activeItems = this.activeItems.filter(i => i !== id); } else { this.activeItems.push(id); this.currentImage = id; }}}">

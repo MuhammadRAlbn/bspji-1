@@ -1,10 +1,14 @@
 @props([
     'dokumensByKode' => collect(),
     'grafikIkms' => collect(),
+    'initialActive' => 'zona-integritas',
+    'showContent' => true,
 ])
 
 @php
     use App\Models\ZonaIntegritasJenisDokumen;
+    use Illuminate\Support\Facades\Route;
+    use Illuminate\Support\Js;
     use Illuminate\Support\Facades\Storage;
 
     $dokumenGroups = collect($dokumensByKode);
@@ -21,38 +25,74 @@
         ['id' => 'wbs', 'label' => 'Whistle Blower System', 'image' => 'wbs.png'],
     ];
 
+    $validMenuIds = collect($menuItems)->pluck('id')->all();
+    $initialActive = in_array($initialActive, $validMenuIds, true) ? $initialActive : 'zona-integritas';
+    $tabUrl = static fn (string $tab): string => Route::has('zona-integritas.index')
+        ? route('zona-integritas.index', ['tab' => $tab])
+        : url('/zona-integritas?tab=' . $tab);
+
     $benturanFormUrl = null;
     $gratifikasiFormUrl = null;
 @endphp
 
 <section id="zona-integritas" class="bg-linear-to-b from-slate-50 via-white to-white py-16 md:pb-20 md:pt-8">
-    <div class="mx-auto max-w-7xl px-6 lg:px-0" x-data="{ active: 'zona-integritas', ikmTab: 'grafik', benturanTab: 'benturan-kepentingan', gratifikasiTab: 'gratifikasi', wbsTab: 'wbs' }">
+    <div class="mx-auto max-w-7xl px-6 lg:px-0"
+        @if ($showContent)
+            x-data="{
+                active: {{ Js::from($initialActive) }},
+                ikmTab: 'grafik',
+                benturanTab: 'benturan-kepentingan',
+                gratifikasiTab: 'gratifikasi',
+                wbsTab: 'wbs',
+                setActive(tab) {
+                    this.active = tab;
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('tab', tab);
+                    window.history.replaceState({ tab }, '', url.toString());
+                }
+            }"
+        @endif>
         <div class="mx-auto mb-14 max-w-2xl text-center" data-aos="fade-up">
             <div class="mb-4 flex items-center justify-center gap-2">
                 <span class="text-[10px] text-orange-600">&#9632;</span>
                 <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Komitmen Kami</span>
             </div>
-            <h2 class="section-title-identic mb-4 text-gray-900">Zona Integritas</h2>
+            <h2 class="mb-4 text-3xl font-light leading-tight tracking-tight text-gray-900 md:text-5xl">Zona Integritas</h2>
         </div>
 
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7 md:gap-5">
             @foreach ($menuItems as $item)
-                <button type="button"
-                    @click="active = '{{ $item['id'] }}'"
-                    :class="active === '{{ $item['id'] }}' ? 'border-orange-400 bg-white shadow-lg shadow-orange-100' : 'border-transparent bg-white/70 shadow-sm'"
-                    class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-orange-300 hover:bg-white"
-                    data-aos="zoom-in">
-                    <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
-                        <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
-                            class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
-                    </span>
-                    <span class="text-sm font-semibold leading-tight text-slate-800">
-                        {{ $item['label'] }}
-                    </span>
-                </button>
+                @if ($showContent)
+                    <button type="button"
+                        @click="setActive('{{ $item['id'] }}')"
+                        :class="active === '{{ $item['id'] }}' ? 'border-orange-400 bg-white shadow-lg shadow-orange-100' : 'border-transparent bg-white/70 shadow-sm'"
+                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-orange-300 hover:bg-white"
+                        data-aos="zoom-in">
+                        <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
+                            <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
+                                class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                        </span>
+                        <span class="text-sm font-semibold leading-tight text-slate-800">
+                            {{ $item['label'] }}
+                        </span>
+                    </button>
+                @else
+                    <a href="{{ $tabUrl($item['id']) }}"
+                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border border-transparent bg-white/70 p-3 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:border-orange-300 hover:bg-white hover:shadow-lg hover:shadow-orange-100"
+                        data-aos="zoom-in">
+                        <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
+                            <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
+                                class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                        </span>
+                        <span class="text-sm font-semibold leading-tight text-slate-800">
+                            {{ $item['label'] }}
+                        </span>
+                    </a>
+                @endif
             @endforeach
         </div>
 
+        @if ($showContent)
         <div class="mt-10 border-t border-slate-200 pt-10" x-cloak>
             <div x-show="active === 'zona-integritas'" x-transition.opacity.duration.300ms>
                 <div class="grid gap-8 lg:grid-cols-[1fr_0.85fr] lg:items-start">
@@ -211,7 +251,7 @@
 
                 <div x-show="gratifikasiTab === 'laporan'" x-transition.opacity.duration.300ms style="display: none;">
                     <x-zona-integritas.document-table
-                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_GRATIFIKASI_LAPORAN)"
+                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan Gratifikasi yang tersedia." />
                 </div>
             </div>
@@ -241,10 +281,11 @@
 
                 <div x-show="wbsTab === 'laporan'" x-transition.opacity.duration.300ms style="display: none;">
                     <x-zona-integritas.document-table
-                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_WBS_LAPORAN)"
+                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan WBS yang tersedia." />
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </section>
