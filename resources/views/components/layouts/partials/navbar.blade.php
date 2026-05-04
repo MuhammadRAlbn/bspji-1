@@ -53,20 +53,19 @@
         </div>
 
         <div class="hidden min-w-0 flex-1 items-center justify-center lg:flex">
-            <ul
-                class="flex w-full items-center justify-center gap-1 rounded-full border border-slate-200/80 bg-white/85 p-1.5 shadow-sm">
+            <ul class="flex w-full items-center justify-center gap-4">
                 @foreach ($mainMenu as $menu)
                     @if ($menu['type'] === 'link')
                         <li>
                             <a href="{{ $menu['url'] }}"
-                                class="inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-2 text-md font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 xl:px-3">
+                                class="inline-flex items-center whitespace-nowrap px-1 py-2 text-md font-semibold text-slate-700 transition hover:text-slate-900 xl:px-2">
                                 {{ $menu['label'] }}
                             </a>
                         </li>
                     @else
                         <li x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
                             <button type="button" @click="open = !open"
-                                class="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-md font-semibold text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 xl:px-3">
+                                class="inline-flex items-center gap-1 whitespace-nowrap px-1 py-2 text-md font-semibold text-slate-700 transition hover:text-slate-900 xl:px-2">
                                 <span>{{ $menu['label'] }}</span>
                                 <svg class="h-4 w-4 transition-transform duration-150" :class="open ? 'rotate-180' : ''"
                                     viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

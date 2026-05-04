@@ -88,7 +88,7 @@
     </header>
 
     <div class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
-        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-24 lg:grid-cols-1">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <button
                 type="button"
                 @click="tab = 'sertifikasi'"
