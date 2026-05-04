@@ -10,51 +10,75 @@
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+<body
+    x-data="{ tab: 'sertifikasi' }"
+    class="overflow-x-hidden bg-white font-sans text-[#1d1d1f] antialiased leading-relaxed"
+>
+    <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
+        <img
+            src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070"
+            alt="Layanan Kalibrasi"
+            class="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.7]"
+        >
+        <div class="mx-auto w-full max-w-[1400px] px-5 text-left sm:px-8 md:px-20">
+            <h1 class="text-[2.25rem] font-bold tracking-[-0.03em] sm:text-[3rem] md:text-[4.5rem]">
+                Layanan Kalibrasi
+            </h1>
+        </div>
+    </header>
 
-    <div class="max-w-6xl mx-auto px-4 py-16" x-data="{ tab: 'sertifikasi' }">
-        <div class="text-center mb-12">
-            <span class="px-4 py-1.5 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full uppercase tracking-widest mb-4 inline-block">Pelayanan Kami</span>
-            <h1 class="text-5xl font-extrabold text-indigo-950 mb-4 tracking-tight">Layanan Kalibrasi</h1>
-            <p class="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed">Penyediaan jasa kalibrasi alat ukur industri dengan standar akreditasi nasional dan internasional.</p>
+    <main class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:sticky lg:top-10 lg:grid-cols-1">
+            <button
+                type="button"
+                @click="tab = 'sertifikasi'"
+                :class="tab === 'sertifikasi' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'sertifikasi' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m5.25 2.814c0 4.285-2.924 8.032-7.087 9.063a1.38 1.38 0 0 1-.326.037 1.38 1.38 0 0 1-.326-.037C8.348 20.596 5.424 16.85 5.424 12.564V7.902c0-.67.423-1.267 1.056-1.491l5.25-1.867a1.37 1.37 0 0 1 .913 0l5.25 1.867c.633.224 1.056.82 1.056 1.49v4.663Z" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Sertifikasi</span>
+            </button>
+
+            <button
+                type="button"
+                @click="tab = 'ruang-lingkup'"
+                :class="tab === 'ruang-lingkup' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'ruang-lingkup' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.75h4.5m-7.386 2.25h10.272c.53 0 1.02.28 1.286.736l2.226 3.818a1.5 1.5 0 0 1 0 1.51l-2.226 3.818a1.5 1.5 0 0 1-1.286.736H6.864a1.5 1.5 0 0 1-1.286-.736l-2.226-3.818a1.5 1.5 0 0 1 0-1.51l2.226-3.818A1.5 1.5 0 0 1 6.864 6ZM9 9.75h6m-6 3h3" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Ruang Lingkup</span>
+            </button>
+
+            <button
+                type="button"
+                @click="tab = 'alur-kalibrasi'"
+                :class="tab === 'alur-kalibrasi' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'alur-kalibrasi' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 15.75 19.5 19.5m0 0-3.75 3.75M19.5 19.5H9A6.75 6.75 0 0 1 2.25 12.75V10.5A6.75 6.75 0 0 1 9 3.75h3" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Alur</span>
+            </button>
+
+            <button
+                type="button"
+                @click="tab = 'tarif'"
+                :class="tab === 'tarif' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'tarif' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14.25 6.75 12m0 0L9 9.75M6.75 12h10.5m3.75-6.75v13.5A2.25 2.25 0 0 1 18.75 21H5.25A2.25 2.25 0 0 1 3 18.75V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Tarif</span>
+            </button>
         </div>
 
-        {{-- Navigasi Tab --}}
-        <div class="flex justify-center mb-12">
-            <nav class="inline-flex p-1.5 bg-gray-200/80 backdrop-blur-sm rounded-2xl border border-gray-300/50">
-                <button 
-                    @click="tab = 'alur-kalibrasi'" 
-                    :class="tab === 'alur-kalibrasi' ? 'bg-white text-indigo-900 shadow-md ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
-                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
-                >
-                    Alur
-                </button>
-                <button 
-                    @click="tab = 'sertifikasi'" 
-                    :class="tab === 'sertifikasi' ? 'bg-white text-indigo-900 shadow-md ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
-                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
-                >
-                    Sertifikasi
-                </button>
-                <button 
-                    @click="tab = 'ruang-lingkup'" 
-                    :class="tab === 'ruang-lingkup' ? 'bg-white text-indigo-900 shadow-sm ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
-                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
-                >
-                    Ruang Lingkup
-                </button>
-                <button 
-                    @click="tab = 'tarif'" 
-                    :class="tab === 'tarif' ? 'bg-white text-indigo-900 shadow-md ring-1 ring-black/5' : 'text-gray-500 hover:text-gray-800 hover:bg-gray-300/50'"
-                    class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 focus:outline-none flex items-center"
-                >
-                    Tarif
-                </button>
-            </nav>
-        </div>
-
-        {{-- Konten Tab --}}
-        <div class="mt-8 transition-all duration-300">
+        <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
             
             {{-- Tab Alur Kalibrasi --}}
             <div x-show="tab === 'alur-kalibrasi'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
@@ -172,16 +196,8 @@
                     @endforelse
                 </div>
             </div>
-        </div>
-        
-        {{-- Footer/Back Link --}}
-        <div class="mt-24 text-center">
-            <a href="{{ url('/') }}" class="inline-flex items-center px-8 py-3 bg-white text-indigo-900 font-bold rounded-2xl shadow-lg border border-gray-100 hover:bg-indigo-50 transition duration-300 group"> 
-                <svg class="w-5 h-5 mr-3 transition group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                Kembali ke Beranda 
-            </a>
-        </div>
-    </div>
+        </article>
+    </main>
 
 </body>
 </html>
