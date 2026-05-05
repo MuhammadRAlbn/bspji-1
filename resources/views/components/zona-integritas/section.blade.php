@@ -65,8 +65,8 @@
                 @if ($showContent)
                     <button type="button"
                         @click="setActive('{{ $item['id'] }}')"
-                        :class="active === '{{ $item['id'] }}' ? 'border-orange-400 bg-white shadow-lg shadow-orange-100' : 'border-transparent bg-white/70 shadow-sm'"
-                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border p-3 text-center transition duration-300 hover:-translate-y-1 hover:border-orange-300 hover:bg-white"
+                        :class="active === '{{ $item['id'] }}' ? 'border-orange-300 bg-white shadow-md shadow-orange-100/50' : 'border-transparent bg-white/70 shadow-sm'"
+                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border p-3 text-center transition duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:bg-white hover:shadow-md hover:shadow-orange-100/50"
                         data-aos="zoom-in">
                         <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
                             <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
@@ -78,7 +78,7 @@
                     </button>
                 @else
                     <a href="{{ $tabUrl($item['id']) }}"
-                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border border-transparent bg-white/70 p-3 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:border-orange-300 hover:bg-white hover:shadow-lg hover:shadow-orange-100"
+                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border border-transparent bg-white/70 p-3 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:bg-white hover:shadow-md hover:shadow-orange-100/50"
                         data-aos="zoom-in">
                         <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
                             <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
@@ -94,23 +94,68 @@
 
         @if ($showContent)
         <div class="mt-10 border-t border-slate-200 pt-10" x-cloak>
-            <div x-show="active === 'zona-integritas'" x-transition.opacity.duration.300ms>
-                <div class="grid gap-8 lg:grid-cols-[1fr_0.85fr] lg:items-start">
-                    <div>
-                        <h3 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">Zona Integritas</h3>
-                        <p class="text-base leading-8 text-slate-600">
-                            Zona Integritas adalah komitmen BSPJI Banda Aceh untuk membangun tata kelola yang bersih,
-                            akuntabel, dan berorientasi pada pelayanan publik. Komitmen ini menjadi dasar peningkatan
-                            kualitas layanan serta pencegahan praktik korupsi, kolusi, dan nepotisme.
-                        </p>
-                    </div>
+            <div x-show="active === 'zona-integritas'">
+                <div class="flex flex-col gap-10">
                     <x-zona-integritas.document-grid
                         :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_ZONA_INTEGRITAS)"
                         empty-message="Belum ada dokumen Zona Integritas yang tersedia." />
+                    
+                    <div class="space-y-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
+                        <div>
+                            <h3 class="mb-4 text-2xl font-bold tracking-tight text-slate-900">Apa Itu Zona Integritas?</h3>
+                            <p class="text-base leading-relaxed text-slate-600">
+                                Sistem birokrasi yang transparan, akuntabilitas, serta bebas dari Korupsi, Kolusi, dan Nepotisme (KKN) merupakan hal yang mutlak dijalankan oleh setiap instansi pemerintah, termasuk oleh Balai Standardisasi dan Pelayanan Jasa Industri (BSPJI) Banda Aceh. Guna mewujudkan birokrasi yang bersih KKN tersebut, BSPJI Banda Aceh terus berupaya mendorong pembangunan Zona Integritas menuju Wilayah Birokrasi Bersih dan Melayani (WBBM).
+                            </p>
+                        </div>
+
+                        <div>
+                            <p class="mb-5 text-base leading-relaxed text-slate-600">
+                                Pembangunan Zona Integritas merupakan pemenuhan aspek terhadap 6 (enam) area perubahan meliputi:
+                            </p>
+                            
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                                <div class="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 p-4">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 font-bold text-orange-600">1</span>
+                                    <span class="text-sm font-semibold text-slate-800">Manajemen Perubahan</span>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 p-4">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 font-bold text-orange-600">2</span>
+                                    <span class="text-sm font-semibold text-slate-800">Penataan Tatalaksana</span>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 p-4">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 font-bold text-orange-600">3</span>
+                                    <span class="text-sm font-semibold text-slate-800">Penataan Sistem Manajemen SDM</span>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 p-4">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 font-bold text-orange-600">4</span>
+                                    <span class="text-sm font-semibold text-slate-800">Penguatan Akuntabilitas</span>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 p-4">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 font-bold text-orange-600">5</span>
+                                    <span class="text-sm font-semibold text-slate-800">Penguatan Pengawasan</span>
+                                </div>
+                                <div class="flex items-center gap-3 rounded-lg border border-slate-100 bg-slate-50 p-4">
+                                    <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-100 font-bold text-orange-600">6</span>
+                                    <span class="text-sm font-semibold text-slate-800">Peningkatan Kualitas Pelayanan Publik</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="rounded-lg border border-orange-200 bg-orange-50 p-5">
+                            <div class="flex items-start gap-4">
+                                <div class="mt-0.5 shrink-0 text-orange-600">
+                                    <i data-lucide="info" class="h-5 w-5"></i>
+                                </div>
+                                <p class="text-sm leading-relaxed text-orange-800">
+                                    Dokumen pendukung Penilaian Mandiri Pembangunan Zona Integritas BSPJI Banda Aceh dapat diakses dengan menghubungi Unit Pelayanan Publik BSPJI Banda Aceh.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div x-show="active === 'ikm'" x-transition.opacity.duration.300ms style="display: none;">
+            <div x-show="active === 'ikm'" style="display: none;">
                 <div class="mb-8 flex flex-wrap gap-3">
                     <button type="button" @click="ikmTab = 'grafik'"
                         :class="ikmTab === 'grafik' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border-slate-200'"
@@ -124,7 +169,7 @@
                     </button>
                 </div>
 
-                <div x-show="ikmTab === 'grafik'" x-transition.opacity.duration.300ms>
+                <div x-show="ikmTab === 'grafik'">
                     @if ($grafikIkms->isNotEmpty())
                         <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
                             @foreach ($grafikIkms as $grafik)
@@ -144,28 +189,35 @@
                     @endif
                 </div>
 
-                <div x-show="ikmTab === 'laporan'" x-transition.opacity.duration.300ms style="display: none;">
+                <div x-show="ikmTab === 'laporan'" style="display: none;">
                     <x-zona-integritas.document-table
                         :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_IKM_LAPORAN)"
                         empty-message="Belum ada laporan IKM yang tersedia." />
                 </div>
             </div>
 
-            <div x-show="active === 'ipk'" x-transition.opacity.duration.300ms style="display: none;">
+            <div x-show="active === 'ipk'" style="display: none;">
                 <h3 class="mb-6 text-2xl font-semibold tracking-tight text-slate-950">Indeks Persepsi Korupsi</h3>
+                
+                <div class="mb-6 rounded-lg border border-orange-200 bg-orange-50 p-4">
+                    <p class="text-sm font-medium text-orange-800">
+                        Untuk mengisi survey silahkan mengunjungi <a href="#" class="font-bold text-orange-600 underline transition hover:text-orange-700">link ini</a>.
+                    </p>
+                </div>
+
                 <x-zona-integritas.document-table
                     :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_INDEKS_PERSEPSI_KORUPSI)"
                     empty-message="Belum ada dokumen Indeks Persepsi Korupsi yang tersedia." />
             </div>
 
-            <div x-show="active === 'pengaduan'" x-transition.opacity.duration.300ms style="display: none;">
+            <div x-show="active === 'pengaduan'" style="display: none;">
                 <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-12 text-center">
                     <h3 class="mb-2 text-xl font-semibold text-slate-900">Pengaduan</h3>
                     <p class="text-sm font-medium text-slate-500">Konten pengaduan akan ditambahkan pada tahap berikutnya.</p>
                 </div>
             </div>
 
-            <div x-show="active === 'benturan'" x-transition.opacity.duration.300ms style="display: none;">
+            <div x-show="active === 'benturan'" style="display: none;">
                 <div class="mb-8 flex flex-wrap gap-3">
                     <button type="button" @click="benturanTab = 'benturan-kepentingan'"
                         :class="benturanTab === 'benturan-kepentingan' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border-slate-200'"
@@ -179,15 +231,13 @@
                     </button>
                 </div>
 
-                <div x-show="benturanTab === 'benturan-kepentingan'" x-transition.opacity.duration.300ms>
-                    <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+                <div x-show="benturanTab === 'benturan-kepentingan'">
+                    <div class="grid gap-8 lg:grid-cols-[3fr_1fr]">
                         <div class="space-y-6">
                             <div>
                                 <h3 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">Benturan Kepentingan</h3>
                                 <p class="text-base leading-8 text-slate-600">
-                                    Benturan kepentingan adalah kondisi ketika kepentingan pribadi, kelompok, atau pihak lain
-                                    berpotensi memengaruhi objektivitas pelaksanaan tugas. BSPJI Banda Aceh mendorong setiap
-                                    pihak untuk melaporkan potensi benturan kepentingan agar pelayanan tetap profesional.
+                                    Benturan Kepentingan adalah situasi dimana penyelenggara negara, memiliki atau patut diduga memiliki kepentingan pribadi, terhadap setiap penggunaan wewenang, sehingga dapat mempengaruhi kualitas keputusan dan/atau tindakannya. Kepentingan/pertimbangan pribadi tersebut dapat berasal dari kepentingan pribadi, kerabat atau kelompok yang kemudian mendesak atau mereduksi gagasan yang dibangun berdasarkan nalar profesionalnya sehingga keputusannya menyimpang dari orisionalitas keprofesionalannya dan akan berimplikasi pada penyelenggaraan negara khususnya di bidang pelayanan publik menjadi tidak efisien dan tidak efektif. Benturan kepentingan sering pula dimaknai sebagai konflik kepentingan (conflict of interest).
                                 </p>
                             </div>
 
@@ -201,19 +251,20 @@
                             @endif
                         </div>
                         <x-zona-integritas.document-grid
+                            layout="list"
                             :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_KEPENTINGAN)"
                             empty-message="Belum ada dokumen Benturan Kepentingan yang tersedia." />
                     </div>
                 </div>
 
-                <div x-show="benturanTab === 'laporan'" x-transition.opacity.duration.300ms style="display: none;">
+                <div x-show="benturanTab === 'laporan'" style="display: none;">
                     <x-zona-integritas.document-table
                         :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan Benturan Kepentingan yang tersedia." />
                 </div>
             </div>
 
-            <div x-show="active === 'gratifikasi'" x-transition.opacity.duration.300ms style="display: none;">
+            <div x-show="active === 'gratifikasi'" style="display: none;">
                 <div class="mb-8 flex flex-wrap gap-3">
                     <button type="button" @click="gratifikasiTab = 'gratifikasi'"
                         :class="gratifikasiTab === 'gratifikasi' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border-slate-200'"
@@ -227,8 +278,8 @@
                     </button>
                 </div>
 
-                <div x-show="gratifikasiTab === 'gratifikasi'" x-transition.opacity.duration.300ms>
-                    <div class="grid gap-8 lg:grid-cols-[1fr_0.9fr]">
+                <div x-show="gratifikasiTab === 'gratifikasi'">
+                    <div class="grid gap-8 lg:grid-cols-[3fr_1fr]">
                         <div>
                             <h3 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">Gratifikasi</h3>
                             <p class="text-base leading-8 text-slate-600">
@@ -249,14 +300,14 @@
                     </div>
                 </div>
 
-                <div x-show="gratifikasiTab === 'laporan'" x-transition.opacity.duration.300ms style="display: none;">
+                <div x-show="gratifikasiTab === 'laporan'" style="display: none;">
                     <x-zona-integritas.document-table
                         :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan Gratifikasi yang tersedia." />
                 </div>
             </div>
 
-            <div x-show="active === 'wbs'" x-transition.opacity.duration.300ms style="display: none;">
+            <div x-show="active === 'wbs'" style="display: none;">
                 <div class="mb-8 flex flex-wrap gap-3">
                     <button type="button" @click="wbsTab = 'wbs'"
                         :class="wbsTab === 'wbs' ? 'bg-slate-900 text-white' : 'bg-white text-slate-700 border-slate-200'"
@@ -270,7 +321,7 @@
                     </button>
                 </div>
 
-                <div x-show="wbsTab === 'wbs'" x-transition.opacity.duration.300ms>
+                <div x-show="wbsTab === 'wbs'">
                     <h3 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">Whistle Blower System</h3>
                     <p class="max-w-4xl text-base leading-8 text-slate-600">
                         Whistle Blower System menjadi sarana pelaporan dugaan pelanggaran yang berkaitan dengan integritas
@@ -279,7 +330,7 @@
                     </p>
                 </div>
 
-                <div x-show="wbsTab === 'laporan'" x-transition.opacity.duration.300ms style="display: none;">
+                <div x-show="wbsTab === 'laporan'" style="display: none;">
                     <x-zona-integritas.document-table
                         :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan WBS yang tersedia." />
