@@ -22,7 +22,7 @@
 
     $informasiPublikMenu = [
         ['label' => 'Unit Pelayanan Publik (UPP)', 'url' => $routeOrHash('upp.index')],
-        ['label' => 'Zona Integritas', 'url' => $routeOrHash('zona-integritas.index')],
+        // ['label' => 'Zona Integritas', 'url' => $routeOrHash('zona-integritas.index')],
         ['label' => 'Informasi Publik', 'url' => $routeOrHash('informasi-publik.index')],
         ['label' => 'PPID', 'url' => $routeOrHash('ppid.index')],
     ];

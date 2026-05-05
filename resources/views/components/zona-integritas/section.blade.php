@@ -52,6 +52,16 @@
                 }
             }"
         @endif>
+        
+        @if ($showContent)
+            <div class="mb-8" data-aos="fade-right">
+                <a href="{{ url('/') }}" class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm">
+                    <i data-lucide="arrow-left" class="h-4 w-4"></i>
+                    Kembali ke Beranda
+                </a>
+            </div>
+        @endif
+
         <div class="mx-auto mb-14 max-w-2xl text-center" data-aos="fade-up">
             <div class="mb-4 flex items-center justify-center gap-2">
                 <span class="text-[10px] text-orange-600">&#9632;</span>
@@ -279,21 +289,31 @@
                 </div>
 
                 <div x-show="gratifikasiTab === 'gratifikasi'">
-                    <div class="grid gap-8 lg:grid-cols-[3fr_1fr]">
+                    <div class="flex flex-col gap-8">
                         <div>
                             <h3 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">Gratifikasi</h3>
-                            <p class="text-base leading-8 text-slate-600">
-                                Gratifikasi merupakan pemberian dalam bentuk uang, barang, rabat, komisi, pinjaman tanpa bunga,
-                                perjalanan, fasilitas penginapan, atau manfaat lain yang berkaitan dengan jabatan. BSPJI Banda
-                                Aceh berkomitmen menolak gratifikasi dan menjaga integritas pelayanan.
-                            </p>
+                            <div class="space-y-4 text-base leading-8 text-slate-600">
+                                <p>
+                                    Pengertian mengenai gratifikasi dapat dilihat pada Penjelasan Pasal 12 B Ayat (1) UU No. 20 Tahun 2001, yaitu : "Yang dimaksud dengan "gratifikasi" dalam ayat ini adalah pemberian dalam arti luas, yakni meliputi pemberian uang, barang, rabat (discount), komisi, pinjaman tanpa bunga, tiket perjalanan, fasilitas penginapan, perjawalan wisata, pengobatan cuma-cuma, dan fasilitas lainnya. Gratifikasi tersebut baik yang diterima di dalam negeri maupun di luar negeri dan yang dilakukan dengan menggunakan sarana elektronik atau tanpa sarana elektronik."
+                                </p>
+                                <p>
+                                    Tidak semua gratifikasi itu bertentangan dengan hukum, melainkan hanya gratifikasi yang memenuhi kriteria pada pasal 12 B, yaitu: "Setiap gratifikasi kepada pegawai negeri atau penyelenggara negara dianggap pemberian suap, apabila berhubungan dengan jabatannya dan yang berlawanan dengan kewajiban atau tugasnya, dengan ketentuan sebagai berikut...". Namun demikian, ketentuan tersebut tidak berlaku jika penerima melaporkan gratifikasi yang diterimanya kepada KPK atau Unit Pengendali Gratifikasi BSPJI Banda Aceh Kementerian Perindustrian selambat-lambatnya 30 (tiga puluh) hari kerja terhitung sejak tanggal gratifikasi tersebut diterima.
+                                </p>
+                                <p>
+                                    Salah satu kebiasaan yang berlaku umum di masyarakat adalah pemberian tanda terima kasih atas jasa yang telah diberikan oleh petugas, baik dalam bentuk barang atau bahkan uang. Hal ini dapat menjadi suatu kebiasaan yang bersifat negatif dan dapat mengarah menjadi potensi perbuatan korupsi di kemudian hari. Potensi korupsi inilah yang berusaha dicegah oleh peraturan UU. Oleh karena itu, berapapun nilai gratifikasi yang anda terima, bila pemberian itu patut diduga berkaitan dengan jabatan/kewenangan yang dimiliki, maka sebaiknya segera dilaporkan ke Unit Pengendali Gratifikasi BSPJI Banda Aceh Kementerian Perindustrian untuk dianalisa lebih lanjut.
+                                </p>
+                            </div>
+                            
+                            <div class="mt-6 inline-block rounded-lg italic text-sm font-semibold text-orange-600">
+                                F-FKAP-LPG
+                            </div>
                         </div>
 
                         @if ($gratifikasiFormUrl)
                             <iframe src="{{ $gratifikasiFormUrl }}" title="Form Gratifikasi"
-                                class="h-[520px] w-full rounded-lg border border-slate-200 bg-white"></iframe>
+                                class="h-[600px] w-full rounded-lg border border-slate-200 bg-white shadow-sm"></iframe>
                         @else
-                            <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-sm font-medium text-slate-500">
+                            <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center text-sm font-medium text-slate-500">
                                 Formulir Google Gratifikasi belum dikonfigurasi.
                             </div>
                         @endif
@@ -323,11 +343,27 @@
 
                 <div x-show="wbsTab === 'wbs'">
                     <h3 class="mb-4 text-2xl font-semibold tracking-tight text-slate-950">Whistle Blower System</h3>
-                    <p class="max-w-4xl text-base leading-8 text-slate-600">
-                        Whistle Blower System menjadi sarana pelaporan dugaan pelanggaran yang berkaitan dengan integritas
-                        organisasi. Setiap laporan diperlakukan secara hati-hati untuk mendukung lingkungan kerja yang bersih,
-                        transparan, dan bertanggung jawab.
-                    </p>
+                    <div class="space-y-4 text-base leading-8 text-slate-600">
+                        <p>
+                            Pelaporan pelanggaran (whistleblowing System) adalah pengungkapan tindakan pelanggaran atau pengungkapan perbuatan yang melawan hukum, perbuatan tidak etis/tidak bermoral atau perbuatan lain yang dapat merugikan organisasi maupun pemangku kepentingan yang dilakukan oleh pejabat/pegawai kepada pimpinan atau lembaga lain yang dapat mengambil tindakan atas pelanggaran tersebut.
+                        </p>
+                        <p>
+                            Pelapor pelanggaran atau biasa disebut whistleblower adalah pejabat/pegawai di lingkungan Kementerian Perindustrian yang melaporkan pelanggaran berupa perbuatan yang melanggar peraturan perundang-undangan, kode etik, kebijakan dan tindakan lain yang sejenis berupa ancaman langsung atas kepentingan umum, serta Korupsi, Kolusi dan Nepotisme (KKN) yang terjadi di lingkungan Kementerian Perindustrian.
+                        </p>
+                        <p>
+                            Hal tersebut diatas diatur melalui Peraturan Menteri Perindustrian Nomor 20/M-IND/PER/2/2015 tentang Pedoman Pelaksanaan Sistem Pelaporan Pelanggaran di Lingkungan Kementerian Perindustrian.
+                        </p>
+                    </div>
+
+                    <div class="mt-8 rounded-lg border border-orange-200 bg-orange-50 p-4">
+                        <p class="text-sm font-bold text-orange-800">
+                            JIKA ANDA MENEMUKAN PELANGGARAN, LAPOR MELALUI <a href="#" class="text-orange-600 underline transition hover:text-orange-700">LINK INI</a>
+                        </p>
+                    </div>
+
+                    <div class="mt-6 inline-block rounded-lg italic text-sm font-semibold text-orange-600">
+                        F-FKAP-RLW
+                    </div>
                 </div>
 
                 <div x-show="wbsTab === 'laporan'" style="display: none;">
