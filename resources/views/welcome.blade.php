@@ -208,10 +208,10 @@
 
         .numbers-card {
             background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 1.25rem;
-            padding: 1rem 1rem 0.75rem;
-            box-shadow: 0 12px 30px -28px rgba(15, 23, 42, 0.55);
+            border: 1px solid #cbd5e1cc;
+            border-radius: 1.5rem;
+            padding: 1.25rem 1.25rem 1rem;
+            box-shadow: 0 2px 10px -4px rgba(0, 0, 0, 0.4);
         }
 
         .numbers-chart {
@@ -227,12 +227,9 @@
 
         .map-distribution-card {
             background: #ffffff;
-            border: 1px solid #dbe4f0;
-            border-radius: 1.25rem;
-            box-shadow:
-                0 2px 8px rgba(15, 23, 42, 0.06),
-                0 14px 34px -16px rgba(15, 23, 42, 0.2),
-                0 28px 60px -30px rgba(15, 23, 42, 0.24);
+            border: 1px solid #cbd5e1cc;
+            border-radius: 1.5rem;
+            box-shadow: 0 2px 10px -4px rgba(0, 0, 0, 0.4);
         }
 
         #customer-distribution-map {
@@ -350,7 +347,7 @@
         </div>
 
         <section id="profil" class="overflow-hidden bg-white py-24">
-            <div class="mx-auto max-w-7xl px-6 lg:px-0">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="flex flex-col items-center gap-16 md:gap-28 lg:flex-row">
                     <div class="relative h-[500px] w-full md:h-[650px] lg:w-1/2">
                         <div class="absolute left-0 top-10 z-10 h-[350px] w-4/5 md:h-[450px]" data-aos="fade-right"
@@ -383,14 +380,11 @@
 
                         <h2 class="mb-8 text-2xl font-ultra-light leading-[1.2] text-gray-900 md:text-[40px]">
                             BSPJI Banda Aceh adalah unit pelayanan teknis di bawah <span
-                                class="font-semibold text-gray-800">Kementerian Perindustrian</span> yang berdedikasi
-                            tinggi.
+                                class="font-semibold text-gray-800">Kementerian Perindustrian</span>
                         </h2>
 
-                        <p class="mb-12 text-lg font-ultra-light leading-relaxed text-gray-600 md:text-xl">
-                            Sebagai perpanjangan tangan negara, kami bertugas membangun kemandirian industri nasional
-                            melalui standardisasi, pengujian laboratorium, dan optimalisasi teknologi industri guna
-                            meningkatkan nilai tambah produk lokal Aceh maupun di luar Aceh.
+                        <p class="mb-12 text-lg font-ultra-light leading-relaxed text-gray-800 md:text-xl">
+                            Kami mempunyai tugas untuk melaksanakan standardisasi industri, optimalisasi pemanfaatan teknologi industri, industri hijau, dan pelayanan jasa industri berlandaskan potensi sumber daya daerah.
                         </p>
 
                         <a href="{{ $routeOrHash('sejarah-singkat.index') }}"
@@ -415,7 +409,7 @@
                 </div>
             </div>
 
-            <div class="relative mx-auto h-full w-full max-w-7xl px-6 lg:px-0">
+            <div class="relative mx-auto h-full w-full max-w-6xl px-6 lg:px-0">
                 <div class="relative flex h-full flex-col items-center lg:flex-row">
                     <div class="z-20 w-full py-12 lg:w-5/12 lg:py-0" data-aos="fade-right">
                         <h2 class="mb-4 text-3xl font-medium leading-tight tracking-tight text-white/95 sm:text-4xl lg:text-5xl">
@@ -484,7 +478,7 @@
         </section>
 
         <section id="layanan" class="pb-12 pt-24 md:pb-20 md:pt-28">
-            <div class="mx-auto max-w-7xl px-6 lg:px-0">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-16 flex flex-col justify-between gap-8 md:mb-14 md:flex-row md:items-end">
                     <div class="max-w-2xl" data-aos="fade-up">
                         <div class="mb-6 flex items-center gap-2">
@@ -502,44 +496,40 @@
                         Data layanan belum tersedia.
                     </div>
                 @else
-                    <div class="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
                         @foreach ($sectionLayanans as $index => $layanan)
                             @php
                                 $slug = Str::slug($layanan->nama_layanan);
                                 $serviceUrl = $serviceRouteMap[$slug] ?? '#';
-                                $serviceIcon = $serviceIconMap[$slug] ?? 'briefcase-business';
                                 $serviceSummary = Str::of(strip_tags((string) $layanan->detail))->squish()->limit(160);
                             @endphp
-                            <div class="group flex h-full flex-col" data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 100 }}">
-                                <div
-                                    class="mb-6 h-60 overflow-hidden rounded-3xl border border-slate-200 shadow-[0_12px_45px_-12px_rgba(0,0,0,0.12)]">
-                                    @if ($layanan->gambar)
-                                        <img src="{{ Storage::url($layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
-                                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                    @else
-                                        <div
-                                            class="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-200 via-slate-100 to-slate-200 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                                            {{ Str::limit($layanan->nama_layanan, 18, '') }}
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="flex grow flex-col px-1">
-                                    <div class="mb-3 flex items-center gap-3">
-                                        <div class="text-orange-600">
-                                            <i data-lucide="{{ $serviceIcon }}" class="h-6 w-6 text-orange-600"></i>
-                                        </div>
-                                        <h3 class="text-xl font-bold text-gray-900 transition-colors group-hover:text-orange-600">
-                                            {{ $layanan->nama_layanan }}
-                                        </h3>
+                            <div class="flex h-full flex-col rounded-3xl border border-slate-300/80 bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]" data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 100 }}">
+                                <div class="p-1.5 pb-0 sm:p-2 sm:pb-0">
+                                    <div class="relative h-[200px] w-full overflow-hidden rounded-2xl border border-slate-200 sm:h-[220px]">
+                                        @if ($layanan->gambar)
+                                            <img src="{{ Storage::url($layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
+                                                class="h-full w-full object-cover">
+                                        @else
+                                            <div class="flex h-full w-full items-center justify-center bg-slate-100 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+                                                {{ Str::limit($layanan->nama_layanan, 18, '') }}
+                                            </div>
+                                        @endif
                                     </div>
-                                    <p class="mb-6 ml-1 grow text-sm font-light leading-relaxed text-gray-500">
+                                </div>
+                                <div class="flex grow flex-col p-5 sm:p-6">
+                                    <h3 class="mb-3 text-[20px] font-semibold tracking-tight text-slate-900">
+                                        {{ $layanan->nama_layanan }}
+                                    </h3>
+                                    <p class="mb-6 grow text-md leading-snug text-slate-700">
                                         {{ $serviceSummary ?: 'Detail layanan akan segera diperbarui.' }}
                                     </p>
                                     <div class="mt-auto">
                                         <a href="{{ $serviceUrl }}"
-                                            class="inline-flex items-center gap-2 rounded-full border border-gray-900 px-5 py-2.5 text-sm font-bold text-gray-900 transition-all duration-300 hover:bg-gray-900 hover:text-white">
+                                            class="inline-flex items-center gap-3 text-sm font-semibold text-slate-900">
+                                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
+                                                <i data-lucide="chevron-right" class="h-4 w-4"></i>
+                                            </span>
                                             Selengkapnya
-                                            <i data-lucide="arrow-right" class="h-4 w-4"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -551,7 +541,7 @@
         </section>
 
         <section id="logo-pelanggan" class="overflow-hidden rounded-bl-3xl rounded-br-3xl border-b border-gray-200 bg-white py-16 md:py-24">
-            <div class="mx-auto max-w-7xl px-6 lg:px-0">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
                     <div class="order-2 lg:order-1" data-aos="fade-right">
                         <div class="mb-6 flex items-center gap-2">
@@ -611,7 +601,7 @@
 
                     <div class="order-1 lg:order-2" data-aos="fade-left">
                         <div class="relative">
-                            <div class="relative overflow-hidden rounded-[40px]">
+                            <div class="relative overflow-hidden rounded-2xl">
                                 <img src="{{ $showcaseImage }}" alt="Modern Industrial Facility Showcase"
                                     class="h-[400px] w-full object-cover">
                             </div>
@@ -621,8 +611,11 @@
             </div>
         </section>
 
-        <section id="sertifikat" class="relative overflow-hidden bg-white py-16 md:pb-32 md:pt-24">
-            <div class="relative mx-auto max-w-7xl px-6 lg:px-0">
+        <section id="sertifikat" class="relative overflow-hidden bg-slate-50/80 py-16 md:pb-32 md:pt-24">
+            <div class="pointer-events-none absolute inset-0 opacity-30"
+                style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 32px 32px;">
+            </div>
+            <div class="relative mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 max-w-4xl md:mb-16" data-aos="fade-up">
                     <div class="mb-6 flex items-center gap-2">
                         <span class="text-[10px] text-orange-600">■</span>
@@ -678,8 +671,8 @@
             </div>
         </section>
 
-        <section id="perusahaan-dalam-angka" class="bg-white py-24 md:pb-16 md:pt-3">
-            <div class="mx-auto max-w-7xl px-6 lg:px-0">
+        <section id="perusahaan-dalam-angka" class="bg-white py-24 md:pb-16 md:pt-32">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end md:mb-16" data-aos="fade-up">
                     <div class="max-w-2xl">
                         <div class="mb-6 flex items-center gap-2">
@@ -698,6 +691,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 gap-5 md:gap-6 lg:grid-cols-2">
+                    {{-- 
                     <article class="numbers-card" data-aos="fade-up" data-aos-delay="50">
                         <div class="mb-2 flex items-start justify-between gap-3 px-2 pt-1">
                             <h3 class="text-base font-semibold text-gray-900 md:text-lg">Survey Persepsi Kualitas Pelayanan (SPKP)</h3>
@@ -712,6 +706,7 @@
                         </div>
                         <div id="chart-anti-korupsi" class="numbers-chart"></div>
                     </article>
+                    --}}
                     <article class="numbers-card" data-aos="fade-up" data-aos-delay="150">
                         <div class="mb-2 flex items-start justify-between gap-3 px-2 pt-1">
                             <h3 class="text-base font-semibold text-gray-900 md:text-lg">Jumlah Pelanggan</h3>
@@ -729,17 +724,32 @@
                 </div>
 
                 <div class="mt-12 md:mt-20" data-aos="fade-up" data-aos-delay="120">
-                    <div class="mb-10 grid grid-cols-[1fr_auto_1fr] items-center gap-4 md:mb-12">
-                        <div aria-hidden="true"></div>
-                        <h3 class="text-center text-2xl font-ultra-light text-gray-900 md:text-3xl">Ringkasan Layanan</h3>
-                        <span
-                            class="justify-self-end inline-flex items-center rounded-full border border-slate-200 bg-orange-500 px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-white shadow-sm md:px-4 md:text-sm">
-                            2020 - 2026
-                        </span>
+                    <div class="relative mb-14" data-aos="fade-up">
+                        <div class="text-center">
+                            <div class="mb-6 flex items-center justify-center gap-2">
+                                <span class="text-[10px] text-orange-600">■</span>
+                                <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Statistik Layanan</span>
+                            </div>
+                            <h2 class="section-title-identic text-gray-900">
+                                Ringkasan Layanan
+                            </h2>
+                            <div class="mt-6 md:hidden">
+                                <span
+                                    class="inline-flex items-center rounded-full border border-slate-200 bg-orange-500 px-3 py-1.5 text-xs font-semibold tracking-[0.08em] text-white shadow-sm">
+                                    2020 - 2026
+                                </span>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-1 right-0 hidden md:block">
+                            <span
+                                class="inline-flex items-center rounded-full border border-slate-200 bg-orange-500 px-4 py-1.5 text-sm font-semibold tracking-[0.08em] text-white shadow-sm">
+                                2020 - 2026
+                            </span>
+                        </div>
                     </div>
 
                     <div
-                        class="grid grid-cols-1 gap-x-6 gap-y-8 rounded-[40px] border border-slate-300 bg-white px-8 py-16 shadow-[10px_10px_20px_-5px_rgba(0,0,0,0.17)] sm:grid-cols-2 lg:grid-cols-5 lg:gap-y-16 md:px-12">
+                        class="grid grid-cols-1 gap-x-6 gap-y-8 rounded-3xl border border-slate-300/80 bg-white px-8 py-16 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)] sm:grid-cols-2 lg:grid-cols-5 lg:gap-y-16 md:px-12">
                         <article class="text-center">
                             <p class="text-xl tracking-wide text-gray-700">Sertifikasi Produk</p>
                             <p class="mt-2 text-[45px] font-semibold leading-none text-gray-900">1.248</p>
@@ -778,7 +788,7 @@
         </section>
 
         <section id="peta-pelanggan" class="bg-white py-24 md:pb-28 md:pt-12">
-            <div class="mx-auto max-w-7xl px-6 lg:px-0">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-10 md:mb-14" data-aos="fade-up">
                     <div class="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-12">
                         <div class="lg:col-span-7">
@@ -801,32 +811,38 @@
                         <div id="customer-distribution-map" class="relative z-0"></div>
                     </article>
 
-                    <aside class="map-distribution-card flex flex-col gap-6 p-5 md:p-6" data-aos="fade-up" data-aos-delay="90">
-                        <div class="grid grid-cols-2 gap-3">
-                            <article class="rounded-2xl border-none bg-linear-to-br from-orange-500 to-orange-600 p-5 shadow-lg shadow-orange-200/50">
-                                <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Total</p>
-                                <p id="map-total-customers" class="mt-1 text-4xl font-bold text-white">0</p>
-                                <p class="mt-1 text-xs text-white/70">Pelanggan Terdaftar</p>
-                            </article>
-                            <article class="rounded-2xl border-none bg-linear-to-br from-blue-500 to-blue-600 p-5 shadow-lg shadow-blue-200/50">
-                                <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Coverage</p>
-                                <p id="map-total-coverage" class="mt-1 text-4xl font-bold text-white">0</p>
-                                <p class="mt-1 text-xs text-white/70">Kota & Kabupaten</p>
-                            </article>
+                    <aside class="flex flex-col gap-5 lg:pl-4" data-aos="fade-up" data-aos-delay="90">
+                        <div class="rounded-2xl bg-linear-to-br from-orange-500 to-orange-600 p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]">
+                            <p class="mb-1 text-xs font-bold uppercase tracking-[0.22em] text-white/80">Total Pelanggan</p>
+                            <div class="flex items-baseline gap-2">
+                                <p id="map-total-customers" class="text-4xl font-bold tracking-tight text-white">0</p>
+                                <p class="text-xs font-medium text-white/70">Pelanggan</p>
+                            </div>
                         </div>
 
-                        <article class="rounded-2xl border-none bg-linear-to-br from-slate-600 to-slate-700 p-5 shadow-lg shadow-slate-200/60">
-                            <p class="text-xs font-bold uppercase tracking-[0.22em] text-white/80">Tanpa Lokasi</p>
-                            <p id="map-total-no-location" class="mt-1 text-4xl font-bold text-white">{{ number_format((int) ($customerWithoutLocation ?? 0), 0, ',', '.') }}</p>
-                            <p class="mt-1 text-xs text-white/70">Pelanggan Belum Terpetakan</p>
-                        </article>
+                        <div class="rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]">
+                            <p class="mb-1 text-xs font-bold uppercase tracking-[0.22em] text-white/80">Wilayah Cakupan</p>
+                            <div class="flex items-baseline gap-2">
+                                <p id="map-total-coverage" class="text-4xl font-bold tracking-tight text-white">0</p>
+                                <p class="text-xs font-medium text-white/70">Kab / Kota</p>
+                            </div>
+                        </div>
 
-                        <div class="rounded-2xl border border-slate-200 p-4">
-                            <h3 class="mb-3 text-sm font-semibold text-slate-900">Legend Jumlah Pelanggan</h3>
-                            <ul class="space-y-2 text-sm text-slate-600">
-                                <li class="flex items-center gap-2"><span class="customer-map-bullet bg-orange-700"></span>Tinggi (>= 90)</li>
-                                <li class="flex items-center gap-2"><span class="customer-map-bullet bg-orange-500"></span>Menengah (45 - 89)</li>
-                                <li class="flex items-center gap-2"><span class="customer-map-bullet bg-orange-300"></span>Dasar (&lt; 45)</li>
+                        <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]">
+                            <h3 class="mb-5 text-xs font-bold uppercase tracking-[0.22em] text-slate-500">Legend Sebaran</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                                    <span class="h-3 w-3 rounded-full bg-orange-700 ring-4 ring-orange-700/10"></span>
+                                    Tinggi (≥ 90)
+                                </li>
+                                <li class="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                                    <span class="h-3 w-3 rounded-full bg-orange-500 ring-4 ring-orange-500/10"></span>
+                                    Menengah (45 - 89)
+                                </li>
+                                <li class="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                                    <span class="h-3 w-3 rounded-full bg-orange-300 ring-4 ring-orange-300/10"></span>
+                                    Dasar (&lt; 45)
+                                </li>
                             </ul>
                         </div>
                     </aside>
@@ -834,7 +850,7 @@
             </div>
         </section>
 
-        <section class="relative overflow-hidden bg-slate-50 pb-14 text-slate-200/80 pattern-grid-lg lg:pb-16 align-left-container"
+        <section class="relative overflow-hidden bg-white py-24 md:py-32 align-left-container"
             x-data="{
                 currentIndex: 0,
                 totalCards: 0,
@@ -865,28 +881,33 @@
                 scrollNext() { if (this.currentIndex < this.maxIndex) this.currentIndex++; },
                 scrollPrev() { if (this.currentIndex > 0) this.currentIndex--; }
             }">
+
             <div class="relative z-20 flex flex-col gap-10 lg:flex-row lg:gap-20">
                 <div class="w-full shrink-0 pr-6 lg:w-[380px] lg:pr-0">
-                    <div class="flex flex-col pt-12">
-                        <div>
-                            <h2 class="section-title-identic mb-6 text-[#1c1e21] lg:mb-8">
-                                Testimoni Pelanggan
-                            </h2>
-                            <p class="max-w-sm text-[16px] leading-relaxed text-gray-600 md:text-[17px]">
-                                Kepercayaan Anda adalah prioritas kami dalam mendukung kemajuan industri nasional.
-                            </p>
-                        </div>
+                        <div class="flex flex-col pt-12">
+                            <div>
+                                <div class="mb-6 flex items-center gap-2">
+                                    <!-- <span class="text-[10px] text-orange-600">■</span> -->
+                                    <!-- <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Feedback Pelanggan</span> -->
+                                </div>
+                                <h2 class="section-title-identic mb-6 text-slate-900 lg:mb-8">
+                                    Testimoni Pelanggan
+                                </h2>
+                                <p class="text-base font-light leading-relaxed text-gray-800 md:text-lg">
+                                    Kepercayaan Anda adalah prioritas kami dalam mendukung kemajuan industri nasional.
+                                </p>
+                            </div>
                         <div class="mt-10 flex gap-4">
                             <button @click="scrollPrev"
-                                :class="currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100'"
-                                class="flex h-11 w-11 items-center justify-center rounded-full border border-black/20 text-[#1c1e21] transition-all active:scale-90">
+                                :class="currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-slate-100'"
+                                class="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-slate-900 transition-all active:scale-90">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="m15 18-6-6 6-6" />
                                 </svg>
                             </button>
                             <button @click="scrollNext"
-                                :class="currentIndex >= maxIndex ? 'opacity-40 cursor-not-allowed' : 'hover:bg-gray-100'"
-                                class="flex h-11 w-11 items-center justify-center rounded-full border border-black/20 text-[#1c1e21] transition-all active:scale-90">
+                                :class="currentIndex >= maxIndex ? 'opacity-40 cursor-not-allowed' : 'hover:bg-slate-100'"
+                                class="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-slate-900 transition-all active:scale-90">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="m9 18 6-6-6-6" />
                                 </svg>
@@ -899,7 +920,7 @@
                     <div x-ref="track" :style="'transform: translateX(' + getTranslateX() + ')'"
                         class="flex gap-6 pb-12 pt-12 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]">
                         @forelse ($testimonis as $testimoni)
-                            <div class="relative h-[460px] min-w-[82%] snap-start overflow-hidden rounded-[40px] border border-gray-400 bg-white p-8 shadow-[10px_0_20px_-6px_rgba(0,0,0,0.12)] md:h-[500px] md:min-w-[440px] md:p-10">
+                            <div class="relative h-[460px] min-w-[82%] snap-start overflow-hidden rounded-[40px] bg-white p-8 md:h-[500px] md:min-w-[440px] md:p-10 border border-gray-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.45)]">
                                 <div class="relative z-10 flex h-full flex-col">
                                     <div class="mb-8 flex items-center gap-5">
                                         @if ($testimoni->gambar_pelanggan)
@@ -925,7 +946,7 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="relative h-[460px] min-w-[82%] snap-start overflow-hidden rounded-[40px] border border-gray-400 bg-white p-8 shadow-[10px_0_20px_-6px_rgba(0,0,0,0.12)] md:h-[500px] md:min-w-[440px] md:p-10">
+                            <div class="relative h-[460px] min-w-[82%] snap-start overflow-hidden rounded-[40px] bg-white p-8 shadow-xl md:h-[500px] md:min-w-[440px] md:p-10">
                                 <p class="text-[16px] italic leading-relaxed text-gray-600 md:text-[18px]">
                                     "Testimoni akan muncul setelah data ditambahkan pada admin panel."
                                 </p>
@@ -938,8 +959,8 @@
 
         <x-zona-integritas.section :show-content="false" />
 
-        <section id="faq" class="border-t border-gray-50 bg-white py-24">
-            <div class="mx-auto max-w-7xl px-6" x-data="{ activeItems: [1], currentImage: 1, toggle(id) { if (this.activeItems.includes(id)) { this.activeItems = this.activeItems.filter(i => i !== id); } else { this.activeItems.push(id); this.currentImage = id; }}}">
+        <section id="faq" class="bg-white py-24">
+            <div class="mx-auto max-w-6xl px-6" x-data="{ activeItems: [1], currentImage: 1, toggle(id) { if (this.activeItems.includes(id)) { this.activeItems = this.activeItems.filter(i => i !== id); } else { this.activeItems.push(id); this.currentImage = id; }}}">
                 <div class="mb-16" data-aos="fade-up">
                     <div class="mb-4 flex items-center gap-2">
                         <span class="text-[10px] text-orange-600">■</span>
@@ -1182,8 +1203,8 @@
             };
 
             [
-                { targetId: 'chart-spkp', labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], values: [3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7], min: 0, max: 4, step: 0.5, color: '#3b82f6', stroke: '#2563eb' },
-                { targetId: 'chart-anti-korupsi', labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], values: [3.0, 3.2, 3.3, 3.4, 3.6, 3.7, 3.8], min: 0, max: 4, step: 0.5, color: '#10b981', stroke: '#059669' },
+                // { targetId: 'chart-spkp', labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], values: [3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7], min: 0, max: 4, step: 0.5, color: '#3b82f6', stroke: '#2563eb' },
+                // { targetId: 'chart-anti-korupsi', labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], values: [3.0, 3.2, 3.3, 3.4, 3.6, 3.7, 3.8], min: 0, max: 4, step: 0.5, color: '#10b981', stroke: '#059669' },
                 { targetId: 'chart-jumlah-pelanggan', labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'], values: [210, 255, 300, 360, 420, 490, 560], min: 0, max: 600, step: 50, color: '#f59e0b', stroke: '#d97706' },
                 { targetId: 'chart-spm', labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'], values: [78, 80, 81, 83, 85, 87, 89, 90, 92, 93, 94, 95], min: 0, max: 100, step: 20, color: '#ef4444', stroke: '#dc2626' }
             ].forEach(renderBarChart);

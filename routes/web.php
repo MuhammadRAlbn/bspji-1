@@ -146,3 +146,4 @@ Route::get('/upp', [UppController::class, 'index'])->name('upp.index');
 Route::get('/ppid', [PpidController::class, 'index'])->name('ppid.index');
 Route::get('/informasi-publik', [InformasiPublikController::class, 'index'])->name('informasi-publik.index');
 Route::get('/informasi-publik/detail/{tipe}', [DetailInformasiController::class, 'show'])->name('detail-informasi.show');
+Route::view('/hubungi-kami', 'hubungi-kami')->name('hubungi-kami.index');

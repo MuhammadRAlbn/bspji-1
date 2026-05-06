@@ -35,8 +35,11 @@
     $gratifikasiFormUrl = null;
 @endphp
 
-<section id="zona-integritas" class="bg-linear-to-b from-slate-50 via-white to-white py-16 md:pb-20 md:pt-8">
-    <div class="mx-auto max-w-7xl px-6 lg:px-0"
+<section id="zona-integritas" class="relative overflow-hidden bg-slate-50/80 py-16 md:pb-20 md:pt-8">
+    <div class="pointer-events-none absolute inset-0 opacity-40"
+        style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 24px 24px;">
+    </div>
+    <div class="relative mx-auto max-w-6xl px-6 lg:px-0"
         @if ($showContent)
             x-data="{
                 active: {{ Js::from($initialActive) }},
@@ -64,10 +67,10 @@
 
         <div class="mx-auto mb-14 max-w-2xl text-center" data-aos="fade-up">
             <div class="mb-4 flex items-center justify-center gap-2">
-                <span class="text-[10px] text-orange-600">&#9632;</span>
+                <span class="text-[10px] text-orange-600">■</span>
                 <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Komitmen Kami</span>
             </div>
-            <h2 class="mb-4 text-3xl font-light leading-tight tracking-tight text-gray-900 md:text-5xl">Zona Integritas</h2>
+            <h2 class="section-title-identic text-gray-900">Zona Integritas</h2>
         </div>
 
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7 md:gap-5">
@@ -75,12 +78,12 @@
                 @if ($showContent)
                     <button type="button"
                         @click="setActive('{{ $item['id'] }}')"
-                        :class="active === '{{ $item['id'] }}' ? 'border-orange-300 bg-white shadow-md shadow-orange-100/50' : 'border-transparent bg-white/70 shadow-sm'"
-                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border p-3 text-center transition duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:bg-white hover:shadow-md hover:shadow-orange-100/50"
+                        :class="active === '{{ $item['id'] }}' ? 'border-orange-300 bg-white shadow-md shadow-orange-100/50' : 'border-slate-300/60 bg-white/70 shadow-sm'"
+                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-2xl border p-3 text-center transition-all duration-500 ease-out hover:border-slate-400/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/60"
                         data-aos="zoom-in">
                         <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
                             <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
-                                class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                                class="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-110">
                         </span>
                         <span class="text-sm font-semibold leading-tight text-slate-800">
                             {{ $item['label'] }}
@@ -88,11 +91,11 @@
                     </button>
                 @else
                     <a href="{{ $tabUrl($item['id']) }}"
-                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-lg border border-transparent bg-white/70 p-3 text-center shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-orange-200 hover:bg-white hover:shadow-md hover:shadow-orange-100/50"
+                        class="group flex min-h-44 flex-col items-center justify-center gap-3 rounded-2xl border border-slate-300/60 bg-white/70 p-3 text-center shadow-sm transition-all duration-500 ease-out hover:border-slate-400/50 hover:bg-white hover:shadow-xl hover:shadow-slate-200/60"
                         data-aos="zoom-in">
                         <span class="flex h-28 w-28 items-center justify-center sm:h-32 sm:w-32">
                             <img src="{{ asset('images/icon-zona/' . $item['image']) }}" alt="{{ $item['label'] }}"
-                                class="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105">
+                                class="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-110">
                         </span>
                         <span class="text-sm font-semibold leading-tight text-slate-800">
                             {{ $item['label'] }}
