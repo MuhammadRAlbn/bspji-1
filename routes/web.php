@@ -6,6 +6,8 @@ use App\Http\Controllers\KalibrasiController;
 use App\Http\Controllers\KonsultasiPendampinganController;
 use App\Http\Controllers\LphController;
 use App\Http\Controllers\LsihController;
+use App\Http\Controllers\NewsCommentController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PelatihanTeknisController;
 use App\Http\Controllers\PengujianController;
 use App\Http\Controllers\PpidController;
@@ -146,4 +148,9 @@ Route::get('/upp', [UppController::class, 'index'])->name('upp.index');
 Route::get('/ppid', [PpidController::class, 'index'])->name('ppid.index');
 Route::get('/informasi-publik', [InformasiPublikController::class, 'index'])->name('informasi-publik.index');
 Route::get('/informasi-publik/detail/{tipe}', [DetailInformasiController::class, 'show'])->name('detail-informasi.show');
+Route::get('/berita', [NewsController::class, 'index'])->name('berita.index');
+Route::get('/berita/{news:slug}', [NewsController::class, 'show'])->name('berita.show');
+Route::post('/berita/{news:slug}/comments', [NewsCommentController::class, 'store'])
+    ->middleware('throttle:6,1')
+    ->name('berita.comments.store');
 Route::view('/hubungi-kami', 'hubungi-kami')->name('hubungi-kami.index');

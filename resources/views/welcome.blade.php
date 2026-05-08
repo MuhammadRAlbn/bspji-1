@@ -310,7 +310,7 @@
 </head>
 
 <body class="overflow-x-hidden bg-white text-gray-900 antialiased">
-    <x-layouts.partials.navbar />
+    <x-layouts.partials.navbar variant="transparent" />
 
     <main>
         <div class="relative flex h-screen w-full flex-col">
@@ -611,7 +611,7 @@
             </div>
         </section>
 
-        <section id="sertifikat" class="relative overflow-hidden bg-slate-50/80 py-16 md:pb-32 md:pt-24">
+        <section id="sertifikat" class="relative overflow-hidden border-b border-slate-200/70 bg-slate-50/80 py-16 md:pb-32 md:pt-24">
             <div class="pointer-events-none absolute inset-0 opacity-30"
                 style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 32px 32px;">
             </div>
@@ -723,7 +723,7 @@
                     </article>
                 </div>
 
-                <div class="mt-12 md:mt-20" data-aos="fade-up" data-aos-delay="120">
+                <div class="mt-24 md:mt-40" data-aos="fade-up" data-aos-delay="120">
                     <div class="relative mb-14" data-aos="fade-up">
                         <div class="text-center">
                             <div class="mb-6 flex items-center justify-center gap-2">
@@ -787,7 +787,7 @@
             </div>
         </section>
 
-        <section id="peta-pelanggan" class="bg-white py-24 md:pb-28 md:pt-12">
+        <section id="peta-pelanggan" class="bg-white py-24 md:pb-16 md:pt-32">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-10 md:mb-14" data-aos="fade-up">
                     <div class="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-12">
@@ -850,7 +850,7 @@
             </div>
         </section>
 
-        <section class="relative overflow-hidden bg-white py-24 md:py-32 align-left-container"
+        <section class="relative overflow-hidden bg-white py-24 md:pb-32 md:pt-16 align-left-container"
             x-data="{
                 currentIndex: 0,
                 totalCards: 0,

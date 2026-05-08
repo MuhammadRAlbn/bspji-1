@@ -35,7 +35,7 @@
     $gratifikasiFormUrl = null;
 @endphp
 
-<section id="zona-integritas" class="relative overflow-hidden bg-slate-50/80 py-16 md:pb-20 md:pt-8">
+<section id="zona-integritas" class="relative overflow-hidden border-y border-slate-200/70 bg-slate-50/80 py-16 md:pb-20 md:pt-8">
     <div class="pointer-events-none absolute inset-0 opacity-40"
         style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 24px 24px;">
     </div>

@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Filament\Resources\News;
+
+use App\Filament\Resources\News\Pages\CreateNews;
+use App\Filament\Resources\News\Pages\EditNews;
+use App\Filament\Resources\News\Pages\ListNews;
+use App\Filament\Resources\News\Schemas\NewsForm;
+use App\Filament\Resources\News\Tables\NewsTable;
+use App\Models\News;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
+
+class NewsResource extends Resource
+{
+    protected static ?string $model = News::class;
+
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-newspaper';
+
+    protected static \UnitEnum|string|null $navigationGroup = 'Berita';
+
+    protected static ?string $modelLabel = 'Berita';
+
+    protected static ?string $pluralModelLabel = 'Berita';
+
+    protected static ?string $navigationLabel = 'Berita';
+
+    public static function form(Schema $schema): Schema
+    {
+        return NewsForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return NewsTable::configure($table);
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListNews::route('/'),
+            'create' => CreateNews::route('/create'),
+            'edit' => EditNews::route('/{record}/edit'),
+        ];
+    }
+}
