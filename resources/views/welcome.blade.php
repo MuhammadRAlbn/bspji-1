@@ -320,26 +320,26 @@
                 </video>
                 <div class="absolute inset-0 bg-linear-to-t from-black via-black/20 to-black/10"></div>
 
-                <div class="relative z-20 mx-auto flex h-full w-full max-w-[1430px] flex-col justify-end px-6 pb-24 lg:px-0">
+                <div class="relative z-20 mx-auto flex h-full w-full max-w-[1430px] flex-col justify-end px-6 pb-28 lg:px-0">
                     <div class="max-w-3xl" data-aos="fade-up" data-aos-duration="1000">
-                        <h1 class="mb-6 text-4xl leading-[1.1] tracking-tighter text-white md:text-[72px]">
-                            Mendorong Inovasi,<br>Memperkuat Industri.
+                        <h1 class="mb-6 text-3xl leading-[1.1] tracking-tight text-white md:text-5xl">
+                            Mewujudkan Industri Nasional yang Mandiri dan Berdaya Saing
                         </h1>
-                        <p class="mb-10 max-w-xl text-lg font-ultra-light leading-relaxed text-white/80 md:text-xl">
+                        <!-- <p class="mb-10 max-w-xl text-lg font-ultra-light leading-relaxed text-white/80 md:text-xl">
                             BSPJI Aceh hadir sebagai mitra strategis untuk meningkatkan daya saing industri melalui
                             standardisasi dan layanan jasa teknis yang terpercaya.
-                        </p>
+                        </p> -->
                         <div class="flex flex-wrap gap-4">
                             <a href="#layanan"
-                                class="rounded-full border border-white/20 bg-white/10 px-8 py-3 text-sm font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20">
+                                class="rounded-full border border-white/20 bg-white/10 px-8 py-3 text-md font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20">
                                 Jelajahi Layanan Kami
                             </a>
-                            <a href="#app-showcase"
+                            <!-- <a href="#app-showcase"
                                 class="group flex items-center bg-transparent px-8 py-3 text-sm font-semibold text-white transition-all">
                                 Daftar akun SIPINTU
                                 <i data-lucide="arrow-right"
                                     class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"></i>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </div>
@@ -349,20 +349,20 @@
         <section id="profil" class="overflow-hidden bg-white py-24">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="flex flex-col items-center gap-16 md:gap-28 lg:flex-row">
-                    <div class="relative h-[500px] w-full md:h-[650px] lg:w-1/2">
-                        <div class="absolute left-0 top-10 z-10 h-[350px] w-4/5 md:h-[450px]" data-aos="fade-right"
+                    <div class="relative h-[450px] w-full md:h-[550px] lg:w-1/2">
+                        <div class="absolute left-0 top-10 z-10 h-[300px] w-[70%] md:h-[380px]" data-aos="fade-right"
                             data-aos-duration="1000">
                             <img src="{{ $profileImages[0] }}" alt="Kegiatan 1"
                                 class="h-full w-full rounded-2xl border-4 border-white object-cover shadow-xl">
                         </div>
 
-                        <div class="absolute right-0 top-0 z-20 h-[200px] w-2/5" data-aos="fade-down" data-aos-delay="300"
+                        <div class="absolute right-4 top-0 z-20 h-[170px] w-[35%]" data-aos="fade-down" data-aos-delay="300"
                             data-aos-duration="1000">
                             <img src="{{ $profileImages[1] }}" alt="Kegiatan 2"
                                 class="h-full w-full rounded-2xl border-4 border-white object-cover shadow-2xl">
                         </div>
 
-                        <div class="absolute bottom-4 right-4 z-30 h-[250px] w-1/2 md:h-[300px]" data-aos="fade-up"
+                        <div class="absolute bottom-4 right-10 z-30 h-[220px] w-[45%] md:h-[260px]" data-aos="fade-up"
                             data-aos-delay="500" data-aos-duration="1000">
                             <img src="{{ $profileImages[2] }}" alt="Kegiatan 3"
                                 class="h-full w-full rounded-2xl border-4 border-white object-cover shadow-2xl">
@@ -373,23 +373,24 @@
                     </div>
 
                     <div class="w-full md:w-1/2" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
-                        <div class="mb-10 flex items-center gap-2">
+                        <div class="mb-2 flex items-center gap-2">
                             <span class="text-[15px] text-gray-900">■</span>
                             <span class="text-sm font-bold uppercase tracking-[0.3em] text-gray-900">Profil</span>
                         </div>
 
-                        <h2 class="mb-8 text-2xl font-ultra-light leading-[1.2] text-gray-900 md:text-[40px]">
-                            BSPJI Banda Aceh adalah unit pelayanan teknis di bawah <span
+                        <h2 class="mb-8 text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">
+                            Unit pelayanan teknis di bawah <span
                                 class="font-semibold text-gray-800">Kementerian Perindustrian</span>
                         </h2>
 
-                        <p class="mb-12 text-lg font-ultra-light leading-relaxed text-gray-800 md:text-xl">
-                            Kami mempunyai tugas untuk melaksanakan standardisasi industri, optimalisasi pemanfaatan teknologi industri, industri hijau, dan pelayanan jasa industri berlandaskan potensi sumber daya daerah.
+                        <p class="mb-12 text-justify text-lg leading-relaxed text-gray-700/95 md:text-lg">
+                            Sebagai perpanjangan tangan dari kementerian perindustrian, Kami mempunyai tugas untuk melaksanakan standardisasi industri, optimalisasi pemanfaatan teknologi industri, industri hijau, dan pelayanan jasa industri berlandaskan potensi sumber daya daerah.
                         </p>
 
                         <a href="{{ $routeOrHash('sejarah-singkat.index') }}"
-                            class="inline-block rounded-full border border-gray-300 px-10 py-3 text-sm font-medium text-gray-800 transition-all duration-500 hover:border-gray-900 hover:bg-gray-900 hover:text-white">
+                            class="group inline-flex items-center gap-2 rounded-full border border-gray-500 px-10 py-3 text-sm font-medium text-gray-800 transition-all duration-500 hover:border-gray-900 hover:bg-gray-900 hover:text-white">
                             Selengkapnya
+                            <i data-lucide="arrow-right" class="h-4 w-4 transition-transform group-hover:translate-x-1"></i>
                         </a>
                     </div>
                 </div>
@@ -462,6 +463,7 @@
                             </div>
                         </div>
 
+                        {{--
                         <div
                             class="absolute -top-16 right-4 z-40 rotate-[-5deg] transform drop-shadow-2xl transition-transform duration-500 ease-out hover:rotate-0 lg:-right-4 lg:-top-24">
                             <div
@@ -472,11 +474,69 @@
                                 </div>
                             </div>
                         </div>
+                        --}}
                     </div>
                 </div>
             </div>
         </section>
 
+        <section id="layanan" class="bg-white pb-16 pt-24 md:pb-24 md:pt-28">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
+                <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)_auto] lg:items-start lg:gap-14" data-aos="fade-up">
+                    <div>
+                        <p class="mb-3 text-sm font-bold uppercase tracking-normal text-[#0038b8]">
+                            ONE ENERGY, ONE PERTAMINA
+                        </p>
+                        <h2 class="text-2xl font-semibold leading-[1.2] tracking-normal text-black md:text-[30px]">
+                            Grup Bisnis Kami
+                        </h2>
+                    </div>
+
+                    <p class="max-w-xl text-lg font-normal leading-relaxed text-slate-700 md:text-lg lg:pt-3">
+                        Pertamina menjalankan bisnis energi yang terintegrasi dari hulu hingga hilir, termasuk pengembangan energi terbarukan untuk masa depan.
+                    </p>
+
+                    <a href="#layanan"
+                        class="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-full border border-slate-700 px-7 text-sm font-semibold text-slate-700 transition duration-300 hover:border-[#0038b8] hover:text-[#0038b8] lg:mt-1 lg:min-w-[180px]">
+                        Selengkapnya
+                        <i data-lucide="arrow-right" class="h-5 w-5"></i>
+                    </a>
+                </div>
+
+                <div class="mt-14 inline-flex rounded-full bg-slate-200 p-1.5" data-aos="fade-up" data-aos-delay="75">
+                    <span class="rounded-full bg-[#123cad] px-6 py-2.5 text-base font-medium text-white">
+                        Subholding
+                    </span>
+                    <span class="px-6 py-2.5 text-base font-medium text-black">
+                        AP &amp; Services
+                    </span>
+                </div>
+
+                @if ($sectionLayanans->isEmpty())
+                    <div class="mt-8 rounded-lg border border-dashed border-slate-300 bg-[#f2f5f9] p-8 text-slate-600">
+                        Data layanan belum tersedia.
+                    </div>
+                @else
+                    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+                        @foreach ($sectionLayanans as $index => $layanan)
+                            @php
+                                $slug = Str::slug($layanan->nama_layanan);
+                                $serviceUrl = $serviceRouteMap[$slug] ?? '#';
+                            @endphp
+                            <a href="{{ $serviceUrl }}"
+                                class="flex h-[220px] items-center justify-center rounded-lg border border-[#dde4ee] bg-[#f1f4f9] px-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[#cfd8e6] hover:bg-[#eef2f8] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25 md:h-[260px]"
+                                data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 75 }}">
+                                <h3 class="text-sm font-semibold uppercase leading-snug tracking-normal text-slate-950 md:text-base">
+                                    {{ $layanan->nama_layanan }}
+                                </h3>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </section>
+
+        {{--
         <section id="layanan" class="pb-12 pt-24 md:pb-20 md:pt-28">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-16 flex flex-col justify-between gap-8 md:mb-14 md:flex-row md:items-end">
@@ -492,53 +552,30 @@
                 </div>
 
                 @if ($sectionLayanans->isEmpty())
-                    <div class="rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-8 text-slate-600">
+                    <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-slate-600">
                         Data layanan belum tersedia.
                     </div>
                 @else
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
                         @foreach ($sectionLayanans as $index => $layanan)
                             @php
                                 $slug = Str::slug($layanan->nama_layanan);
                                 $serviceUrl = $serviceRouteMap[$slug] ?? '#';
-                                $serviceSummary = Str::of(strip_tags((string) $layanan->detail))->squish()->limit(160);
                             @endphp
-                            <div class="flex h-full flex-col rounded-3xl border border-slate-300/80 bg-white shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]" data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 100 }}">
-                                <div class="p-1.5 pb-0 sm:p-2 sm:pb-0">
-                                    <div class="relative h-[200px] w-full overflow-hidden rounded-2xl border border-slate-200 sm:h-[220px]">
-                                        @if ($layanan->gambar)
-                                            <img src="{{ Storage::url($layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
-                                                class="h-full w-full object-cover">
-                                        @else
-                                            <div class="flex h-full w-full items-center justify-center bg-slate-100 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
-                                                {{ Str::limit($layanan->nama_layanan, 18, '') }}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="flex grow flex-col p-5 sm:p-6">
-                                    <h3 class="mb-3 text-[20px] font-semibold tracking-tight text-slate-900">
-                                        {{ $layanan->nama_layanan }}
-                                    </h3>
-                                    <p class="mb-6 grow text-md leading-snug text-slate-700">
-                                        {{ $serviceSummary ?: 'Detail layanan akan segera diperbarui.' }}
-                                    </p>
-                                    <div class="mt-auto">
-                                        <a href="{{ $serviceUrl }}"
-                                            class="inline-flex items-center gap-3 text-sm font-semibold text-slate-900">
-                                            <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-900 text-white">
-                                                <i data-lucide="chevron-right" class="h-4 w-4"></i>
-                                            </span>
-                                            Selengkapnya
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+                            <a href="{{ $serviceUrl }}"
+                                class="flex min-h-[180px] items-center justify-center rounded-2xl border border-slate-200 bg-slate-50 px-6 py-8 text-center shadow-[0_2px_10px_-6px_rgba(15,23,42,0.45)] transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:bg-white hover:shadow-[0_18px_35px_-28px_rgba(15,23,42,0.75)] focus:outline-none focus:ring-2 focus:ring-slate-900/20"
+                                data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 75 }}">
+                                <h3 class="text-lg font-semibold leading-snug tracking-tight text-slate-900">
+                                    {{ $layanan->nama_layanan }}
+                                </h3>
+                            </a>
                         @endforeach
                     </div>
                 @endif
             </div>
         </section>
+
+        --}}
 
         <section id="logo-pelanggan" class="overflow-hidden rounded-bl-3xl rounded-br-3xl border-b border-gray-200 bg-white py-16 md:py-24">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
@@ -723,6 +760,7 @@
                     </article>
                 </div>
 
+                {{--
                 <div class="mt-24 md:mt-40" data-aos="fade-up" data-aos-delay="120">
                     <div class="relative mb-14" data-aos="fade-up">
                         <div class="text-center">
@@ -784,6 +822,7 @@
                         </article>
                     </div>
                 </div>
+                --}}
             </div>
         </section>
 
