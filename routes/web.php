@@ -151,6 +151,6 @@ Route::get('/informasi-publik/detail/{tipe}', [DetailInformasiController::class,
 Route::get('/berita', [NewsController::class, 'index'])->name('berita.index');
 Route::get('/berita/{news:slug}', [NewsController::class, 'show'])->name('berita.show');
 Route::post('/berita/{news:slug}/comments', [NewsCommentController::class, 'store'])
-    ->middleware('throttle:6,1')
+    ->middleware('throttle:news-comments')
     ->name('berita.comments.store');
 Route::view('/hubungi-kami', 'hubungi-kami')->name('hubungi-kami.index');

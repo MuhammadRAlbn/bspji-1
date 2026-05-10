@@ -24,6 +24,7 @@ class StoreNewsCommentRequest extends FormRequest
             'author_name' => ['required', 'string', 'max:100'],
             'author_email' => ['required', 'email', 'max:255'],
             'content' => ['required', 'string', 'min:3', 'max:2000'],
+            'website' => ['prohibited'],
         ];
     }
 

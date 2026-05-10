@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\News;
 use App\Models\NewsComment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class NewsFeatureTest extends TestCase
@@ -55,6 +56,7 @@ class NewsFeatureTest extends TestCase
             'author_name' => 'Pengunjung',
             'author_email' => 'pengunjung@example.com',
             'content' => 'Informasinya sangat membantu.',
+            'website' => '',
         ])
             ->assertRedirect()
             ->assertSessionHas('comment_status');
@@ -71,6 +73,71 @@ class NewsFeatureTest extends TestCase
             ->assertSee('Informasinya sangat membantu.');
     }
 
+    public function test_comment_submission_rejects_filled_honeypot(): void
+    {
+        $news = News::factory()->published()->create();
+
+        $this->from(route('berita.show', $news))
+            ->post(route('berita.comments.store', $news), [
+                'author_name' => 'Pengunjung',
+                'author_email' => 'pengunjung@example.com',
+                'content' => 'Komentar dari bot sederhana.',
+                'website' => 'https://spam.example',
+            ])
+            ->assertRedirect(route('berita.show', $news))
+            ->assertSessionHasErrors(['website']);
+
+        $this->assertDatabaseMissing('news_comments', [
+            'news_id' => $news->id,
+            'content' => 'Komentar dari bot sederhana.',
+        ]);
+    }
+
+    public function test_comment_rate_limit_allows_ten_comments_per_ten_minutes_per_ip(): void
+    {
+        $news = News::factory()->published()->create();
+        $limitedIp = '203.0.113.10';
+
+        for ($i = 1; $i <= 10; $i++) {
+            $this->withServerVariables(['REMOTE_ADDR' => $limitedIp])
+                ->post(route('berita.comments.store', $news), [
+                    'author_name' => 'Pengunjung',
+                    'author_email' => 'pengunjung@example.com',
+                    'content' => "Komentar valid ke-{$i}.",
+                    'website' => '',
+                ])
+                ->assertRedirect();
+        }
+
+        $this->withServerVariables(['REMOTE_ADDR' => $limitedIp])
+            ->post(route('berita.comments.store', $news), [
+                'author_name' => 'Pengunjung',
+                'author_email' => 'pengunjung@example.com',
+                'content' => 'Komentar valid ke-11.',
+                'website' => '',
+            ])
+            ->assertStatus(429);
+
+        $this->withServerVariables(['REMOTE_ADDR' => '203.0.113.20'])
+            ->post(route('berita.comments.store', $news), [
+                'author_name' => 'Pengunjung Lain',
+                'author_email' => 'pengunjung-lain@example.com',
+                'content' => 'Komentar dari IP berbeda.',
+                'website' => '',
+            ])
+            ->assertRedirect();
+
+        $this->assertDatabaseMissing('news_comments', [
+            'news_id' => $news->id,
+            'content' => 'Komentar valid ke-11.',
+        ]);
+
+        $this->assertDatabaseHas('news_comments', [
+            'news_id' => $news->id,
+            'content' => 'Komentar dari IP berbeda.',
+        ]);
+    }
+
     public function test_comments_and_replies_are_visible(): void
     {
         $news = News::factory()->published()->create();
@@ -85,6 +152,24 @@ class NewsFeatureTest extends TestCase
             ->assertOk()
             ->assertSee($comment->content)
             ->assertSee($reply->content);
+    }
+
+    public function test_comment_times_are_displayed_in_wib(): void
+    {
+        $news = News::factory()->published()->create();
+        $comment = NewsComment::factory()->for($news)->create([
+            'content' => 'Komentar dengan waktu WIB.',
+            'created_at' => Carbon::parse('2026-05-08 01:43:00', 'UTC'),
+        ]);
+        NewsComment::factory()->for($news)->for($comment, 'parent')->create([
+            'content' => 'Balasan dengan waktu WIB.',
+            'created_at' => Carbon::parse('2026-05-08 02:10:00', 'UTC'),
+        ]);
+
+        $this->get(route('berita.show', $news))
+            ->assertOk()
+            ->assertSee('08:43 WIB')
+            ->assertSee('09:10 WIB');
     }
 
     public function test_reply_must_target_root_comment_on_same_news(): void

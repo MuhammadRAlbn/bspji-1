@@ -11,6 +11,12 @@
         <input type="hidden" name="parent_id" value="{{ $parentId }}">
     @endif
 
+    <div class="hidden" aria-hidden="true">
+        <label for="website_{{ $parentId ?? 'root' }}">Website</label>
+        <input id="website_{{ $parentId ?? 'root' }}" type="text" name="website" value="" tabindex="-1"
+            autocomplete="off">
+    </div>
+
     <div class="grid gap-4 md:grid-cols-2">
         <div class="space-y-2">
             <label for="author_name_{{ $parentId ?? 'root' }}" class="text-sm font-semibold text-slate-700">Nama</label>

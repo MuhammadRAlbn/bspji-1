@@ -78,7 +78,7 @@
                             <div>
                                 <h3 class="font-extrabold text-slate-800">{{ $comment->author_name }}</h3>
                                 <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                                    {{ $comment->created_at->format('d M Y H:i') }}
+                                    {{ $comment->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }} WIB
                                 </p>
                             </div>
                             <button type="button" @click="replying = !replying"
@@ -100,7 +100,7 @@
                                         <div class="flex items-center justify-between gap-4">
                                             <h4 class="font-extrabold text-slate-800">{{ $reply->author_name }}</h4>
                                             <p class="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                                                {{ $reply->created_at->format('d M Y H:i') }}
+                                                {{ $reply->created_at->timezone('Asia/Jakarta')->format('d M Y H:i') }} WIB
                                             </p>
                                         </div>
                                         <p class="mt-3 whitespace-pre-line leading-7 text-slate-700">{{ $reply->content }}</p>
