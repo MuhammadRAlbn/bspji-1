@@ -1,5 +1,18 @@
 <x-layouts.app title="Layanan Kalibrasi">
-<div x-data="{ tab: 'sertifikasi' }">
+<div x-data="{
+    tab: 'sertifikasi',
+    lightboxOpen: false,
+    lightboxImage: '',
+    lightboxAlt: '',
+    openLightbox(image, alt) {
+        this.lightboxImage = image;
+        this.lightboxAlt = alt;
+        this.lightboxOpen = true;
+    },
+    closeLightbox() {
+        this.lightboxOpen = false;
+    }
+}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&q=80&w=2070"
@@ -64,111 +77,122 @@
             </button>
         </div>
 
-        <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
+        <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
+            <div class="grid grid-cols-1 items-start">
             
-            {{-- Tab Alur Kalibrasi --}}
-            <div x-show="tab === 'alur-kalibrasi'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-indigo-950 uppercase tracking-tight">Alur Layanan Kalibrasi</h2>
-                    </div>
-                    
-                    @if($alurKalibrasi && $alurKalibrasi->image)
-                        <div class="flex justify-center bg-gray-50 rounded-2xl p-4">
-                            <img src="{{ asset('storage/' . $alurKalibrasi->image) }}" alt="Alur Kalibrasi" class="max-w-full h-auto rounded-xl shadow-lg border-2 border-white">
-                        </div>
-                    @else
-                        <div class="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 py-24 text-center">
-                            <p class="text-gray-400 font-medium italic">Data alur layanan belum tersedia.</p>
-                        </div>
-                    @endif
-                </div>
-            </div>
-
-            {{-- Tab Sertifikasi --}}
-            <div x-show="tab === 'sertifikasi'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-indigo-950 uppercase tracking-tight">Sertifikat Akreditasi</h2>
-                    </div>
-                    
+                <section x-show="tab === 'sertifikasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-5xl space-y-8">
                     @if($sertifikasis->isNotEmpty())
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                             @foreach($sertifikasis as $sert)
-                                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition duration-300">
-                                    <img src="{{ asset('storage/' . $sert->image) }}" class="w-full h-auto rounded-xl shadow-inner border border-gray-200 transition duration-500 hover:scale-[1.01]">
-                                </div>
+                                <button
+                                    type="button"
+                                    @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi')"
+                                    class="group relative block aspect-square w-full cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-sm transition-all hover:shadow-md"
+                                >
+                                    <img
+                                        src="{{ asset('storage/' . $sert->image) }}"
+                                        alt="Sertifikat Akreditasi"
+                                        class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                                    >
+                                    <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                        <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                            Klik untuk memperbesar
+                                        </span>
+                                    </div>
+                                </button>
                             @endforeach
                         </div>
                     @else
-                        <div class="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 py-24 text-center">
-                            <p class="text-gray-400 font-medium italic">Gambar sertifikat belum tersedia.</p>
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Gambar sertifikat belum tersedia.</p>
                         </div>
                     @endif
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Ruang Lingkup --}}
-            <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-5xl">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     @forelse($ruangLingkupan as $item)
-                        <div class="bg-white rounded-4xl shadow-xl overflow-hidden border border-gray-100 flex flex-col group hover:-translate-y-2 transition duration-500">
+                        <div class="group flex flex-col overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-sm transition-all duration-500 hover:shadow-md">
                             @if($item->image)
-                                <div class="h-52 overflow-hidden relative">
-                                    <div class="absolute inset-0 bg-indigo-900/10 group-hover:bg-transparent transition duration-500 z-10"></div>
-                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700">
+                                <div class="relative aspect-square overflow-hidden">
+                                    <div class="absolute inset-0 z-10 bg-slate-900/5 transition duration-500 group-hover:bg-transparent"></div>
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
                                 </div>
                             @endif
-                            <div class="p-8 grow">
-                                <span class="px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-full uppercase tracking-widest mb-3 inline-block">Scope</span>
-                                <h3 class="text-2xl font-extrabold text-indigo-950 mb-6 leading-tight">{{ $item->title }}</h3>
-                                <ul class="space-y-4">
+                            <div class="grow p-6">
+                                <span class="mb-3 inline-block rounded-full bg-slate-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">Scope</span>
+                                <h3 class="mb-6 text-xl font-bold leading-tight text-slate-800">{{ $item->title }}</h3>
+                                <ul class="space-y-3">
                                     @foreach($item->details ?? [] as $detail)
                                         <li class="flex items-start">
-                                            <div class="p-1 bg-green-100 rounded-full mr-3 mt-0.5">
-                                                <svg class="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                                            <div class="mt-1 mr-3 rounded-full bg-emerald-50 p-1">
+                                                <svg class="h-3 w-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
                                             </div>
-                                            <span class="text-gray-600 text-sm font-medium leading-relaxed">{{ is_array($detail) ? ($detail['name'] ?? '-') : $detail }}</span>
+                                            <span class="text-sm font-medium leading-relaxed text-slate-600">{{ is_array($detail) ? ($detail['name'] ?? '-') : $detail }}</span>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-full bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
-                            <p class="text-gray-400 font-medium italic">Data ruang lingkup belum tersedia.</p>
+                        <div class="col-span-full rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Data ruang lingkup belum tersedia.</p>
                         </div>
                     @endforelse
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Tarif --}}
-            <div x-show="tab === 'tarif'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section x-show="tab === 'alur-kalibrasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-5xl space-y-6 text-center">
+                    @if($alurKalibrasi && $alurKalibrasi->image)
+                        <button
+                            type="button"
+                            @click="openLightbox('{{ asset('storage/' . $alurKalibrasi->image) }}', 'Alur Pelayanan Kalibrasi')"
+                            class="group relative mx-auto block aspect-square w-full max-w-[400px] cursor-pointer overflow-hidden rounded-[30px] border border-black/15 bg-slate-50 text-left shadow-xl transition-all duration-500 hover:shadow-2xl"
+                        >
+                                <img
+                                    src="{{ asset('storage/' . $alurKalibrasi->image) }}"
+                                    alt="Alur Pelayanan Kalibrasi"
+                                    class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
+                                >
+                            <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                    Klik untuk memperbesar
+                                </span>
+                            </div>
+                        </button>
+                    @else
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Gambar alur layanan belum tersedia.</p>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
+                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-5xl">
+                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     @forelse($ruangLingkupan as $item)
-                        <div class="bg-white rounded-4xl shadow-xl overflow-hidden border border-gray-100 flex flex-col group hover:shadow-indigo-900/5 transition duration-500">
+                        <div class="group flex flex-col overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-sm transition-all duration-500 hover:shadow-md">
                             @if($item->image)
-                                <div class="h-32 overflow-hidden relative">
-                                    <div class="absolute inset-0 bg-gray-900/40 z-10"></div>
-                                    <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full object-cover blur-[1px] opacity-60">
+                                <div class="relative h-32 overflow-hidden">
+                                    <div class="absolute inset-0 z-10 bg-slate-900/40"></div>
+                                    <img src="{{ asset('storage/' . $item->image) }}" class="h-full w-full object-cover opacity-60 blur-[1px]">
                                     <div class="absolute inset-0 z-20 flex items-center justify-center">
-                                        <h4 class="text-white font-extrabold text-center px-4 tracking-wide uppercase text-sm">{{ $item->title }}</h4>
+                                        <h4 class="px-4 text-center text-sm font-bold uppercase tracking-wide text-white">{{ $item->title }}</h4>
                                     </div>
                                 </div>
                             @endif
-                            <div class="p-8 grow bg-white">
+                            <div class="grow bg-white p-6">
                                 <div class="space-y-3">
                                     @foreach($item->details ?? [] as $detail)
                                         @if(is_array($detail))
-                                            <div class="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border border-gray-100 hover:bg-white hover:shadow-md transition duration-200">
-                                                <span class="text-gray-700 text-xs font-bold leading-snug pr-3">{{ $detail['name'] ?? '-' }}</span>
-                                                <span class="text-indigo-700 text-sm font-extrabold whitespace-nowrap bg-white px-3 py-1.5 rounded-lg shadow-sm border border-gray-100">Rp {{ number_format($detail['price'] ?? 0, 0, ',', '.') }}</span>
+                                            <div class="flex items-center justify-between rounded-xl border border-black/5 bg-slate-50 p-4 transition duration-200 hover:bg-white hover:shadow-sm">
+                                                <span class="pr-3 text-xs font-bold leading-snug text-slate-700">{{ $detail['name'] ?? '-' }}</span>
+                                                <span class="whitespace-nowrap rounded-lg border border-black/5 bg-white px-3 py-1.5 text-sm font-bold text-slate-800 shadow-sm">Rp {{ number_format($detail['price'] ?? 0, 0, ',', '.') }}</span>
                                             </div>
                                         @endif
                                     @endforeach
@@ -176,13 +200,40 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-full bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
-                            <p class="text-gray-400 font-medium italic">Data daftar tarif belum tersedia.</p>
+                        <div class="col-span-full rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Data daftar tarif belum tersedia.</p>
                         </div>
                     @endforelse
+                    </div>
                 </div>
+                </section>
             </div>
         </article>
+    </div>
+    <div
+        x-show="lightboxOpen"
+        x-transition.opacity.duration.300ms
+        @click="closeLightbox()"
+        @keydown.escape.window="closeLightbox()"
+        class="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm md:p-10"
+        style="display: none;"
+    >
+        <button
+            type="button"
+            @click.stop="closeLightbox()"
+            class="absolute top-6 right-6 z-110 text-white transition-colors hover:text-gray-300"
+            aria-label="Tutup lightbox"
+        >
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img
+            :src="lightboxImage"
+            :alt="lightboxAlt"
+            @click.stop
+            class="max-h-full max-w-full rounded-lg shadow-2xl"
+        >
     </div>
 </div>
 </x-layouts.app>

@@ -18,6 +18,7 @@ use App\Http\Controllers\UppController;
 use App\Http\Controllers\ZonaIntegritasController;
 use App\Http\Controllers\ZonaIntegritasDokumenController;
 use App\Models\LogoMitra;
+use App\Models\News;
 use App\Models\SectionLayanan;
 use App\Models\SectionProfil;
 use App\Models\SectionSipintu;
@@ -58,6 +59,13 @@ Route::get('/', function () {
 
     $testimonis = SectionTestimoni::query()
         ->latest()
+        ->get();
+
+    $latestNews = News::query()
+        ->published()
+        ->select(['id', 'title', 'slug', 'excerpt', 'cover_image', 'published_at'])
+        ->latest('published_at')
+        ->limit(3)
         ->get();
 
     if (Schema::hasTable('legacy_users') && Schema::hasTable('tbl_kabupaten') && Schema::hasTable('tbl_provinsi')) {
@@ -117,6 +125,7 @@ Route::get('/', function () {
         'pelengkaps',
         'sertifikats',
         'testimonis',
+        'latestNews',
         'customerDistribution',
         'customerWithoutLocation'
     ));

@@ -1,5 +1,18 @@
 <x-layouts.app title="Sertifikasi Produk - BSPJI Pekanbaru">
-<div x-data="{ tab: 'sertifikat' }">
+<div x-data="{
+    tab: 'sertifikat',
+    lightboxOpen: false,
+    lightboxImage: '',
+    lightboxAlt: '',
+    openLightbox(image, alt) {
+        this.lightboxImage = image;
+        this.lightboxAlt = alt;
+        this.lightboxOpen = true;
+    },
+    closeLightbox() {
+        this.lightboxOpen = false;
+    }
+}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&q=80&w=2070"
@@ -112,114 +125,129 @@
             </button>
         </div>
 
-        <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
+        <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
+            <div class="grid grid-cols-1 items-start">
             
-            {{-- Tab Alur --}}
-            <div x-show="tab === 'alur'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Alur Sertifikasi Produk</h2>
-                    </div>
-                    
+                <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-6">
                     @if($alurProduk && $alurProduk->image)
-                        <div class="flex justify-center bg-gray-50 rounded-2xl p-4">
-                            <img src="{{ asset('storage/' . $alurProduk->image) }}" alt="Alur Sertifikasi" class="max-w-full h-auto rounded-xl shadow-lg border-2 border-white">
-                        </div>
+                        <div class="flex justify-center">
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $alurProduk->image) }}', 'Alur Sertifikasi Produk')"
+                                class="group relative block w-full max-w-4xl cursor-pointer overflow-hidden rounded-[30px] border border-black/15 bg-slate-50 text-left shadow-xl transition-all duration-500 hover:shadow-2xl"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $alurProduk->image) }}"
+                                    alt="Alur Sertifikasi"
+                                    class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
+                                >
+                            <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                    Klik untuk memperbesar
+                                </span>
+                            </div>
+                        </button>
                     @else
-                        <div class="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 py-24 text-center">
-                            <p class="text-gray-400 font-medium italic">Data alur sertifikasi belum tersedia.</p>
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Data alur sertifikasi belum tersedia.</p>
                         </div>
                     @endif
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Sertifikat --}}
-            <div x-show="tab === 'sertifikat'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Sertifikat Akreditasi LSPro</h2>
-                    </div>
-                    
+                <section x-show="tab === 'sertifikat'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-8">
                     @if($sertifikats->isNotEmpty())
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="flex flex-wrap justify-center gap-8">
                             @foreach($sertifikats as $sert)
-                                <div class="bg-gray-50 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition duration-300 text-center">
-                                    <img src="{{ asset('storage/' . $sert->image) }}" class="w-full h-auto rounded-xl shadow-inner border border-gray-200 transition duration-500 hover:scale-[1.01]">
-                                </div>
+                                <button
+                                    type="button"
+                                    @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi')"
+                                    class="group relative block aspect-square w-full max-w-[380px] cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-sm transition-all hover:shadow-md"
+                                >
+                                    <img
+                                        src="{{ asset('storage/' . $sert->image) }}"
+                                        alt="Sertifikat Akreditasi"
+                                        class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                                    >
+                                    <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                        <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                            Klik untuk memperbesar
+                                        </span>
+                                    </div>
+                                </button>
                             @endforeach
                         </div>
                     @else
-                        <div class="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 py-24 text-center">
-                            <p class="text-gray-400 font-medium italic">Gambar sertifikat belum tersedia.</p>
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Gambar sertifikat belum tersedia.</p>
                         </div>
                     @endif
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Ruang Lingkup --}}
-            <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl">
+                    <div class="flex flex-wrap justify-center gap-8">
                     @forelse($ruangLingkup as $item)
-                        <div class="bg-white rounded-4xl shadow-xl overflow-hidden border border-gray-100 flex flex-col group hover:-translate-y-2 transition duration-500">
-                            @if($item->image)
-                                <div class="h-64 overflow-hidden relative p-4 bg-gray-50">
-                                    <img src="{{ asset('storage/' . $item->image) }}" class="w-full h-full object-contain group-hover:scale-105 transition duration-700">
+                        @if($item->image)
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Ruang Lingkup')"
+                                class="group relative block w-full max-w-[380px] cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-sm transition-all hover:shadow-md"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $item->image) }}"
+                                    alt="Ruang Lingkup"
+                                    class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-110"
+                                >
+                                <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                        Klik untuk memperbesar
+                                    </span>
                                 </div>
-                            @endif
-                        </div>
+                            </button>
+                        @endif
                     @empty
-                        <div class="col-span-full bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
-                            <p class="text-gray-400 font-medium italic">Data ruang lingkup belum tersedia.</p>
+                        <div class="col-span-full rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Data ruang lingkup belum tersedia.</p>
                         </div>
                     @endforelse
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Dokumen --}}
-            <div x-show="tab === 'dokumen'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Dokumen Sertifikasi Produk</h2>
-                    </div>
-                    
+                <section x-show="tab === 'dokumen'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-separate border-spacing-y-3">
+                        <table class="w-full border-collapse text-left">
                             <thead>
-                                <tr class="text-gray-400 text-xs uppercase tracking-widest font-bold">
-                                    <th class="px-6 py-3">No</th>
-                                    <th class="px-6 py-3">Nama Dokumen</th>
-                                    <th class="px-6 py-3 text-right">Aksi</th>
+                                <tr class="border-b border-black/20 bg-slate-50">
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">No</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Dokumen</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-800">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="divide-y divide-black/10">
                                 @forelse($dokumens as $index => $dokumen)
-                                    <tr class="bg-gray-50/50 hover:bg-green-50 transition duration-300 group rounded-2xl shadow-sm">
-                                        <td class="px-6 py-4 text-sm font-bold text-gray-400 w-16 rounded-l-2xl border-y border-l border-gray-100">
+                                    <tr class="transition-colors hover:bg-slate-50/50">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-500">
                                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-bold text-green-950 border-y border-gray-100">
+                                        <td class="px-6 py-4 text-sm font-semibold text-slate-800">
                                             {{ $dokumen->nama_dokumen }}
                                         </td>
-                                        <td class="px-6 py-4 text-right rounded-r-2xl border-y border-r border-gray-100">
-                                            <a href="{{ route('dokumen-produk.download', $dokumen) }}" class="inline-flex items-center px-4 py-2 bg-green-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-green-200 hover:bg-green-700 hover:shadow-green-300 transition duration-300 group">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                        <td class="px-6 py-4 text-right">
+                                            <a href="{{ route('dokumen-produk.download', $dokumen) }}" class="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white transition-all active:scale-95">
+                                                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                                 Download
                                             </a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="px-6 py-12 text-center text-gray-400 font-medium italic bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200">
-                                            Belum ada dokumen yang tersedia saat ini.
+                                        <td colspan="3" class="px-6 py-16 text-center">
+                                            <p class="font-medium text-slate-400">Belum ada dokumen yang tersedia saat ini.</p>
                                         </td>
                                     </tr>
                                 @endforelse
@@ -227,47 +255,39 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Hak & Kewajiban --}}
-            <div x-show="tab === 'hak-kewajiban'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Hak dan Kewajiban Pelanggan</h2>
-                    </div>
-                    
+                <section x-show="tab === 'hak-kewajiban'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-separate border-spacing-y-3">
+                        <table class="w-full border-collapse text-left">
                             <thead>
-                                <tr class="text-gray-400 text-xs uppercase tracking-widest font-bold">
-                                    <th class="px-6 py-3">No</th>
-                                    <th class="px-6 py-3">Nama Dokumen</th>
-                                    <th class="px-6 py-3 text-right">Aksi</th>
+                                <tr class="border-b border-black/20 bg-slate-50">
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">No</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Dokumen</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-800">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="divide-y divide-black/10">
                                 @forelse($hakKewajibans as $index => $hak)
-                                    <tr class="bg-gray-50/50 hover:bg-emerald-50 transition duration-300 group rounded-2xl shadow-sm">
-                                        <td class="px-6 py-4 text-sm font-bold text-gray-400 w-16 rounded-l-2xl border-y border-l border-gray-100">
+                                    <tr class="transition-colors hover:bg-slate-50/50">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-500">
                                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-bold text-green-950 border-y border-gray-100">
+                                        <td class="px-6 py-4 text-sm font-semibold text-slate-800">
                                             {{ $hak->nama_dokumen }}
                                         </td>
-                                        <td class="px-6 py-4 text-right rounded-r-2xl border-y border-r border-gray-100">
-                                            <a href="{{ route('hak-kewajiban-produk.download', $hak) }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:shadow-emerald-300 transition duration-300 group">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                        <td class="px-6 py-4 text-right">
+                                            <a href="{{ route('hak-kewajiban-produk.download', $hak) }}" class="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white transition-all active:scale-95">
+                                                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                                 Download
                                             </a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="px-6 py-12 text-center text-gray-400 font-medium italic bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200">
-                                            Belum ada dokumen hak dan kewajiban yang tersedia saat ini.
+                                        <td colspan="3" class="px-6 py-16 text-center">
+                                            <p class="font-medium text-slate-400">Belum ada dokumen hak dan kewajiban yang tersedia saat ini.</p>
                                         </td>
                                     </tr>
                                 @endforelse
@@ -275,154 +295,111 @@
                         </table>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Tarif --}}
-            <div x-show="tab === 'tarif'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="space-y-12">
+                    @forelse($tarifs as $tarif)
+                        <div class="space-y-4">
+                            <h3 class="border-l-4 border-slate-800 px-4 text-lg font-bold text-slate-800">{{ $tarif->nama_dokumen }}</h3>
+                            <div class="aspect-3/4 overflow-hidden rounded-2xl border border-black/10 bg-[#fbfbfd] shadow-inner md:aspect-video">
+                                <iframe
+                                    src="{{ asset('storage/' . $tarif->file_path) }}"
+                                    class="h-full w-full border-none"
+                                    title="{{ $tarif->nama_dokumen }}"
+                                >
+                                    Browser Anda tidak mendukung iframe. Silakan download dokumen.
+                                </iframe>
+                            </div>
                         </div>
-                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Tarif Layanan Sertifikasi Produk</h2>
-                    </div>
-                    
-                    <div class="space-y-12">
-                        @forelse($tarifs as $tarif)
-                            <div class="space-y-4">
-                                <h3 class="text-lg font-bold text-green-900 px-2 border-l-4 border-amber-500">{{ $tarif->nama_dokumen }}</h3>
-                                <div class="rounded-2xl overflow-hidden border border-gray-200 shadow-inner bg-gray-50 aspect-3/4 md:aspect-video">
-                                    <iframe 
-                                        src="{{ asset('storage/' . $tarif->file_path) }}" 
-                                        class="w-full h-full border-none"
-                                        title="{{ $tarif->nama_dokumen }}"
-                                    >
-                                        Browser Anda tidak mendukung iframe. Silakan download dokumen.
-                                    </iframe>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 py-24 text-center">
-                                <p class="text-gray-400 font-medium italic">Informasi tarif belum tersedia.</p>
-                            </div>
-                        @endforelse
-                    </div>
+                    @empty
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Informasi tarif belum tersedia.</p>
+                        </div>
+                    @endforelse
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab SDM --}}
-            <div x-show="tab === 'sdm'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-10">
-                        <div class="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                        </div>
-                        <div>
-                            <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Sumber Daya Manusia (SDM)</h2>
-                            <p class="text-gray-500 font-medium">Auditor Sertifikasi Produk yang kompeten dan berpengalaman.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <section x-show="tab === 'sdm'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-10">
+                    <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
+                        Auditor Sertifikasi Produk yang kompeten dan berpengalaman untuk menjamin kualitas layanan.
+                    </p>
+
+                    <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                         {{-- Card Ahli Madya --}}
-                        <div class="group relative bg-linear-to-br from-indigo-600 to-blue-700 rounded-[2.5rem] p-8 text-white shadow-xl shadow-indigo-100/50 hover:shadow-indigo-200/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
-                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                            <div class="relative z-10 flex flex-col items-center text-center space-y-6">
-                                <div class="bg-white/20 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20">
-                                    <span class="text-3xl font-black">{{ $countAhliMadya }}</span>
-                                    <span class="text-xs font-bold uppercase tracking-widest ml-2 opacity-80">Auditor</span>
-                                </div>
-                                
-                                <h3 class="text-4xl font-extrabold tracking-tighter group-hover:scale-110 transition-transform duration-500">AMMI</h3>
-                                
-                                <div class="w-full space-y-1">
-                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
-                                    <p class="text-lg font-bold tracking-tight uppercase">Ahli Madya</p>
-                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
-                                </div>
+                        <div class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] border border-black/10 bg-white p-8 text-center shadow-sm transition-all duration-500 hover:shadow-md">
+                            <div class="absolute top-0 left-0 h-1.5 w-full bg-slate-800"></div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-slate-800">{{ $countAhliMadya }}</span>
+                                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Auditor</span>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-black tracking-tight text-slate-800">AMMI</h3>
+                                <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Ahli Madya</p>
                             </div>
                         </div>
 
                         {{-- Card Ahli Muda --}}
-                        <div class="group relative bg-linear-to-br from-amber-500 to-orange-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-amber-100/50 hover:shadow-amber-200/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
-                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                            <div class="relative z-10 flex flex-col items-center text-center space-y-6">
-                                <div class="bg-white/20 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20">
-                                    <span class="text-3xl font-black">{{ $countAhliMuda }}</span>
-                                    <span class="text-xs font-bold uppercase tracking-widest ml-2 opacity-80">Auditor</span>
-                                </div>
-                                
-                                <h3 class="text-4xl font-extrabold tracking-tighter group-hover:scale-110 transition-transform duration-500">AMMI</h3>
-                                
-                                <div class="w-full space-y-1">
-                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
-                                    <p class="text-lg font-bold tracking-tight uppercase">Ahli Muda</p>
-                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
-                                </div>
+                        <div class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] border border-black/10 bg-white p-8 text-center shadow-sm transition-all duration-500 hover:shadow-md">
+                            <div class="absolute top-0 left-0 h-1.5 w-full bg-slate-400"></div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-slate-800">{{ $countAhliMuda }}</span>
+                                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Auditor</span>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-black tracking-tight text-slate-800">AMMI</h3>
+                                <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Ahli Muda</p>
                             </div>
                         </div>
 
                         {{-- Card Ahli Pertama --}}
-                        <div class="group relative bg-linear-to-br from-emerald-500 to-teal-600 rounded-[2.5rem] p-8 text-white shadow-xl shadow-emerald-100/50 hover:shadow-emerald-200/50 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
-                            <div class="absolute -right-8 -top-8 w-32 h-32 bg-white/10 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
-                            <div class="relative z-10 flex flex-col items-center text-center space-y-6">
-                                <div class="bg-white/20 backdrop-blur-md px-6 py-2 rounded-2xl border border-white/20">
-                                    <span class="text-3xl font-black">{{ $countAhliPertama }}</span>
-                                    <span class="text-xs font-bold uppercase tracking-widest ml-2 opacity-80">Auditor</span>
-                                </div>
-                                
-                                <h3 class="text-4xl font-extrabold tracking-tighter group-hover:scale-110 transition-transform duration-500">AMMI</h3>
-                                
-                                <div class="w-full space-y-1">
-                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
-                                    <p class="text-lg font-bold tracking-tight uppercase">Ahli Pertama</p>
-                                    <div class="h-px bg-white/20 w-1/2 mx-auto"></div>
-                                </div>
+                        <div class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] border border-black/10 bg-white p-8 text-center shadow-sm transition-all duration-500 hover:shadow-md">
+                            <div class="absolute top-0 left-0 h-1.5 w-full bg-slate-200"></div>
+                            <div class="flex items-baseline gap-2">
+                                <span class="text-4xl font-black text-slate-800">{{ $countAhliPertama }}</span>
+                                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Auditor</span>
+                            </div>
+                            <div class="space-y-1">
+                                <h3 class="text-xl font-black tracking-tight text-slate-800">AMMI</h3>
+                                <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Ahli Pertama</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            {{-- Tab Informasi Publik --}}
-            <div x-show="tab === 'informasi-publik'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100 p-10">
-                    <div class="flex items-center mb-8">
-                        <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mr-4">
-                            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <h2 class="text-2xl font-extrabold text-green-950 uppercase tracking-tight">Informasi Publik Produk</h2>
-                    </div>
-                    
+                <section x-show="tab === 'informasi-publik'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-separate border-spacing-y-3">
+                        <table class="w-full border-collapse text-left">
                             <thead>
-                                <tr class="text-gray-400 text-xs uppercase tracking-widest font-bold">
-                                    <th class="px-6 py-3">No</th>
-                                    <th class="px-6 py-3">Nama Informasi</th>
-                                    <th class="px-6 py-3 text-right">Aksi</th>
+                                <tr class="border-b border-black/20 bg-slate-50">
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">No</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Informasi</th>
+                                    <th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-slate-800">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="divide-y divide-black/10">
                                 @forelse($informasiPubliks as $index => $informasi)
-                                    <tr class="bg-gray-50/50 hover:bg-blue-50 transition duration-300 group rounded-2xl shadow-sm">
-                                        <td class="px-6 py-4 text-sm font-bold text-gray-400 w-16 rounded-l-2xl border-y border-l border-gray-100">
+                                    <tr class="transition-colors hover:bg-slate-50/50">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-500">
                                             {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
                                         </td>
-                                        <td class="px-6 py-4 text-sm font-bold text-green-950 border-y border-gray-100">
+                                        <td class="px-6 py-4 text-sm font-semibold text-slate-800">
                                             {{ $informasi->nama }}
                                         </td>
-                                        <td class="px-6 py-4 text-right rounded-r-2xl border-y border-r border-gray-100">
-                                            <a href="{{ route('informasi-publik-produk.download', $informasi) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-blue-300 transition duration-300 group">
-                                                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                        <td class="px-6 py-4 text-right">
+                                            <a href="{{ route('informasi-publik-produk.download', $informasi) }}" class="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white transition-all active:scale-95">
+                                                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                                                 Download
                                             </a>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="3" class="px-6 py-12 text-center text-gray-400 font-medium italic bg-gray-50/50 rounded-2xl border-2 border-dashed border-gray-200">
-                                            Belum ada informasi publik yang tersedia saat ini.
+                                        <td colspan="3" class="px-6 py-16 text-center">
+                                            <p class="font-medium text-slate-400">Belum ada informasi publik yang tersedia saat ini.</p>
                                         </td>
                                     </tr>
                                 @endforelse
@@ -430,8 +407,34 @@
                         </table>
                     </div>
                 </div>
+                </section>
             </div>
         </article>
+    </div>
+    <div
+        x-show="lightboxOpen"
+        x-transition.opacity.duration.300ms
+        @click="closeLightbox()"
+        @keydown.escape.window="closeLightbox()"
+        class="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm md:p-10"
+        style="display: none;"
+    >
+        <button
+            type="button"
+            @click.stop="closeLightbox()"
+            class="absolute top-6 right-6 z-110 text-white transition-colors hover:text-gray-300"
+            aria-label="Tutup lightbox"
+        >
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img
+            :src="lightboxImage"
+            :alt="lightboxAlt"
+            @click.stop
+            class="max-h-full max-w-full rounded-lg shadow-2xl"
+        >
     </div>
 </div>
 </x-layouts.app>

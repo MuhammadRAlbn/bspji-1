@@ -17,6 +17,8 @@
         return $item?->foto ? Storage::url($item->foto) : $profileFallbacks[$index];
     });
 
+    $certificateBgImage = $profileImages->first() ?? $profileFallbacks[0];
+
     $sipintuDesktopImage = $sectionSipintu?->gambar_desktop
         ? Storage::url($sectionSipintu->gambar_desktop)
         : 'https://images.unsplash.com/photo-1518773553398-650c184e0bb3?auto=format&fit=crop&q=80&w=1200';
@@ -97,6 +99,26 @@
 
         .align-left-container {
             padding-left: max(1.5rem, calc((100vw - 1280px) / 2));
+        }
+
+        .testimonials-carousel {
+            --testimonial-card-width: min(82vw, 336px);
+            --testimonial-card-gap: 20px;
+            clip-path: inset(-32px -120vw -32px 0);
+        }
+
+        @media (min-width: 640px) {
+            .testimonials-carousel {
+                --testimonial-card-width: 340px;
+                --testimonial-card-gap: 28px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .testimonials-carousel {
+                --testimonial-card-width: 330px;
+                --testimonial-card-gap: 44px;
+            }
         }
 
         .pattern-grid-lg {
@@ -413,8 +435,8 @@
             <div class="relative mx-auto h-full w-full max-w-6xl px-6 lg:px-0">
                 <div class="relative flex h-full flex-col items-center lg:flex-row">
                     <div class="z-20 w-full py-12 lg:w-5/12 lg:py-0" data-aos="fade-right">
-                        <h2 class="mb-4 text-3xl font-medium leading-tight tracking-tight text-white/95 sm:text-4xl lg:text-5xl">
-                            <span class="text-white">SIPINTU</span>
+                        <h2 class="mb-8 text-2xl font-semibold leading-[1.2] text-white md:text-[30px]">
+                            SIPINTU
                         </h2>
 
                         <p class="mb-8 max-w-md text-base font-light text-white/80 sm:text-lg">
@@ -482,34 +504,19 @@
 
         <section id="layanan" class="bg-white pb-16 pt-24 md:pb-24 md:pt-28">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
-                <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)_auto] lg:items-start lg:gap-14" data-aos="fade-up">
+                <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:items-start lg:gap-14" data-aos="fade-up">
                     <div>
                         <p class="mb-3 text-sm font-bold uppercase tracking-normal text-[#0038b8]">
-                            ONE ENERGY, ONE PERTAMINA
+                            STANDARDISASI & PELAYANAN INDUSTRI
                         </p>
-                        <h2 class="text-2xl font-semibold leading-[1.2] tracking-normal text-black md:text-[30px]">
-                            Grup Bisnis Kami
+                        <h2 class="text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">
+                            Layanan Jasa Kami
                         </h2>
                     </div>
 
                     <p class="max-w-xl text-lg font-normal leading-relaxed text-slate-700 md:text-lg lg:pt-3">
-                        Pertamina menjalankan bisnis energi yang terintegrasi dari hulu hingga hilir, termasuk pengembangan energi terbarukan untuk masa depan.
+                        BSPJI Banda Aceh berkomitmen meningkatkan daya saing industri melalui layanan sertifikasi, kalibrasi, pengujian, serta konsultansi yang profesional dan terpercaya.
                     </p>
-
-                    <a href="#layanan"
-                        class="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-full border border-slate-700 px-7 text-sm font-semibold text-slate-700 transition duration-300 hover:border-[#0038b8] hover:text-[#0038b8] lg:mt-1 lg:min-w-[180px]">
-                        Selengkapnya
-                        <i data-lucide="arrow-right" class="h-5 w-5"></i>
-                    </a>
-                </div>
-
-                <div class="mt-14 inline-flex rounded-full bg-slate-200 p-1.5" data-aos="fade-up" data-aos-delay="75">
-                    <span class="rounded-full bg-[#123cad] px-6 py-2.5 text-base font-medium text-white">
-                        Subholding
-                    </span>
-                    <span class="px-6 py-2.5 text-base font-medium text-black">
-                        AP &amp; Services
-                    </span>
                 </div>
 
                 @if ($sectionLayanans->isEmpty())
@@ -517,16 +524,21 @@
                         Data layanan belum tersedia.
                     </div>
                 @else
-                    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+                    <div class="mt-20 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
                         @foreach ($sectionLayanans as $index => $layanan)
                             @php
                                 $slug = Str::slug($layanan->nama_layanan);
                                 $serviceUrl = $serviceRouteMap[$slug] ?? '#';
                             @endphp
                             <a href="{{ $serviceUrl }}"
-                                class="flex h-[220px] items-center justify-center rounded-lg border border-[#dde4ee] bg-[#f1f4f9] px-6 text-center transition duration-300 hover:-translate-y-1 hover:border-[#cfd8e6] hover:bg-[#eef2f8] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25 md:h-[260px]"
+                                class="group relative flex h-[170px] items-end justify-start overflow-hidden rounded-lg border border-[#dde4ee] bg-[#f1f4f9] px-5 pb-5 text-left transition duration-300 hover:-translate-y-1 hover:border-[#cfd8e6] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25 md:h-[190px]"
                                 data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 75 }}">
-                                <h3 class="text-sm font-semibold uppercase leading-snug tracking-normal text-slate-950 md:text-base">
+                                @if ($layanan->gambar)
+                                    <img src="{{ Storage::url($layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
+                                        class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
+                                    <div class="absolute inset-0 bg-slate-950/35 transition duration-300 group-hover:bg-slate-950/45"></div>
+                                @endif
+                                <h3 class="relative z-10 text-sm font-bold uppercase leading-snug tracking-normal {{ $layanan->gambar ? 'text-white drop-shadow-sm' : 'text-slate-950' }}">
                                     {{ $layanan->nama_layanan }}
                                 </h3>
                             </a>
@@ -581,7 +593,7 @@
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
                     <div class="order-2 lg:order-1" data-aos="fade-right">
-                        <div class="mb-6 flex items-center gap-2">
+                        <div class="mb-2 flex items-center gap-2">
                             <span class="text-[10px] text-orange-600">■</span>
                             <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Dipercaya Pelanggan</span>
                         </div>
@@ -648,17 +660,20 @@
             </div>
         </section>
 
-        <section id="sertifikat" class="relative overflow-hidden border-b border-slate-200/70 bg-slate-50/80 py-16 md:pb-32 md:pt-24">
+        <section id="sertifikat" class="relative overflow-hidden border-b border-slate-200/70 py-16 md:pb-32 md:pt-24">
+            <div class="absolute inset-0 -z-10">
+                <img src="{{ $certificateBgImage }}" alt="Background Sertifikat" class="h-full w-full object-cover">
+            </div>
             <div class="pointer-events-none absolute inset-0 opacity-30"
                 style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 32px 32px;">
             </div>
             <div class="relative mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 max-w-4xl md:mb-16" data-aos="fade-up">
-                    <div class="mb-6 flex items-center gap-2">
+                    <div class="mb-2 flex items-center gap-2">
                         <span class="text-[10px] text-orange-600">■</span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Sertifikat</span>
                     </div>
-                    <h2 class="section-title-identic mb-6 text-gray-900">
+                    <h2 class="mb-6 text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">
                         Sertifikat Akreditasi Layanan Kami
                     </h2>
                 </div>
@@ -712,16 +727,16 @@
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end md:mb-16" data-aos="fade-up">
                     <div class="max-w-2xl">
-                        <div class="mb-6 flex items-center gap-2">
+                        <div class="mb-2 flex items-center gap-2">
                             <span class="text-[10px] text-orange-600">■</span>
                             <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Data Kinerja</span>
                         </div>
-                        <h2 class="section-title-identic text-gray-900">
+                        <h2 class="text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">
                             Perusahaan dalam Angka
                         </h2>
                     </div>
                     <div class="lg:max-w-sm lg:pb-2">
-                        <p class="text-base font-light leading-relaxed text-gray-600 md:text-lg">
+                        <p class="text-justify text-lg leading-relaxed text-gray-700/95 md:text-lg">
                             Visualisasi data kinerja utama menggunakan diagram batang ringan untuk memudahkan pembacaan tren.
                         </p>
                     </div>
@@ -826,19 +841,195 @@
             </div>
         </section>
 
+        <section x-data="{
+                activeIndex: 0,
+                cardStep: 0,
+                transitionEnabled: true,
+                get totalCards() {
+                    return this.$refs.track ? this.$refs.track.children.length : 0;
+                },
+                init() {
+                    this.measure();
+                    window.addEventListener('resize', () => this.measure());
+                },
+                measure() {
+                    this.$nextTick(() => {
+                        const card = this.$root.querySelector('[data-testimonial-card]');
+                        const track = this.$root.querySelector('[data-testimonial-track]');
+
+                        if (!card || !track) {
+                            this.cardStep = 0;
+                            return;
+                        }
+
+                        const trackStyle = window.getComputedStyle(track);
+                        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
+                        this.cardStep = card.getBoundingClientRect().width + gap;
+
+                        if (this.activeIndex > this.maxIndex()) {
+                            this.activeIndex = this.maxIndex();
+                        }
+                    });
+                },
+                maxIndex() {
+                    return Math.max(0, this.totalCards - 1);
+                },
+                cardPosition(index) {
+                    return index - this.activeIndex;
+                },
+                cardTone(index) {
+                    const position = this.cardPosition(index);
+
+                    if (position === 0) {
+                        return 'bg-[#1839a8] text-white opacity-100 border-transparent';
+                    }
+
+                    if (position === 1) {
+                        return 'bg-white text-black opacity-100 border-transparent';
+                    }
+
+                    if (position === 2) {
+                        return 'bg-white/65 text-[#939393] opacity-80 border-slate-200 shadow-[0_8px_18px_rgba(15,23,42,0.12)]';
+                    }
+
+                    return 'bg-white/0 text-[#939393] opacity-0 shadow-none pointer-events-none border-transparent';
+                },
+                next() {
+                    if (this.activeIndex >= this.maxIndex()) return;
+
+                    this.transitionEnabled = true;
+                    this.activeIndex += 1;
+                },
+                previous() {
+                    if (this.activeIndex <= 0) return;
+
+                    this.transitionEnabled = true;
+                    this.activeIndex -= 1;
+                }
+            }"
+            x-cloak
+            @resize.window.debounce.150ms="measure()"
+            class="relative isolate mb-12 mt-12 overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 md:mb-16 md:mt-16 lg:mt-28 lg:min-h-[560px] lg:py-0"
+            aria-labelledby="testimonials-slider-title">
+            <div class="mx-auto grid w-full max-w-[1920px] grid-cols-1 lg:min-h-[560px] lg:grid-cols-[49%_51%]">
+                <div class="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-auto">
+                    <img src="{{ asset('images/udara1.jpeg') }}"
+                        alt="Petugas BSPJI Banda Aceh melakukan pemantauan alat pengujian udara"
+                        class="h-full w-full object-cover object-center">
+                    <div class="absolute inset-0 bg-linear-to-br from-slate-950/70 via-slate-950/25 to-white/5"></div>
+                    <div class="absolute left-5 right-5 top-6 z-10 flex items-start justify-between gap-4 text-white sm:left-8 sm:right-8 sm:top-8 lg:left-10 lg:right-auto lg:top-10 lg:flex-col lg:justify-start lg:gap-5">
+                        <h2 id="testimonials-slider-title" class="shrink-0 text-2xl font-semibold leading-[1.05] tracking-normal md:text-[30px] lg:whitespace-nowrap lg:text-[44px]">
+                            <span class="block lg:inline">Testimoni</span>
+                            <span class="block lg:inline">Pelanggan</span>
+                        </h2>
+                        <div class="flex items-center gap-2 sm:gap-3">
+                            <button type="button"
+                                @click="previous()"
+                                :disabled="activeIndex === 0"
+                                class="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none focus:ring-2 focus:ring-[#1839a8] focus:ring-offset-2 disabled:opacity-60 sm:h-14 sm:w-14 lg:h-12 lg:w-12"
+                                aria-label="Testimoni sebelumnya">
+                                <svg class="h-7 w-7 sm:h-8 sm:w-8 lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M14.5 18L8.5 12L14.5 6" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+
+                            <button type="button"
+                                @click="next()"
+                                :disabled="activeIndex >= maxIndex()"
+                                class="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none focus:ring-2 focus:ring-[#1839a8] focus:ring-offset-2 disabled:opacity-60 sm:h-14 sm:w-14 lg:h-12 lg:w-12"
+                                aria-label="Testimoni berikutnya">
+                                <svg class="h-7 w-7 sm:h-8 sm:w-8 lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M9.5 6L15.5 12L9.5 18" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative flex flex-col justify-center px-5 pb-10 pt-8 sm:px-8 lg:px-0 lg:pb-0 lg:pt-0">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 hidden w-24 bg-linear-to-r from-[#f5f8fc]/0 to-[#f5f8fc] lg:block"></div>
+
+                    <div class="testimonials-carousel relative z-10 -mt-24 overflow-visible pl-0 pr-0 sm:-mt-28 lg:mt-0 lg:-translate-x-[19%] lg:pl-0"
+                        aria-live="polite">
+                        <div x-ref="track"
+                            data-testimonial-track
+                            class="flex will-change-transform"
+                            :class="transitionEnabled ? 'transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]' : ''"
+                            :style="`gap: var(--testimonial-card-gap); transform: translate3d(-${activeIndex * cardStep}px, 0, 0);`">
+                            @forelse ($testimonis as $testimoni)
+                                <article data-testimonial-card
+                                    class="group relative flex h-[380px] shrink-0 flex-col justify-between rounded-md border p-8 shadow-[0_14px_26px_rgba(15,23,42,0.18)] transition-[background-color,color,opacity,box-shadow,border-color] duration-500 sm:h-[420px] sm:p-10 lg:h-[450px] lg:p-12"
+                                    style="width: var(--testimonial-card-width);"
+                                    :class="cardTone({{ $loop->index }})"
+                                    :aria-hidden="cardPosition({{ $loop->index }}) > 2 || cardPosition({{ $loop->index }}) < 0">
+                                    <div class="flex h-full min-h-0 flex-col">
+                                        <p class="no-scrollbar min-h-0 overflow-y-auto text-[14px] font-normal italic leading-relaxed tracking-normal sm:text-[15px]"
+                                            :class="cardPosition({{ $loop->index }}) === 0 ? 'text-white' : (cardPosition({{ $loop->index }}) === 1 ? 'text-gray-700' : 'text-[#939393]')">
+                                            &ldquo;{{ $testimoni->pesan }}&rdquo;
+                                        </p>
+
+                                        <div class="mt-auto flex items-center gap-5 pt-8">
+                                            @if ($testimoni->gambar_pelanggan)
+                                                <img src="{{ Storage::url($testimoni->gambar_pelanggan) }}" alt="{{ $testimoni->nama }}"
+                                                    class="h-14 w-14 shrink-0 rounded-full border-2 object-cover shadow-sm sm:h-16 sm:w-16"
+                                                    :class="cardPosition({{ $loop->index }}) === 0 ? 'border-white/20' : 'border-gray-100'">
+                                            @else
+                                                <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 text-lg font-bold shadow-sm sm:h-16 sm:w-16"
+                                                    :class="cardPosition({{ $loop->index }}) === 0 ? 'border-white/20 bg-white/15 text-white' : 'border-gray-100 bg-blue-50 text-[#1839a8]'">
+                                                    {{ Str::substr($testimoni->nama, 0, 1) }}
+                                                </div>
+                                            @endif
+                                            <div class="min-w-0">
+                                                <h4 class="text-[17px] font-bold leading-tight"
+                                                    :class="cardPosition({{ $loop->index }}) === 0 ? 'text-white' : 'text-gray-900'">
+                                                    {{ $testimoni->nama }}
+                                                </h4>
+                                                {{--
+                                                <p class="mt-2 text-[13px] font-medium leading-tight"
+                                                    :class="cardPosition({{ $loop->index }}) === 0 ? 'text-white/70' : 'text-gray-500'">
+                                                    {{ $testimoni->jabatan }}
+                                                </p>
+                                                --}}
+                                                <p class="mt-1 text-[13px] font-medium leading-tight"
+                                                    :class="cardPosition({{ $loop->index }}) === 0 ? 'text-white/70' : 'text-gray-500'">
+                                                    {{ $testimoni->nama_perusahaan }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </article>
+                            @empty
+                                <article data-testimonial-card
+                                    class="group relative flex h-[380px] shrink-0 flex-col justify-between rounded-md border p-8 shadow-[0_14px_26px_rgba(15,23,42,0.18)] transition-[background-color,color,opacity,box-shadow,border-color] duration-500 sm:h-[420px] sm:p-10 lg:h-[450px] lg:p-12"
+                                    style="width: var(--testimonial-card-width);"
+                                    :class="cardTone(0)"
+                                    :aria-hidden="false">
+                                    <div class="flex h-full flex-col">
+                                        <p class="text-[14px] font-normal italic leading-relaxed tracking-normal text-white sm:text-[15px]">
+                                            &ldquo;Testimoni akan muncul setelah data ditambahkan pada admin panel.&rdquo;
+                                        </p>
+                                    </div>
+                                </article>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="peta-pelanggan" class="bg-white py-24 md:pb-16 md:pt-32">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-10 md:mb-14" data-aos="fade-up">
                     <div class="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-12">
                         <div class="lg:col-span-7">
-                            <div class="mb-6 flex items-center gap-2">
+                            <div class="mb-2 flex items-center gap-2">
                                 <span class="text-[10px] text-orange-600">■</span>
                                 <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Customer Intelligence</span>
                             </div>
-                            <h2 class="section-title-identic text-gray-900">Peta Penyebaran Pelanggan</h2>
+                            <h2 class="text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">Peta Penyebaran Pelanggan</h2>
                         </div>
                         <div class="lg:col-span-5">
-                            <p class="text-base font-light leading-relaxed text-gray-800 md:text-lg lg:pt-2">
+                            <p class="text-justify text-lg leading-relaxed text-gray-700/95 md:text-lg lg:pt-2">
                                 Visualisasi interaktif sebaran pelanggan pada wilayah Indonesia. Arahkan kursor ke titik kota/kabupaten untuk melihat jumlah pelanggan.
                             </p>
                         </div>
@@ -889,123 +1080,21 @@
             </div>
         </section>
 
-        <section class="relative overflow-hidden bg-white py-24 md:pb-32 md:pt-16 align-left-container"
-            x-data="{
-                currentIndex: 0,
-                totalCards: 0,
-                maxIndex: 0,
-                init() {
-                    this.totalCards = this.$refs.track.children.length;
-                    this.calculateMaxIndex();
-                    window.addEventListener('resize', () => this.calculateMaxIndex());
-                },
-                calculateMaxIndex() {
-                    const container = this.$refs.sliderViewport;
-                    const track = this.$refs.track;
-                    if (!container || !track || !track.children.length) return;
-                    const card = track.children[0];
-                    const gap = 24;
-                    const cardWidth = card.offsetWidth + gap;
-                    const visibleCards = Math.floor(container.offsetWidth / cardWidth);
-                    this.maxIndex = Math.max(0, this.totalCards - visibleCards);
-                    if (this.currentIndex > this.maxIndex) this.currentIndex = this.maxIndex;
-                },
-                getTranslateX() {
-                    const track = this.$refs.track;
-                    if (!track || !track.children.length) return '0px';
-                    const card = track.children[0];
-                    const gap = 24;
-                    return '-' + (this.currentIndex * (card.offsetWidth + gap)) + 'px';
-                },
-                scrollNext() { if (this.currentIndex < this.maxIndex) this.currentIndex++; },
-                scrollPrev() { if (this.currentIndex > 0) this.currentIndex--; }
-            }">
-
-            <div class="relative z-20 flex flex-col gap-10 lg:flex-row lg:gap-20">
-                <div class="w-full shrink-0 pr-6 lg:w-[380px] lg:pr-0">
-                        <div class="flex flex-col pt-12">
-                            <div>
-                                <div class="mb-6 flex items-center gap-2">
-                                    <!-- <span class="text-[10px] text-orange-600">■</span> -->
-                                    <!-- <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Feedback Pelanggan</span> -->
-                                </div>
-                                <h2 class="section-title-identic mb-6 text-slate-900 lg:mb-8">
-                                    Testimoni Pelanggan
-                                </h2>
-                                <p class="text-base font-light leading-relaxed text-gray-800 md:text-lg">
-                                    Kepercayaan Anda adalah prioritas kami dalam mendukung kemajuan industri nasional.
-                                </p>
-                            </div>
-                        <div class="mt-10 flex gap-4">
-                            <button @click="scrollPrev"
-                                :class="currentIndex === 0 ? 'opacity-40 cursor-not-allowed' : 'hover:bg-slate-100'"
-                                class="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-slate-900 transition-all active:scale-90">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="m15 18-6-6 6-6" />
-                                </svg>
-                            </button>
-                            <button @click="scrollNext"
-                                :class="currentIndex >= maxIndex ? 'opacity-40 cursor-not-allowed' : 'hover:bg-slate-100'"
-                                class="flex h-11 w-11 items-center justify-center rounded-full border border-slate-300 text-slate-900 transition-all active:scale-90">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="m9 18 6-6-6-6" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <div x-ref="sliderViewport" class="grow overflow-hidden">
-                    <div x-ref="track" :style="'transform: translateX(' + getTranslateX() + ')'"
-                        class="flex gap-6 pb-12 pt-12 transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)]">
-                        @forelse ($testimonis as $testimoni)
-                            <div class="relative h-[460px] min-w-[82%] snap-start overflow-hidden rounded-[40px] bg-white p-8 md:h-[500px] md:min-w-[440px] md:p-10 border border-gray-200 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.45)]">
-                                <div class="relative z-10 flex h-full flex-col">
-                                    <div class="mb-8 flex items-center gap-5">
-                                        @if ($testimoni->gambar_pelanggan)
-                                            <div class="h-16 w-16 overflow-hidden rounded-2xl shadow-md">
-                                                <img src="{{ Storage::url($testimoni->gambar_pelanggan) }}" alt="{{ $testimoni->nama }}"
-                                                    class="h-full w-full object-cover">
-                                            </div>
-                                        @else
-                                            <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-xl font-bold text-blue-700 shadow-md">
-                                                {{ Str::substr($testimoni->nama, 0, 1) }}
-                                            </div>
-                                        @endif
-                                        <div>
-                                            <h4 class="text-xl font-bold text-gray-900">{{ $testimoni->nama }}</h4>
-                                            <p class="text-sm font-medium text-blue-600">{{ $testimoni->jabatan }}</p>
-                                            <p class="text-xs font-medium text-gray-400">{{ $testimoni->nama_perusahaan }}</p>
-                                        </div>
-                                    </div>
-
-                                    <p class="text-[16px] italic leading-relaxed text-gray-600 md:text-[18px]">
-                                        "{{ $testimoni->pesan }}"
-                                    </p>
-                                </div>
-                            </div>
-                        @empty
-                            <div class="relative h-[460px] min-w-[82%] snap-start overflow-hidden rounded-[40px] bg-white p-8 shadow-xl md:h-[500px] md:min-w-[440px] md:p-10">
-                                <p class="text-[16px] italic leading-relaxed text-gray-600 md:text-[18px]">
-                                    "Testimoni akan muncul setelah data ditambahkan pada admin panel."
-                                </p>
-                            </div>
-                        @endforelse
-                    </div>
-                </div>
-            </div>
-        </section>
+        {{--
+            Arsip section testimoni lama:
+            <x-landing.testimoni-legacy :testimonis="$testimonis" />
+        --}}
 
         <x-zona-integritas.section :show-content="false" />
 
         <section id="faq" class="bg-white py-24">
             <div class="mx-auto max-w-6xl px-6" x-data="{ activeItems: [1], currentImage: 1, toggle(id) { if (this.activeItems.includes(id)) { this.activeItems = this.activeItems.filter(i => i !== id); } else { this.activeItems.push(id); this.currentImage = id; }}}">
                 <div class="mb-16" data-aos="fade-up">
-                    <div class="mb-4 flex items-center gap-2">
+                    <div class="mb-2 flex items-center gap-2">
                         <span class="text-[10px] text-orange-600">■</span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">FAQ</span>
                     </div>
-                    <h2 class="section-title-identic mb-6 text-gray-900">Pertanyaan yang Sering Diajukan</h2>
+                    <h2 class="mb-6 text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">Pertanyaan yang Sering Diajukan</h2>
                 </div>
                 <div class="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
                     <div class="space-y-0">
@@ -1042,6 +1131,83 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="berita" class="relative overflow-hidden bg-slate-50/80 py-16 md:py-24">
+            <div class="pointer-events-none absolute inset-0 opacity-40"
+                style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 24px 24px;">
+            </div>
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
+                <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.12fr)] lg:items-start lg:gap-14" data-aos="fade-up">
+                    <div>
+                        <p class="mb-3 text-sm font-bold uppercase tracking-normal text-[#0038b8]">
+                            BERITA
+                        </p>
+                        <h2 class="text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">
+                            Berita Terkini
+                        </h2>
+                    </div>
+
+                    <div class="flex flex-col gap-6 lg:pt-3">
+                        <p class="max-w-xl text-lg font-normal leading-relaxed text-slate-700 md:text-lg">
+                            Ikuti kabar terbaru, agenda, dan informasi layanan BSPJI Banda Aceh dalam mendukung pertumbuhan industri yang berdaya saing.
+                        </p>
+
+                        <a href="{{ $routeOrHash('berita.index') }}"
+                            class="group inline-flex w-fit items-center gap-3 rounded-full border border-slate-600 px-7 py-3 text-sm font-semibold text-slate-700 transition duration-300 hover:border-slate-900 hover:bg-slate-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-slate-900/20">
+                            Selengkapnya
+                            <i data-lucide="arrow-right" class="h-5 w-5 transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                @if ($latestNews->isEmpty())
+                    <div class="mt-12 rounded-lg border border-dashed border-slate-300 bg-[#f2f5f9] p-8 text-slate-600">
+                        Berita terbaru belum tersedia.
+                    </div>
+                @else
+                    <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-10">
+                        @foreach ($latestNews as $index => $item)
+                            @php
+                                $newsImage = $item->cover_image
+                                    ? asset('storage/' . $item->cover_image)
+                                    : asset('images/imagelab.webp');
+                            @endphp
+                            <article class="group flex h-full flex-col" data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 3) * 75 }}">
+                                <a href="{{ route('berita.show', $item) }}"
+                                    class="block overflow-hidden rounded-lg bg-[#f1f4f9] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25">
+                                    <img src="{{ $newsImage }}" alt="{{ $item->title }}"
+                                        class="aspect-video w-full object-cover transition duration-500 group-hover:scale-105">
+                                </a>
+
+                                <div class="flex flex-1 flex-col pt-6">
+                                    <p class="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#0038b8]">
+                                        {{ $item->published_at?->format('d M Y') }}
+                                    </p>
+
+                                    <h3 class="text-xl font-semibold leading-snug text-gray-900 md:text-2xl">
+                                        <a href="{{ route('berita.show', $item) }}" class="transition hover:text-[#0038b8]">
+                                            {{ $item->title }}
+                                        </a>
+                                    </h3>
+
+                                    @if ($item->excerpt)
+                                        <p class="mt-4 line-clamp-3 text-base leading-relaxed text-slate-700">
+                                            {{ $item->excerpt }}
+                                        </p>
+                                    @endif
+
+                                    <a href="{{ route('berita.show', $item) }}"
+                                        class="group/link mt-8 inline-flex w-fit items-center gap-3 rounded-full border border-slate-600 px-7 py-3 text-sm font-semibold text-slate-700 transition duration-300 hover:border-slate-900 hover:bg-slate-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-slate-900/20">
+                                        Selengkapnya
+                                        <i data-lucide="arrow-right" class="h-5 w-5 transition-transform group-hover/link:translate-x-1"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </section>
 

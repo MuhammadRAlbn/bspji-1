@@ -1,631 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Perusahaan - Profil Korporat</title>
-
-    <!-- Fonts: Inter (Modern & Clean) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Alpine JS -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        // Menggunakan palet warna korporat (Biru Tua & Merah Aksen mirip referensi)
-                        corporate: {
-                            blue: '#0F172A',   // Slate 900
-                            light: '#334155',  // Slate 700
-                            accent: '#DC2626', // Red 600
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        html {
-            scrollbar-gutter: stable;
-        }
-
-        [x-cloak] {
-            display: none !important;
-        }
-
-        /* Hide scrollbar for horizontal scrolling on mobile */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            /* IE and Edge */
-            scrollbar-width: none;
-            /* Firefox */
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reports Slider Section</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .reports-carousel {
+      --report-card-width: min(82vw, 336px);
+      --report-card-gap: 20px;
+      clip-path: inset(-32px -120vw -32px 0);
+    }
+    @media (min-width: 640px) {
+      .reports-carousel {
+        --report-card-width: 340px;
+        --report-card-gap: 28px;
+      }
+    }
+    @media (min-width: 1024px) {
+      .reports-carousel {
+        --report-card-width: 330px;
+        --report-card-gap: 44px;
+      }
+    }
+  </style>
 </head>
+<body class="bg-white">
+  <section
+    x-data="reportsSlider()"
+    x-init="init()"
+    x-cloak
+    @resize.window.debounce.150ms="measure()"
+    class="relative isolate overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 lg:min-h-[560px] lg:py-0"
+    aria-labelledby="reports-slider-title"
+  >
+    <h2 id="testimonials-slider-title" class="sr-only">Testimoni Pelanggan</h2>
 
-<body class="bg-white text-slate-700 antialiased" x-data="{
-        activeTab: 'sejarah',
-        lightboxOpen: false,
-        lightboxData: {},
-        openProfile(profile) {
-            this.lightboxData = profile;
-            this.lightboxOpen = true;
-        },
-        closeProfile() {
-            this.lightboxOpen = false;
-        }
-    }" :class="{ 'overflow-hidden': lightboxOpen }">
+    <div class="mx-auto grid w-full max-w-[1920px] grid-cols-1 lg:min-h-[560px] lg:grid-cols-[49%_51%]">
+      <div class="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-auto">
+        <img
+          src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=1400"
+          alt="Tim profesional sedang berdiskusi di kantor yang modern"
+          class="h-full w-full object-cover object-center"
+        />
+        <div class="absolute inset-0 bg-white/5"></div>
+        <div class="absolute left-1/2 top-5 z-10 flex -translate-x-1/2 items-center gap-3 sm:top-7 lg:bottom-10 lg:top-auto">
+          <button
+            type="button"
+            @click="previous()"
+            class="inline-flex h-16 w-16 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none focus:ring-2 focus:ring-[#1839a8] focus:ring-offset-2 disabled:opacity-60 sm:h-[68px] sm:w-[68px]"
+            :disabled="activeIndex === 0"
+            aria-label="Report sebelumnya"
+          >
+            <svg class="h-9 w-9" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M14.5 18L8.5 12L14.5 6" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
 
-    <!-- 1. HERO SECTION (96% Width with Centered Content Container) -->
-    <header
-        class="relative mx-auto mt-8 w-[95%] md:w-[96%] h-[400px] md:h-[450px] flex flex-col justify-center overflow-hidden rounded-[2.5rem] shadow-2xl">
-        <!-- Background Image dengan Overlay -->
-        <div class="absolute inset-0 z-0">
-            <!-- Gambar Industri / Gedung -->
-            <img src="gbr2.webp" alt="Background Perusahaan" class="w-full h-full object-cover object-[center_75%]">
-            <!-- Overlay Gradient Biru Gelap - Disesuaikan agar lebih gelap sesuai gambar -->
-            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/60 to-transparent"></div>
+          <button
+            type="button"
+            @click="next()"
+            class="inline-flex h-16 w-16 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none focus:ring-2 focus:ring-[#1839a8] focus:ring-offset-2 disabled:opacity-60 sm:h-[68px] sm:w-[68px]"
+            :disabled="activeIndex === reports.length - 1"
+            aria-label="Report berikutnya"
+          >
+            <svg class="h-9 w-9" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M9.5 6L15.5 12L9.5 18" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
         </div>
+      </div>
 
-        <!-- Content Hero (Aligned with Main Content below) -->
-        <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
-            <!-- Breadcrumb -->
-            <nav class="flex items-center text-sm text-slate-300 mb-4 space-x-2">
-                <span class="hover:text-white cursor-pointer transition">Home</span>
-                <span class="text-xs">&rsaquo;</span>
-                <span class="text-white font-semibold">Tentang Kami</span>
-            </nav>
+      <div class="relative flex flex-col justify-center px-5 pb-10 pt-8 sm:px-8 lg:px-0 lg:pb-0 lg:pt-0">
+        <div class="pointer-events-none absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-[#f5f8fc]/0 to-[#f5f8fc] lg:block"></div>
 
-            <!-- Title & Description -->
-            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                Tentang Kami
-            </h1>
-            <p class="text-lg md:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
-                Telusuri sejarah perjalanan, visi, dan misi kami yang menjadi fondasi operasional, serta struktur
-                organisasi yang mendukung efisiensi bisnis berkelanjutan.
-            </p>
-        </div>
-    </header>
+        <div
+          class="reports-carousel relative z-10 -mt-24 overflow-visible pl-0 pr-0 sm:-mt-28 lg:mt-0 lg:-translate-x-[19%] lg:pl-0"
+          aria-live="polite"
+        >
+          <div
+            data-report-track
+            class="flex will-change-transform"
+            :class="transitionEnabled ? 'transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]' : ''"
+            :style="`gap: var(--report-card-gap); transform: translate3d(-${activeIndex * cardStep}px, 0, 0);`"
+          >
+            <template x-for="(testimonial, loopIndex) in loopedReports" :key="`${loopIndex}-${testimonial.name}`">
+              <article
+                data-report-card
+                class="group relative flex h-[380px] shrink-0 flex-col justify-between rounded-md p-8 shadow-[0_14px_26px_rgba(15,23,42,0.18)] transition-[background-color,color,opacity,box-shadow,border-color] duration-500 sm:h-[420px] sm:p-10 lg:h-[450px] lg:p-[48px_48px] border border-transparent"
+                style="width: var(--report-card-width);"
+                :class="cardTone(loopIndex)"
+                :aria-hidden="cardPosition(loopIndex) > 2 || cardPosition(loopIndex) < 0"
+              >
+                <div class="flex flex-col h-full">
+                  <p
+                    class="text-[14px] font-normal leading-relaxed tracking-normal sm:text-[15px] italic"
+                    :class="cardPosition(loopIndex) === 0 ? 'text-white' : (cardPosition(loopIndex) === 1 ? 'text-gray-700' : 'text-[#939393]')"
+                    x-text="`&ldquo;${testimonial.message}&rdquo;`"
+                  ></p>
 
-    <!-- 2. NAVIGATION BAR (Overlapping Pill Style) -->
-    <div class="relative z-20 -mt-8 flex justify-center px-4">
-        <nav class="gap-x-2 md:gap-x-6 inline-flex bg-white p-2 rounded-full shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] border border-slate-100 overflow-x-auto no-scrollbar max-w-full"
-            aria-label="Tabs">
-
-            <!-- Tab Buttons -->
-            <template x-for="tab in ['sejarah', 'motto', 'tugas', 'struktur','profil']">
-                <button @click="activeTab = tab" :class="activeTab === tab 
-                        ? 'bg-[#0F172A] text-white shadow-lg' 
-                        : 'text-slate-800 hover:text-slate-900 hover:bg-slate-50'"
-                    class="py-2.5 px-4 md:px-10 text-sm md:text-md font-medium rounded-full transition-all duration-300 focus:outline-none whitespace-nowrap">
-                    <span x-text="tab === 'motto' ? 'Moto' : tab.charAt(0).toUpperCase() + tab.slice(1)"></span>
-                </button>
+                  <div class="mt-auto flex items-center gap-5">
+                    <img 
+                      :src="testimonial.image" 
+                      :alt="testimonial.name"
+                      class="h-14 w-14 shrink-0 rounded-full object-cover border-2 shadow-sm sm:h-16 sm:w-16"
+                      :class="cardPosition(loopIndex) === 0 ? 'border-white/20' : 'border-gray-100'"
+                    />
+                    <div class="min-w-0">
+                      <h4
+                        class="text-[17px] font-bold leading-tight"
+                        :class="cardPosition(loopIndex) === 0 ? 'text-white' : 'text-gray-900'"
+                        x-text="testimonial.name"
+                      ></h4>
+                      <p
+                        class="text-[13px] font-medium leading-tight mt-2"
+                        :class="cardPosition(loopIndex) === 0 ? 'text-white/70' : 'text-gray-500'"
+                        x-text="testimonial.role"
+                      ></p>
+                      <p
+                        class="mt-1 text-[13px] font-medium leading-tight"
+                        :class="cardPosition(loopIndex) === 0 ? 'text-white/70' : 'text-gray-500'"
+                        x-text="testimonial.company"
+                      ></p>
+                    </div>
+                  </div>
+                </div>
+              </article>
             </template>
-
-        </nav>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <!-- 3. CONTENT SECTIONS -->
-    <main class="min-h-screen bg-white pb-20 pt-16">
-        <div class="container mx-auto px-4 sm:px-6 md:px-12 max-w-7xl">
+  <script>
+    function reportsSlider() {
+      return {
+        activeIndex: 0,
+        cardStep: 0,
+        transitionEnabled: true,
+        isAnimating: false,
+        reports: [
+          {
+            name: 'Andi Pratama',
+            role: 'CEO',
+            company: 'Tech Innovate',
+            message: 'Layanan yang sangat profesional dan cepat. Kami sangat terbantu dengan solusi yang diberikan oleh tim ini dalam meningkatkan efisiensi operasional kami.',
+            image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=150',
+          },
+          {
+            name: 'Sari Wijaya',
+            role: 'Marketing Director',
+            company: 'Global Retail',
+            message: 'Hasil yang diberikan melampaui ekspektasi kami. Strategi yang diimplementasikan sangat tepat sasaran dan berdampak signifikan pada pertumbuhan brand kami.',
+            image: 'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150',
+          },
+          {
+            name: 'Budi Santoso',
+            role: 'Operations Manager',
+            company: 'Laju Logistik',
+            message: 'Transparansi dan komunikasi yang baik adalah nilai tambah utama. Kami merasa sangat aman bekerja sama dengan tim yang sangat berdedikasi ini.',
+            image: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150',
+          },
+          {
+            name: 'Diana Putri',
+            role: 'Founder',
+            company: 'Creative Studio',
+            message: 'Kreativitas dan perhatian terhadap detail sangat luar biasa. Mereka benar-benar memahami visi kami dan mewujudkannya dengan sangat sempurna.',
+            image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=150',
+          },
+        ],
+        init() {
+          this.syncActiveFlag();
+          this.measure();
+        },
+        measure() {
+          this.$nextTick(() => {
+            const card = this.$root.querySelector('[data-report-card]');
+            const track = this.$root.querySelector('[data-report-track]');
 
-            <!-- SECTION: PROFIL (Profil Pejabat) -->
-            <div x-show="activeTab === 'profil'" x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+            if (!card || !track) return;
 
-                <div class="mb-8 md:mb-10">
-                    <h2 class="text-2xl md:text-3xl font-bold text-corporate-blue mb-4 border-l-4 border-corporate-accent pl-4">
-                        Profil Pejabat</h2>
-                    <p class="max-w-3xl text-sm md:text-base text-slate-600 leading-relaxed">Susunan pejabat ditampilkan dalam dua lapisan:
-                        dua profil utama di bagian atas dan empat profil pendukung di bagian bawah, dengan tampilan yang
-                        lebih modern dan mudah dipindai.</p>
-                </div>
+            const trackStyle = window.getComputedStyle(track);
+            const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
+            this.cardStep = card.getBoundingClientRect().width + gap;
+          });
+        },
+        get loopedReports() {
+          return this.reports;
+        },
+        get normalizedIndex() {
+          return this.activeIndex % this.reports.length;
+        },
+        cardPosition(loopIndex) {
+          return loopIndex - this.activeIndex;
+        },
+        cardTone(loopIndex) {
+          const position = this.cardPosition(loopIndex);
 
-                <div class="grid xl:grid-cols-2 gap-6 md:gap-8 mb-8 md:mb-10">
-                    <article class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-                        <div class="grid md:grid-cols-[0.95fr_1.05fr]">
-                            <div class="relative min-h-[260px] sm:min-h-[320px] md:min-h-[340px] bg-slate-100 cursor-zoom-in group" @click="openProfile({
-                                    image: 'agung.svg',
-                                    name: 'Agung Budi Lestari, S.Si., M.T.A.',
-                                    title: 'Kepala BSPJI Banda Aceh',
-                                    unit: 'Pejabat Utama',
-                                    details: [
-                                        'Lahir di Magetan, Jawa Timur, dan meniti karier di lingkungan standardisasi industri dengan pengalaman kepemimpinan yang kuat.',
-                                        'Pernah mengemban tanggung jawab pada bidang standardisasi, pengembangan jasa teknik, dan penguatan pelayanan industri di berbagai unit kerja.'
-                                    ]
-                                })">
-                                <img src="agung.svg" alt="Agung Budi Lestari"
-                                    class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                                <div
-                                    class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/35 to-transparent">
-                                </div>
-                            </div>
-                            <div class="p-5 sm:p-6 md:p-8">
-                                <p class="text-xs font-bold uppercase tracking-[0.22em] text-corporate-accent mb-3">
-                                    Pejabat Utama</p>
-                                <h3 class="text-xl sm:text-2xl font-bold text-corporate-blue leading-tight">Agung Budi Lestari,
-                                    S.Si., M.T.A.</h3>
-                                <p class="mt-3 text-sm font-semibold text-emerald-600">Kepala BSPJI Banda Aceh</p>
-                                <div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-600">
-                                    <p>Lahir di Magetan, Jawa Timur, dan memulai kariernya di lingkungan layanan
-                                        standardisasi industri dengan pengalaman kepemimpinan yang kuat.</p>
-                                    <p>Pernah mengemban tanggung jawab pada bidang standardisasi, pengembangan jasa
-                                        teknik, dan penguatan pelayanan industri di berbagai unit kerja.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+          if (position === 0) {
+            return 'bg-[#1839a8] text-white opacity-100 border-transparent';
+          }
 
-                    <article class="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm">
-                        <div class="grid md:grid-cols-[0.95fr_1.05fr]">
-                            <div class="relative min-h-[260px] sm:min-h-[320px] md:min-h-[340px] bg-slate-100 cursor-zoom-in group" @click="openProfile({
-                                    image: 'ely.svg',
-                                    name: 'Ely Maskidah, S.E., M.AP.',
-                                    title: 'Kepala Sub Bag Tata Usaha',
-                                    unit: 'Pejabat Utama',
-                                    details: [
-                                        'Memiliki pengalaman administratif dan tata kelola kelembagaan yang mendukung efektivitas operasional dan pelayanan publik.',
-                                        'Fokus kerja mencakup penguatan layanan internal, pengelolaan program, serta dukungan administrasi organisasi secara terpadu.'
-                                    ]
-                                })">
-                                <img src="ely.svg" alt="Ely Maskidah"
-                                    class="absolute inset-0 h-full w-full scale-[1.08] object-cover object-[center_18%] transition duration-500 group-hover:scale-[1.12]">
-                                <div
-                                    class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-slate-950/35 to-transparent">
-                                </div>
-                            </div>
-                            <div class="p-5 sm:p-6 md:p-8">
-                                <p class="text-xs font-bold uppercase tracking-[0.22em] text-corporate-accent mb-3">
-                                    Pejabat Utama</p>
-                                <h3 class="text-xl sm:text-2xl font-bold text-corporate-blue leading-tight">Ely Maskidah, S.E.,
-                                    M.AP.</h3>
-                                <p class="mt-3 text-sm font-semibold text-emerald-600">Kepala Sub Bag Tata Usaha</p>
-                                <div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-600">
-                                    <p>Memiliki pengalaman administratif dan tata kelola kelembagaan yang mendukung
-                                        efektivitas operasional dan pelayanan publik.</p>
-                                    <p>Fokus kerja mencakup penguatan layanan internal, pengelolaan program, serta
-                                        dukungan administrasi organisasi secara terpadu.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+          if (position === 1) {
+            return 'bg-white text-black opacity-100 border-transparent';
+          }
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
-                    <article class="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm">
-                        <div class="flex items-start gap-4 sm:block">
-                        <div class="overflow-hidden rounded-[1.25rem] mb-0 sm:mb-4 bg-slate-100 aspect-[4/5] w-28 shrink-0 sm:w-auto cursor-zoom-in group"
-                            @click="openProfile({
-                                image: 'fitriana.svg',
-                                name: 'Dr. Fitriana Djafar, S.Si., M.T.',
-                                title: 'Ketua Tim Kerja',
-                                unit: 'Standardisasi dan Sertifikasi',
-                                details: [
-                                    'Memimpin pengembangan mutu layanan standardisasi dan sertifikasi untuk memperkuat kepercayaan industri dan pemangku kepentingan.',
-                                    'Berperan dalam koordinasi program, pengawalan standar, serta peningkatan kualitas proses sertifikasi secara berkelanjutan.'
-                                ]
-                            })">
-                            <img src="fitriana.svg" alt="Dr. Fitriana Djafar"
-                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                        </div>
-                        <div class="min-w-0">
-                        <h3 class="text-base sm:text-lg font-bold text-corporate-blue leading-snug">Dr. Fitriana Djafar, S.Si., M.T.
-                        </h3>
-                        <p class="mt-2 text-sm font-semibold text-emerald-600">Ketua Tim Kerja</p>
-                        <p class="mt-1 text-sm text-slate-600 leading-relaxed">Standardisasi dan Sertifikasi</p>
-                        </div>
-                        </div>
-                    </article>
+          if (position === 2) {
+            return 'bg-white/65 text-[#939393] opacity-80 border-slate-200 shadow-[0_8px_18px_rgba(15,23,42,0.12)]';
+          }
 
-                    <article class="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm">
-                        <div class="flex items-start gap-4 sm:block">
-                        <div class="overflow-hidden rounded-[1.25rem] mb-0 sm:mb-4 bg-slate-100 aspect-[4/5] w-28 shrink-0 sm:w-auto cursor-zoom-in group"
-                            @click="openProfile({
-                                image: 'mahlinda.svg',
-                                name: 'Dr. Mahlinda, S.T., M.T.',
-                                title: 'Ketua Tim Kerja',
-                                unit: 'Optimalisasi Pemanfaatan Teknologi Industri',
-                                details: [
-                                    'Mengawal strategi optimalisasi teknologi industri melalui pendampingan, konsultansi, dan penguatan implementasi di lapangan.',
-                                    'Mendorong keterhubungan antara inovasi teknis, kebutuhan industri, dan efektivitas layanan kelembagaan.'
-                                ]
-                            })">
-                            <img src="mahlinda.svg" alt="Dr. Mahlinda"
-                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                        </div>
-                        <div class="min-w-0">
-                        <h3 class="text-base sm:text-lg font-bold text-corporate-blue leading-snug">Dr. Mahlinda, S.T., M.T.</h3>
-                        <p class="mt-2 text-sm font-semibold text-emerald-600">Ketua Tim Kerja</p>
-                        <p class="mt-1 text-sm text-slate-600 leading-relaxed">Optimalisasi Pemanfaatan Teknologi
-                            Industri</p>
-                        </div>
-                        </div>
-                    </article>
+          return 'bg-white/0 text-[#939393] opacity-0 shadow-none pointer-events-none border-transparent';
+        },
+        syncActiveFlag() {
+          this.reports = this.reports.map((report, index) => ({
+            ...report,
+            active: index === this.normalizedIndex,
+          }));
+        },
+        next() {
+          if (this.activeIndex >= this.reports.length - 1) return;
 
-                    <article class="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm">
-                        <div class="flex items-start gap-4 sm:block">
-                        <div class="overflow-hidden rounded-[1.25rem] mb-0 sm:mb-4 bg-slate-100 aspect-[4/5] w-28 shrink-0 sm:w-auto cursor-zoom-in group"
-                            @click="openProfile({
-                                image: 'syarifuddin.svg',
-                                name: 'Dr. Syarifuddin, S.T., M.T.',
-                                title: 'Ketua Tim Kerja',
-                                unit: 'Pengujian, Kalibrasi, Inspeksi, Verifikasi',
-                                details: [
-                                    'Memimpin penguatan mutu layanan teknis yang berkaitan dengan pengujian, kalibrasi, inspeksi, dan verifikasi.',
-                                    'Berfokus pada akurasi, keandalan hasil, serta konsistensi prosedur agar layanan teknis tetap memenuhi standar yang ditetapkan.'
-                                ]
-                            })">
-                            <img src="syarifuddin.svg" alt="Dr. Syarifuddin"
-                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                        </div>
-                        <div class="min-w-0">
-                        <h3 class="text-base sm:text-lg font-bold text-corporate-blue leading-snug">Dr. Syarifuddin, S.T., M.T.</h3>
-                        <p class="mt-2 text-sm font-semibold text-emerald-600">Ketua Tim Kerja</p>
-                        <p class="mt-1 text-sm text-slate-600 leading-relaxed">Pengujian, Kalibrasi, Inspeksi,
-                            Verifikasi</p>
-                        </div>
-                        </div>
-                    </article>
+          this.transitionEnabled = true;
+          this.activeIndex += 1;
+          this.syncActiveFlag();
+        },
+        previous() {
+          if (this.activeIndex <= 0) return;
 
-                    <article class="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm">
-                        <div class="flex items-start gap-4 sm:block">
-                        <div class="overflow-hidden rounded-[1.25rem] mb-0 sm:mb-4 bg-slate-100 aspect-[4/5] w-28 shrink-0 sm:w-auto cursor-zoom-in group"
-                            @click="openProfile({
-                                image: 'mutia.svg',
-                                name: 'Meuthia Busthan, S.T., M.T.',
-                                title: 'Ketua Tim Kerja',
-                                unit: 'Pengembangan Jasa Industri',
-                                details: [
-                                    'Mengembangkan inisiatif layanan baru yang relevan dengan kebutuhan dunia industri dan peluang kolaborasi antar pemangku kepentingan.',
-                                    'Mengawal perencanaan program, perluasan layanan, dan peningkatan nilai tambah jasa industri secara berkelanjutan.'
-                                ]
-                            })">
-                            <img src="mutia.svg" alt="Meuthia Busthan"
-                                class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                        </div>
-                        <div class="min-w-0">
-                        <h3 class="text-base sm:text-lg font-bold text-corporate-blue leading-snug">Meuthia Busthan, S.T., M.T.</h3>
-                        <p class="mt-2 text-sm font-semibold text-emerald-600">Ketua Tim Kerja</p>
-                        <p class="mt-1 text-sm text-slate-600 leading-relaxed">Pengembangan Jasa Industri</p>
-                        </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
+          this.transitionEnabled = true;
+          this.activeIndex -= 1;
+          this.syncActiveFlag();
+        },
 
-            <!-- SECTION: SEJARAH (Tonggak Sejarah) -->
-            <div x-show="activeTab === 'sejarah'" x-cloak x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
 
-                <h2 class="text-3xl font-bold text-corporate-blue mb-10 border-l-4 border-corporate-accent pl-4">Tonggak
-                    Sejarah</h2>
-
-                <!-- Vertical Timeline Style -->
-                <div class="relative border-l-2 border-slate-200 ml-4 md:ml-10 space-y-12">
-
-                    <!-- Item 1 -->
-                    <div class="relative pl-8 md:pl-12">
-                        <div
-                            class="absolute -left-[9px] top-0 w-5 h-5 bg-corporate-accent rounded-full border-4 border-white shadow-sm">
-                        </div>
-                        <span class="text-sm font-bold text-corporate-accent tracking-widest uppercase mb-1 block">2023
-                            - Sekarang</span>
-                        <h3 class="text-xl font-bold text-corporate-blue">Ekspansi Regional</h3>
-                        <p class="mt-2 text-slate-600 leading-relaxed max-w-2xl">
-                            Memperluas jangkauan operasional ke 5 negara di Asia Tenggara dan meluncurkan inisiatif
-                            Green Energy untuk keberlanjutan masa depan.
-                        </p>
-                        <!-- Image Below Text -->
-                        <div
-                            class="mt-4 rounded-xl overflow-hidden border border-slate-200 shadow-sm w-[300px] h-[200px] max-w-full">
-                            <img src="https://picsum.photos/seed/timeline-1/600/400" alt="Timeline 2023"
-                                class="w-full h-full object-cover">
-                        </div>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div class="relative pl-8 md:pl-12">
-                        <div
-                            class="absolute -left-[9px] top-0 w-5 h-5 bg-slate-400 rounded-full border-4 border-white shadow-sm">
-                        </div>
-                        <span class="text-sm font-bold text-slate-500 tracking-widest uppercase mb-1 block">2018</span>
-                        <h3 class="text-xl font-bold text-corporate-blue">Transformasi Digital</h3>
-                        <p class="mt-2 text-slate-600 leading-relaxed max-w-2xl">
-                            Melakukan perombakan total pada sistem manajemen internal menjadi berbasis cloud,
-                            meningkatkan efisiensi operasional sebesar 40%.
-                        </p>
-                        <!-- Image Below Text -->
-                        <div
-                            class="mt-4 rounded-xl overflow-hidden border border-slate-200 shadow-sm w-[300px] h-[200px] max-w-full">
-                            <img src="https://picsum.photos/seed/timeline-2/600/400" alt="Timeline 2018"
-                                class="w-full h-full object-cover">
-                        </div>
-                    </div>
-
-                    <!-- Item 3 -->
-                    <div class="relative pl-8 md:pl-12">
-                        <div
-                            class="absolute -left-[9px] top-0 w-5 h-5 bg-slate-400 rounded-full border-4 border-white shadow-sm">
-                        </div>
-                        <span class="text-sm font-bold text-slate-500 tracking-widest uppercase mb-1 block">2010</span>
-                        <h3 class="text-xl font-bold text-corporate-blue">Pendirian Perusahaan</h3>
-                        <p class="mt-2 text-slate-600 leading-relaxed max-w-2xl">
-                            Didirikan di Jakarta dengan visi sederhana: menjadi jembatan teknologi bagi industri
-                            konvensional.
-                        </p>
-                        <!-- Image Below Text -->
-                        <div
-                            class="mt-4 rounded-xl overflow-hidden border border-slate-200 shadow-sm w-[300px] h-[200px] max-w-full">
-                            <img src="https://picsum.photos/seed/timeline-3/600/400" alt="Timeline 2010"
-                                class="w-full h-full object-cover">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- SECTION: MOTTO (Visi, Misi, Tata Nilai) -->
-            <div x-show="activeTab === 'motto'" x-cloak x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-
-                <h2 class="text-3xl font-bold text-corporate-blue mb-10 border-l-4 border-corporate-accent pl-4">Moto,
-                    Visi, & Misi</h2>
-
-                <div class="grid lg:grid-cols-12 gap-8">
-                    <!-- Kolom Kiri: Moto Pelayanan -->
-                    <div class="lg:col-span-5 xl:col-span-4">
-                        <article
-                            class="relative overflow-hidden rounded-[2rem] border border-[#d7f1f4] bg-white p-6 shadow-md h-full flex flex-col">
-                            <div class="absolute -left-14 -top-14 h-40 w-40 rounded-full border border-[#d7f1f4]"></div>
-                            <div class="absolute -left-10 -top-10 h-32 w-32 rounded-full border border-[#d7f1f4]"></div>
-                            <div class="absolute -right-16 -top-12 h-44 w-44 rounded-full border border-[#d7f1f4]">
-                            </div>
-
-                            <div class="relative">
-                                <p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#1ab6c5] mb-2">
-                                    Moto Pelayanan
-                                </p>
-                                <h3 class="text-4xl md:text-5xl font-black uppercase leading-none text-[#12afc0] mb-8">
-                                    Pasti Bisa
-                                </h3>
-
-                                <div class="space-y-8">
-                                    <!-- Layanan -->
-                                    <div>
-                                        <p class="text-xs font-medium uppercase tracking-[0.14em] text-slate-400 mb-3">
-                                            Layanan
-                                        </p>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">P</span>
-                                                <span><strong class="font-semibold">Prima</strong></span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">A</span>
-                                                <span><strong class="font-semibold">Akuntabel</strong></span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">S</span>
-                                                <span><strong class="font-semibold">Siap</strong></span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">T</span>
-                                                <span><strong class="font-semibold">Transparan</strong></span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">I</span>
-                                                <span><strong class="font-semibold">Inovatif</strong></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Petugas -->
-                                    <div>
-                                        <p class="text-xs font-medium uppercase tracking-[0.14em] text-slate-400 mb-3">
-                                            Petugas Pelayanan
-                                        </p>
-                                        <div class="space-y-2">
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">B</span>
-                                                <span><strong class="font-semibold">Berorientasi</strong>
-                                                    Pelayanan</span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">I</span>
-                                                <span><strong class="font-semibold">Integritas</strong></span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">S</span>
-                                                <span><strong class="font-semibold">Suportif</strong></span>
-                                            </div>
-                                            <div class="flex items-center gap-3 text-lg text-slate-700">
-                                                <span
-                                                    class="flex h-8 w-8 shrink-0 items-center justify-center bg-[#12afc0] font-black text-white text-sm">A</span>
-                                                <span><strong class="font-semibold">Adaptif</strong></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <!-- Kolom Kanan: Visi & Misi -->
-                    <div class="lg:col-span-7 xl:col-span-8 space-y-6">
-                        <article class="rounded-[2rem] border border-slate-200 bg-white p-8 md:p-10 shadow-md">
-                            <p class="text-sm font-bold uppercase tracking-[0.2em] text-corporate-accent mb-4">Visi</p>
-                            <h3 class="text-2xl md:text-4xl font-bold text-corporate-blue leading-tight mb-5">Menjadi
-                                perusahaan kelas
-                                dunia yang menggerakkan inovasi dan memberi nilai tambah bagi kehidupan.</h3>
-                            <p class="text-lg text-slate-600 leading-relaxed font-light">Visi ini menjadi arah jangka
-                                panjang perusahaan dalam
-                                membangun layanan yang modern, relevan, dan berdampak luas bagi masyarakat.</p>
-                        </article>
-
-                        <article class="rounded-[2rem] border border-slate-200 bg-white p-8 md:p-10 shadow-md">
-                            <p class="text-sm font-bold uppercase tracking-[0.2em] text-corporate-accent mb-4">Misi</p>
-                            <ul class="space-y-4 text-lg text-slate-600 leading-relaxed font-light">
-                                <li class="flex items-start gap-4">
-                                    <span class="mt-2.5 w-2 h-2 rounded-full bg-corporate-accent shrink-0"></span>
-                                    <span>Menjalankan bisnis dengan integritas tinggi dan tata kelola yang bertanggung
-                                        jawab.</span>
-                                </li>
-                                <li class="flex items-start gap-4">
-                                    <span class="mt-2.5 w-2 h-2 rounded-full bg-corporate-accent shrink-0"></span>
-                                    <span>Mengembangkan talenta unggul yang adaptif, kompeten, dan kolaboratif.</span>
-                                </li>
-                                <li class="flex items-start gap-4">
-                                    <span class="mt-2.5 w-2 h-2 rounded-full bg-corporate-accent shrink-0"></span>
-                                    <span>Menghadirkan solusi yang relevan, efisien, dan berkelanjutan bagi pelanggan
-                                        serta lingkungan.</span>
-                                </li>
-                            </ul>
-                        </article>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION: TUGAS -->
-            <div x-show="activeTab === 'tugas'" x-cloak x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-
-                <h2 class="text-3xl font-bold text-corporate-blue mb-8 border-l-4 border-corporate-accent pl-4">Fungsi &
-                    Tugas Utama</h2>
-
-                <p class="mb-8 text-slate-600 max-w-3xl">Kami menjalankan mandat untuk memastikan ketersediaan layanan
-                    digital dan infrastruktur yang merata. Berikut adalah pilar tugas utama kami:</p>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div
-                        class="bg-white p-6 rounded-[2rem] border border-slate-200 hover:border-corporate-blue transition group">
-                        <div
-                            class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-corporate-blue group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-corporate-blue mb-2">Perencanaan Strategis</h3>
-                        <p class="text-sm text-slate-500">Merumuskan kebijakan jangka panjang untuk keberlanjutan bisnis
-                            dan energi.</p>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 rounded-[2rem] border border-slate-200 hover:border-corporate-blue transition group">
-                        <div
-                            class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-corporate-blue group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-corporate-blue mb-2">Pengawasan Operasional</h3>
-                        <p class="text-sm text-slate-500">Memastikan seluruh unit bisnis berjalan sesuai SOP dan standar
-                            keselamatan.</p>
-                    </div>
-
-                    <div
-                        class="bg-white p-6 rounded-[2rem] border border-slate-200 hover:border-corporate-blue transition group">
-                        <div
-                            class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-corporate-blue group-hover:text-white transition">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="text-lg font-bold text-corporate-blue mb-2">Pengembangan SDM</h3>
-                        <p class="text-sm text-slate-500">Mencetak pemimpin masa depan melalui program pelatihan yang
-                            komprehensif.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION: STRUKTUR -->
-            <div x-show="activeTab === 'struktur'" x-cloak x-transition:enter="transition ease-out duration-300"
-                x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-
-                <h2 class="text-3xl font-bold text-corporate-blue mb-10 border-l-4 border-corporate-accent pl-4">
-                    Struktur Organisasi</h2>
-
-                <div class="rounded-[2rem] overflow-hidden border border-slate-200 bg-white shadow-sm">
-                    <img src="https://picsum.photos/seed/struktur-organisasi/1600/1000" alt="Dummy struktur organisasi"
-                        class="w-full h-auto object-cover">
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div x-show="lightboxOpen" x-cloak x-transition.opacity @keydown.escape.window="closeProfile()"
-        @click.self="closeProfile()"
-        class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-[3px] p-4 md:p-8">
-        <div class="relative w-full max-w-5xl max-h-[90vh] overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-            <button @click="closeProfile()"
-                class="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-700 shadow-sm transition hover:bg-white"
-                aria-label="Tutup detail profil">
-                <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-
-            <div class="grid lg:grid-cols-[0.92fr_1.08fr] max-h-[90vh] overflow-y-auto">
-                <div class="relative min-h-[240px] sm:min-h-[320px] bg-slate-100 lg:min-h-[620px]">
-                    <img :src="lightboxData.image" :alt="lightboxData.name || 'Profil pejabat'"
-                        class="absolute inset-0 h-full w-full object-cover">
-                </div>
-
-                <div class="p-6 md:p-8 lg:p-10">
-                    <p class="text-xs font-bold uppercase tracking-[0.22em] text-corporate-accent"
-                        x-text="lightboxData.unit || 'Profil Pejabat'"></p>
-                    <h3 class="mt-4 text-2xl md:text-4xl font-bold text-corporate-blue leading-tight"
-                        x-text="lightboxData.name || ''"></h3>
-                    <p class="mt-4 text-base md:text-lg font-semibold text-emerald-600"
-                        x-text="lightboxData.title || ''"></p>
-
-                    <div class="mt-8 space-y-4 text-sm md:text-base leading-relaxed text-slate-600">
-                        <template x-for="detail in (lightboxData.details || [])" :key="detail">
-                            <p x-text="detail"></p>
-                        </template>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Simple Footer -->
-    <footer class="bg-slate-900 text-white py-8 border-t border-slate-800">
-        <div class="container mx-auto px-6 text-center text-sm text-slate-400">
-            &copy; 2024 PT Modern Solusi Tbk. All Rights Reserved.
-        </div>
-    </footer>
-
+      };
+    }
+  </script>
 </body>
-
 </html>

@@ -100,7 +100,7 @@
                 class="{{ $isTransparent ? 'group inline-flex items-center p-0 transition hover:opacity-85' : 'group inline-flex items-center rounded-xl p-1 transition hover:bg-slate-50' }}">
                 @if ($isTransparent)
                     <span class="relative inline-block h-[100px] sm:h-[110px]">
-                        <img src="{{ asset('images/profil/logobalai.png') }}" alt="Logo BSPJI Banda Aceh"
+                        <img src="{{ asset('images/profil/logobalai.webp') }}" alt="Logo BSPJI Banda Aceh"
                             :class="isSolid ? 'opacity-100' : 'opacity-0'"
                             class="block h-full w-auto max-w-none object-contain transition-opacity duration-300">
                         <img src="{{ asset('images/profil/logowhite.webp') }}" alt="" aria-hidden="true"
@@ -108,7 +108,7 @@
                             class="absolute left-0 top-0 block h-full w-auto max-w-none object-contain transition-opacity duration-300">
                     </span>
                 @else
-                    <img src="{{ asset('images/profil/logobalai.png') }}" alt="Logo BSPJI Banda Aceh"
+                    <img src="{{ asset('images/profil/logobalai.webp') }}" alt="Logo BSPJI Banda Aceh"
                         class="block h-[70px] w-auto max-w-none object-contain">
                 @endif
             </a>

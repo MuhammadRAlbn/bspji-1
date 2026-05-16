@@ -138,49 +138,52 @@
             </button>
         </div>
 
-        <article class="min-h-[70vh] pb-20 sm:pb-[150px]">
-            <section x-show="tab === 'sertifikasi'" x-transition.opacity.duration.300ms>
-                <div class="mx-auto max-w-4xl space-y-6">
-                    @if($sertifikasi && $sertifikasi->image)
-                        <div class="flex justify-start">
-                            <a
-                                href="{{ asset('storage/' . $sertifikasi->image) }}"
-                                download
-                                class="inline-flex items-center gap-2 rounded-xl border border-black/25 px-4 py-2 text-sm font-semibold text-slate-800 transition-all active:scale-95"
-                            >
-                                <svg class="h-4 w-4 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4m-4 7.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V18" />
-                                </svg>
-                                Download Sertifikat Akreditasi
-                            </a>
-                        </div>
-
-                        <button
-                            type="button"
-                            @click="openLightbox('{{ asset('storage/' . $sertifikasi->image) }}', 'Sertifikat Akreditasi')"
-                            class="group relative block w-full max-w-[720px] cursor-pointer overflow-hidden rounded-[24px] text-left sm:w-[85%] lg:w-[70%]"
-                        >
-                            <img
-                                src="{{ asset('storage/' . $sertifikasi->image) }}"
-                                alt="Sertifikat Akreditasi"
-                                class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-105"
-                            >
-                            <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                                <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
-                                    Klik untuk memperbesar
-                                </span>
+        <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
+            <div class="grid grid-cols-1 items-start">
+                <section x-show="tab === 'sertifikasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-8">
+                        @if($sertifikasi && $sertifikasi->image)
+                            <div class="flex justify-start">
+                                <a
+                                    href="{{ asset('storage/' . $sertifikasi->image) }}"
+                                    download
+                                    class="inline-flex items-center gap-2 rounded-xl border border-black/25 px-4 py-2 text-sm font-semibold text-slate-800 transition-all active:scale-95"
+                                >
+                                    <svg class="h-4 w-4 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4m-4 7.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V18" />
+                                    </svg>
+                                    Download Sertifikat Akreditasi
+                                </a>
                             </div>
-                        </button>
-                    @else
-                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
-                            <p class="font-medium text-slate-400">Gambar sertifikat belum tersedia.</p>
-                        </div>
-                    @endif
+
+                            <div class="flex flex-wrap justify-center gap-8">
+                                <button
+                                    type="button"
+                                    @click="openLightbox('{{ asset('storage/' . $sertifikasi->image) }}', 'Sertifikat Akreditasi')"
+                                    class="group relative block aspect-square w-full max-w-[380px] cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-xl"
+                                >
+                                    <img
+                                        src="{{ asset('storage/' . $sertifikasi->image) }}"
+                                        alt="Sertifikat Akreditasi"
+                                        class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                                    >
+                                    <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                        <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                            Klik untuk memperbesar
+                                        </span>
+                                    </div>
+                                </button>
+                            </div>
+                        @else
+                            <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                                <p class="font-medium text-slate-400">Gambar sertifikat belum tersedia.</p>
+                            </div>
+                        @endif
                 </div>
             </section>
 
-            <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.300ms style="display: none;">
-                <div class="mx-auto max-w-5xl space-y-6">
+                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-6">
                     <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
                         Informasi ruang lingkup pengujian dapat difilter berdasarkan lab dan tetap bisa dicari cepat
                         melalui komoditi maupun uraian ruang lingkup.
@@ -322,19 +325,20 @@
                 </div>
             </section>
 
-            <section x-show="tab === 'alur'" x-transition.opacity.duration.300ms style="display: none;">
-                <div class="mx-auto max-w-5xl space-y-6">
+                <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-6">
                     @if($alurPengujian && $alurPengujian->image)
-                        <button
-                            type="button"
-                            @click="openLightbox('{{ asset('storage/' . $alurPengujian->image) }}', 'Alur Pelayanan Pengujian')"
-                            class="group relative block w-full cursor-pointer overflow-hidden rounded-[30px] border border-black/15 text-left shadow-xl"
-                        >
-                            <img
-                                src="{{ asset('storage/' . $alurPengujian->image) }}"
-                                alt="Alur Pelayanan Pengujian"
-                                class="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+                        <div class="flex justify-center">
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $alurPengujian->image) }}', 'Alur Pelayanan Pengujian')"
+                                class="group relative block w-full max-w-4xl cursor-pointer overflow-hidden rounded-[30px] border border-black/15 bg-slate-50 text-left shadow-xl"
                             >
+                                <img
+                                    src="{{ asset('storage/' . $alurPengujian->image) }}"
+                                    alt="Alur Pelayanan Pengujian"
+                                    class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
+                                >
                         </button>
                     @else
                         <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
@@ -344,8 +348,8 @@
                 </div>
             </section>
 
-            <section x-show="tab === 'tarif'" x-transition.opacity.duration.300ms style="display: none;">
-                <div class="mx-auto max-w-5xl space-y-8">
+                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl space-y-8">
                     <div class="rounded-[24px] border border-black/10 bg-slate-50 p-5 sm:rounded-[30px] sm:p-8">
                         <p class="text-justify text-sm leading-relaxed text-slate-700 md:text-base">
                             BSPJI Banda Aceh menggunakan standar biaya yang mengacu pada
@@ -363,7 +367,8 @@
 
                     @livewire('tarif-pengujian')
                 </div>
-            </section>
+                </section>
+            </div>
         </article>
     </div>
 

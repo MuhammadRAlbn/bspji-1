@@ -6,6 +6,7 @@ use App\Models\News;
 use App\Models\NewsComment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class NewsFeatureTest extends TestCase
@@ -27,6 +28,66 @@ class NewsFeatureTest extends TestCase
             ->assertOk()
             ->assertSee($published->title)
             ->assertDontSee($draft->title);
+    }
+
+    public function test_homepage_displays_latest_three_published_news(): void
+    {
+        $latest = News::factory()->published()->create([
+            'title' => 'Berita Terbaru Pertama',
+            'slug' => 'berita-terbaru-pertama',
+            'published_at' => Carbon::parse('2026-05-12 09:00:00'),
+        ]);
+        $second = News::factory()->published()->create([
+            'title' => 'Berita Terbaru Kedua',
+            'slug' => 'berita-terbaru-kedua',
+            'published_at' => Carbon::parse('2026-05-11 09:00:00'),
+        ]);
+        $third = News::factory()->published()->create([
+            'title' => 'Berita Terbaru Ketiga',
+            'slug' => 'berita-terbaru-ketiga',
+            'published_at' => Carbon::parse('2026-05-10 09:00:00'),
+        ]);
+        $older = News::factory()->published()->create([
+            'title' => 'Berita Lama Keempat',
+            'slug' => 'berita-lama-keempat',
+            'published_at' => Carbon::parse('2026-05-09 09:00:00'),
+        ]);
+        $draft = News::factory()->create([
+            'title' => 'Berita Draft Beranda',
+            'slug' => 'berita-draft-beranda',
+        ]);
+        $future = News::factory()->create([
+            'title' => 'Berita Terjadwal Beranda',
+            'slug' => 'berita-terjadwal-beranda',
+            'status' => News::STATUS_PUBLISHED,
+            'published_at' => Carbon::parse('2026-05-20 09:00:00'),
+        ]);
+
+        $response = $this->get('/')
+            ->assertOk()
+            ->assertSeeText('Berita Terkini')
+            ->assertSeeInOrder([$latest->title, $second->title, $third->title]);
+
+        $content = $response->getContent();
+        $faqPosition = strpos($content, '<section id="faq" class=');
+        $newsPosition = strrpos($content, '<section id="berita" class=');
+        $footerPosition = strpos($content, '<footer class=');
+
+        $this->assertGreaterThan($faqPosition, $newsPosition);
+        $this->assertGreaterThan($newsPosition, $footerPosition);
+
+        $homepageNewsSection = Str::between(
+            substr($content, $newsPosition),
+            '<section id="berita" class=',
+            '<footer class='
+        );
+
+        $this->assertStringContainsString($latest->title, $homepageNewsSection);
+        $this->assertStringContainsString($second->title, $homepageNewsSection);
+        $this->assertStringContainsString($third->title, $homepageNewsSection);
+        $this->assertStringNotContainsString($older->title, $homepageNewsSection);
+        $this->assertStringNotContainsString($draft->title, $homepageNewsSection);
+        $this->assertStringNotContainsString($future->title, $homepageNewsSection);
     }
 
     public function test_news_detail_hides_unpublished_news(): void

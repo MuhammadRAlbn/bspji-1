@@ -1,5 +1,18 @@
 <x-layouts.app title="Verifikasi TKDN - BSPJI Banda Aceh">
-<div x-data="{ tab: 'ruang-lingkup' }">
+<div x-data="{
+    tab: 'ruang-lingkup',
+    lightboxOpen: false,
+    lightboxImage: '',
+    lightboxAlt: '',
+    openLightbox(image, alt) {
+        this.lightboxImage = image;
+        this.lightboxAlt = alt;
+        this.lightboxOpen = true;
+    },
+    closeLightbox() {
+        this.lightboxOpen = false;
+    }
+}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
     <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
         <img
             src="https://images.unsplash.com/photo-1507413245164-6160d8298b31?auto=format&fit=crop&q=80&w=2070"
@@ -46,13 +59,24 @@
             <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="grid grid-cols-1 gap-12">
                     @forelse($ruangLingkup as $item)
-                        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 group">
-                            @if($item->image)
-                                <div class="p-8 flex justify-center bg-white">
-                                    <img src="{{ asset('storage/' . $item->image) }}" class="max-w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition duration-700">
+                        @if($item->image)
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Ruang Lingkup Verifikasi TKDN')"
+                                class="group relative block w-full cursor-pointer overflow-hidden rounded-[24px] border border-black/15 text-left shadow-xl"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $item->image) }}"
+                                    alt="Ruang Lingkup Verifikasi TKDN"
+                                    class="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+                                >
+                                <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                        Klik untuk memperbesar
+                                    </span>
                                 </div>
-                            @endif
-                        </div>
+                            </button>
+                        @endif
                     @empty
                         <div class="bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
                             <p class="text-gray-400 font-medium italic">Data ruang lingkup Verifikasi TKDN belum tersedia.</p>
@@ -65,13 +89,24 @@
             <div x-show="tab === 'alur'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
                 <div class="grid grid-cols-1 gap-12">
                     @forelse($alur as $item)
-                        <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 group">
-                            @if($item->image)
-                                <div class="p-8 flex justify-center bg-white">
-                                    <img src="{{ asset('storage/' . $item->image) }}" class="max-w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition duration-700">
+                        @if($item->image)
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Alur Verifikasi TKDN')"
+                                class="group relative block w-full cursor-pointer overflow-hidden rounded-[24px] border border-black/15 text-left shadow-xl"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $item->image) }}"
+                                    alt="Alur Verifikasi TKDN"
+                                    class="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.01]"
+                                >
+                                <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                        Klik untuk memperbesar
+                                    </span>
                                 </div>
-                            @endif
-                        </div>
+                            </button>
+                        @endif
                     @empty
                         <div class="bg-white rounded-3xl shadow-xl p-24 text-center border border-gray-100">
                             <p class="text-gray-400 font-medium italic">Data alur Verifikasi TKDN belum tersedia.</p>
@@ -81,5 +116,30 @@
             </div>
         </article>
     </main>
+    <div
+        x-show="lightboxOpen"
+        x-transition.opacity.duration.300ms
+        @click="closeLightbox()"
+        @keydown.escape.window="closeLightbox()"
+        class="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm md:p-10"
+        style="display: none;"
+    >
+        <button
+            type="button"
+            @click.stop="closeLightbox()"
+            class="absolute top-6 right-6 z-110 text-white transition-colors hover:text-gray-300"
+            aria-label="Tutup lightbox"
+        >
+            <svg class="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img
+            :src="lightboxImage"
+            :alt="lightboxAlt"
+            @click.stop
+            class="max-h-full max-w-full rounded-lg shadow-2xl"
+        >
+    </div>
 </div>
 </x-layouts.app>

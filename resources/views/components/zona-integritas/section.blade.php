@@ -66,11 +66,11 @@
         @endif
 
         <div class="mx-auto mb-14 max-w-2xl text-center" data-aos="fade-up">
-            <div class="mb-4 flex items-center justify-center gap-2">
+            <div class="mb-2 flex items-center justify-center gap-2">
                 <span class="text-[10px] text-orange-600">■</span>
                 <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-900">Komitmen Kami</span>
             </div>
-            <h2 class="section-title-identic text-gray-900">Zona Integritas</h2>
+            <h2 class="text-2xl font-semibold leading-[1.2] text-gray-900 md:text-[30px]">Zona Integritas</h2>
         </div>
 
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7 md:gap-5">
