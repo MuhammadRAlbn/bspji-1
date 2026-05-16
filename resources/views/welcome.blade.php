@@ -256,7 +256,7 @@
 
         #customer-distribution-map {
             width: 100%;
-            height: 520px;
+            height: 450px;
             border-radius: 1rem;
             overflow: hidden;
             background: linear-gradient(180deg, #93c5fd 0%, #bfdbfe 52%, #dcfce7 100%);
@@ -531,14 +531,14 @@
                                 $serviceUrl = $serviceRouteMap[$slug] ?? '#';
                             @endphp
                             <a href="{{ $serviceUrl }}"
-                                class="group relative flex h-[170px] items-end justify-start overflow-hidden rounded-lg border border-[#dde4ee] bg-[#f1f4f9] px-5 pb-5 text-left transition duration-300 hover:-translate-y-1 hover:border-[#cfd8e6] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25 md:h-[190px]"
+                                class="group relative flex h-[170px] flex-col justify-end overflow-hidden rounded-lg border border-[#dde4ee] bg-[#f1f4f9] p-5 text-left transition duration-300 hover:-translate-y-1 hover:border-[#cfd8e6] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25 md:h-[190px]"
                                 data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 75 }}">
                                 @if ($layanan->gambar)
                                     <img src="{{ Storage::url($layanan->gambar) }}" alt="{{ $layanan->nama_layanan }}"
                                         class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
-                                    <div class="absolute inset-0 bg-slate-950/35 transition duration-300 group-hover:bg-slate-950/45"></div>
+                                    <div class="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent transition duration-300 group-hover:from-slate-950 group-hover:via-slate-950/30"></div>
                                 @endif
-                                <h3 class="relative z-10 text-sm font-bold uppercase leading-snug tracking-normal {{ $layanan->gambar ? 'text-white drop-shadow-sm' : 'text-slate-950' }}">
+                                <h3 class="relative z-10 text-sm font-bold uppercase leading-snug tracking-normal {{ $layanan->gambar ? 'text-white drop-shadow-md' : 'text-slate-950' }}">
                                     {{ $layanan->nama_layanan }}
                                 </h3>
                             </a>
@@ -589,7 +589,7 @@
 
         --}}
 
-        <section id="logo-pelanggan" class="overflow-hidden rounded-bl-3xl rounded-br-3xl border-b border-gray-200 bg-white py-16 md:py-24">
+        <section id="logo-pelanggan" class="overflow-hidden rounded-bl-3xl rounded-br-3xl bg-white py-16 md:py-24">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-20">
                     <div class="order-2 lg:order-1" data-aos="fade-right">
@@ -660,13 +660,39 @@
             </div>
         </section>
 
-        <section id="sertifikat" class="relative overflow-hidden border-b border-slate-200/70 py-16 md:pb-32 md:pt-24">
-            <div class="absolute inset-0 -z-10">
-                <img src="{{ $certificateBgImage }}" alt="Background Sertifikat" class="h-full w-full object-cover">
+        <section id="whatsapp-cta" class="relative bg-white pt-12 md:pt-16 pb-8">
+            <div class="mx-auto max-w-6xl px-6 lg:px-0">
+                <div class="relative overflow-hidden rounded-3xl bg-[#0f172a] px-8 py-12 md:px-16 md:py-16" data-aos="fade-up">
+                    
+                    <div class="relative flex flex-col items-center justify-between gap-10 md:flex-row">
+                        <div class="max-w-2xl text-center md:text-left">
+                        <div class="mb-4 flex items-center justify-center gap-2 md:justify-start">
+                                <span class="text-[10px] text-[#25D366]">■</span>
+                                <span class="text-xs font-bold uppercase tracking-[0.3em] text-[#25D366]">Layanan Pelanggan</span>
+                            </div>
+                            <h2 class="text-2xl font-bold tracking-tight text-white md:text-3xl lg:text-4xl lg:leading-[1.2]">
+                                Punya pertanyaan tentang layanan kami?
+                            </h2>
+                            <p class="mt-4 text-base text-slate-300 md:text-lg">
+                                Tim Customer Service kami siap memberikan informasi mendetail mengenai pengujian, kalibrasi, maupun sertifikasi yang Anda butuhkan.
+                            </p>
+                        </div>
+                        <div class="shrink-0">
+                            <a href="#"
+                               class="group inline-flex items-center gap-3 rounded-full bg-[#25D366] px-8 py-4 text-base font-bold text-white transition-all duration-300 hover:-translate-y-1 hover:bg-[#20bd5a] focus:outline-none">
+                                <svg class="h-6 w-6 fill-current transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                                </svg>
+                                Hubungi via WhatsApp
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="pointer-events-none absolute inset-0 opacity-30"
-                style="background-image: radial-gradient(#64748b20 0.8px, transparent 0.8px); background-size: 32px 32px;">
-            </div>
+        </section>
+
+        <section id="sertifikat" class="relative overflow-hidden bg-white py-12 md:pb-16 md:pt-16">
+
             <div class="relative mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 max-w-4xl md:mb-16" data-aos="fade-up">
                     <div class="mb-2 flex items-center gap-2">
@@ -723,7 +749,7 @@
             </div>
         </section>
 
-        <section id="perusahaan-dalam-angka" class="bg-white py-24 md:pb-16 md:pt-32">
+        <section id="perusahaan-dalam-angka" class="bg-white py-12 md:pb-16 md:pt-16">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 flex flex-col justify-between gap-8 lg:flex-row lg:items-end md:mb-16" data-aos="fade-up">
                     <div class="max-w-2xl">
@@ -909,7 +935,7 @@
             }"
             x-cloak
             @resize.window.debounce.150ms="measure()"
-            class="relative isolate mb-12 mt-12 overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 md:mb-16 md:mt-16 lg:mt-28 lg:min-h-[560px] lg:py-0"
+            class="relative isolate mb-8 mt-12 overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 md:mb-10 md:mt-16 lg:mt-28 lg:min-h-[560px] lg:py-0"
             aria-labelledby="testimonials-slider-title">
             <div class="mx-auto grid w-full max-w-[1920px] grid-cols-1 lg:min-h-[560px] lg:grid-cols-[49%_51%]">
                 <div class="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-auto">
@@ -926,7 +952,7 @@
                             <button type="button"
                                 @click="previous()"
                                 :disabled="activeIndex === 0"
-                                class="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none focus:ring-2 focus:ring-[#1839a8] focus:ring-offset-2 disabled:opacity-60 sm:h-14 sm:w-14 lg:h-12 lg:w-12"
+                                class="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none disabled:opacity-60 sm:h-14 sm:w-14 lg:h-12 lg:w-12"
                                 aria-label="Testimoni sebelumnya">
                                 <svg class="h-7 w-7 sm:h-8 sm:w-8 lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                     <path d="M14.5 18L8.5 12L14.5 6" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
@@ -936,7 +962,7 @@
                             <button type="button"
                                 @click="next()"
                                 :disabled="activeIndex >= maxIndex()"
-                                class="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none focus:ring-2 focus:ring-[#1839a8] focus:ring-offset-2 disabled:opacity-60 sm:h-14 sm:w-14 lg:h-12 lg:w-12"
+                                class="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-[#9ba9bf] bg-white/95 text-[#7b8798] shadow-[0_8px_18px_rgba(15,23,42,0.18)] transition enabled:hover:border-[#1839a8] enabled:hover:text-[#1839a8] focus:outline-none disabled:opacity-60 sm:h-14 sm:w-14 lg:h-12 lg:w-12"
                                 aria-label="Testimoni berikutnya">
                                 <svg class="h-7 w-7 sm:h-8 sm:w-8 lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                     <path d="M9.5 6L15.5 12L9.5 18" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round" />
@@ -1017,7 +1043,7 @@
             </div>
         </section>
 
-        <section id="peta-pelanggan" class="bg-white py-24 md:pb-16 md:pt-32">
+        <section id="peta-pelanggan" class="bg-white pb-24 pt-16 md:pb-16 md:pt-24">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-10 md:mb-14" data-aos="fade-up">
                     <div class="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-12">
