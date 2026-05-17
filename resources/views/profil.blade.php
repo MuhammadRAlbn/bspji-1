@@ -253,9 +253,9 @@
                         Data Struktur Organisasi belum tersedia.
                     </div>
                 @else
-                    <div class="rounded-4xl overflow-hidden border border-slate-200 bg-white shadow-sm">
+                    <div class="mx-auto max-w-3xl rounded-4xl border border-slate-200 bg-white p-2 shadow-sm">
                         <img src="{{ Storage::url($strukturOrganisasi->image_path) }}" alt="Struktur Organisasi" loading="lazy" decoding="async"
-                            class="w-full h-auto object-cover">
+                            class="w-full h-auto rounded-3xl object-contain">
                     </div>
                 @endif
             </section>

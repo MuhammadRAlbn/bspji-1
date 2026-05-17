@@ -693,6 +693,7 @@
             </div>
         </section>
 
+        {{-- 
         <section id="sertifikat" class="relative overflow-hidden border-y border-slate-300 bg-slate-50 py-12 md:pb-16 md:pt-16">
 
             <div class="relative mx-auto max-w-6xl px-6 lg:px-0">
@@ -735,18 +736,83 @@
                     </div>
                 @endif
             </div>
+        </section>
+        --}}
 
-            <div id="certificateLightbox" class="fixed inset-0 z-120 hidden" aria-hidden="true">
-                <div id="certificateLightboxBackdrop" class="absolute inset-0 bg-black/90"></div>
-                <div class="relative z-10 flex min-h-full items-center justify-center p-2 md:p-6">
-                    <p id="certificateLightboxTitle" class="sr-only">Sertifikat</p>
-                    <button type="button" id="certificateLightboxClose"
-                        class="absolute right-3 top-3 text-white/90 transition-colors hover:text-white md:right-6 md:top-6"
-                        aria-label="Tutup lightbox">
-                        <i data-lucide="x" class="h-7 w-7"></i>
-                    </button>
-                    <img id="certificateLightboxImage" src="" alt=""
-                        class="h-auto max-h-[92vh] w-auto max-w-[96vw] object-contain">
+        <div id="certificateLightbox" class="fixed inset-0 z-120 hidden" aria-hidden="true">
+            <div id="certificateLightboxBackdrop" class="absolute inset-0 bg-black/90"></div>
+            <div class="relative z-10 flex min-h-full items-center justify-center p-2 md:p-6">
+                <p id="certificateLightboxTitle" class="sr-only">Sertifikat</p>
+                <button type="button" id="certificateLightboxClose"
+                    class="absolute right-3 top-3 text-white/90 transition-colors hover:text-white md:right-6 md:top-6"
+                    aria-label="Tutup lightbox">
+                    <i data-lucide="x" class="h-7 w-7"></i>
+                </button>
+                <img id="certificateLightboxImage" src="" alt=""
+                    class="h-auto max-h-[92vh] w-auto max-w-[96vw] object-contain">
+            </div>
+        </div>
+
+        <section id="sertifikat-2" class="relative w-full overflow-hidden">
+            <div class="absolute inset-0">
+                <img src="{{ $certificateBgImage }}" alt="" class="h-full w-full object-cover" aria-hidden="true">
+                <div class="absolute inset-0 bg-black/30 lg:hidden"></div>
+                <div class="absolute inset-0 hidden bg-linear-to-r from-black/60 via-black/30 to-transparent lg:block"></div>
+            </div>
+
+            <div class="relative z-10 grid min-h-[700px] grid-cols-1 lg:grid-cols-[42%_58%]">
+                {{-- Left side: dark overlay + text --}}
+                <div class="relative flex flex-col justify-center px-8 py-16 md:px-12 lg:px-16 lg:py-24">
+                    <div class="relative z-10 max-w-lg" data-aos="fade-right" data-aos-duration="1000">
+                        <div class="mb-3 flex items-center gap-2">
+                            <span class="text-[10px] text-orange-400">■</span>
+                            <span class="text-xs font-bold uppercase tracking-[0.3em] text-orange-400">Akreditasi</span>
+                        </div>
+                        <h2 class="mb-6 text-3xl font-semibold leading-[1.15] tracking-tight text-white md:text-4xl lg:text-[42px]">
+                            Sertifikat Akreditasi Layanan Kami
+                        </h2>
+                        <p class="mb-8 text-base leading-relaxed text-white/80 md:text-lg">
+                            Seluruh layanan yang kami sediakan telah terakreditasi oleh lembaga yang berwenang, menjamin mutu dan keandalan hasil pengujian, kalibrasi, serta sertifikasi yang kami berikan.
+                        </p>
+                        <div class="flex items-center gap-3">
+                            <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm">
+                                <i data-lucide="shield-check" class="h-5 w-5 text-orange-400"></i>
+                            </span>
+                            <span class="text-sm font-medium text-white/70">Terjamin & Terpercaya</span>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Right side: 3x3 certificate grid --}}
+                <div class="relative flex items-center justify-center px-6 py-12 md:px-10 lg:pl-8 lg:pr-20 lg:py-16">
+                    @if ($sertifikats->isEmpty())
+                        <div class="w-full rounded-2xl border border-dashed border-white/30 bg-white/10 p-8 text-center text-white/70 backdrop-blur-sm">
+                            Data sertifikat belum tersedia.
+                        </div>
+                    @else
+                        <div class="mx-auto grid w-full max-w-md grid-cols-2 gap-4 sm:max-w-xl sm:grid-cols-3 md:gap-6 lg:max-w-[85%]">
+                            @foreach ($sertifikats->take(9) as $index => $sertifikat)
+                                @php
+                                    $image = $sertifikat->gambar ? Storage::url($sertifikat->gambar) : null;
+                                    $title = $sertifikat->nama_sertifikat ?: 'Sertifikat';
+                                @endphp
+                                @if ($image)
+                                    <button type="button" data-certificate-trigger data-certificate-variant="compact" data-src="{{ $image }}"
+                                        data-title="{{ $title }}"
+                                        class="group text-center transition-all duration-300 hover:-translate-y-1"
+                                        data-aos="fade-up" data-aos-delay="{{ 80 + ($index % 9) * 60 }}">
+                                        <div class="relative aspect-4/3 overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]">
+                                            <img src="{{ $image }}" alt="{{ $title }}"
+                                                class="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105">
+                                        </div>
+                                        <div class="mt-3 px-1">
+                                            <h3 class="line-clamp-2 text-[13.5px] font-semibold leading-tight text-white drop-shadow-md">{{ $title }}</h3>
+                                        </div>
+                                    </button>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>
@@ -1262,10 +1328,14 @@
             const certificateTriggers = document.querySelectorAll('[data-certificate-trigger]');
 
             if (certificateLightbox && certificateLightboxImage && certificateLightboxTitle) {
-                const openCertificateLightbox = (imageSrc, imageTitle, imageAlt) => {
+                const defaultImageClasses = 'h-auto max-h-[92vh] w-auto max-w-[96vw] object-contain';
+                const compactImageClasses = 'h-auto max-h-[78vh] w-auto max-w-[80vw] object-contain';
+
+                const openCertificateLightbox = (imageSrc, imageTitle, imageAlt, variant) => {
                     certificateLightboxImage.src = imageSrc;
                     certificateLightboxImage.alt = imageAlt || imageTitle || 'Sertifikat';
                     certificateLightboxTitle.textContent = imageTitle || 'Sertifikat';
+                    certificateLightboxImage.className = variant === 'compact' ? compactImageClasses : defaultImageClasses;
                     certificateLightbox.classList.remove('hidden');
                     certificateLightbox.setAttribute('aria-hidden', 'false');
                     document.body.classList.add('overflow-hidden');
@@ -1275,11 +1345,13 @@
                     certificateLightbox.setAttribute('aria-hidden', 'true');
                     certificateLightboxImage.src = '';
                     certificateLightboxImage.alt = '';
+                    certificateLightboxImage.className = defaultImageClasses;
                     document.body.classList.remove('overflow-hidden');
                 };
                 certificateTriggers.forEach((trigger) => {
                     trigger.addEventListener('click', () => {
-                        openCertificateLightbox(trigger.dataset.src, trigger.dataset.title, trigger.querySelector('img')?.alt);
+                        const variant = trigger.dataset.certificateVariant || '';
+                        openCertificateLightbox(trigger.dataset.src, trigger.dataset.title, trigger.querySelector('img')?.alt, variant);
                     });
                 });
                 certificateLightboxClose?.addEventListener('click', closeCertificateLightbox);
