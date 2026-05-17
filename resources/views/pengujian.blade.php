@@ -74,20 +74,33 @@
     }"
     x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)"
 >
-    <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
-        <img
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2070"
-            alt="Pengujian Hero"
-            class="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.7]"
-        >
-        <div class="mx-auto w-full max-w-[1400px] px-5 text-left sm:px-8 md:px-20">
-            <h1 class="text-[2.25rem] font-bold tracking-[-0.03em] sm:text-[3rem] md:text-[4.5rem]">
-                Pengujian
-            </h1>
-        </div>
-    </header>
+    <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
+        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 py-10 shadow-md lg:py-12">
+            <!-- Abstract Background Image (Aligned to Right) -->
+            <img
+                src="{{ asset('images/bgabstrak2.webp') }}"
+                alt=""
+                class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+            >
+            <!-- Very subtle overlay just for contrast if needed -->
+            <div class="absolute inset-0 -z-10 bg-white/20"></div>
 
-    <div class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
+            <div class="px-6 text-left lg:px-10">
+                <div class="mb-3 flex items-center gap-2">
+                    <span class="text-[10px] text-blue-600">■</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
+                </div>
+                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
+                    Pengujian
+                </h1>
+                <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                    Memberikan hasil analisis yang akurat, tepercaya, dan sesuai dengan standar nasional maupun internasional untuk mendukung mutu produk Anda.
+                </p>
+            </div>
+        </header>
+    </div>
+
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-start gap-8 px-6 lg:px-8 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <button
                 type="button"
@@ -141,7 +154,7 @@
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
             <div class="grid grid-cols-1 items-start">
                 <section x-show="tab === 'sertifikasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
-                <div class="mx-auto max-w-6xl space-y-8">
+                <div class="mx-auto max-w-7xl space-y-8">
                         @if($sertifikasi && $sertifikasi->image)
                             <div class="flex justify-start">
                                 <a
@@ -156,16 +169,16 @@
                                 </a>
                             </div>
 
-                            <div class="flex flex-wrap justify-center gap-8">
+                            <div class="flex justify-start">
                                 <button
                                     type="button"
                                     @click="openLightbox('{{ asset('storage/' . $sertifikasi->image) }}', 'Sertifikat Akreditasi')"
-                                    class="group relative block aspect-square w-full max-w-[380px] cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-xl"
+                                    class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl text-left"
                                 >
                                     <img
                                         src="{{ asset('storage/' . $sertifikasi->image) }}"
                                         alt="Sertifikat Akreditasi"
-                                        class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                                        class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                                     >
                                     <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                         <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
@@ -183,7 +196,7 @@
             </section>
 
                 <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
-                <div class="mx-auto max-w-6xl space-y-6">
+                <div class="mx-auto max-w-7xl space-y-6">
                     <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
                         Informasi ruang lingkup pengujian dapat difilter berdasarkan lab dan tetap bisa dicari cepat
                         melalui komoditi maupun uraian ruang lingkup.
@@ -326,7 +339,7 @@
             </section>
 
                 <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
-                <div class="mx-auto max-w-6xl space-y-6">
+                <div class="mx-auto max-w-7xl space-y-6">
                     @if($alurPengujian && $alurPengujian->image)
                         <div class="flex justify-center">
                             <button
@@ -349,7 +362,7 @@
             </section>
 
                 <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
-                <div class="mx-auto max-w-6xl space-y-8">
+                <div class="mx-auto max-w-7xl space-y-8">
                     <div class="rounded-[24px] border border-black/10 bg-slate-50 p-5 sm:rounded-[30px] sm:p-8">
                         <p class="text-justify text-sm leading-relaxed text-slate-700 md:text-base">
                             BSPJI Banda Aceh menggunakan standar biaya yang mengacu pada

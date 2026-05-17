@@ -13,20 +13,33 @@
         this.lightboxOpen = false;
     }
 }" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
-    <header class="relative mb-8 flex h-[300px] w-full items-center overflow-hidden text-white sm:mx-auto sm:mt-5 sm:mb-10 sm:h-[360px] sm:w-[96%] sm:rounded-[25px] md:mt-5 md:h-[400px]">
-        <img
-            src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?auto=format&fit=crop&q=80&w=2070"
-            alt="Sertifikasi Produk"
-            class="absolute inset-0 -z-10 h-full w-full object-cover brightness-[0.7]"
-        >
-        <div class="mx-auto w-full max-w-[1400px] px-5 text-left sm:px-8 md:px-20">
-            <h1 class="text-[2.25rem] font-bold tracking-[-0.03em] sm:text-[3rem] md:text-[4.5rem]">
-                Sertifikasi Produk (LSPro)
-            </h1>
-        </div>
-    </header>
+    <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
+        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 py-10 shadow-md lg:py-12">
+            <!-- Abstract Background Image (Aligned to Right) -->
+            <img
+                src="{{ asset('images/bgabstrak2.webp') }}"
+                alt=""
+                class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
+            >
+            <!-- Very subtle overlay just for contrast if needed -->
+            <div class="absolute inset-0 -z-10 bg-white/20"></div>
 
-    <div class="mx-auto grid max-w-[1400px] grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
+            <div class="px-6 text-left lg:px-10">
+                <div class="mb-3 flex items-center gap-2">
+                    <span class="text-[10px] text-blue-600">■</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
+                </div>
+                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
+                    Sertifikasi Produk (LSPro)
+                </h1>
+                <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                    Lembaga Sertifikasi Produk untuk memastikan produk Anda memenuhi Standar Nasional Indonesia (SNI).
+                </p>
+            </div>
+        </header>
+    </div>
+
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-start gap-8 px-4 sm:px-5 md:px-10 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <button
                 type="button"
@@ -131,23 +144,23 @@
                 <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl space-y-6">
                     @if($alurProduk && $alurProduk->image)
-                        <div class="flex justify-center">
+                        <div class="flex justify-start">
                             <button
                                 type="button"
                                 @click="openLightbox('{{ asset('storage/' . $alurProduk->image) }}', 'Alur Sertifikasi Produk')"
-                                class="group relative block w-full max-w-4xl cursor-pointer overflow-hidden rounded-[30px] border border-black/15 bg-slate-50 text-left shadow-xl transition-all duration-500 hover:shadow-2xl"
+                                class="group relative block w-full max-w-4xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                             >
                                 <img
                                     src="{{ asset('storage/' . $alurProduk->image) }}"
                                     alt="Alur Sertifikasi"
-                                    class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
+                                    class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                                 >
-                            <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                                <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
-                                    Klik untuk memperbesar
-                                </span>
-                            </div>
-                        </button>
+                                <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                        Klik untuk memperbesar
+                                    </span>
+                                </div>
+                            </button>
                     @else
                         <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
                             <p class="font-medium text-slate-400">Data alur sertifikasi belum tersedia.</p>
@@ -159,17 +172,17 @@
                 <section x-show="tab === 'sertifikat'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl space-y-8">
                     @if($sertifikats->isNotEmpty())
-                        <div class="flex flex-wrap justify-center gap-8">
+                        <div class="flex justify-start">
                             @foreach($sertifikats as $sert)
                                 <button
                                     type="button"
                                     @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi')"
-                                    class="group relative block aspect-square w-full max-w-[380px] cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-sm transition-all hover:shadow-md"
+                                    class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl text-left"
                                 >
                                     <img
                                         src="{{ asset('storage/' . $sert->image) }}"
                                         alt="Sertifikat Akreditasi"
-                                        class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-105"
+                                        class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                                     >
                                     <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                         <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
@@ -189,18 +202,18 @@
 
                 <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl">
-                    <div class="flex flex-wrap justify-center gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     @forelse($ruangLingkup as $item)
                         @if($item->image)
                             <button
                                 type="button"
                                 @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Ruang Lingkup')"
-                                class="group relative block w-full max-w-[380px] cursor-pointer overflow-hidden rounded-[24px] border border-black/10 bg-slate-50 text-left shadow-sm transition-all hover:shadow-md"
+                                class="group relative block w-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                             >
                                 <img
                                     src="{{ asset('storage/' . $item->image) }}"
                                     alt="Ruang Lingkup"
-                                    class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-110"
+                                    class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                                 >
                                 <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                                     <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
@@ -301,7 +314,7 @@
                 <div class="space-y-12">
                     @forelse($tarifs as $tarif)
                         <div class="space-y-4">
-                            <h3 class="border-l-4 border-slate-800 px-4 text-lg font-bold text-slate-800">{{ $tarif->nama_dokumen }}</h3>
+                            <h3 class="border-l-4 border-slate-800 px-4 text-lg font-bold text-slate-800">TARIF SERTIFIKASI/RESERTIFIKASI/SURVEILANS BSPJI BANDA ACEH</h3>
                             <div class="aspect-3/4 overflow-hidden rounded-2xl border border-black/10 bg-[#fbfbfd] shadow-inner md:aspect-video">
                                 <iframe
                                     src="{{ asset('storage/' . $tarif->file_path) }}"
@@ -328,41 +341,83 @@
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                         {{-- Card Ahli Madya --}}
-                        <div class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] border border-black/10 bg-white p-8 text-center shadow-sm transition-all duration-500 hover:shadow-md">
-                            <div class="absolute top-0 left-0 h-1.5 w-full bg-slate-800"></div>
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-4xl font-black text-slate-800">{{ $countAhliMadya }}</span>
-                                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Auditor</span>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
+                            <!-- Top Accent Gradient line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
+                            
+                            <div class="flex items-center justify-between">
+                                <!-- Icon Wrapper -->
+                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100/50 text-indigo-600 transition-colors group-hover:bg-indigo-100/50">
+                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <!-- Count Pill -->
+                                <div class="flex items-baseline gap-1 rounded-full bg-indigo-50 border border-indigo-100/30 px-3 py-1 text-xs font-bold text-indigo-700">
+                                    <span class="text-lg font-black leading-none">{{ $countAhliMadya }}</span>
+                                    <span class="text-[9px] uppercase tracking-wider text-indigo-500">Auditor</span>
+                                </div>
                             </div>
-                            <div class="space-y-1">
-                                <h3 class="text-xl font-black tracking-tight text-slate-800">AMMI</h3>
-                                <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Ahli Madya</p>
+
+                            <div class="mt-8 space-y-1 text-left">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Kualifikasi AMMI</span>
+                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
+                                    Ahli <span class="font-semibold text-slate-900">Madya</span>
+                                </h3>
                             </div>
                         </div>
 
                         {{-- Card Ahli Muda --}}
-                        <div class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] border border-black/10 bg-white p-8 text-center shadow-sm transition-all duration-500 hover:shadow-md">
-                            <div class="absolute top-0 left-0 h-1.5 w-full bg-slate-400"></div>
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-4xl font-black text-slate-800">{{ $countAhliMuda }}</span>
-                                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Auditor</span>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
+                            <!-- Top Accent Gradient line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
+                            
+                            <div class="flex items-center justify-between">
+                                <!-- Icon Wrapper -->
+                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100/50 text-emerald-600 transition-colors group-hover:bg-emerald-100/50">
+                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <!-- Count Pill -->
+                                <div class="flex items-baseline gap-1 rounded-full bg-emerald-50 border border-emerald-100/30 px-3 py-1 text-xs font-bold text-emerald-700">
+                                    <span class="text-lg font-black leading-none">{{ $countAhliMuda }}</span>
+                                    <span class="text-[9px] uppercase tracking-wider text-emerald-500">Auditor</span>
+                                </div>
                             </div>
-                            <div class="space-y-1">
-                                <h3 class="text-xl font-black tracking-tight text-slate-800">AMMI</h3>
-                                <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Ahli Muda</p>
+
+                            <div class="mt-8 space-y-1 text-left">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Kualifikasi AMMI</span>
+                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
+                                    Ahli <span class="font-semibold text-slate-900">Muda</span>
+                                </h3>
                             </div>
                         </div>
 
                         {{-- Card Ahli Pertama --}}
-                        <div class="group relative flex flex-col items-center gap-6 overflow-hidden rounded-[30px] border border-black/10 bg-white p-8 text-center shadow-sm transition-all duration-500 hover:shadow-md">
-                            <div class="absolute top-0 left-0 h-1.5 w-full bg-slate-200"></div>
-                            <div class="flex items-baseline gap-2">
-                                <span class="text-4xl font-black text-slate-800">{{ $countAhliPertama }}</span>
-                                <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Auditor</span>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
+                            <!-- Top Accent Gradient line -->
+                            <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-sky-500 to-blue-600"></div>
+                            
+                            <div class="flex items-center justify-between">
+                                <!-- Icon Wrapper -->
+                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-50 border border-sky-100/50 text-sky-600 transition-colors group-hover:bg-sky-100/50">
+                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                    </svg>
+                                </div>
+                                <!-- Count Pill -->
+                                <div class="flex items-baseline gap-1 rounded-full bg-sky-50 border border-sky-100/30 px-3 py-1 text-xs font-bold text-sky-700">
+                                    <span class="text-lg font-black leading-none">{{ $countAhliPertama }}</span>
+                                    <span class="text-[9px] uppercase tracking-wider text-sky-500">Auditor</span>
+                                </div>
                             </div>
-                            <div class="space-y-1">
-                                <h3 class="text-xl font-black tracking-tight text-slate-800">AMMI</h3>
-                                <p class="text-sm font-bold uppercase tracking-widest text-slate-500">Ahli Pertama</p>
+
+                            <div class="mt-8 space-y-1 text-left">
+                                <span class="text-[10px] font-bold uppercase tracking-widest text-sky-500">Kualifikasi AMMI</span>
+                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
+                                    Ahli <span class="font-semibold text-slate-900">Pertama</span>
+                                </h3>
                             </div>
                         </div>
                     </div>
