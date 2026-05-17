@@ -1,4 +1,4 @@
-<x-layouts.app title="Konsultasi dan Pendampingan - BSPJI Pekanbaru">
+<x-layouts.app title="Konsultansi dan Pendampingan - BSPJI Pekanbaru">
 <div x-data="{
     tab: 'ruang-lingkup',
     lightboxOpen: false,
@@ -14,26 +14,17 @@
     }
 }" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
-        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 py-10 shadow-md lg:py-12">
-            <!-- Abstract Background Image (Aligned to Right) -->
-            <img
-                src="{{ asset('images/bgabstrak2.webp') }}"
-                alt=""
-                class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
-            >
-            <!-- Very subtle overlay just for contrast if needed -->
-            <div class="absolute inset-0 -z-10 bg-white/20"></div>
-
+        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
             <div class="px-6 text-left lg:px-10">
                 <div class="mb-3 flex items-center gap-2">
                     <span class="text-[10px] text-blue-600">■</span>
                     <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
                 </div>
-                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
-                    Konsultasi dan Pendampingan
+                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl lg:text-[3rem] lg:leading-[1.1]">
+                    Konsultansi dan Pendampingan
                 </h1>
                 <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-                    Layanan konsultasi dan pendampingan bagi industri untuk meningkatkan kualitas dan daya saing.
+                    Layanan konsultansi dan pendampingan bagi industri untuk meningkatkan kualitas dan daya saing.
                 </p>
             </div>
         </header>
@@ -79,15 +70,12 @@
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
-            <div class="mt-8 transition-all duration-500">
+            <div class="mt-8 lg:mt-0 transition-all duration-500">
                 <div x-show="tab === 'ruang-lingkup'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100">
                     <div class="space-y-12">
                         @if($ruangLingkupParagraf)
-                            <div class="bg-white rounded-[2.5rem] shadow-xl p-10 border border-slate-100 relative overflow-hidden group">
-                                <div class="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
-                            <div class="text-slate-700 text-lg leading-relaxed font-medium space-y-4">
+                            <div class="text-slate-600 text-sm sm:text-base leading-relaxed font-normal p-0 m-0 [&_p]:m-0 [&_p]:p-0 [&_p]:leading-relaxed space-y-3 mb-12">
                                 {!! $ruangLingkupParagraf->content !!}
-                            </div>
                             </div>
                         @else
                              <div class="bg-white rounded-[2.5rem] shadow-xl p-16 text-center border border-slate-100">
@@ -101,7 +89,7 @@
                                     <button
                                         type="button"
                                         @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Ruang Lingkup')"
-                                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden text-left"
+                                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                                     >
                                         <img
                                             src="{{ asset('storage/' . $item->image) }}"
@@ -126,7 +114,7 @@
                             <button
                                 type="button"
                                 @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Alur Proses')"
-                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden text-left"
+                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                             >
                                 <img
                                     src="{{ asset('storage/' . $item->image) }}"
@@ -153,15 +141,31 @@
                 <div x-show="tab === 'tarif'" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" style="display: none;">
                     <div class="grid grid-cols-1 gap-12">
                         @if($tarif && $tarif->file_pdf)
-                            <div class="bg-white rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 group mb-8">
-                                <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
-                                    <h3 class="text-xl font-bold text-slate-900 px-4">Dokumen Tarif Resmi</h3>
-                                    <a href="{{ asset('storage/' . $tarif->file_pdf) }}" target="_blank" class="flex items-center px-6 py-2 bg-blue-600 text-white text-sm font-bold rounded-xl shadow-lg hover:bg-blue-700 transition duration-300">
-                                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                                        Unduh PDF
-                                    </a>
+                            <div class="space-y-8 text-left">
+                                {{-- Main Heading at the absolute top --}}
+                                <h3 class="text-lg font-bold text-slate-700 tracking-tight">TARIF KONSULTANSI DAN PENDAMPINGAN - BSPJI BANDA ACEH</h3>
+
+                                {{-- PDF Download Section --}}
+                                <div class="bg-white rounded-3xl shadow-md overflow-hidden border border-slate-200 p-6 hover:bg-slate-50/30 hover:border-slate-300 transition duration-500">
+                                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                                        <div class="flex items-center">
+                                            <div class="w-12 h-12 bg-red-50 border border-red-100 rounded-xl flex items-center justify-center mr-4 shadow-sm text-red-500">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-base font-bold text-slate-700 mb-1">Unduh Dokumen Lengkap</h4>
+                                                <p class="text-xs text-slate-400 font-medium">Klik tombol di samping untuk mengunduh dokumen lengkap.</p>
+                                            </div>
+                                        </div>
+                                        <a href="{{ asset('storage/' . $tarif->file_pdf) }}" target="_blank" class="flex items-center px-6 py-3 bg-slate-800 text-white text-sm font-semibold rounded-xl shadow-md hover:bg-slate-900 hover:-translate-y-0.5 transition duration-300 group">
+                                            <svg class="w-4 h-4 mr-2 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                            Unduh PDF Tarif
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="bg-slate-800">
+
+                                {{-- PDF Iframe Section --}}
+                                <div class="w-full overflow-hidden rounded-2xl border border-slate-200 shadow-sm bg-slate-100">
                                     <iframe src="{{ asset('storage/' . $tarif->file_pdf) }}" class="w-full h-[800px] border-0"></iframe>
                                 </div>
                             </div>

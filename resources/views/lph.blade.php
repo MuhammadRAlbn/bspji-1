@@ -13,18 +13,20 @@
         this.lightboxOpen = false;
     }
 }" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
-    <div class="mx-auto mt-8 mb-10 w-full max-w-7xl px-6 sm:mt-10 sm:mb-12 lg:mt-12 lg:px-8">
-        <header class="w-full text-left pb-8 border-b-[6px] border-slate-300">
-            <div class="mb-3 flex items-center gap-2">
-                <span class="text-[10px] text-blue-600">■</span>
-                <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
+    <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
+        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
+            <div class="px-6 text-left lg:px-10">
+                <div class="mb-3 flex items-center gap-2">
+                    <span class="text-[10px] text-blue-600">■</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
+                </div>
+                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl lg:text-[3rem] lg:leading-[1.1]">
+                    Lembaga Pemeriksa Halal (LPH)
+                </h1>
+                <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
+                    Layanan pemeriksaan produk untuk memastikan kehalalan sesuai standar yang ditetapkan.
+                </p>
             </div>
-            <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl lg:text-[3rem] lg:leading-[1.1]">
-                Lembaga Pemeriksa Halal (LPH)
-            </h1>
-            <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-                Layanan pemeriksaan produk untuk memastikan kehalalan sesuai standar yang ditetapkan.
-            </p>
         </header>
     </div>
 

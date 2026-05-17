@@ -14,22 +14,13 @@
     }
 }" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
-        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 py-10 shadow-md lg:py-12">
-            <!-- Abstract Background Image (Aligned to Right) -->
-            <img
-                src="{{ asset('images/bgabstrak2.webp') }}"
-                alt=""
-                class="absolute inset-0 -z-10 h-full w-full object-cover object-right"
-            >
-            <!-- Very subtle overlay just for contrast if needed -->
-            <div class="absolute inset-0 -z-10 bg-white/20"></div>
-
+        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
             <div class="px-6 text-left lg:px-10">
                 <div class="mb-3 flex items-center gap-2">
                     <span class="text-[10px] text-blue-600">■</span>
                     <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
                 </div>
-                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl md:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
+                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl lg:text-[3rem] lg:leading-[1.1]">
                     Laboratorium Sentral Ilmu Hayati (LSIH)
                 </h1>
                 <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
@@ -88,7 +79,7 @@
                             <button
                                 type="button"
                                 @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Ruang Lingkup LSIH')"
-                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden text-left"
+                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                             >
                                 <img
                                     src="{{ asset('storage/' . $item->image) }}"
@@ -118,7 +109,7 @@
                             <button
                                 type="button"
                                 @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Alur LSIH')"
-                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden text-left"
+                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                             >
                                 <img
                                     src="{{ asset('storage/' . $item->image) }}"
@@ -148,7 +139,7 @@
                             <button
                                 type="button"
                                 @click="openLightbox('{{ asset('storage/' . $item->image) }}', 'Tarif LSIH')"
-                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden text-left"
+                                class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
                             >
                                 <img
                                     src="{{ asset('storage/' . $item->image) }}"

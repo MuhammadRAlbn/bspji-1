@@ -12,7 +12,7 @@ class KonsultasiTarifForm
     {
         return $schema
             ->components([
-                Section::make('Tarif Konsultasi dan Pendampingan')
+                Section::make('Tarif Konsultansi dan Pendampingan')
                     ->schema([
                         FileUpload::make('file_pdf')
                             ->label('Dokumen PDF Tarif')

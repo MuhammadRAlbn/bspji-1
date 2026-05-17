@@ -12,7 +12,7 @@ class KonsultasiAlurForm
     {
         return $schema
             ->components([
-                Section::make('Alur Konsultasi dan Pendampingan')
+                Section::make('Alur Konsultansi dan Pendampingan')
                     ->schema([
                         FileUpload::make('image')
                             ->label('Gambar Alur')

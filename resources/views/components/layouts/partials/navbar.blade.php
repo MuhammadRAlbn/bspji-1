@@ -21,7 +21,7 @@
         ['label' => 'Lembaga Sertifikasi Industri Hijau', 'url' => $routeOrHash('lsih.index')],
         ['label' => 'Verifikasi TKDN', 'url' => $routeOrHash('tkdn.index')],
         ['label' => 'Pelatihan Teknis', 'url' => $routeOrHash('pelatihan-teknis.index')],
-        ['label' => 'Konsultasi', 'url' => $routeOrHash('konsultasi-pendampingan.index')],
+        ['label' => 'Konsultansi', 'url' => $routeOrHash('konsultasi-pendampingan.index')],
     ];
 
     $informasiPublikMenu = [

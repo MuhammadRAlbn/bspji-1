@@ -14,7 +14,7 @@ class KonsultasiRuangLingkupForm
     {
         return $schema
             ->components([
-                Section::make('Ruang Lingkup Konsultasi dan Pendampingan')
+                Section::make('Ruang Lingkup Konsultansi dan Pendampingan')
                     ->schema([
                         Select::make('type')
                             ->label('Tipe Konten')
