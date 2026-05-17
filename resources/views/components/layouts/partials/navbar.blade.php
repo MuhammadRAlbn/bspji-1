@@ -32,6 +32,7 @@
     ];
 
     $tautanMenu = [
+        ['label' => 'Berita', 'url' => $routeOrHash('berita.index')],
         ['label' => 'SIPPN Menpan RB', 'url' => 'https://sippn.menpan.go.id'],
         ['label' => 'Lapor (Layanan Aspirasi dan Pengaduan Online Rakyat) Kemenpan RB', 'url' => 'https://www.lapor.go.id'],
         ['label' => 'Kementerian Perindustrian', 'url' => 'https://kemenperin.go.id'],
@@ -49,13 +50,10 @@
         ['type' => 'dropdown', 'key' => 'pelayanan', 'label' => 'Pelayanan', 'items' => $pelayananMenu],
         ['type' => 'dropdown', 'key' => 'informasi-publik', 'label' => 'Informasi Publik', 'items' => $informasiPublikMenu],
         ['type' => 'dropdown', 'key' => 'tautan', 'label' => 'Tautan', 'items' => $tautanMenu],
-        ['type' => 'link', 'label' => 'Berita', 'url' => $routeOrHash('berita.index')],
-        ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => $routeOrHash('hubungi-kami.index')],
+        ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => '#'],
     ];
 
-    $displayMenu = $isTransparent
-        ? array_values(array_filter($mainMenu, static fn(array $menu): bool => $menu['label'] !== 'Hubungi Kami'))
-        : $mainMenu;
+    $displayMenu = $mainMenu;
 @endphp
 
 <nav @if ($isTransparent) x-data="{

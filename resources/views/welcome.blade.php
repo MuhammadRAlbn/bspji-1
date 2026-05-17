@@ -217,6 +217,7 @@
             padding: 0.85rem 0.2rem 0;
             display: flex;
             align-items: flex-start;
+            justify-content: center;
         }
 
         .certificate-title {
@@ -226,6 +227,7 @@
             line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            text-align: center;
         }
 
         .numbers-card {
@@ -660,7 +662,7 @@
             </div>
         </section>
 
-        <section id="whatsapp-cta" class="relative bg-white pt-12 md:pt-16 pb-8">
+        <section id="whatsapp-cta" class="relative bg-white pt-12 md:pt-16 pb-16 md:pb-24">
             <div class="mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="relative overflow-hidden rounded-3xl bg-[#0f172a] px-8 py-12 md:px-16 md:py-16" data-aos="fade-up">
                     
@@ -691,7 +693,7 @@
             </div>
         </section>
 
-        <section id="sertifikat" class="relative overflow-hidden bg-white py-12 md:pb-16 md:pt-16">
+        <section id="sertifikat" class="relative overflow-hidden border-y border-slate-300 bg-slate-50 py-12 md:pb-16 md:pt-16">
 
             <div class="relative mx-auto max-w-6xl px-6 lg:px-0">
                 <div class="mb-12 max-w-4xl md:mb-16" data-aos="fade-up">
