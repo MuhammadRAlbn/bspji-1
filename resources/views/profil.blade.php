@@ -225,20 +225,48 @@
                         Data Tugas dan Fungsi belum tersedia.
                     </div>
                 @else
-                    <div class="grid gap-6 lg:grid-cols-2">
-                        <article class="rounded-4xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-                            <p class="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-red-600">Tugas</p>
-                            <div
-                                class="text-sm leading-relaxed text-slate-600 md:text-base [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5">
-                                {!! $tugasFungsi->tugas ?: '<p>Data tugas belum tersedia.</p>' !!}
+                    <div class="mr-auto grid max-w-4xl grid-cols-1 gap-8">
+                        <article class="group relative rounded-4xl border border-slate-200 bg-linear-to-br from-white to-slate-50/50 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg md:p-8">
+                            <div class="absolute right-6 top-6 opacity-5 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
+                                <svg class="h-24 w-24 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <div class="mb-6 flex items-center gap-3">
+                                    <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                        </svg>
+                                    </span>
+                                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-red-600">Tugas Pokok</p>
+                                </div>
+                                <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-base [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
+                                    {!! $tugasFungsi->tugas ?: '<p>Data tugas belum tersedia.</p>' !!}
+                                </div>
                             </div>
                         </article>
 
-                        <article class="rounded-4xl border border-slate-200 bg-slate-900 p-6 text-white shadow-sm md:p-8">
-                            <p class="mb-4 text-xs font-bold uppercase tracking-[0.24em] text-red-300">Fungsi</p>
-                            <div
-                                class="text-sm leading-relaxed text-slate-200 md:text-base [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5">
-                                {!! $tugasFungsi->fungsi ?: '<p>Data fungsi belum tersedia.</p>' !!}
+                        <article class="group relative rounded-4xl border border-slate-200 bg-linear-to-br from-white to-slate-50/50 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg md:p-8">
+                            <div class="absolute right-6 top-6 opacity-5 transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110">
+                                <svg class="h-24 w-24 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="relative z-10">
+                                <div class="mb-6 flex items-center gap-3">
+                                    <span class="flex h-10 w-10 items-center justify-center rounded-2xl bg-red-50 text-red-600">
+                                        <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </span>
+                                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-red-600">Fungsi Utama</p>
+                                </div>
+                                <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-base [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
+                                    {!! $tugasFungsi->fungsi ?: '<p>Data fungsi belum tersedia.</p>' !!}
+                                </div>
                             </div>
                         </article>
                     </div>
@@ -273,7 +301,7 @@
                             <article class="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-sm">
                                 <div class="grid md:grid-cols-[0.95fr_1.05fr]">
                                     <button type="button"
-                                        class="group relative min-h-[280px] bg-slate-100 text-left sm:min-h-[340px] md:min-h-[360px]"
+                                        class="group relative min-h-[280px] cursor-zoom-in bg-slate-100 text-left sm:min-h-[340px] md:min-h-[360px]"
                                         @click="openProfile({{ $pejabat->id }})"
                                         aria-label="Lihat profil {{ $pejabat->nama }}">
                                         @if ($pejabat->foto)
@@ -291,10 +319,9 @@
                                     </button>
 
                                     <div class="p-5 sm:p-6 md:p-8">
-                                        <p class="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-red-600">Pejabat Utama</p>
                                         <h3 class="text-xl font-bold leading-tight text-slate-900 sm:text-2xl">{{ $pejabat->nama }}</h3>
                                         <p class="mt-3 text-sm font-semibold text-emerald-600">{{ $pejabat->jabatan }}</p>
-                                        <p class="mt-5 text-sm leading-relaxed text-slate-600">
+                                        <p class="mt-5 text-sm leading-relaxed text-slate-600 text-justify">
                                             {{ Str::limit(strip_tags($pejabat->detail), 220) }}
                                         </p>
                                     </div>
@@ -306,10 +333,10 @@
                     @if ($supportPejabats->isNotEmpty())
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
                             @foreach ($supportPejabats as $pejabat)
-                                <article class="rounded-[1.75rem] border border-slate-200 bg-white p-4 shadow-sm">
+                                <article class="rounded-[1.75rem] border border-slate-200 bg-white p-2 shadow-sm">
                                     <div class="flex items-start gap-4 sm:block">
                                         <button type="button"
-                                            class="group mb-0 aspect-4/5 w-28 shrink-0 overflow-hidden rounded-[1.25rem] bg-slate-100 sm:mb-4 sm:w-full"
+                                            class="group mb-0 aspect-4/5 w-28 shrink-0 cursor-zoom-in overflow-hidden rounded-[1.25rem] bg-slate-100 sm:mb-2 sm:w-full"
                                             @click="openProfile({{ $pejabat->id }})"
                                             aria-label="Lihat profil {{ $pejabat->nama }}">
                                             @if ($pejabat->foto)
@@ -325,13 +352,9 @@
                                             @endif
                                         </button>
 
-                                        <div class="min-w-0">
-                                            <p class="mb-2 text-[11px] font-bold uppercase tracking-[0.18em] text-red-600">Profil Pejabat</p>
-                                            <h3 class="text-base font-bold leading-snug text-slate-900">{{ $pejabat->nama }}</h3>
+                                        <div class="min-w-0 flex-1 p-2 text-center sm:p-2 sm:pt-0">
+                                            <h3 class="text-sm font-bold leading-snug text-slate-900">{{ $pejabat->nama }}</h3>
                                             <p class="mt-2 text-sm font-semibold text-emerald-600">{{ $pejabat->jabatan }}</p>
-                                            <p class="mt-3 hidden text-sm leading-relaxed text-slate-600 sm:block">
-                                                {{ Str::limit(strip_tags($pejabat->detail), 120) }}
-                                            </p>
                                         </div>
                                     </div>
                                 </article>
@@ -378,7 +401,7 @@
                 <h3 class="text-2xl font-bold leading-tight text-slate-900 md:text-4xl" x-text="lightboxData.name || ''"></h3>
                 <p class="mt-3 text-base font-semibold text-emerald-600" x-text="lightboxData.title || ''"></p>
                 <div
-                    class="mt-6 text-sm leading-relaxed text-slate-600 md:text-base [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5"
+                    class="mt-6 text-justify text-sm leading-relaxed text-slate-600 md:text-base [&_li]:mb-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_ul]:list-disc [&_ul]:pl-5"
                     x-html="lightboxData.detailHtml || '<p>Detail profil belum tersedia.</p>'"></div>
             </div>
         </section>
