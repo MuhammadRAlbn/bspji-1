@@ -35,21 +35,21 @@
     <script type="application/json" id="profile-page-profiles">@json($profileModalData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)</script>
 
     <section
-        class="relative mx-auto mt-8 flex h-[360px] w-[95%] flex-col justify-center overflow-hidden rounded-4xl shadow-2xl md:h-[450px] md:w-[96%] md:rounded-[2.5rem]">
+        class="relative flex h-[360px] w-[calc(100%-2rem)] max-w-7xl mx-auto mt-4 flex-col justify-center overflow-hidden border border-slate-300 shadow-sm rounded-3xl md:w-[calc(100%-6rem)] lg:w-full md:h-[450px] md:rounded-[2.25rem] md:mt-8">
         <div class="absolute inset-0">
-            <img src="{{ $heroImage }}" alt="BSPJI Banda Aceh" class="h-full w-full object-cover object-[center_65%]" fetchpriority="high">
-            <div class="absolute inset-0 bg-linear-to-r from-black/75 via-black/60 to-black/10"></div>
+            <img src="{{ asset('gbr2.webp') }}" alt="BSPJI Banda Aceh" class="h-full w-full object-cover object-[center_65%]" fetchpriority="high">
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,1)_65%,rgba(255,255,255,0)_90%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,.92)_35%,rgba(255,255,255,0)_65%)]"></div>
         </div>
 
-        <div class="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
-            <nav class="mb-4 flex items-center gap-2 text-sm text-slate-300" aria-label="Breadcrumb">
-                <a href="{{ url('/') }}" class="transition hover:text-white">Home</a>
+        <div class="relative z-10 w-full px-6 md:px-12 lg:px-16">
+            <nav class="mb-4 flex items-center gap-2 text-sm text-slate-500" aria-label="Breadcrumb">
+                <a href="{{ url('/') }}" class="transition hover:text-slate-800">Home</a>
                 <span class="text-xs">&rsaquo;</span>
-                <span class="font-semibold text-white">Tentang Kami</span>
+                <span class="font-medium text-slate-800">Tentang Kami</span>
             </nav>
 
-            <h1 class="mb-6 text-4xl font-bold leading-tight text-white md:text-6xl">Tentang Kami</h1>
-            <p class="max-w-2xl text-base font-light leading-relaxed text-slate-200 md:text-xl">
+            <h1 class="mb-6 text-4xl font-semibold leading-tight text-slate-900 md:text-6xl">Tentang Kami</h1>
+            <p class="max-w-2xl text-base font-normal leading-relaxed text-slate-900 md:text-xl">
                 Telusuri sejarah perjalanan, moto, visi, misi, tugas, struktur organisasi, dan profil pejabat BSPJI Banda Aceh.
             </p>
         </div>
@@ -85,50 +85,67 @@
             <section x-show="activeTab === 'sejarah'" x-cloak x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
+                <div class="mr-auto max-w-2xl rounded-4xl border border-slate-200 bg-white p-3 shadow-md hover:shadow-lg transition-all duration-300">
+                    <img src="{{ asset('sejarah.png') }}" alt="Sejarah BSPJI Banda Aceh" loading="lazy" decoding="async"
+                        class="w-full h-auto rounded-[1.75rem] object-contain">
+                </div>
+
+                {{--
                 @if ($sejarahSingkats->isEmpty())
                     <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Belum ada data sejarah singkat yang ditambahkan.
                     </div>
                 @else
-                    <div class="relative ml-4 space-y-12 border-l-2 border-slate-200 md:ml-10">
-                        @foreach ($sejarahSingkats as $index => $sejarah)
-                            <article class="relative pl-8 md:pl-12">
-                                <div
-                                    @class([
-                                        'absolute -left-[9px] top-0 h-5 w-5 rounded-full border-4 border-white shadow-sm',
-                                        'bg-red-600' => $index === 0,
+                    <div class="relative mx-auto max-w-5xl">
+                        <!-- Timeline Vertical Line -->
+                        <div class="absolute left-4 top-2 bottom-2 w-0.5 bg-slate-200 md:left-1/2 md:-translate-x-1/2"></div>
+
+                        <div class="space-y-12 relative">
+                            @foreach ($sejarahSingkats as $index => $sejarah)
+                                <div class="relative w-full">
+                                    <!-- Card Container -->
+                                    <div class="w-full pl-10 md:pl-0 md:w-[calc(50%-2.5rem)] {{ $index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto' }}">
+                                        <article class="group relative rounded-4xl border border-slate-200 bg-white p-6 shadow-md md:p-8 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg transition-all duration-300">
+                                            <!-- Year -->
+                                            <span class="mb-3 inline-block rounded-full bg-red-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-red-600">
+                                                {{ $sejarah->tahun }}
+                                            </span>
+
+                                            <!-- Title -->
+                                            <h3 class="text-xl font-bold text-slate-900 md:text-2xl">{{ $sejarah->judul }}</h3>
+
+                                            <!-- Description (Justified) -->
+                                            <div class="mt-4 text-justify text-sm leading-relaxed text-slate-950 md:text-base [&_p]:text-justify [&_p]:text-slate-950">
+                                                {!! nl2br(e($sejarah->detail)) !!}
+                                            </div>
+
+                                            <!-- Image -->
+                                            <div class="mt-6 aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm" style="max-width: 450px;">
+                                                @if ($sejarah->gambar)
+                                                    <img src="{{ Storage::url($sejarah->gambar) }}" alt="{{ $sejarah->judul }}" loading="lazy" decoding="async"
+                                                        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                                                @else
+                                                    <div class="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-900 via-slate-700 to-red-700 px-6 text-center text-sm font-bold uppercase tracking-[0.22em] text-white">
+                                                        {{ $sejarah->tahun }}
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </article>
+                                    </div>
+
+                                    <!-- Central Dot/Node -->
+                                    <div @class([
+                                        'absolute left-[8px] top-8 h-4.5 w-4.5 rounded-full border-4 border-white shadow-md transition-all duration-300 md:left-1/2 md:-translate-x-1/2 md:top-10',
+                                        'bg-red-600 scale-110' => $index === 0,
                                         'bg-slate-400' => $index !== 0,
                                     ])>
+                                    </div>
                                 </div>
-
-                                <span
-                                    @class([
-                                        'mb-1 block text-sm font-bold uppercase tracking-widest',
-                                        'text-red-600' => $index === 0,
-                                        'text-slate-500' => $index !== 0,
-                                    ])>
-                                    {{ $sejarah->tahun }}
-                                </span>
-
-                                <h3 class="text-xl font-bold text-slate-900">{{ $sejarah->judul }}</h3>
-                                <div class="mt-2 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-base">
-                                    {!! nl2br(e($sejarah->detail)) !!}
-                                </div>
-
-                                <div class="mt-4 h-[200px] w-[300px] max-w-full overflow-hidden rounded-xl border border-slate-200 bg-slate-100 shadow-sm">
-                                    @if ($sejarah->gambar)
-                                        <img src="{{ Storage::url($sejarah->gambar) }}" alt="{{ $sejarah->judul }}" loading="lazy" decoding="async"
-                                            class="h-full w-full object-cover">
-                                    @else
-                                        <div class="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-900 via-slate-700 to-red-700 px-6 text-center text-sm font-bold uppercase tracking-[0.22em] text-white">
-                                            {{ $sejarah->tahun }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </article>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 @endif
+                --}}
             </section>
 
             <section x-show="activeTab === 'motto'" x-cloak x-transition:enter="transition ease-out duration-200"
@@ -200,16 +217,16 @@
 
                     <div class="space-y-6 lg:col-span-7 xl:col-span-8">
                         <article class="rounded-4xl border border-slate-200 bg-white p-8 shadow-md md:p-10">
-                            <p class="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-red-600">Visi</p>
-                            <div class="text-sm leading-relaxed text-slate-600 md:text-lg md:font-light [&_p]:mb-3">
+                            <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Visi</p>
+                            <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-lg md:font-light [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950">
                                 {!! $visiMisi?->visi ?: '<p>Data visi belum tersedia.</p>' !!}
                             </div>
                         </article>
 
                         <article class="rounded-4xl border border-slate-200 bg-white p-8 shadow-md md:p-10">
-                            <p class="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-red-600">Misi</p>
+                            <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Misi</p>
                             <div
-                                class="text-sm leading-relaxed text-slate-600 md:text-lg md:font-light [&_li]:mb-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5">
+                                class="text-justify text-sm leading-relaxed text-slate-950 md:text-lg md:font-light [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
                                 {!! $visiMisi?->misi ?: '<p>Data misi belum tersedia.</p>' !!}
                             </div>
                         </article>
@@ -239,7 +256,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                                         </svg>
                                     </span>
-                                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-red-600">Tugas Pokok</p>
+                                    <p class="text-base md:text-lg font-bold uppercase tracking-[0.24em] text-red-600">Tugas Pokok</p>
                                 </div>
                                 <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-base [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
                                     {!! $tugasFungsi->tugas ?: '<p>Data tugas belum tersedia.</p>' !!}
@@ -262,7 +279,7 @@
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                         </svg>
                                     </span>
-                                    <p class="text-sm font-bold uppercase tracking-[0.24em] text-red-600">Fungsi Utama</p>
+                                    <p class="text-base md:text-lg font-bold uppercase tracking-[0.24em] text-red-600">Fungsi Utama</p>
                                 </div>
                                 <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-base [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
                                     {!! $tugasFungsi->fungsi ?: '<p>Data fungsi belum tersedia.</p>' !!}
@@ -281,9 +298,9 @@
                         Data Struktur Organisasi belum tersedia.
                     </div>
                 @else
-                    <div class="mx-auto max-w-3xl rounded-4xl border border-slate-200 bg-white p-2 shadow-sm">
+                    <div class="mr-auto max-w-2xl rounded-4xl border border-slate-200 bg-white p-3 shadow-md hover:shadow-lg transition-all duration-300">
                         <img src="{{ Storage::url($strukturOrganisasi->image_path) }}" alt="Struktur Organisasi" loading="lazy" decoding="async"
-                            class="w-full h-auto rounded-3xl object-contain">
+                            class="w-full h-auto rounded-[1.75rem] object-contain">
                     </div>
                 @endif
             </section>
