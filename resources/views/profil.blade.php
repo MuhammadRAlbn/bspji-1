@@ -57,7 +57,7 @@
 
     <div class="relative z-20 -mt-8 flex justify-center px-4">
         <nav
-            class="no-scrollbar inline-flex max-w-full gap-x-2 overflow-x-auto rounded-full border border-slate-100 bg-white p-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] md:gap-x-6"
+            class="no-scrollbar inline-flex max-w-full gap-x-2 overflow-x-auto rounded-full border border-slate-300 bg-white p-2 shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] md:gap-x-6"
             aria-label="Navigasi profil">
             @foreach ($tabs as $key => $tab)
                 <a href="{{ route($tab['route']) }}"
@@ -85,14 +85,14 @@
             <section x-show="activeTab === 'sejarah'" x-cloak x-transition:enter="transition ease-out duration-200"
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
-                <div class="mr-auto max-w-2xl rounded-4xl border border-slate-200 bg-white p-3 shadow-md hover:shadow-lg transition-all duration-300">
+                <div class="mr-auto max-w-2xl rounded-4xl border border-slate-300 bg-white p-3 shadow-md hover:shadow-lg transition-all duration-300">
                     <img src="{{ asset('sejarah.png') }}" alt="Sejarah BSPJI Banda Aceh" loading="lazy" decoding="async"
                         class="w-full h-auto rounded-[1.75rem] object-contain">
                 </div>
 
                 {{--
                 @if ($sejarahSingkats->isEmpty())
-                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-300 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Belum ada data sejarah singkat yang ditambahkan.
                     </div>
                 @else
@@ -105,7 +105,7 @@
                                 <div class="relative w-full">
                                     <!-- Card Container -->
                                     <div class="w-full pl-10 md:pl-0 md:w-[calc(50%-2.5rem)] {{ $index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto' }}">
-                                        <article class="group relative rounded-4xl border border-slate-200 bg-white p-6 shadow-md md:p-8 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg transition-all duration-300">
+                                        <article class="group relative rounded-4xl border border-slate-300 bg-white p-6 shadow-md md:p-8 hover:-translate-y-1 hover:border-slate-400 hover:shadow-lg transition-all duration-300">
                                             <!-- Year -->
                                             <span class="mb-3 inline-block rounded-full bg-red-50 px-3 py-1 text-xs font-bold uppercase tracking-widest text-red-600">
                                                 {{ $sejarah->tahun }}
@@ -120,7 +120,7 @@
                                             </div>
 
                                             <!-- Image -->
-                                            <div class="mt-6 aspect-video w-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-100 shadow-sm" style="max-width: 450px;">
+                                            <div class="mt-6 aspect-video w-full overflow-hidden rounded-3xl border border-slate-300 bg-slate-100 shadow-sm" style="max-width: 450px;">
                                                 @if ($sejarah->gambar)
                                                     <img src="{{ Storage::url($sejarah->gambar) }}" alt="{{ $sejarah->judul }}" loading="lazy" decoding="async"
                                                         class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
@@ -216,14 +216,14 @@
                     </div>
 
                     <div class="space-y-6 lg:col-span-7 xl:col-span-8">
-                        <article class="rounded-4xl border border-slate-200 bg-white p-8 shadow-md md:p-10">
+                        <article class="rounded-4xl border border-slate-300 bg-white p-8 shadow-md md:p-10">
                             <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Visi</p>
                             <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-lg md:font-light [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950">
                                 {!! $visiMisi?->visi ?: '<p>Data visi belum tersedia.</p>' !!}
                             </div>
                         </article>
 
-                        <article class="rounded-4xl border border-slate-200 bg-white p-8 shadow-md md:p-10">
+                        <article class="rounded-4xl border border-slate-300 bg-white p-8 shadow-md md:p-10">
                             <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Misi</p>
                             <div
                                 class="text-justify text-sm leading-relaxed text-slate-950 md:text-lg md:font-light [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
@@ -238,12 +238,12 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if (! $tugasFungsi)
-                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-300 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Data Tugas dan Fungsi belum tersedia.
                     </div>
                 @else
                     <div class="mr-auto grid max-w-4xl grid-cols-1 gap-8">
-                        <article class="group relative rounded-4xl border border-slate-200 bg-linear-to-br from-white to-slate-50/50 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg md:p-8">
+                        <article class="group relative rounded-4xl border border-slate-300 bg-linear-to-br from-white to-slate-50/50 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-400 hover:shadow-lg md:p-8">
                             <div class="absolute right-6 top-6 opacity-5 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110">
                                 <svg class="h-24 w-24 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
@@ -264,7 +264,7 @@
                             </div>
                         </article>
 
-                        <article class="group relative rounded-4xl border border-slate-200 bg-linear-to-br from-white to-slate-50/50 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-lg md:p-8">
+                        <article class="group relative rounded-4xl border border-slate-300 bg-linear-to-br from-white to-slate-50/50 p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-slate-400 hover:shadow-lg md:p-8">
                             <div class="absolute right-6 top-6 opacity-5 transition-transform duration-500 group-hover:-rotate-12 group-hover:scale-110">
                                 <svg class="h-24 w-24 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
@@ -294,11 +294,11 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if (! $strukturOrganisasi || ! $strukturOrganisasi->image_path)
-                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-300 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Data Struktur Organisasi belum tersedia.
                     </div>
                 @else
-                    <div class="mr-auto max-w-2xl rounded-4xl border border-slate-200 bg-white p-3 shadow-md hover:shadow-lg transition-all duration-300">
+                    <div class="mr-auto max-w-2xl rounded-4xl border border-slate-300 bg-white p-3 shadow-md hover:shadow-lg transition-all duration-300">
                         <img src="{{ Storage::url($strukturOrganisasi->image_path) }}" alt="Struktur Organisasi" loading="lazy" decoding="async"
                             class="w-full h-auto rounded-[1.75rem] object-contain">
                     </div>
@@ -309,13 +309,13 @@
                 x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
                 role="tabpanel">
                 @if ($pejabats->isEmpty())
-                    <div class="rounded-4xl border border-slate-200 bg-white p-8 text-center text-slate-500 shadow-sm">
+                    <div class="rounded-4xl border border-slate-300 bg-white p-8 text-center text-slate-500 shadow-sm">
                         Data profil pejabat belum tersedia.
                     </div>
                 @else
                     <div class="mb-8 grid gap-6 md:mb-10 xl:grid-cols-2">
                         @foreach ($featuredPejabats as $pejabat)
-                            <article class="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-sm">
+                            <article class="overflow-hidden rounded-4xl border border-slate-300 bg-white shadow-sm">
                                 <div class="grid md:grid-cols-[0.95fr_1.05fr]">
                                     <button type="button"
                                         class="group relative min-h-[280px] cursor-zoom-in bg-slate-100 text-left sm:min-h-[340px] md:min-h-[360px]"
@@ -350,7 +350,7 @@
                     @if ($supportPejabats->isNotEmpty())
                         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
                             @foreach ($supportPejabats as $pejabat)
-                                <article class="rounded-[1.75rem] border border-slate-200 bg-white p-2 shadow-sm">
+                                <article class="rounded-[1.75rem] border border-slate-300 bg-white p-2 shadow-sm">
                                     <div class="flex items-start gap-4 sm:block">
                                         <button type="button"
                                             class="group mb-0 aspect-4/5 w-28 shrink-0 cursor-zoom-in overflow-hidden rounded-[1.25rem] bg-slate-100 sm:mb-2 sm:w-full"

@@ -1308,14 +1308,10 @@
         <x-layouts.partials.footer />
     </main>
 
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.lucide) {
-                window.lucide.createIcons();
-            }
             if (window.AOS) {
                 window.AOS.init({ once: true, offset: 200 });
             }

@@ -30,10 +30,25 @@
                     {{-- Address & Socials --}}
                     <div class="space-y-8">
                         <ul class="space-y-4 text-[15px] text-slate-400">
-                            <li>Jl. Cut Nyak Dhien No.377, Lamtemeun Timur, Kec. Jaya Baru, Kota Banda Aceh, Prov. Aceh</li>
-                            <li>(0651) 49714</li>
-                            <li>bspjiaceh@gmail.com</li>
-                            <li>Sen - Jum: 08.00 - 16.30 WIB</li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="map-pin" class="mt-0.5 h-5 w-5 shrink-0 text-blue-400"></i>
+                                <span>Jl. Cut Nyak Dhien No.377, Lamtemeun Timur, Kec. Jaya Baru, Kota Banda Aceh, Prov. Aceh</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="phone" class="h-5 w-5 shrink-0 text-blue-400"></i>
+                                <span>(0651) 49714</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="mail" class="h-5 w-5 shrink-0 text-blue-400"></i>
+                                <span>bspjiaceh@gmail.com</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="clock" class="mt-0.5 h-5 w-5 shrink-0 text-blue-400"></i>
+                                <div class="flex flex-col">
+                                    <span>Sen - Kam : 07.30 - 16.00 WIB</span>
+                                    <span>Jum'at : 07.30 - 16.30 WIB</span>
+                                </div>
+                            </li>
                         </ul>
 
                         {{-- <div class="flex items-center gap-4">
@@ -58,6 +73,16 @@
             <div class="lg:col-span-3">
                 <h4 class="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-white">Navigasi Utama</h4>
                 <ul class="space-y-4 text-[15px] text-slate-400">
+                    <li><a href="{{ $routeOrHash('pengujian.index', []) }}"
+                            class="transition-colors hover:text-white flex items-center gap-2 group"><i
+                                data-lucide="chevron-right"
+                                class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
+                            Pengujian</a></li>
+                    <li><a href="{{ $routeOrHash('kalibrasi.index', []) }}"
+                            class="transition-colors hover:text-white flex items-center gap-2 group"><i
+                                data-lucide="chevron-right"
+                                class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
+                            Kalibrasi</a></li>
                     <li><a href="{{ $routeOrHash('sertifikasi-produk.index', []) }}"
                             class="transition-colors hover:text-white flex items-center gap-2 group"><i
                                 data-lucide="chevron-right"
@@ -67,22 +92,27 @@
                             class="transition-colors hover:text-white flex items-center gap-2 group"><i
                                 data-lucide="chevron-right"
                                 class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
-                            Sertifikasi Halal (LPH)</a></li>
-                    <li><a href="{{ $routeOrHash('kalibrasi.index', []) }}"
-                            class="transition-colors hover:text-white flex items-center gap-2 group"><i
-                                data-lucide="chevron-right"
-                                class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
-                            Kalibrasi Alat</a></li>
+                            Lembaga Pemeriksa Halal</a></li>
                     <li><a href="{{ $routeOrHash('lsih.index', []) }}"
                             class="transition-colors hover:text-white flex items-center gap-2 group"><i
                                 data-lucide="chevron-right"
                                 class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
-                            Industri Hijau (LSIH)</a></li>
+                            Lembaga Sertifikasi Industri Hijau</a></li>
                     <li><a href="{{ $routeOrHash('tkdn.index', []) }}"
                             class="transition-colors hover:text-white flex items-center gap-2 group"><i
                                 data-lucide="chevron-right"
                                 class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
                             Verifikasi TKDN</a></li>
+                    <li><a href="{{ $routeOrHash('pelatihan-teknis.index', []) }}"
+                            class="transition-colors hover:text-white flex items-center gap-2 group"><i
+                                data-lucide="chevron-right"
+                                class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
+                            Pelatihan Teknis</a></li>
+                    <li><a href="{{ $routeOrHash('konsultasi-pendampingan.index', []) }}"
+                            class="transition-colors hover:text-white flex items-center gap-2 group"><i
+                                data-lucide="chevron-right"
+                                class="h-3 w-3 text-slate-600 transition-transform group-hover:translate-x-1"></i>
+                            Konsultansi</a></li>
                 </ul>
             </div>
 

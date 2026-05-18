@@ -62,4 +62,10 @@ Alpine.data('profilePage', () => ({
     },
 }));
 
+import { createIcons, icons } from 'lucide';
+
 Livewire.start();
+
+document.addEventListener('DOMContentLoaded', () => {
+    createIcons({ icons });
+});
