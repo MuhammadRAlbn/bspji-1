@@ -1072,7 +1072,7 @@
                                                     :class="cardPosition({{ $loop->index }}) === 0 ? 'border-white/20 bg-white/15 text-white' : 'border-gray-100 bg-blue-50 text-[#1839a8]'">
                                                     {{ Str::substr($testimoni->nama, 0, 1) }}
                                                 </div>
-                                            @endif
+                                            @endif                                          
                                             <div class="min-w-0">
                                                 <h4 class="text-[17px] font-bold leading-tight"
                                                     :class="cardPosition({{ $loop->index }}) === 0 ? 'text-white' : 'text-gray-900'">

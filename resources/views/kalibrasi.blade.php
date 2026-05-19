@@ -1,4 +1,4 @@
-<x-layouts.app title="Layanan Kalibrasi">
+<x-layouts.app title="Layanan Kalibrasi" bodyClass="bg-slate-100/90">
 <div x-data="{
     tab: 'sertifikasi',
     lightboxOpen: false,
@@ -14,7 +14,7 @@
     }
 }" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
-        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
+        <header class="relative w-full overflow-hidden rounded-4xl border border-slate-300 bg-white py-10 shadow-md lg:py-12">
             <div class="px-6 text-left lg:px-10">
                 <div class="mb-3 flex items-center gap-2">
                     <span class="text-[10px] text-blue-600">■</span>

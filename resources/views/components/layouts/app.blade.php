@@ -1,4 +1,4 @@
-@props(['title' => 'BSPJI Banda Aceh'])
+@props(['title' => 'BSPJI Banda Aceh', 'bodyClass' => 'bg-white'])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
@@ -19,7 +19,7 @@
     @stack('styles')
 </head>
 
-<body {{ $attributes->merge(['class' => 'bg-white text-slate-800 antialiased font-sans pt-20']) }}>
+<body {{ $attributes->merge(['class' => $bodyClass . ' text-slate-800 antialiased font-sans pt-20']) }}>
 
     <x-layouts.partials.navbar />
 

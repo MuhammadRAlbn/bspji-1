@@ -25,7 +25,7 @@
     });
 @endphp
 
-<x-layouts.app title="Tentang Kami - BSPJI Banda Aceh"
+<x-layouts.app title="Tentang Kami - BSPJI Banda Aceh" bodyClass="bg-slate-50"
     x-data="profilePage"
     data-active-tab="{{ $activeTab }}"
     data-content-titles='@json($sectionTitles, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)'
@@ -35,21 +35,15 @@
     <script type="application/json" id="profile-page-profiles">@json($profileModalData, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)</script>
 
     <section
-        class="relative flex h-[360px] w-[calc(100%-2rem)] max-w-7xl mx-auto mt-4 flex-col justify-center overflow-hidden border border-slate-300 shadow-sm rounded-3xl md:w-[calc(100%-6rem)] lg:w-full md:h-[450px] md:rounded-[2.25rem] md:mt-8">
+        class="relative flex h-[360px] w-[calc(100%-2rem)] max-w-7xl mx-auto mt-4 flex-col justify-center overflow-hidden border border-slate-700 shadow-xl rounded-3xl md:w-[calc(100%-6rem)] lg:w-full md:h-[450px] md:rounded-[2.25rem] md:mt-8">
         <div class="absolute inset-0">
             <img src="{{ asset('gbr2.webp') }}" alt="BSPJI Banda Aceh" class="h-full w-full object-cover object-[center_65%]" fetchpriority="high">
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,1)_65%,rgba(255,255,255,0)_90%)] md:bg-[linear-gradient(to_right,rgba(255,255,255,1)_0%,rgba(255,255,255,.92)_35%,rgba(255,255,255,0)_65%)]"></div>
+            <div class="absolute inset-0 bg-slate-900/80 md:bg-transparent md:bg-[linear-gradient(to_right,rgba(30,41,59,0.95)_0%,rgba(30,41,59,0.6)_55%,rgba(30,41,59,0)_85%)]"></div>
         </div>
 
         <div class="relative z-10 w-full px-6 md:px-12 lg:px-16">
-            <nav class="mb-4 flex items-center gap-2 text-sm text-slate-500" aria-label="Breadcrumb">
-                <a href="{{ url('/') }}" class="transition hover:text-slate-800">Home</a>
-                <span class="text-xs">&rsaquo;</span>
-                <span class="font-medium text-slate-800">Tentang Kami</span>
-            </nav>
-
-            <h1 class="mb-6 text-4xl font-semibold leading-tight text-slate-900 md:text-6xl">Tentang Kami</h1>
-            <p class="max-w-2xl text-base font-normal leading-relaxed text-slate-900 md:text-xl">
+            <h1 class="mb-6 text-4xl font-semibold leading-tight text-white md:text-6xl">Tentang Kami</h1>
+            <p class="max-w-2xl text-base font-normal leading-relaxed text-white md:text-xl">
                 Telusuri sejarah perjalanan, moto, visi, misi, tugas, struktur organisasi, dan profil pejabat BSPJI Banda Aceh.
             </p>
         </div>
@@ -72,7 +66,7 @@
         </nav>
     </div>
 
-    <main id="profil-content" class="min-h-screen bg-white pb-20 pt-16">
+    <main id="profil-content" class="min-h-screen bg-transparent pb-20 pt-16">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 md:px-12">
             <div class="mb-8 md:mb-10">
                 <p class="mb-3 text-xs font-bold uppercase tracking-[0.24em] text-red-600">Tentang Kami</p>
@@ -153,7 +147,7 @@
                 role="tabpanel">
                 <div class="grid gap-8 lg:grid-cols-12">
                     <div class="lg:col-span-5 xl:col-span-4">
-                        <article class="relative flex h-full flex-col overflow-hidden rounded-4xl border border-[#d7f1f4] bg-white p-6 shadow-md">
+                        <article class="relative flex h-full flex-col overflow-hidden rounded-4xl border border-slate-300 bg-white p-6 shadow-md">
                             <div class="absolute -left-14 -top-14 h-40 w-40 rounded-full border border-[#d7f1f4]"></div>
                             <div class="absolute -left-10 -top-10 h-32 w-32 rounded-full border border-[#d7f1f4]"></div>
                             <div class="absolute -right-16 -top-12 h-44 w-44 rounded-full border border-[#d7f1f4]"></div>
@@ -389,7 +383,7 @@
         <button type="button" class="absolute inset-0 cursor-default" @click="closeProfile()" aria-label="Tutup modal"></button>
 
         <section
-            class="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-4xl bg-white shadow-2xl md:grid-cols-[0.9fr_1.1fr]">
+            class="relative grid max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-4xl bg-white shadow-2xl grid-rows-[auto_1fr] md:grid-rows-none md:grid-cols-[0.9fr_1.1fr]">
             <button type="button"
                 class="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-900 shadow transition hover:bg-white"
                 @click="closeProfile()" aria-label="Tutup profil">
@@ -398,10 +392,10 @@
                 </svg>
             </button>
 
-            <div class="relative min-h-[320px] bg-slate-100 md:min-h-[620px]">
+            <div class="relative h-56 bg-slate-100 md:h-auto md:min-h-[620px]">
                 <template x-if="lightboxData.image">
                     <img :src="lightboxData.image" :alt="lightboxData.name || 'Profil pejabat'"
-                        class="absolute inset-0 h-full w-full object-cover">
+                        class="absolute inset-0 h-full w-full object-cover object-top">
                 </template>
                 <template x-if="!lightboxData.image">
                     <div class="absolute inset-0 flex items-center justify-center text-slate-300">

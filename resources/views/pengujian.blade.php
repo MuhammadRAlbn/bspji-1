@@ -1,4 +1,4 @@
-<x-layouts.app title="Pengujian">
+<x-layouts.app title="Pengujian" bodyClass="bg-slate-100/90">
 <div
     x-data="{
         tab: 'sertifikasi',
@@ -75,18 +75,23 @@
     x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)"
 >
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
-        <header class="relative w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
-            <div class="px-6 text-left lg:px-10">
-                <div class="mb-3 flex items-center gap-2">
-                    <span class="text-[10px] text-blue-600">■</span>
-                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
+        <header class="relative w-full overflow-hidden rounded-4xl border border-slate-300 bg-white py-10 shadow-md lg:py-12">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8 px-6 lg:px-10">
+                <div class="flex-1 text-left max-w-2xl">
+                    <div class="mb-3 flex items-center gap-2">
+                        <span class="text-[10px] text-blue-600">■</span>
+                        <span class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">Layanan Jasa</span>
+                    </div>
+                    <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl lg:text-[3rem] lg:leading-[1.1]">
+                        Pengujian
+                    </h1>
+                    <p class="mt-4 text-sm leading-relaxed text-slate-600 sm:text-base">
+                        Memberikan hasil analisis yang akurat, tepercaya, dan sesuai dengan standar nasional maupun internasional untuk mendukung mutu produk Anda.
+                    </p>
                 </div>
-                <h1 class="text-3xl font-light tracking-tight text-slate-900 sm:text-4xl lg:text-[3rem] lg:leading-[1.1]">
-                    Pengujian
-                </h1>
-                <p class="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-base">
-                    Memberikan hasil analisis yang akurat, tepercaya, dan sesuai dengan standar nasional maupun internasional untuk mendukung mutu produk Anda.
-                </p>
+                <div class="w-full md:w-auto flex justify-center md:justify-end shrink-0">
+                    <img src="{{ asset('header_pengujian.webp') }}" alt="Pengujian" class="h-32 sm:h-40 md:h-48 lg:h-56 w-auto object-contain">
+                </div>
             </div>
         </header>
     </div>
