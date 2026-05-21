@@ -16,6 +16,8 @@
         "vite": "^8.0.0"
     },
     "dependencies": {
+        "aos": "^2.3.4",
+        "leaflet": "^1.9.4",
         "lucide": "^1.16.0"
     }
 }

@@ -1,7 +1,14 @@
 import './bootstrap';
 import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { createIcons, icons } from 'lucide';
 
 window.Alpine = Alpine;
+window.AOS = AOS;
+window.L = L;
 
 Alpine.data('profilePage', () => ({
     activeTab: 'sejarah',
@@ -62,10 +69,9 @@ Alpine.data('profilePage', () => ({
     },
 }));
 
-import { createIcons, icons } from 'lucide';
-
 Livewire.start();
 
 document.addEventListener('DOMContentLoaded', () => {
     createIcons({ icons });
+    AOS.init({ once: true, offset: 200 });
 });
