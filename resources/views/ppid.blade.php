@@ -51,7 +51,7 @@
         $ppidPdf = $ppid && $ppid->pdf_file ? asset('storage/' . $ppid->pdf_file) : null;
     @endphp
 
-    <section class="bg-slate-100 max-w-6xl mx-auto rounded-3xl pt-4 mt-6">
+    <section class="bg-slate-100 max-w-6xl mx-auto rounded-3xl pt-4 mt-6 border border-slate-300 shadow-md">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid md:grid-cols-12 gap-8 items-center">
                 <div class="md:col-span-7 pl-6">

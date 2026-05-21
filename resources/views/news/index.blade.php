@@ -3,22 +3,14 @@
         $heroImage = asset('images/imagelab.webp');
     @endphp
 
-    <section class="mx-auto mt-6 max-w-6xl rounded-3xl bg-slate-100 pt-4">
-        <div class="mx-auto max-w-6xl px-6">
-            <div class="grid items-center gap-2 md:grid-cols-2">
-                <div class="pl-0 md:pl-6">
-                    <h1 class="text-4xl tracking-tight text-slate-800 md:text-5xl">
-                        Berita
-                    </h1>
-                    <p class="mt-4 max-w-md text-lg text-slate-600">
-                        Kabar terbaru dari Balai Standardisasi dan Pelayanan Jasa Industri Banda Aceh.
-                    </p>
-                </div>
-
-                <div class="flex justify-center md:justify-end">
-                    <img src="{{ $heroImage }}" alt="Berita BSPJI Banda Aceh" class="w-full max-w-md rounded-3xl object-cover">
-                </div>
-            </div>
+    <section class="mx-auto mt-12 max-w-6xl px-6">
+        <div class="max-w-3xl">
+            <h1 class="text-4xl tracking-tight text-slate-800 md:text-5xl">
+                Berita
+            </h1>
+            <p class="mt-4 text-lg text-slate-600">
+                Kabar terbaru dari Balai Standardisasi dan Pelayanan Jasa Industri Banda Aceh.
+            </p>
         </div>
     </section>
 

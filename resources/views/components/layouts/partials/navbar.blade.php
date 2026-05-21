@@ -92,7 +92,7 @@
 @endif>
     <div @if ($isTransparent)
         class="mx-auto flex h-28 w-full items-center justify-between gap-6 px-5 transition-all duration-300 sm:px-8 lg:px-10"
-    @else class="mx-auto flex h-20 w-full max-w-7xl items-center gap-16 px-6 lg:px-8" @endif>
+    @else class="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-6 lg:gap-16 lg:px-8" @endif>
         <div class="flex shrink-0 items-center pr-2">
             <a href="{{ url('/') }}"
                 class="{{ $isTransparent ? 'group inline-flex items-center p-0 transition hover:opacity-85' : 'group inline-flex items-center rounded-xl p-1 transition hover:bg-slate-50' }}">
@@ -212,8 +212,8 @@
         x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2" @if ($isTransparent)
             :class="isSolid ? 'border-slate-200 bg-white/95 text-slate-900 shadow-xl' : 'border-white/10 bg-slate-950/85 text-white shadow-2xl shadow-black/25'"
-        class="border-t px-4 py-5 backdrop-blur-xl xl:hidden sm:px-6" @else
-        class="border-t border-slate-200 bg-white/95 px-4 py-5 shadow-xl backdrop-blur lg:hidden sm:px-6" @endif
+        class="max-h-[calc(100vh-7rem)] overflow-y-auto border-t px-4 py-5 backdrop-blur-xl xl:hidden sm:px-6" @else
+        class="max-h-[calc(100vh-5rem)] overflow-y-auto border-t border-slate-200 bg-white/95 px-4 py-5 shadow-xl backdrop-blur lg:hidden sm:px-6" @endif
         style="display: none;">
         <div class="space-y-2">
             @foreach ($displayMenu as $menu)

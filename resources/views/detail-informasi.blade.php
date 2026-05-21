@@ -7,7 +7,7 @@
         ];
     @endphp
 
-    <section class="bg-slate-100 max-w-6xl mx-auto rounded-3xl pt-4 mt-6">
+    <section class="bg-slate-100 max-w-6xl mx-auto rounded-3xl pt-4 mt-6 border border-slate-300 shadow-md">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-2 items-center">
                 <div class="pl-6">
