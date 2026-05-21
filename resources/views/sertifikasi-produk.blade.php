@@ -1,6 +1,6 @@
 <x-layouts.app title="Sertifikasi Produk - BSPJI Pekanbaru" bodyClass="bg-slate-100/90">
 <div x-data="{
-    tab: 'sertifikat',
+    tab: @js($activeTab),
     lightboxOpen: false,
     lightboxImage: '',
     lightboxAlt: '',
@@ -126,6 +126,18 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                 </svg>
                 <span class="text-base font-semibold sm:text-[1.05rem]">Informasi Publik</span>
+            </button>
+
+            <button
+                type="button"
+                @click="tab = 'direktori-pelanggan'"
+                :class="tab === 'direktori-pelanggan' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'direktori-pelanggan' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 21h16.5M4.5 3h15l-.75 18H5.25L4.5 3Zm4.5 4.5h1.5m3 0H15m-6 4.5h1.5m3 0H15m-6 4.5h1.5m3 0H15" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Direktori Pelanggan</span>
             </button>
         </div>
 
@@ -414,6 +426,100 @@
                     </div>
                 </div>
             </section>
+
+                <section x-show="tab === 'direktori-pelanggan'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
+                    <div class="border-b border-black/10 bg-white px-4 py-4 sm:px-6">
+                        <form action="{{ route('sertifikasi-produk.index') }}" method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <input type="hidden" name="tab" value="direktori-pelanggan">
+
+                            <label class="relative block w-full sm:max-w-md">
+                                <span class="sr-only">Cari direktori pelanggan</span>
+                                <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z" />
+                                </svg>
+                                <input
+                                    type="search"
+                                    name="direktori_search"
+                                    value="{{ $direktoriSearch }}"
+                                    placeholder="Cari nama perusahaan, merek, atau tahun"
+                                    class="w-full rounded-xl border border-black/20 bg-white py-2.5 pl-11 pr-4 text-sm font-medium text-slate-700 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                                >
+                            </label>
+
+                            <div class="flex items-center gap-2">
+                                @if($direktoriSearch !== '')
+                                    <a href="{{ route('sertifikasi-produk.index', ['tab' => 'direktori-pelanggan']) }}" class="inline-flex items-center justify-center rounded-xl border border-black/20 px-4 py-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-50">
+                                        Reset
+                                    </a>
+                                @endif
+                                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-slate-800 px-4 py-2.5 text-xs font-bold text-white transition active:scale-95">
+                                    Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[760px] border-collapse text-left">
+                            <thead>
+                                <tr class="border-b border-black/20 bg-slate-50">
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Perusahaan</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Merek</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Tahun Sertifikasi</th>
+                                    <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-800">Gambar</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-black/10">
+                                @forelse($direktoriPelanggan as $pelanggan)
+                                    <tr class="align-middle transition-colors hover:bg-slate-50/50">
+                                        <td class="w-[36%] px-6 py-4 align-middle text-sm font-semibold text-slate-800">
+                                            {{ $pelanggan->nama_perusahaan ?: '-' }}
+                                        </td>
+                                        <td class="w-[28%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
+                                            {{ $pelanggan->merek ?: '-' }}
+                                        </td>
+                                        <td class="w-[18%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
+                                            {{ $pelanggan->tahun_sertifikasi ?: '-' }}
+                                        </td>
+                                        <td class="w-[18%] px-6 py-4 align-middle text-center">
+                                            @if($pelanggan->gambar)
+                                                <button
+                                                    type="button"
+                                                    @click="openLightbox(@js(asset('storage/' . $pelanggan->gambar)), @js('Gambar ' . $pelanggan->nama_perusahaan))"
+                                                    class="group mx-auto block overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
+                                                >
+                                                    <img
+                                                        src="{{ asset('storage/' . $pelanggan->gambar) }}"
+                                                        alt="Gambar {{ $pelanggan->nama_perusahaan }}"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        class="h-16 w-24 object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    >
+                                                </button>
+                                            @else
+                                                <span class="mx-auto inline-flex justify-center rounded-full bg-slate-100 px-3 py-1 text-center text-xs font-semibold text-slate-400">
+                                                    Belum ada
+                                                </span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-16 text-center">
+                                            <p class="font-medium text-slate-400">Direktori pelanggan belum tersedia.</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex flex-col gap-4 border-t border-black/10 px-4 py-4 sm:px-6">
+                        {{ $direktoriPelanggan->links() }}
+                    </div>
+                </div>
+                </section>
 
                 <section x-show="tab === 'informasi-publik'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
