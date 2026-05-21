@@ -88,8 +88,10 @@
             @else
                 <div class="mx-auto grid w-full max-w-md grid-cols-2 gap-4 sm:max-w-xl sm:grid-cols-3 md:gap-6 lg:max-w-[85%]">
                     @foreach ($certificateItems->take(9) as $index => $certificate)
-                        <button type="button" data-certificate-trigger data-certificate-variant="compact" data-src="{{ $certificate['image_url'] }}"
+                        <button type="button" data-certificate-variant="compact" data-src="{{ $certificate['image_url'] }}"
                             data-title="{{ $certificate['title'] }}"
+                            data-alt="{{ $certificate['title'] }}"
+                            @click="$dispatch('certificate-open', { src: $el.dataset.src, title: $el.dataset.title, alt: $el.dataset.alt, variant: $el.dataset.certificateVariant || '' })"
                             class="group text-center transition-all duration-300 hover:-translate-y-1"
                             data-aos="fade-up" data-aos-delay="{{ 80 + ($index % 9) * 60 }}">
                             <div class="relative aspect-4/3 overflow-hidden rounded-xl border border-white/20 bg-white shadow-[0_8px_24px_-8px_rgba(0,0,0,0.5)]">

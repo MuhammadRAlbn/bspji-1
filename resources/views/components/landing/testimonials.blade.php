@@ -2,72 +2,7 @@
     'testimonialItems',
 ])
 
-<section x-data="{
-        activeIndex: 0,
-        cardStep: 0,
-        transitionEnabled: true,
-        get totalCards() {
-            return this.$refs.track ? this.$refs.track.children.length : 0;
-        },
-        init() {
-            this.measure();
-            window.addEventListener('resize', () => this.measure());
-        },
-        measure() {
-            this.$nextTick(() => {
-                const card = this.$root.querySelector('[data-testimonial-card]');
-                const track = this.$root.querySelector('[data-testimonial-track]');
-
-                if (!card || !track) {
-                    this.cardStep = 0;
-                    return;
-                }
-
-                const trackStyle = window.getComputedStyle(track);
-                const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || 0);
-                this.cardStep = card.getBoundingClientRect().width + gap;
-
-                if (this.activeIndex > this.maxIndex()) {
-                    this.activeIndex = this.maxIndex();
-                }
-            });
-        },
-        maxIndex() {
-            return Math.max(0, this.totalCards - 1);
-        },
-        cardPosition(index) {
-            return index - this.activeIndex;
-        },
-        cardTone(index) {
-            const position = this.cardPosition(index);
-
-            if (position === 0) {
-                return 'bg-[#1839a8] text-white opacity-100 border-transparent';
-            }
-
-            if (position === 1) {
-                return 'bg-white text-black opacity-100 border-transparent';
-            }
-
-            if (position === 2) {
-                return 'bg-white/65 text-[#939393] opacity-80 border-slate-200 shadow-[0_8px_18px_rgba(15,23,42,0.12)]';
-            }
-
-            return 'bg-white/0 text-[#939393] opacity-0 shadow-none pointer-events-none border-transparent';
-        },
-        next() {
-            if (this.activeIndex >= this.maxIndex()) return;
-
-            this.transitionEnabled = true;
-            this.activeIndex += 1;
-        },
-        previous() {
-            if (this.activeIndex <= 0) return;
-
-            this.transitionEnabled = true;
-            this.activeIndex -= 1;
-        }
-    }"
+<section x-data="testimonialsCarousel"
     x-cloak
     @resize.window.debounce.150ms="measure()"
     class="relative isolate mb-8 mt-12 overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 md:mb-10 md:mt-16 lg:mt-28 lg:min-h-[560px] lg:py-0"
@@ -113,12 +48,12 @@
             <div class="testimonials-carousel relative z-10 -mt-24 overflow-visible pl-0 pr-0 sm:-mt-28 lg:mt-0 lg:-translate-x-[19%] lg:pl-0"
                 aria-live="polite">
                 <div x-ref="track"
-                    data-testimonial-track
                     class="flex will-change-transform"
                     :class="transitionEnabled ? 'transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]' : ''"
                     :style="`gap: var(--testimonial-card-gap); transform: translate3d(-${activeIndex * cardStep}px, 0, 0);`">
                     @forelse ($testimonialItems as $testimoni)
-                        <article data-testimonial-card
+                        <article
+                            @if ($loop->first) x-ref="card" @endif
                             class="group relative flex h-[380px] shrink-0 flex-col justify-between rounded-md border p-8 shadow-[0_14px_26px_rgba(15,23,42,0.18)] transition-[background-color,color,opacity,box-shadow,border-color] duration-500 sm:h-[420px] sm:p-10 lg:h-[450px] lg:p-12"
                             style="width: var(--testimonial-card-width);"
                             :class="cardTone({{ $loop->index }})"
@@ -160,7 +95,7 @@
                             </div>
                         </article>
                     @empty
-                        <article data-testimonial-card
+                        <article x-ref="card"
                             class="group relative flex h-[380px] shrink-0 flex-col justify-between rounded-md border p-8 shadow-[0_14px_26px_rgba(15,23,42,0.18)] transition-[background-color,color,opacity,box-shadow,border-color] duration-500 sm:h-[420px] sm:p-10 lg:h-[450px] lg:p-12"
                             style="width: var(--testimonial-card-width);"
                             :class="cardTone(0)"

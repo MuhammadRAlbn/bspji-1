@@ -5,6 +5,10 @@ import 'aos/dist/aos.css';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { createIcons, icons } from 'lucide';
+import { registerCertificateLightbox } from './landing/certificate-lightbox';
+import { initCustomerMap } from './landing/customer-map';
+import { initNumbersCharts } from './landing/numbers-chart';
+import { registerTestimonialsCarousel } from './landing/testimonials-carousel';
 
 window.Alpine = Alpine;
 window.AOS = AOS;
@@ -69,9 +73,14 @@ Alpine.data('profilePage', () => ({
     },
 }));
 
+registerCertificateLightbox(Alpine);
+registerTestimonialsCarousel(Alpine);
+
 Livewire.start();
 
 document.addEventListener('DOMContentLoaded', () => {
     createIcons({ icons });
     AOS.init({ once: true, offset: 200 });
+    initCustomerMap();
+    initNumbersCharts();
 });
