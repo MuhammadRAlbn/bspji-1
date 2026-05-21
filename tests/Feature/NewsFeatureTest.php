@@ -32,6 +32,8 @@ class NewsFeatureTest extends TestCase
 
     public function test_homepage_displays_latest_three_published_news(): void
     {
+        Carbon::setTestNow(Carbon::parse('2026-05-15 09:00:00'));
+
         $latest = News::factory()->published()->create([
             'title' => 'Berita Terbaru Pertama',
             'slug' => 'berita-terbaru-pertama',
@@ -88,6 +90,8 @@ class NewsFeatureTest extends TestCase
         $this->assertStringNotContainsString($older->title, $homepageNewsSection);
         $this->assertStringNotContainsString($draft->title, $homepageNewsSection);
         $this->assertStringNotContainsString($future->title, $homepageNewsSection);
+
+        Carbon::setTestNow();
     }
 
     public function test_news_detail_hides_unpublished_news(): void
