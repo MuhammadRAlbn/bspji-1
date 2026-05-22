@@ -5,6 +5,7 @@ namespace App\Filament\Clusters\SertifikasiProduk\Resources\DirektoriPelangganRe
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class DirektoriPelangganForm
@@ -38,6 +39,9 @@ class DirektoriPelangganForm
                 TextInput::make('keterangan')
                     ->label('Keterangan')
                     ->maxLength(255),
+                Toggle::make('is_active')
+                    ->label('Aktif')
+                    ->default(true),
                 FileUpload::make('gambar')
                     ->label('Gambar')
                     ->image()

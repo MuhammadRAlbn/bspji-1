@@ -4,6 +4,8 @@
     lightboxOpen: false,
     lightboxImage: '',
     lightboxAlt: '',
+    customerDetailOpen: false,
+    selectedCustomer: null,
     openLightbox(image, alt) {
         this.lightboxImage = image;
         this.lightboxAlt = alt;
@@ -11,8 +13,15 @@
     },
     closeLightbox() {
         this.lightboxOpen = false;
+    },
+    openCustomerDetail(customer) {
+        this.selectedCustomer = customer;
+        this.customerDetailOpen = true;
+    },
+    closeCustomerDetail() {
+        this.customerDetailOpen = false;
     }
-}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
+}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen || customerDetailOpen)">
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
         <header class="relative w-full overflow-hidden rounded-4xl border border-slate-300 bg-white py-10 shadow-md lg:py-12">
             <div class="px-6 text-left lg:px-10">
@@ -144,7 +153,7 @@
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
             <div class="grid grid-cols-1 items-start">
             
-                <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'alur'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl space-y-6">
                     @if($alurProduk && $alurProduk->image)
                         <div class="flex justify-start">
@@ -172,7 +181,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'sertifikat'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sertifikat'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl space-y-8">
                     @if($sertifikats->isNotEmpty())
                         <div class="flex justify-start">
@@ -203,7 +212,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'ruang-lingkup'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     @forelse($ruangLingkup as $item)
@@ -233,7 +242,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'dokumen'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'dokumen'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -273,7 +282,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'hak-kewajiban'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'hak-kewajiban'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -313,7 +322,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'tarif'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="space-y-12">
                     @forelse($tarifs as $tarif)
                         <div class="space-y-4">
@@ -336,7 +345,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'sdm'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sdm'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl space-y-10">
                     <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
                         Auditor Sertifikasi Produk yang kompeten dan berpengalaman untuk menjamin kualitas layanan.
@@ -427,7 +436,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'direktori-pelanggan'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'direktori-pelanggan'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="border-b border-black/10 bg-white px-4 py-4 sm:px-6">
                         <form action="{{ route('sertifikasi-produk.index') }}" method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -442,7 +451,7 @@
                                     type="search"
                                     name="direktori_search"
                                     value="{{ $direktoriSearch }}"
-                                    placeholder="Cari nama perusahaan, merek, atau tahun"
+                                    placeholder="Cari nama perusahaan, merek, tahun, atau alamat"
                                     class="w-full rounded-xl border border-black/20 bg-white py-2.5 pl-11 pr-4 text-sm font-medium text-slate-700 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
                                 >
                             </label>
@@ -466,37 +475,61 @@
                                 <tr class="border-b border-black/20 bg-slate-50">
                                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Perusahaan</th>
                                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Merek</th>
-                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Tahun Sertifikasi</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Status</th>
                                     <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-800">Gambar</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-black/10">
                                 @forelse($direktoriPelanggan as $pelanggan)
-                                    <tr class="align-middle transition-colors hover:bg-slate-50/50">
-                                        <td class="w-[36%] px-6 py-4 align-middle text-sm font-semibold text-slate-800">
+                                    @php
+                                        $detailPelanggan = [
+                                            'namaPerusahaan' => $pelanggan->nama_perusahaan ?: '-',
+                                            'merek' => $pelanggan->merek ?: '-',
+                                            'tahunSertifikasi' => $pelanggan->tahun_sertifikasi ?: '-',
+                                            'alamat' => $pelanggan->alamat ?: 'Alamat belum tersedia.',
+                                            'isActive' => $pelanggan->is_active,
+                                            'statusLabel' => $pelanggan->is_active ? 'Aktif' : 'Tidak Aktif',
+                                            'image' => $pelanggan->gambar ? asset('storage/' . $pelanggan->gambar) : null,
+                                            'imageAlt' => 'Gambar ' . ($pelanggan->nama_perusahaan ?: 'Direktori Pelanggan'),
+                                        ];
+                                    @endphp
+                                    <tr
+                                        tabindex="0"
+                                        role="button"
+                                        aria-label="Buka detail {{ $pelanggan->nama_perusahaan ?: 'direktori pelanggan' }}"
+                                        @click="openCustomerDetail(@js($detailPelanggan))"
+                                        @keydown.enter.prevent="openCustomerDetail(@js($detailPelanggan))"
+                                        @keydown.space.prevent="openCustomerDetail(@js($detailPelanggan))"
+                                        class="cursor-pointer align-middle transition-colors hover:bg-slate-50 focus:outline-none focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-400"
+                                    >
+                                        <td class="w-[40%] px-6 py-4 align-middle text-sm font-semibold text-slate-800">
                                             {{ $pelanggan->nama_perusahaan ?: '-' }}
                                         </td>
-                                        <td class="w-[28%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
+                                        <td class="w-[30%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
                                             {{ $pelanggan->merek ?: '-' }}
                                         </td>
-                                        <td class="w-[18%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
-                                            {{ $pelanggan->tahun_sertifikasi ?: '-' }}
+                                        <td class="w-[15%] px-6 py-4 align-middle">
+                                            @if($pelanggan->is_active)
+                                                <span class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-200">
+                                                    Aktif
+                                                </span>
+                                            @else
+                                                <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500 ring-1 ring-slate-200">
+                                                    Tidak Aktif
+                                                </span>
+                                            @endif
                                         </td>
-                                        <td class="w-[18%] px-6 py-4 align-middle text-center">
+                                        <td class="w-[15%] px-6 py-4 align-middle text-center">
                                             @if($pelanggan->gambar)
-                                                <button
-                                                    type="button"
-                                                    @click="openLightbox(@js(asset('storage/' . $pelanggan->gambar)), @js('Gambar ' . $pelanggan->nama_perusahaan))"
-                                                    class="group mx-auto block overflow-hidden rounded-xl border border-slate-200 bg-slate-50"
-                                                >
+                                                <div class="mx-auto h-16 w-24 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
                                                     <img
                                                         src="{{ asset('storage/' . $pelanggan->gambar) }}"
                                                         alt="Gambar {{ $pelanggan->nama_perusahaan }}"
                                                         loading="lazy"
                                                         decoding="async"
-                                                        class="h-16 w-24 object-cover transition-transform duration-300 group-hover:scale-105"
+                                                        class="h-full w-full object-cover"
                                                     >
-                                                </button>
+                                                </div>
                                             @else
                                                 <span class="mx-auto inline-flex justify-center rounded-full bg-slate-100 px-3 py-1 text-center text-xs font-semibold text-slate-400">
                                                     Belum ada
@@ -521,7 +554,7 @@
                 </div>
                 </section>
 
-                <section x-show="tab === 'informasi-publik'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'informasi-publik'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -562,6 +595,87 @@
                 </section>
             </div>
         </article>
+    </div>
+    <div
+        x-show="customerDetailOpen"
+        x-cloak
+        x-transition.opacity.duration.300ms
+        @click="closeCustomerDetail()"
+        @keydown.escape.window="closeCustomerDetail()"
+        class="fixed inset-0 z-90 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="customer-detail-title"
+    >
+        <div
+            x-show="customerDetailOpen"
+            x-transition.scale.duration.300ms
+            @click.stop
+            class="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+        >
+            <div class="flex items-start justify-between gap-4 border-b border-slate-200 px-5 py-4 sm:px-6">
+                <div class="min-w-0">
+                    <div class="mb-2 flex flex-wrap items-center gap-2">
+                        <span
+                            class="inline-flex rounded-full px-3 py-1 text-xs font-bold ring-1"
+                            :class="selectedCustomer?.isActive ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-slate-100 text-slate-500 ring-slate-200'"
+                            x-text="selectedCustomer?.statusLabel"
+                        ></span>
+                    </div>
+                    <h2 id="customer-detail-title" class="text-xl font-semibold leading-tight text-slate-900 sm:text-2xl" x-text="selectedCustomer?.namaPerusahaan"></h2>
+                </div>
+                <button
+                    type="button"
+                    @click="closeCustomerDetail()"
+                    class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+                    aria-label="Tutup detail pelanggan"
+                >
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="grid gap-0 md:grid-cols-[minmax(0,1fr)_260px]">
+                <div class="space-y-5 px-5 py-5 sm:px-6">
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Merek</p>
+                            <p class="mt-2 text-sm font-semibold text-slate-900" x-text="selectedCustomer?.merek"></p>
+                        </div>
+                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Tahun Sertifikasi</p>
+                            <p class="mt-2 text-sm font-semibold text-slate-900" x-text="selectedCustomer?.tahunSertifikasi"></p>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 p-4">
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Alamat</p>
+                        <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-700" x-text="selectedCustomer?.alamat"></p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 bg-slate-50 p-5 md:border-l md:border-t-0">
+                    <template x-if="selectedCustomer?.image">
+                        <img
+                            :src="selectedCustomer.image"
+                            :alt="selectedCustomer.imageAlt"
+                            class="h-64 w-full rounded-xl border border-slate-200 bg-white object-cover"
+                        >
+                    </template>
+                    <template x-if="! selectedCustomer?.image">
+                        <div class="flex h-64 w-full items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white text-center">
+                            <div class="px-6">
+                                <svg class="mx-auto h-10 w-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m2.25 15.75 5.16-5.16a2.25 2.25 0 0 1 3.18 0l5.16 5.16m-1.5-1.5 1.41-1.41a2.25 2.25 0 0 1 3.18 0l2.91 2.91m-18 3h16.5a1.5 1.5 0 0 0 1.5-1.5V6.75a1.5 1.5 0 0 0-1.5-1.5H3.75a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5Zm14.25-9h.008v.008H18V9.75Z" />
+                                </svg>
+                                <p class="mt-3 text-sm font-semibold text-slate-400">Belum ada gambar</p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
     </div>
     <div
         x-show="lightboxOpen"

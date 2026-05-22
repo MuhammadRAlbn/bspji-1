@@ -38,13 +38,14 @@ class SertifikasiProdukController extends Controller
         $tarifs = TarifProduk::all();
         $hakKewajibans = HakKewajibanProduk::all();
         $direktoriPelanggan = DirektoriPelanggan::query()
-            ->select(['id', 'nama_perusahaan', 'merek', 'tahun_sertifikasi', 'gambar'])
+            ->select(['id', 'nama_perusahaan', 'merek', 'tahun_sertifikasi', 'gambar', 'alamat', 'is_active'])
             ->when($direktoriSearch !== '', function ($query) use ($direktoriSearch): void {
                 $query->where(function ($query) use ($direktoriSearch): void {
                     $query
                         ->where('nama_perusahaan', 'like', "%{$direktoriSearch}%")
                         ->orWhere('merek', 'like', "%{$direktoriSearch}%")
-                        ->orWhere('tahun_sertifikasi', 'like', "%{$direktoriSearch}%");
+                        ->orWhere('tahun_sertifikasi', 'like', "%{$direktoriSearch}%")
+                        ->orWhere('alamat', 'like', "%{$direktoriSearch}%");
                 });
             })
             ->orderBy('id')

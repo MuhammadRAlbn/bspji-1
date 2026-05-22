@@ -97,7 +97,8 @@
                     autoplay
                     muted
                     loop
-                    playsinline>
+                    playsinline
+                    preload="metadata">
                     <source src="{{ $slide['src'] }}" type="video/webm">
                 </video>
             @else
@@ -106,7 +107,8 @@
                     alt="{{ $slide['alt'] }}"
                     class="absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out"
                     style="opacity: {{ $index === 0 ? '.85' : '0' }};"
-                    :style="activeSlide === {{ $index }} ? 'opacity: .85;' : 'opacity: 0;'">
+                    :style="activeSlide === {{ $index }} ? 'opacity: .85;' : 'opacity: 0;'"
+                    @if ($index === 1) fetchpriority="high" @else loading="lazy" @endif>
             @endif
         @endforeach
 

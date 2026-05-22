@@ -10,6 +10,7 @@ use App\Models\SectionSipintu;
 use App\Models\SectionTestimoni;
 use App\Models\SertifikatPerusahaan;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -48,6 +49,14 @@ class LandingPageData
     ];
 
     public function toArray(): array
+    {
+        return Cache::flexible('landing-page-data', [300, 600], fn (): array => $this->buildData());
+    }
+
+    /**
+     * Build the full landing page data array (called on cache miss).
+     */
+    private function buildData(): array
     {
         $sectionProfils = $this->sectionProfils();
         $sectionSipintu = $this->sectionSipintu();

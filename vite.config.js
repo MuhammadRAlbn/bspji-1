@@ -15,4 +15,24 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes('node_modules/alpinejs')) {
+                        return 'vendor-alpine';
+                    }
+                    if (id.includes('node_modules/aos')) {
+                        return 'vendor-aos';
+                    }
+                    if (id.includes('node_modules/leaflet')) {
+                        return 'vendor-leaflet';
+                    }
+                    if (id.includes('node_modules/lucide')) {
+                        return 'vendor-lucide';
+                    }
+                },
+            },
+        },
+    },
 });

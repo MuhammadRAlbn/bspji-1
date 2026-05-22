@@ -15,5 +15,18 @@ class DirektoriPelanggan extends Model
         'gambar',
         'no_hp',
         'keterangan',
+        'is_active',
     ];
+
+    /** @var array<string, mixed> */
+    protected $attributes = [
+        'is_active' => true,
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
+    }
 }

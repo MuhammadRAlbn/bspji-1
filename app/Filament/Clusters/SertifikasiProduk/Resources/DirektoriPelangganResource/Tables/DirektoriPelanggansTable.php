@@ -5,6 +5,7 @@ namespace App\Filament\Clusters\SertifikasiProduk\Resources\DirektoriPelangganRe
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -29,6 +30,10 @@ class DirektoriPelanggansTable
                     ->sortable(),
                 TextColumn::make('tahun_sertifikasi')
                     ->label('Tahun Sertifikasi')
+                    ->sortable(),
+                IconColumn::make('is_active')
+                    ->label('Aktif')
+                    ->boolean()
                     ->sortable(),
                 TextColumn::make('no_sertifikat')
                     ->label('No Sertifikat')

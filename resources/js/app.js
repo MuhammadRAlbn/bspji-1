@@ -4,11 +4,58 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { createIcons, icons } from 'lucide';
+import {
+    createIcons,
+    AlertCircle,
+    ArrowLeft,
+    ArrowRight,
+    Check,
+    CheckCircle,
+    ChevronRight,
+    Clock,
+    Download,
+    FileText,
+    Info,
+    LogIn,
+    Mail,
+    MapPin,
+    Minus,
+    Phone,
+    Plus,
+    Search,
+    Send,
+    ShieldCheck,
+    UserPlus,
+    X,
+} from 'lucide';
 import { registerCertificateLightbox } from './landing/certificate-lightbox';
 import { initCustomerMap } from './landing/customer-map';
 import { initNumbersCharts } from './landing/numbers-chart';
 import { registerTestimonialsCarousel } from './landing/testimonials-carousel';
+
+const usedIcons = {
+    AlertCircle,
+    ArrowLeft,
+    ArrowRight,
+    Check,
+    CheckCircle,
+    ChevronRight,
+    Clock,
+    Download,
+    FileText,
+    Info,
+    LogIn,
+    Mail,
+    MapPin,
+    Minus,
+    Phone,
+    Plus,
+    Search,
+    Send,
+    ShieldCheck,
+    UserPlus,
+    X,
+};
 
 window.Alpine = Alpine;
 window.AOS = AOS;
@@ -79,7 +126,7 @@ registerTestimonialsCarousel(Alpine);
 Livewire.start();
 
 document.addEventListener('DOMContentLoaded', () => {
-    createIcons({ icons });
+    createIcons({ icons: usedIcons });
     AOS.init({ once: true, offset: 200 });
     initCustomerMap();
     initNumbersCharts();

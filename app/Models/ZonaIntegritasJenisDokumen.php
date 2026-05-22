@@ -13,6 +13,8 @@ class ZonaIntegritasJenisDokumen extends Model
 
     public const KODE_INDEKS_PERSEPSI_KORUPSI = 'indeks-persepsi-korupsi';
 
+    public const KODE_PENGADUAN_LAPORAN = 'pengaduan-laporan';
+
     public const KODE_BENTURAN_KEPENTINGAN = 'benturan-kepentingan';
 
     public const KODE_BENTURAN_LAPORAN = 'benturan-laporan';
@@ -25,6 +27,7 @@ class ZonaIntegritasJenisDokumen extends Model
         self::KODE_ZONA_INTEGRITAS,
         self::KODE_IKM_LAPORAN,
         self::KODE_INDEKS_PERSEPSI_KORUPSI,
+        self::KODE_PENGADUAN_LAPORAN,
         self::KODE_BENTURAN_KEPENTINGAN,
         self::KODE_BENTURAN_LAPORAN,
         self::KODE_GRATIFIKASI_LAPORAN,
@@ -35,6 +38,7 @@ class ZonaIntegritasJenisDokumen extends Model
         self::KODE_ZONA_INTEGRITAS => 'Zona Integritas',
         self::KODE_IKM_LAPORAN => 'Laporan IKM',
         self::KODE_INDEKS_PERSEPSI_KORUPSI => 'Indeks Persepsi Korupsi',
+        self::KODE_PENGADUAN_LAPORAN => 'Laporan Pelaksanaan Pengaduan',
         self::KODE_BENTURAN_KEPENTINGAN => 'Benturan Kepentingan',
         self::KODE_BENTURAN_LAPORAN => 'Laporan Pelaksanaan Benturan Kepentingan',
         self::KODE_GRATIFIKASI_LAPORAN => 'Laporan Pelaksanaan Gratifikasi',

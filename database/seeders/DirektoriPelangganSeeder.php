@@ -60,6 +60,7 @@ class DirektoriPelangganSeeder extends Seeder
                 'gambar' => null,
                 'no_hp' => $this->emptyToNull($data['No HP'] ?? null),
                 'keterangan' => $this->emptyToNull($data['Keterangan'] ?? null),
+                'is_active' => true,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
