@@ -72,9 +72,8 @@
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
-            <div class="grid grid-cols-1 items-start">
-            
-                <section x-show="tab === 'sertifikasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+
+                <section x-show="tab === 'sertifikasi'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-5xl space-y-8">
                     @if($sertifikasis->isNotEmpty())
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
@@ -105,7 +104,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'ruang-lingkup'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-5xl">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     @forelse($ruangLingkupan as $item)
@@ -143,7 +142,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'alur-kalibrasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'alur-kalibrasi'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-5xl space-y-6 text-center">
                     @if($alurKalibrasi && $alurKalibrasi->image)
                         <button
@@ -170,8 +169,6 @@
                 </div>
             </section>
 
-
-            </div>
         </article>
     </div>
     <div

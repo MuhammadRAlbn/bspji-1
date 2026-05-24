@@ -148,8 +148,7 @@
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
-            <div class="grid grid-cols-1 items-start">
-                <section x-show="tab === 'sertifikasi'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sertifikasi'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-8">
                         @if($sertifikasi && $sertifikasi->image)
                             <div class="flex justify-start">
@@ -191,7 +190,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'ruang-lingkup'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-6">
 
 
@@ -307,7 +306,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'alur'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-6">
                     @if($alurPengujian && $alurPengujian->image)
                         <div class="flex justify-center">
@@ -330,7 +329,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'tarif'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-8">
                     <div class="rounded-[24px] border border-black/10 bg-slate-50 p-5 sm:rounded-[30px] sm:p-8">
                         <p class="text-justify text-sm leading-relaxed text-slate-700 md:text-base">
@@ -350,7 +349,6 @@
                     @livewire('tarif-pengujian')
                 </div>
                 </section>
-            </div>
         </article>
     </div>
 

@@ -151,9 +151,8 @@
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
-            <div class="grid grid-cols-1 items-start">
-            
-                <section x-show="tab === 'alur'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+
+                <section x-show="tab === 'alur'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl space-y-6">
                     @if($alurProduk && $alurProduk->image)
                         <div class="flex justify-start">
@@ -181,7 +180,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'sertifikat'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sertifikat'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl space-y-8">
                     @if($sertifikats->isNotEmpty())
                         <div class="flex justify-start">
@@ -212,7 +211,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'ruang-lingkup'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'ruang-lingkup'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     @forelse($ruangLingkup as $item)
@@ -242,7 +241,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'dokumen'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'dokumen'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -321,7 +320,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'hak-kewajiban'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'hak-kewajiban'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -361,7 +360,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'tarif'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'tarif'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="space-y-12">
                     @forelse($tarifs as $tarif)
                         <div class="space-y-4">
@@ -384,7 +383,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'sdm'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sdm'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl space-y-10">
                     <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
                         Auditor Sertifikasi Produk yang kompeten dan berpengalaman untuk menjamin kualitas layanan.
@@ -475,7 +474,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'direktori-pelanggan'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'direktori-pelanggan'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="border-b border-black/10 bg-white px-4 py-4 sm:px-6">
                         <form action="{{ route('sertifikasi-produk.index') }}" method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -593,7 +592,7 @@
                 </div>
                 </section>
 
-                <section x-show="tab === 'informasi-publik'" x-cloak x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'informasi-publik'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -632,7 +631,6 @@
                     </div>
                 </div>
                 </section>
-            </div>
         </article>
     </div>
     <div
