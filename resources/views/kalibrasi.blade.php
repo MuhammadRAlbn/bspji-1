@@ -41,7 +41,7 @@
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'sertifikasi' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m5.25 2.814c0 4.285-2.924 8.032-7.087 9.063a1.38 1.38 0 0 1-.326.037 1.38 1.38 0 0 1-.326-.037C8.348 20.596 5.424 16.85 5.424 12.564V7.902c0-.67.423-1.267 1.056-1.491l5.25-1.867a1.37 1.37 0 0 1 .913 0l5.25 1.867c.633.224 1.056.82 1.056 1.49v4.663Z" />
                 </svg>
-                <span class="text-base font-semibold sm:text-[1.05rem]">Sertifikasi</span>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Sertifikat</span>
             </button>
 
             <button
@@ -53,7 +53,7 @@
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'ruang-lingkup' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.75h4.5m-7.386 2.25h10.272c.53 0 1.02.28 1.286.736l2.226 3.818a1.5 1.5 0 0 1 0 1.51l-2.226 3.818a1.5 1.5 0 0 1-1.286.736H6.864a1.5 1.5 0 0 1-1.286-.736l-2.226-3.818a1.5 1.5 0 0 1 0-1.51l2.226-3.818A1.5 1.5 0 0 1 6.864 6ZM9 9.75h6m-6 3h3" />
                 </svg>
-                <span class="text-base font-semibold sm:text-[1.05rem]">Ruang Lingkup</span>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Ruang Lingkup dan Tarif</span>
             </button>
 
             <button
@@ -68,17 +68,7 @@
                 <span class="text-base font-semibold sm:text-[1.05rem]">Alur</span>
             </button>
 
-            <button
-                type="button"
-                @click="tab = 'tarif'"
-                :class="tab === 'tarif' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
-            >
-                <svg class="h-5 w-5 shrink-0" :class="tab === 'tarif' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14.25 6.75 12m0 0L9 9.75M6.75 12h10.5m3.75-6.75v13.5A2.25 2.25 0 0 1 18.75 21H5.25A2.25 2.25 0 0 1 3 18.75V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />
-                </svg>
-                <span class="text-base font-semibold sm:text-[1.05rem]">Tarif</span>
-            </button>
+
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
@@ -119,26 +109,30 @@
                 <div class="mx-auto max-w-5xl">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                     @forelse($ruangLingkupan as $item)
-                        <div class="group flex flex-col overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-sm transition-all duration-500 hover:shadow-md">
+                        <div class="group flex flex-col rounded-[20px] border border-slate-200 bg-white p-2 shadow-sm transition-all duration-500 hover:shadow-lg hover:shadow-slate-200/50">
                             @if($item->image)
-                                <div class="relative aspect-square overflow-hidden">
+                                <div class="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
                                     <div class="absolute inset-0 z-10 bg-slate-900/5 transition duration-500 group-hover:bg-transparent"></div>
-                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+                                    <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover transition duration-700 group-hover:scale-105">
                                 </div>
                             @endif
-                            <div class="grow p-6">
-                                <span class="mb-3 inline-block rounded-full bg-slate-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-slate-500">Scope</span>
-                                <h3 class="mb-6 text-xl font-bold leading-tight text-slate-800">{{ $item->title }}</h3>
-                                <ul class="space-y-3">
+                            <div class="flex grow flex-col px-5 py-6 md:px-6">
+                                <span class="mb-5 self-start text-[13px] font-bold text-slate-500">{{ $item->title }}</span>
+                                <div class="space-y-8">
                                     @foreach($item->details ?? [] as $detail)
-                                        <li class="flex items-start">
-                                            <div class="mt-1 mr-3 rounded-full bg-emerald-50 p-1">
-                                                <svg class="h-3 w-3 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                            </div>
-                                            <span class="text-sm font-medium leading-relaxed text-slate-600">{{ is_array($detail) ? ($detail['name'] ?? '-') : $detail }}</span>
-                                        </li>
+                                        <div class="flex flex-col gap-4">
+                                            <h4 class="text-[1.35rem] font-bold leading-snug text-slate-900">{{ is_array($detail) ? ($detail['name'] ?? '-') : $detail }}</h4>
+                                            @if(is_array($detail) && isset($detail['price']) && $detail['price'] > 0)
+                                                <div class="flex items-center gap-3">
+                                                    <div class="flex h-6 w-6 shrink-0 items-center justify-center rounded-[8px] bg-[#0f172a] text-white shadow-sm transition-transform group-hover:scale-105">
+                                                        <svg class="h-2.5 w-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                                    </div>
+                                                    <span class="text-[13px] font-semibold text-slate-700">Rp {{ number_format($detail['price'], 0, ',', '.') }}</span>
+                                                </div>
+                                            @endif
+                                        </div>
                                     @endforeach
-                                </ul>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -176,41 +170,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
-                <div class="mx-auto max-w-5xl">
-                    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-                    @forelse($ruangLingkupan as $item)
-                        <div class="group flex flex-col overflow-hidden rounded-[24px] border border-black/10 bg-white shadow-sm transition-all duration-500 hover:shadow-md">
-                            @if($item->image)
-                                <div class="relative h-32 overflow-hidden">
-                                    <div class="absolute inset-0 z-10 bg-slate-900/40"></div>
-                                    <img src="{{ asset('storage/' . $item->image) }}" class="h-full w-full object-cover opacity-60 blur-[1px]">
-                                    <div class="absolute inset-0 z-20 flex items-center justify-center">
-                                        <h4 class="px-4 text-center text-sm font-bold uppercase tracking-wide text-white">{{ $item->title }}</h4>
-                                    </div>
-                                </div>
-                            @endif
-                            <div class="grow bg-white p-6">
-                                <div class="space-y-3">
-                                    @foreach($item->details ?? [] as $detail)
-                                        @if(is_array($detail))
-                                            <div class="flex items-center justify-between rounded-xl border border-black/5 bg-slate-50 p-4 transition duration-200 hover:bg-white hover:shadow-sm">
-                                                <span class="pr-3 text-xs font-bold leading-snug text-slate-700">{{ $detail['name'] ?? '-' }}</span>
-                                                <span class="whitespace-nowrap rounded-lg border border-black/5 bg-white px-3 py-1.5 text-sm font-bold text-slate-800 shadow-sm">Rp {{ number_format($detail['price'] ?? 0, 0, ',', '.') }}</span>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    @empty
-                        <div class="col-span-full rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
-                            <p class="font-medium text-slate-400">Data daftar tarif belum tersedia.</p>
-                        </div>
-                    @endforelse
-                    </div>
-                </div>
-                </section>
+
             </div>
         </article>
     </div>

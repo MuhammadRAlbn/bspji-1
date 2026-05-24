@@ -10,34 +10,10 @@
             'cta_url' => '#layanan',
         ],
         [
-            'type' => 'image',
-            'src' => asset('header_pengujian.webp'),
-            'alt' => 'Aktivitas layanan pengujian BSPJI Banda Aceh',
-            'kicker' => 'Layanan Pengujian',
-            'title' => 'Pengujian Mutu untuk Keputusan Industri yang Lebih Pasti',
-            'description' => 'Dukungan laboratorium dan tenaga teknis untuk memastikan produk memenuhi kebutuhan standar mutu.',
-            'cta_label' => 'Lihat Layanan',
-            'cta_url' => '#layanan',
+            'type' => 'custom_wbk',
         ],
         [
-            'type' => 'image',
-            'src' => asset('images/imagelab.webp'),
-            'alt' => 'Fasilitas laboratorium BSPJI Banda Aceh',
-            'kicker' => 'Fasilitas Teknis',
-            'title' => 'Laboratorium dan Pendampingan untuk Industri yang Tumbuh',
-            'description' => 'Akses informasi cepat terkait fasilitas, layanan, dan dukungan teknis bagi pelaku industri.',
-            'cta_label' => 'Kenali Profil Kami',
-            'cta_url' => '#profil',
-        ],
-        [
-            'type' => 'image',
-            'src' => asset('images/udara1.jpeg'),
-            'alt' => 'Pemantauan alat pengujian udara',
-            'kicker' => 'Informasi Cepat',
-            'title' => 'Solusi Standardisasi dari Pengujian hingga Sertifikasi',
-            'description' => 'Temukan jalur layanan yang sesuai untuk kebutuhan standardisasi, konsultasi, dan sertifikasi produk.',
-            'cta_label' => 'Mulai Konsultasi',
-            'cta_url' => '#whatsapp-cta',
+            'type' => 'custom_maklumat',
         ],
     ];
 @endphp
@@ -101,7 +77,7 @@
                     preload="metadata">
                     <source src="{{ $slide['src'] }}" type="video/webm">
                 </video>
-            @else
+            @elseif ($slide['type'] === 'image')
                 <img
                     src="{{ $slide['src'] }}"
                     alt="{{ $slide['alt'] }}"
@@ -109,37 +85,114 @@
                     style="opacity: {{ $index === 0 ? '.85' : '0' }};"
                     :style="activeSlide === {{ $index }} ? 'opacity: .85;' : 'opacity: 0;'"
                     @if ($index === 1) fetchpriority="high" @else loading="lazy" @endif>
+            @elseif ($slide['type'] === 'custom_wbk' || $slide['type'] === 'custom_maklumat')
+                <div 
+                    class="absolute inset-0 h-full w-full bg-gray-900 transition-opacity duration-700 ease-out overflow-hidden"
+                    style="opacity: {{ $index === 0 ? '1' : '0' }};"
+                    :style="activeSlide === {{ $index }} ? 'opacity: 1;' : 'opacity: 0;'">
+                    <!-- Decorative blurred blobs for dark bg -->
+                    <div class="absolute -top-[20%] -left-[10%] h-[600px] w-[600px] rounded-full bg-red-900/20 blur-[100px]"></div>
+                    <div class="absolute top-[20%] -right-[10%] h-[500px] w-[500px] rounded-full bg-blue-900/20 blur-[100px]"></div>
+                    <!-- Subtle grid pattern -->
+                    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+                </div>
             @endif
         @endforeach
 
-        <div class="absolute inset-0 bg-linear-to-t from-black via-black/45 to-black/10"></div>
-        <div class="absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black via-black/45 to-black/10 transition-opacity duration-700" :style="(activeSlide === 1 || activeSlide === 2) ? 'opacity: 0;' : 'opacity: 1;'"></div>
+        <div class="absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/70 via-black/20 to-transparent transition-opacity duration-700" :style="(activeSlide === 1 || activeSlide === 2) ? 'opacity: 0;' : 'opacity: 1;'"></div>
 
         <div class="relative z-20 mx-auto flex h-full w-full max-w-[1430px] flex-col justify-end px-6 pb-28 lg:px-8 2xl:px-0">
             <div class="grid w-full items-end" data-aos="fade-up" data-aos-duration="1000">
             @foreach ($heroSlides as $index => $slide)
                 <div
-                    class="col-start-1 row-start-1 max-w-3xl transition-opacity duration-500 ease-out"
+                    class="col-start-1 row-start-1 w-full transition-opacity duration-500 ease-out"
                     style="opacity: {{ $index === 0 ? '1' : '0' }}; visibility: {{ $index === 0 ? 'visible' : 'hidden' }};"
                     :style="activeSlide === {{ $index }} ? 'opacity: 1; visibility: visible;' : 'opacity: 0; visibility: hidden;'"
                     :class="activeSlide === {{ $index }} ? 'pointer-events-auto' : 'pointer-events-none'"
                     :aria-hidden="activeSlide !== {{ $index }}">
-                    <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-white/70">
-                        {{ $slide['kicker'] }}
-                    </p>
-                    <h1 class="mb-6 text-3xl leading-[1.1] tracking-tight text-white md:text-5xl">
-                        {{ $slide['title'] }}
-                    </h1>
-                    <p class="mb-9 max-w-2xl text-base font-light leading-relaxed text-white/80 md:text-xl">
-                        {{ $slide['description'] }}
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <a href="{{ $slide['cta_url'] }}"
-                            class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-8 py-3 text-md font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20">
-                            {{ $slide['cta_label'] }}
-                            <i data-lucide="arrow-right" class="h-4 w-4"></i>
-                        </a>
-                    </div>
+                    @if ($slide['type'] === 'custom_wbk')
+                        <div class="flex items-center justify-center w-full h-full pb-0 pt-0 md:pb-12 md:pt-16 mt-16 md:mt-0">
+                            <!-- White Card Container -->
+                            <div class="relative w-full max-w-5xl bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-[2rem] shadow-2xl p-6 md:p-12 lg:p-16 border border-white/20 mx-auto transform transition-all duration-700 ease-out"
+                                 :class="activeSlide === {{ $index }} ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'">
+                                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
+                                    <div class="w-full max-w-[140px] md:max-w-[280px] md:w-5/12 flex justify-center md:justify-end">
+                                        <div class="relative group cursor-default">
+                                            <div class="absolute inset-0 rounded-full bg-red-100/60 blur-3xl transition-all duration-700 group-hover:bg-red-200/80"></div>
+                                            <img src="{{ asset('images/hero/WBK.png') }}" alt="Zona Integritas WBK" class="relative z-10 w-full h-auto object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105" />
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-7/12 flex flex-col justify-center text-center md:text-left">
+                                        <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs font-semibold tracking-wide text-gray-600 shadow-xs mb-3 md:mb-6 mx-auto md:mx-0 w-fit">
+                                            <span class="relative flex h-2 w-2">
+                                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                            </span>
+                                            Fokus Utama Kami
+                                        </div>
+                                        <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold mb-2 md:mb-5 leading-[1.15] tracking-tight text-gray-900">
+                                            Anda Memasuki<br>
+                                            <span class="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-red-400 drop-shadow-sm">ZONA INTEGRITAS</span>
+                                        </h2>
+                                        <p class="text-xs md:text-lg font-medium text-gray-600 max-w-xl mx-auto md:mx-0 leading-relaxed">
+                                            BSPJI Banda Aceh Menuju Wilayah Bebas Korupsi (WBK) & Wilayah Birokrasi Bersih dan Melayani (WBBM)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @elseif ($slide['type'] === 'custom_maklumat')
+                        <div class="flex items-center justify-center w-full h-full pb-0 pt-0 md:pb-12 md:pt-16 mt-16 md:mt-0">
+                            <!-- White Card Container -->
+                            <div class="relative w-full max-w-5xl bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-[2rem] shadow-2xl p-6 md:p-12 lg:p-16 border border-white/20 mx-auto transform transition-all duration-700 ease-out"
+                                 :class="activeSlide === {{ $index }} ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'">
+                                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
+                                    <div class="w-full max-w-[140px] md:max-w-[280px] md:w-5/12 flex justify-center md:justify-end">
+                                        <div class="relative group cursor-default">
+                                            <div class="absolute inset-0 rounded-full bg-red-100/60 blur-3xl transition-all duration-700 group-hover:bg-red-200/80"></div>
+                                            <img src="{{ asset('images/hero/maklumat.webp') }}" alt="Maklumat Pelayanan BSPJI Banda Aceh" class="relative z-10 w-full h-auto object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105" />
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-7/12 flex flex-col justify-center text-center md:text-left">
+                                        <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs font-semibold tracking-wide text-gray-600 shadow-xs mb-3 md:mb-6 mx-auto md:mx-0 w-fit">
+                                            <span class="relative flex h-2 w-2">
+                                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                            </span>
+                                            Komitmen Kami
+                                        </div>
+                                        <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold mb-2 md:mb-5 leading-[1.15] tracking-tight text-gray-900">
+                                            Maklumat Pelayanan<br>
+                                            BSPJI BANDA ACEH
+                                        </h2>
+                                        <p class="text-xs md:text-lg font-medium text-gray-600 max-w-xl mx-auto md:mx-0 leading-relaxed">
+                                            Kami melayani industri sepenuh hati
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @else
+                        <div class="max-w-3xl">
+                            <p class="mb-4 text-sm font-semibold uppercase tracking-[0.22em] text-white/70">
+                                {{ $slide['kicker'] }}
+                            </p>
+                            <h1 class="mb-6 text-3xl leading-[1.1] tracking-tight text-white md:text-5xl">
+                                {{ $slide['title'] }}
+                            </h1>
+                            <p class="mb-9 max-w-2xl text-base font-light leading-relaxed text-white/80 md:text-xl">
+                                {{ $slide['description'] }}
+                            </p>
+                            <div class="flex flex-wrap gap-4">
+                                <a href="{{ $slide['cta_url'] }}"
+                                    class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-8 py-3 text-md font-semibold text-white backdrop-blur-md transition-all hover:bg-white/20">
+                                    {{ $slide['cta_label'] }}
+                                    <i data-lucide="arrow-right" class="h-4 w-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             @endforeach
             </div>

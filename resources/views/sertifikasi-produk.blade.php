@@ -23,7 +23,7 @@
     }
 }" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen || customerDetailOpen)">
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
-        <header class="relative w-full overflow-hidden rounded-4xl border border-slate-300 bg-white py-10 shadow-md lg:py-12">
+        <header class="relative w-full overflow-hidden rounded-[32px] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
             <div class="px-6 text-left lg:px-10">
                 <div class="mb-3 flex items-center gap-2">
                     <span class="text-[10px] text-blue-600">■</span>
@@ -254,6 +254,7 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-black/10">
+                                {{-- LOGIKA DINAMIS SEMENTARA DI-COMMENT
                                 @forelse($dokumens as $index => $dokumen)
                                     <tr class="transition-colors hover:bg-slate-50/50">
                                         <td class="px-6 py-4 text-sm font-medium text-slate-500">
@@ -276,6 +277,44 @@
                                         </td>
                                     </tr>
                                 @endforelse
+                                --}}
+
+                                {{-- hapus dummy ini jika ingin menerapkan dinamis --}}
+                                @php
+                                    $staticDokumens = [
+                                        "Blangko Daftar Isian Permohonan SPPT SNI",
+                                        "Blangko Data Pemohon Sertifikasi",
+                                        "Blangko Ilustrasi Pembubuhan Tanda SNI",
+                                        "Blangko Kualifikasi Penanggung Jawab Mutu",
+                                        "Blangko Peralatan Inspeksi - Pengujian",
+                                        "Blangko Peralatan Produksi",
+                                        "Blangko Pernyataan Kesesuaian",
+                                        "Blangko Pernyataan PenanggungJawab di Indonesia",
+                                        "Blangko Pernyataan Penerapan CPPOB",
+                                        "Blangko Surat Pelimpahan Merek (bila merek punya orang lain)",
+                                        "Blangko Surat Penunjukan Personil Pengurusan",
+                                        "Blangko Surat Pernyataan Keabsahan Merek",
+                                        "Blanko Surat Pernyataan Keaslian Dokumen",
+                                        "Surat permohonan Perusahaan"
+                                    ];
+                                @endphp
+
+                                @foreach($staticDokumens as $index => $namaDokumen)
+                                    <tr class="transition-colors hover:bg-slate-50/50">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-500">
+                                            {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-semibold text-slate-800">
+                                            {{ $namaDokumen }}
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <a href="{{ asset('dokumen-dummy.pdf') }}" download="{{ $namaDokumen }}.pdf" class="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white transition-all hover:bg-slate-700 active:scale-95">
+                                                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                                Download
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -353,82 +392,82 @@
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                         {{-- Card Ahli Madya --}}
-                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
-                            <!-- Top Accent Gradient line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-indigo-500 to-purple-600"></div>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-500/30 bg-slate-800 text-white">
+                            <!-- Background Decor -->
+                            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-500 group-hover:scale-150"></div>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="relative z-10 flex items-center justify-between">
                                 <!-- Icon Wrapper -->
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100/50 text-indigo-600 transition-colors group-hover:bg-indigo-100/50">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                <div class="flex h-14 w-14 items-center justify-center rounded-[16px] bg-white/10 border border-white/20 backdrop-blur-sm text-white shadow-inner">
+                                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <!-- Count Pill -->
-                                <div class="flex items-baseline gap-1 rounded-full bg-indigo-50 border border-indigo-100/30 px-3 py-1 text-xs font-bold text-indigo-700">
-                                    <span class="text-lg font-black leading-none">{{ $countAhliMadya }}</span>
-                                    <span class="text-[9px] uppercase tracking-wider text-indigo-500">Auditor</span>
+                                <!-- Count -->
+                                <div class="flex items-baseline gap-1.5 text-right">
+                                    <span class="text-4xl font-black tracking-tight text-white">{{ $countAhliMadya }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Orang</span>
                                 </div>
                             </div>
 
-                            <div class="mt-8 space-y-1 text-left">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Kualifikasi AMMI</span>
-                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
-                                    Ahli <span class="font-semibold text-slate-900">Madya</span>
+                            <div class="relative z-10 mt-10 space-y-1 text-left">
+                                <span class="inline-block rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-md">Auditor</span>
+                                <h3 class="mt-4 text-3xl font-light tracking-tight text-slate-50 sm:text-4xl">
+                                    Ahli <span class="font-bold text-white">Madya</span>
                                 </h3>
                             </div>
                         </div>
 
                         {{-- Card Ahli Muda --}}
-                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
-                            <!-- Top Accent Gradient line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-emerald-500 to-teal-600"></div>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-500/30 bg-slate-800 text-white">
+                            <!-- Background Decor -->
+                            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-500 group-hover:scale-150"></div>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="relative z-10 flex items-center justify-between">
                                 <!-- Icon Wrapper -->
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100/50 text-emerald-600 transition-colors group-hover:bg-emerald-100/50">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                <div class="flex h-14 w-14 items-center justify-center rounded-[16px] bg-white/10 border border-white/20 backdrop-blur-sm text-white shadow-inner">
+                                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <!-- Count Pill -->
-                                <div class="flex items-baseline gap-1 rounded-full bg-emerald-50 border border-emerald-100/30 px-3 py-1 text-xs font-bold text-emerald-700">
-                                    <span class="text-lg font-black leading-none">{{ $countAhliMuda }}</span>
-                                    <span class="text-[9px] uppercase tracking-wider text-emerald-500">Auditor</span>
+                                <!-- Count -->
+                                <div class="flex items-baseline gap-1.5 text-right">
+                                    <span class="text-4xl font-black tracking-tight text-white">{{ $countAhliMuda }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Orang</span>
                                 </div>
                             </div>
 
-                            <div class="mt-8 space-y-1 text-left">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Kualifikasi AMMI</span>
-                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
-                                    Ahli <span class="font-semibold text-slate-900">Muda</span>
+                            <div class="relative z-10 mt-10 space-y-1 text-left">
+                                <span class="inline-block rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-md">Auditor</span>
+                                <h3 class="mt-4 text-3xl font-light tracking-tight text-slate-50 sm:text-4xl">
+                                    Ahli <span class="font-bold text-white">Muda</span>
                                 </h3>
                             </div>
                         </div>
 
                         {{-- Card Ahli Pertama --}}
-                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
-                            <!-- Top Accent Gradient line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-sky-500 to-blue-600"></div>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-500/30 bg-slate-800 text-white">
+                            <!-- Background Decor -->
+                            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-500 group-hover:scale-150"></div>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="relative z-10 flex items-center justify-between">
                                 <!-- Icon Wrapper -->
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-50 border border-sky-100/50 text-sky-600 transition-colors group-hover:bg-sky-100/50">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                <div class="flex h-14 w-14 items-center justify-center rounded-[16px] bg-white/10 border border-white/20 backdrop-blur-sm text-white shadow-inner">
+                                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <!-- Count Pill -->
-                                <div class="flex items-baseline gap-1 rounded-full bg-sky-50 border border-sky-100/30 px-3 py-1 text-xs font-bold text-sky-700">
-                                    <span class="text-lg font-black leading-none">{{ $countAhliPertama }}</span>
-                                    <span class="text-[9px] uppercase tracking-wider text-sky-500">Auditor</span>
+                                <!-- Count -->
+                                <div class="flex items-baseline gap-1.5 text-right">
+                                    <span class="text-4xl font-black tracking-tight text-white">{{ $countAhliPertama }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Orang</span>
                                 </div>
                             </div>
 
-                            <div class="mt-8 space-y-1 text-left">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-sky-500">Kualifikasi AMMI</span>
-                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
-                                    Ahli <span class="font-semibold text-slate-900">Pertama</span>
+                            <div class="relative z-10 mt-10 space-y-1 text-left">
+                                <span class="inline-block rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-md">Auditor</span>
+                                <h3 class="mt-4 text-3xl font-light tracking-tight text-slate-50 sm:text-4xl">
+                                    Ahli <span class="font-bold text-white">Pertama</span>
                                 </h3>
                             </div>
                         </div>

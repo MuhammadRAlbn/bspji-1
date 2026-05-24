@@ -29,16 +29,17 @@
                 </p>
 
                 <div class="flex flex-wrap gap-3">
-                    <a href="#"
+                    <a href="http://pintu.bspjiaceh.id/login"
                         class="flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/35 transition-all hover:bg-blue-700">
                         <i data-lucide="log-in" class="h-4 w-4"></i> Login
                     </a>
-                    <a href="#"
+                    <a href="http://pintu.bspjiaceh.id/register"
                         class="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20">
                         <i data-lucide="user-plus" class="h-4 w-4"></i> Daftar
                     </a>
                 </div>
 
+                {{--
                 <div class="mt-8 max-w-md rounded-2xl backdrop-blur-md">
                     <p class="mb-3 text-xs uppercase tracking-[0.2em] text-white/65">Cek Order</p>
                     <form class="flex flex-col gap-2.5 sm:flex-row">
@@ -51,6 +52,7 @@
                     </form>
                     <p class="mt-2 text-xs text-white/65">Contoh: BA-2026-001245</p>
                 </div>
+                --}}
             </div>
 
             <div class="relative mt-8 flex h-full w-full items-center justify-center lg:mt-0 lg:w-7/12 lg:justify-end"

@@ -107,7 +107,7 @@
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'sertifikasi' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m5.25 2.814c0 4.285-2.924 8.032-7.087 9.063a1.38 1.38 0 0 1-.326.037 1.38 1.38 0 0 1-.326-.037C8.348 20.596 5.424 16.85 5.424 12.564V7.902c0-.67.423-1.267 1.056-1.491l5.25-1.867a1.37 1.37 0 0 1 .913 0l5.25 1.867c.633.224 1.056.82 1.056 1.49v4.663Z" />
                 </svg>
-                <span class="text-base font-semibold sm:text-[1.05rem]">Sertifikasi</span>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Sertifikat</span>
             </button>
 
             <button
@@ -193,37 +193,10 @@
 
                 <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
                 <div class="mx-auto max-w-7xl space-y-6">
-                    <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
-                        Informasi ruang lingkup pengujian dapat difilter berdasarkan lab dan tetap bisa dicari cepat
-                        melalui komoditi maupun uraian ruang lingkup.
-                    </p>
+
 
                     <form @submit.prevent class="space-y-4 rounded-2xl border border-black/20 bg-[#fbfbfd] p-4 sm:p-6">
-                        <div class="space-y-3">
-                            <label class="block text-sm font-bold uppercase tracking-wider text-[#1d1d1f]">
-                                Pilih lab
-                            </label>
-                            <div class="flex flex-wrap gap-3">
-                                <button
-                                    type="button"
-                                    @click="selectedLab = ''; resetPagination()"
-                                    :class="selectedLab === '' ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-700 border-black/15'"
-                                    class="rounded-full border px-4 py-2 text-sm font-semibold transition-all"
-                                >
-                                    Semua Lab
-                                </button>
 
-                                <template x-for="lab in labMenuItems" :key="lab.value">
-                                    <button
-                                        type="button"
-                                        @click="selectedLab = lab.value; resetPagination()"
-                                        :class="selectedLab === lab.value ? 'bg-slate-800 text-white border-slate-800' : 'bg-white text-slate-700 border-black/15'"
-                                        class="rounded-full border px-4 py-2 text-sm font-semibold transition-all"
-                                        x-text="lab.label"
-                                    ></button>
-                                </template>
-                            </div>
-                        </div>
 
                         <label class="block text-sm font-bold uppercase tracking-wider text-[#1d1d1f]">
                             Cari ruang lingkup pengujian

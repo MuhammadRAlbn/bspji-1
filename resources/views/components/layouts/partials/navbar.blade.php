@@ -47,7 +47,7 @@
     $mainMenu = [
         ['type' => 'link', 'label' => 'Beranda', 'url' => url('/')],
         ['type' => 'dropdown', 'key' => 'profil', 'label' => 'Profil', 'items' => $profilMenu],
-        ['type' => 'dropdown', 'key' => 'pelayanan', 'label' => 'Pelayanan', 'items' => $pelayananMenu],
+        ['type' => 'dropdown', 'key' => 'pelayanan', 'label' => 'Layanan', 'items' => $pelayananMenu],
         ['type' => 'dropdown', 'key' => 'informasi-publik', 'label' => 'Informasi Publik', 'items' => $informasiPublikMenu],
         ['type' => 'dropdown', 'key' => 'tautan', 'label' => 'Tautan', 'items' => $tautanMenu],
         ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => '#'],

@@ -55,20 +55,21 @@
             :showcase-image="$showcaseImage"
         />
 
-        <!-- WhatsApp CTA section -->
-        <x-landing.whatsapp-cta />
-
+        
         <!-- Certificate lightbox section -->
         <x-landing.certificate-lightbox />
-
+        
         <!-- Certificates section -->
         <x-landing.certificates
-            :certificate-bg-image="$certificateBgImage"
-            :certificate-items="$certificateItems"
+        :certificate-bg-image="$certificateBgImage"
+        :certificate-items="$certificateItems"
         />
-
+        
+        <!-- WhatsApp CTA section -->
+        <x-landing.whatsapp-cta />
+        
         <!-- Company in numbers section -->
-        <x-landing.company-numbers />
+        <!-- <x-landing.company-numbers /> -->
 
         <!-- Testimonials section -->
         <x-landing.testimonials :testimonial-items="$testimonialItems" />
@@ -89,7 +90,7 @@
         <x-zona-integritas.section :show-content="false" />
 
         <!-- FAQ section -->
-        <x-landing.faq :faq-display-images="$faqDisplayImages" />
+        <!-- <x-landing.faq :faq-display-images="$faqDisplayImages" /> -->
 
         <!-- Latest news section -->
         <x-landing.latest-news
