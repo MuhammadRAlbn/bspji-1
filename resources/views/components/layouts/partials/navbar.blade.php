@@ -50,7 +50,7 @@
         ['type' => 'dropdown', 'key' => 'pelayanan', 'label' => 'Layanan', 'items' => $pelayananMenu],
         ['type' => 'dropdown', 'key' => 'informasi-publik', 'label' => 'Informasi Publik', 'items' => $informasiPublikMenu],
         ['type' => 'dropdown', 'key' => 'tautan', 'label' => 'Tautan', 'items' => $tautanMenu],
-        ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => '#'],
+        // ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => '#'],
     ];
 
     $displayMenu = $mainMenu;
@@ -123,7 +123,7 @@
                         <li>
                             <a href="{{ $menu['url'] }}" @if ($isTransparent)
                                 :class="isSolid ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-950' : 'text-white/90 hover:bg-white/10 hover:text-white'"
-                                class="inline-flex items-center whitespace-nowrap rounded-full px-4 py-2.5 text-base font-medium transition xl:px-5"
+                                class="inline-flex items-center whitespace-nowrap rounded-full px-4 py-2.5 text-base font-semibold transition xl:px-5"
                             @else
                                     class="inline-flex items-center whitespace-nowrap px-1 py-2 text-md font-semibold text-slate-700 transition hover:text-slate-900 xl:px-2"
                                 @endif>
@@ -134,7 +134,7 @@
                         <li x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false" class="relative">
                             <button type="button" @click="open = !open" @if ($isTransparent)
                                 :class="isSolid ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-950' : 'text-white/90 hover:bg-white/10 hover:text-white'"
-                                class="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-4 py-2.5 text-base font-medium transition xl:px-5"
+                                class="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-4 py-2.5 text-base font-semibold transition xl:px-5"
                             @else
                                     class="inline-flex items-center gap-1 whitespace-nowrap px-1 py-2 text-md font-semibold text-slate-700 transition hover:text-slate-900 xl:px-2"
                                 @endif>
@@ -162,7 +162,7 @@
                                     @foreach ($menu['items'] as $item)
                                         <a href="{{ $item['url'] }}" @if ($isTransparent)
                                             :class="isSolid ? 'text-slate-700 hover:bg-slate-100 hover:text-slate-950' : 'text-white/80 hover:bg-white/10 hover:text-white'"
-                                        class="block rounded-xl px-3 py-2 text-md font-medium transition" @else
+                                        class="block rounded-xl px-3 py-2 text-md font-semibold transition" @else
                                                 class="block rounded-xl px-3 py-2 text-md font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-900"
                                             @endif>
                                             {{ $item['label'] }}
