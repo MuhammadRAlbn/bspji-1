@@ -50,7 +50,7 @@
         ['type' => 'dropdown', 'key' => 'pelayanan', 'label' => 'Layanan', 'items' => $pelayananMenu],
         ['type' => 'dropdown', 'key' => 'informasi-publik', 'label' => 'Informasi Publik', 'items' => $informasiPublikMenu],
         ['type' => 'dropdown', 'key' => 'tautan', 'label' => 'Tautan', 'items' => $tautanMenu],
-        // ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => '#'],
+        ['type' => 'link', 'label' => 'Hubungi Kami', 'url' => route('hubungi-kami.index')],
     ];
 
     $displayMenu = $mainMenu;

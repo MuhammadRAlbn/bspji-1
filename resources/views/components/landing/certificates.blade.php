@@ -49,7 +49,7 @@
 </section>
 --}}
 
-<section id="sertifikat-2" class="relative w-full overflow-hidden">
+<section id="sertifikat-2" class="relative w-full overflow-hidden" x-data>
     <div class="absolute inset-0">
         <img src="{{ $certificateBgImage }}" alt="" class="h-full w-full object-cover" aria-hidden="true">
         <div class="absolute inset-0 bg-black/30 lg:hidden"></div>

@@ -512,6 +512,7 @@
                             <thead>
                                 <tr class="border-b border-black/20 bg-slate-50">
                                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Perusahaan</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Alamat</th>
                                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Merek</th>
                                     <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Status</th>
                                     <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-800">Gambar</th>
@@ -540,13 +541,18 @@
                                         @keydown.space.prevent="openCustomerDetail(@js($detailPelanggan))"
                                         class="cursor-pointer align-middle transition-colors hover:bg-slate-50 focus:outline-none focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-400"
                                     >
-                                        <td class="w-[40%] px-6 py-4 align-middle text-sm font-semibold text-slate-800">
+                                        <td class="w-[30%] px-6 py-4 align-middle text-sm font-semibold text-slate-800">
                                             {{ $pelanggan->nama_perusahaan ?: '-' }}
                                         </td>
-                                        <td class="w-[30%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
+                                        <td class="w-[25%] px-6 py-4 align-middle text-sm text-slate-600">
+                                            <span class="inline-flex rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
+                                                {{ $pelanggan->alamat_singkat }}
+                                            </span>
+                                        </td>
+                                        <td class="w-[20%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
                                             {{ $pelanggan->merek ?: '-' }}
                                         </td>
-                                        <td class="w-[15%] px-6 py-4 align-middle">
+                                        <td class="w-[10%] px-6 py-4 align-middle">
                                             @if($pelanggan->is_active)
                                                 <span class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-200">
                                                     Aktif

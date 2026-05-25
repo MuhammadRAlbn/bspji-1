@@ -24,6 +24,10 @@ class DirektoriPelanggansTable
                     ->label('Nama Perusahaan')
                     ->searchable()
                     ->sortable(),
+                TextColumn::make('alamat_singkat')
+                    ->label('Alamat')
+                    ->badge()
+                    ->color('gray'),
                 TextColumn::make('merek')
                     ->label('Merek')
                     ->searchable()
