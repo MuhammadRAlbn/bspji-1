@@ -51,11 +51,11 @@ class LandingPageData
     public function toArray(): array
     {
         $data = Cache::flexible('landing-page-data', [300, 600], fn (): array => $this->buildData());
-        
+
         $collectionKeys = [
-            'profileImages', 'serviceItems', 'logoItems', 'firstLogoGroup', 
-            'secondLogoGroup', 'certificateItems', 'testimonialItems', 
-            'faqDisplayImages', 'latestNewsItems', 'customerDistribution'
+            'profileImages', 'serviceItems', 'logoItems', 'firstLogoGroup',
+            'secondLogoGroup', 'certificateItems', 'testimonialItems',
+            'faqDisplayImages', 'latestNewsItems', 'customerDistribution',
         ];
 
         foreach ($collectionKeys as $key) {
@@ -118,6 +118,20 @@ class LandingPageData
             ->first();
     }
 
+    /**
+     * Desired display order for service cards (slug => priority).
+     */
+    private const SERVICE_DISPLAY_ORDER = [
+        'pengujian' => 1,
+        'lembaga-sertifikasi-produk' => 2,
+        'sertifikasi-industri-hijau' => 3,
+        'verifikasi-tkdn' => 4,
+        'kalibrasi' => 5,
+        'lembaga-pemeriksa-halal' => 6,
+        'pelatihan' => 7,
+        'pendampingan-dan-konsultasi' => 8,
+    ];
+
     private function serviceItems(): Collection
     {
         return SectionLayanan::query()
@@ -128,7 +142,9 @@ class LandingPageData
                 'detail' => $layanan->detail,
                 'image_url' => $layanan->gambar ? Storage::url($layanan->gambar) : null,
                 'url' => $this->serviceUrl($layanan->nama_layanan),
-            ]);
+            ])
+            ->sortBy(fn (array $item): int => self::SERVICE_DISPLAY_ORDER[Str::slug($item['name'])] ?? 999)
+            ->values();
     }
 
     private function logoItems(): Collection

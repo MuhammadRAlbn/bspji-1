@@ -1,6 +1,6 @@
 <section id="whatsapp-cta" class="relative bg-white pt-20 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20">
     <div class="mx-auto max-w-6xl px-6 lg:px-0">
-        <div class="relative overflow-hidden rounded-3xl bg-[#0f172a] px-8 py-12 md:px-16 md:py-16" data-aos="fade-up">
+        <div class="relative py-6 md:py-10" data-aos="fade-up">
             
             <div class="relative flex flex-col items-center justify-between gap-10 md:flex-row">
                 <div class="max-w-2xl text-center md:text-left">
@@ -8,10 +8,10 @@
                         <span class="text-[10px] text-[#25D366]">■</span>
                         <span class="text-xs font-bold uppercase tracking-[0.3em] text-[#25D366]">Layanan Pelanggan</span>
                     </div>
-                    <h2 class="text-2xl font-bold tracking-tight text-white md:text-3xl lg:text-4xl lg:leading-[1.2]">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl lg:text-5xl lg:leading-[1.15]">
                         Punya pertanyaan tentang layanan kami?
                     </h2>
-                    <p class="mt-4 text-base text-slate-300 md:text-lg">
+                    <p class="mt-4 text-lg text-slate-600 md:text-xl">
                         Tim Customer Service kami siap memberikan informasi mendetail mengenai pengujian, kalibrasi, maupun sertifikasi yang Anda butuhkan <span class="font-bold">(hanya chat)</span>.
                     </p>
                 </div>
