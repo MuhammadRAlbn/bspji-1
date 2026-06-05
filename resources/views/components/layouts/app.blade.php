@@ -1,4 +1,4 @@
-@props(['title' => 'BSPJI Banda Aceh', 'bodyClass' => 'bg-white'])
+@props(['title' => 'BSPJI Banda Aceh', 'description' => 'Balai Standardisasi dan Pelayanan Jasa Industri (BSPJI) Banda Aceh — layanan teknis pengujian, kalibrasi, sertifikasi, dan konsultasi industri.', 'bodyClass' => 'bg-white'])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title }}</title>
+    <meta name="description" content="{{ $description }}">
+    <link rel="canonical" href="{{ url()->current() }}">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

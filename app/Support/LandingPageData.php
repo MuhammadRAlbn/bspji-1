@@ -10,6 +10,7 @@ use App\Models\SectionSipintu;
 use App\Models\SectionTestimoni;
 use App\Models\SertifikatPerusahaan;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -49,6 +50,28 @@ class LandingPageData
 
     public function toArray(): array
     {
+        $data = Cache::flexible('landing-page-data', [300, 600], fn (): array => $this->buildData());
+
+        $collectionKeys = [
+            'profileImages', 'serviceItems', 'logoItems', 'firstLogoGroup',
+            'secondLogoGroup', 'certificateItems', 'testimonialItems',
+            'faqDisplayImages', 'latestNewsItems', 'customerDistribution',
+        ];
+
+        foreach ($collectionKeys as $key) {
+            if (isset($data[$key]) && is_array($data[$key])) {
+                $data[$key] = collect($data[$key]);
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Build the full landing page data array (called on cache miss).
+     */
+    private function buildData(): array
+    {
         $sectionProfils = $this->sectionProfils();
         $sectionSipintu = $this->sectionSipintu();
         $pelengkaps = $this->pelengkaps();
@@ -59,22 +82,22 @@ class LandingPageData
         [$firstLogoGroup, $secondLogoGroup] = $this->logoGroups($logoItems);
 
         return [
-            'profileImages' => $profileImages,
+            'profileImages' => $profileImages->all(),
             'sejarahUrl' => $this->routeOrHash('sejarah-singkat.index'),
             'sipintuDesktopImage' => $this->sipintuDesktopImage($sectionSipintu),
             'sipintuMobileImage' => $this->sipintuMobileImage($sectionSipintu),
-            'serviceItems' => $this->serviceItems(),
-            'logoItems' => $logoItems,
-            'firstLogoGroup' => $firstLogoGroup,
-            'secondLogoGroup' => $secondLogoGroup,
+            'serviceItems' => $this->serviceItems()->all(),
+            'logoItems' => $logoItems->all(),
+            'firstLogoGroup' => $firstLogoGroup->all(),
+            'secondLogoGroup' => $secondLogoGroup->all(),
             'showcaseImage' => $this->showcaseImage($pelengkaps),
             'certificateBgImage' => $profileImages->first() ?? self::PROFILE_FALLBACKS[0],
-            'certificateItems' => $this->certificateItems(),
-            'testimonialItems' => $this->testimonialItems(),
-            'faqDisplayImages' => $this->faqDisplayImages($pelengkaps),
-            'latestNewsItems' => $this->latestNewsItems($latestNews),
+            'certificateItems' => $this->certificateItems()->all(),
+            'testimonialItems' => $this->testimonialItems()->all(),
+            'faqDisplayImages' => $this->faqDisplayImages($pelengkaps)->all(),
+            'latestNewsItems' => $this->latestNewsItems($latestNews)->all(),
             'beritaIndexUrl' => $this->routeOrHash('berita.index'),
-            'customerDistribution' => $customerStats['distribution'],
+            'customerDistribution' => $customerStats['distribution']->all(),
             'customerWithoutLocation' => $customerStats['without_location'],
         ];
     }
@@ -95,6 +118,20 @@ class LandingPageData
             ->first();
     }
 
+    /**
+     * Desired display order for service cards (slug => priority).
+     */
+    private const SERVICE_DISPLAY_ORDER = [
+        'pengujian' => 1,
+        'lembaga-sertifikasi-produk' => 2,
+        'sertifikasi-industri-hijau' => 3,
+        'verifikasi-tkdn' => 4,
+        'kalibrasi' => 5,
+        'lembaga-pemeriksa-halal' => 6,
+        'pelatihan' => 7,
+        'pendampingan-dan-konsultasi' => 8,
+    ];
+
     private function serviceItems(): Collection
     {
         return SectionLayanan::query()
@@ -105,7 +142,9 @@ class LandingPageData
                 'detail' => $layanan->detail,
                 'image_url' => $layanan->gambar ? Storage::url($layanan->gambar) : null,
                 'url' => $this->serviceUrl($layanan->nama_layanan),
-            ]);
+            ])
+            ->sortBy(fn (array $item): int => self::SERVICE_DISPLAY_ORDER[Str::slug($item['name'])] ?? 999)
+            ->values();
     }
 
     private function logoItems(): Collection

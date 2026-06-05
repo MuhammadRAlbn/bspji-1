@@ -17,6 +17,7 @@ use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\ZonaIntegritasController;
 use App\Http\Controllers\ZonaIntegritasDokumenController;
+use App\Http\Controllers\ZonaIntegritasPengaduanController;
 use App\Support\LandingPageData;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,17 @@ Route::get('/zona-integritas', [ZonaIntegritasController::class, 'index'])
 
 Route::get('/zona-integritas/dokumen/{dokumen}/download', [ZonaIntegritasDokumenController::class, 'download'])
     ->name('zona-integritas.dokumen.download');
+
+Route::post('/zona-integritas/pengaduan', [ZonaIntegritasPengaduanController::class, 'store'])
+    ->middleware('throttle:zona-integritas-pengaduan')
+    ->name('zona-integritas.pengaduan.store');
+
+Route::get('/zona-integritas/pengaduan/{pengaduan:nomor_pengaduan}/hasil/download', [ZonaIntegritasPengaduanController::class, 'downloadHasil'])
+    ->name('zona-integritas.pengaduan.hasil.download');
+
+Route::get('/zona-integritas/pengaduan/{pengaduan}/bukti/download', [ZonaIntegritasPengaduanController::class, 'downloadBukti'])
+    ->middleware('auth')
+    ->name('zona-integritas.pengaduan.bukti.download');
 
 Route::get('/sejarah-singkat', [ProfilController::class, 'index'])->defaults('activeTab', 'sejarah')->name('sejarah-singkat.index');
 Route::get('/visi-misi', [ProfilController::class, 'index'])->defaults('activeTab', 'motto')->name('visi-misi.index');

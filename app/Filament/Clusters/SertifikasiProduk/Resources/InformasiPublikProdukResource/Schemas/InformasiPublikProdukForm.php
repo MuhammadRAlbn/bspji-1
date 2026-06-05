@@ -26,6 +26,9 @@ class InformasiPublikProdukForm
                         'application/pdf',
                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                         'application/msword',
+                        'application/zip',
+                        'application/x-zip-compressed',
+                        'multipart/x-zip',
                     ])
                     ->required()
                     ->maxSize(5120), // 5MB

@@ -41,7 +41,7 @@
                     <article class="group flex h-full flex-col" data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 3) * 75 }}">
                         <a href="{{ $item['url'] }}"
                             class="block overflow-hidden rounded-lg bg-[#f1f4f9] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25">
-                            <img src="{{ $item['image_url'] }}" alt="{{ $item['title'] }}"
+                            <img src="{{ $item['image_url'] }}" alt="{{ $item['title'] }}" loading="lazy"
                                 class="aspect-video w-full object-cover transition duration-500 group-hover:scale-105">
                         </a>
 

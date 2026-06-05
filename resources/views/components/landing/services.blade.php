@@ -30,7 +30,7 @@
                         class="group relative flex h-[170px] flex-col justify-end overflow-hidden rounded-lg border border-[#dde4ee] bg-[#f1f4f9] p-5 text-left transition duration-300 hover:-translate-y-1 hover:border-[#cfd8e6] focus:outline-none focus:ring-2 focus:ring-[#123cad]/25 md:h-[190px]"
                         data-aos="fade-up" data-aos-delay="{{ 100 + ($index % 4) * 75 }}">
                         @if ($service['image_url'])
-                            <img src="{{ $service['image_url'] }}" alt="{{ $service['name'] }}"
+                            <img src="{{ $service['image_url'] }}" alt="{{ $service['name'] }}" loading="lazy"
                                 class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105">
                             <div class="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/20 to-transparent transition duration-300 group-hover:from-slate-950 group-hover:via-slate-950/30"></div>
                         @endif

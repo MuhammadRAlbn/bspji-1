@@ -39,14 +39,14 @@
                     <h3 class="text-base font-semibold text-gray-900 md:text-lg">Jumlah Pelanggan</h3>
                     <span class="rounded-full bg-orange-100 px-2.5 py-1 text-[11px] font-semibold text-orange-700">Skala 0-600</span>
                 </div>
-                <div id="chart-jumlah-pelanggan" class="numbers-chart"></div>
+                <div id="chart-jumlah-pelanggan" class="numbers-chart" data-numbers-chart="jumlah-pelanggan"></div>
             </article>
             <article class="numbers-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="mb-2 flex items-start justify-between gap-3 px-2 pt-1">
                     <h3 class="text-base font-semibold text-gray-900 md:text-lg">Persentase Standar Pelayanan Minimum</h3>
                     <span class="rounded-full bg-orange-100 px-2.5 py-1 text-[11px] font-semibold text-orange-700">Skala 0-100</span>
                 </div>
-                <div id="chart-spm" class="numbers-chart"></div>
+                <div id="chart-spm" class="numbers-chart" data-numbers-chart="spm"></div>
             </article>
         </div>
 

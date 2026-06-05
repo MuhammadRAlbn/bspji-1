@@ -2,7 +2,9 @@
     <x-zona-integritas.section
         :dokumens-by-kode="$zonaIntegritasDokumens"
         :grafik-ikms="$zonaIntegritasGrafikIkms"
-        :initial-active="$initialActive" />
+        :initial-active="$initialActive"
+        :initial-pengaduan-tab="$initialPengaduanTab"
+        :tracked-pengaduan="$trackedPengaduan" />
 
     @push('scripts')
         <script src="https://unpkg.com/lucide@latest"></script>

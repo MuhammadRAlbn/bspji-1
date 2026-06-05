@@ -1,4 +1,9 @@
-<section id="peta-pelanggan" class="bg-white pb-24 pt-16 md:pb-16 md:pt-24">
+@props([
+    'customerDistribution' => [],
+    'customerWithoutLocation' => 0,
+])
+
+<section id="peta-pelanggan" class="bg-white pb-24 pt-16 md:pb-16 md:pt-24" data-customer-map>
     <div class="mx-auto max-w-6xl px-6 lg:px-0">
         <div class="mb-10 md:mb-14" data-aos="fade-up">
             <div class="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-12">
@@ -19,14 +24,14 @@
 
         <div class="grid grid-cols-1 gap-5 md:gap-6 xl:grid-cols-[minmax(0,1.7fr)_minmax(300px,1fr)]">
             <article class="map-distribution-card self-start p-3 md:p-4" data-aos="fade-up" data-aos-delay="40">
-                <div id="customer-distribution-map" class="relative z-0"></div>
+                <div id="customer-distribution-map" class="relative z-0" data-customer-map-canvas></div>
             </article>
 
             <aside class="flex flex-col gap-5 lg:pl-4" data-aos="fade-up" data-aos-delay="90">
                 <div class="rounded-2xl bg-linear-to-br from-orange-500 to-orange-600 p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]">
                     <p class="mb-1 text-xs font-bold uppercase tracking-[0.22em] text-white/80">Total Pelanggan</p>
                     <div class="flex items-baseline gap-2">
-                        <p id="map-total-customers" class="text-4xl font-bold tracking-tight text-white">0</p>
+                        <p id="map-total-customers" class="text-4xl font-bold tracking-tight text-white" data-customer-map-total="customers">0</p>
                         <p class="text-xs font-medium text-white/70">Pelanggan</p>
                     </div>
                 </div>
@@ -34,7 +39,7 @@
                 <div class="rounded-2xl bg-linear-to-br from-blue-500 to-blue-600 p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.4)]">
                     <p class="mb-1 text-xs font-bold uppercase tracking-[0.22em] text-white/80">Wilayah Cakupan</p>
                     <div class="flex items-baseline gap-2">
-                        <p id="map-total-coverage" class="text-4xl font-bold tracking-tight text-white">0</p>
+                        <p id="map-total-coverage" class="text-4xl font-bold tracking-tight text-white" data-customer-map-total="coverage">0</p>
                         <p class="text-xs font-medium text-white/70">Kab / Kota</p>
                     </div>
                 </div>
@@ -59,4 +64,7 @@
             </aside>
         </div>
     </div>
+
+    <script type="application/json" data-customer-map-data="distribution">@json($customerDistribution, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)</script>
+    <script type="application/json" data-customer-map-data="without-location">@json($customerWithoutLocation, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT)</script>
 </section>

@@ -1,9 +1,11 @@
 <x-layouts.app title="Sertifikasi Produk - BSPJI Pekanbaru" bodyClass="bg-slate-100/90">
 <div x-data="{
-    tab: 'sertifikat',
+    tab: @js($activeTab),
     lightboxOpen: false,
     lightboxImage: '',
     lightboxAlt: '',
+    customerDetailOpen: false,
+    selectedCustomer: null,
     openLightbox(image, alt) {
         this.lightboxImage = image;
         this.lightboxAlt = alt;
@@ -11,10 +13,17 @@
     },
     closeLightbox() {
         this.lightboxOpen = false;
+    },
+    openCustomerDetail(customer) {
+        this.selectedCustomer = customer;
+        this.customerDetailOpen = true;
+    },
+    closeCustomerDetail() {
+        this.customerDetailOpen = false;
     }
-}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen)">
+}" x-effect="document.body.classList.toggle('overflow-hidden', lightboxOpen || customerDetailOpen)">
     <div class="mx-auto mt-4 mb-8 w-full max-w-7xl px-6 sm:mt-6 sm:mb-12 lg:mt-8 lg:px-8">
-        <header class="relative w-full overflow-hidden rounded-4xl border border-slate-300 bg-white py-10 shadow-md lg:py-12">
+        <header class="relative w-full overflow-hidden rounded-[32px] border border-slate-200 bg-white py-10 shadow-md lg:py-12">
             <div class="px-6 text-left lg:px-10">
                 <div class="mb-3 flex items-center gap-2">
                     <span class="text-[10px] text-blue-600">■</span>
@@ -127,12 +136,23 @@
                 </svg>
                 <span class="text-base font-semibold sm:text-[1.05rem]">Informasi Publik</span>
             </button>
+
+            <button
+                type="button"
+                @click="tab = 'direktori-pelanggan'"
+                :class="tab === 'direktori-pelanggan' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'direktori-pelanggan' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 21h16.5M4.5 3h15l-.75 18H5.25L4.5 3Zm4.5 4.5h1.5m3 0H15m-6 4.5h1.5m3 0H15m-6 4.5h1.5m3 0H15" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">Direktori Pelanggan</span>
+            </button>
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
-            <div class="grid grid-cols-1 items-start">
-            
-                <section x-show="tab === 'alur'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+
+                <section x-show="tab === 'alur'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl space-y-6">
                     @if($alurProduk && $alurProduk->image)
                         <div class="flex justify-start">
@@ -160,7 +180,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'sertifikat'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sertifikat'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl space-y-8">
                     @if($sertifikats->isNotEmpty())
                         <div class="flex justify-start">
@@ -191,7 +211,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'ruang-lingkup'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'ruang-lingkup'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                     @forelse($ruangLingkup as $item)
@@ -221,7 +241,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'dokumen'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'dokumen'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -233,6 +253,7 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-black/10">
+                                {{-- LOGIKA DINAMIS SEMENTARA DI-COMMENT
                                 @forelse($dokumens as $index => $dokumen)
                                     <tr class="transition-colors hover:bg-slate-50/50">
                                         <td class="px-6 py-4 text-sm font-medium text-slate-500">
@@ -255,13 +276,51 @@
                                         </td>
                                     </tr>
                                 @endforelse
+                                --}}
+
+                                {{-- hapus dummy ini jika ingin menerapkan dinamis --}}
+                                @php
+                                    $staticDokumens = [
+                                        "Blangko Daftar Isian Permohonan SPPT SNI",
+                                        "Blangko Data Pemohon Sertifikasi",
+                                        "Blangko Ilustrasi Pembubuhan Tanda SNI",
+                                        "Blangko Kualifikasi Penanggung Jawab Mutu",
+                                        "Blangko Peralatan Inspeksi - Pengujian",
+                                        "Blangko Peralatan Produksi",
+                                        "Blangko Pernyataan Kesesuaian",
+                                        "Blangko Pernyataan PenanggungJawab di Indonesia",
+                                        "Blangko Pernyataan Penerapan CPPOB",
+                                        "Blangko Surat Pelimpahan Merek (bila merek punya orang lain)",
+                                        "Blangko Surat Penunjukan Personil Pengurusan",
+                                        "Blangko Surat Pernyataan Keabsahan Merek",
+                                        "Blanko Surat Pernyataan Keaslian Dokumen",
+                                        "Surat permohonan Perusahaan"
+                                    ];
+                                @endphp
+
+                                @foreach($staticDokumens as $index => $namaDokumen)
+                                    <tr class="transition-colors hover:bg-slate-50/50">
+                                        <td class="px-6 py-4 text-sm font-medium text-slate-500">
+                                            {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm font-semibold text-slate-800">
+                                            {{ $namaDokumen }}
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <a href="{{ asset('dokumen-dummy.pdf') }}" download="{{ $namaDokumen }}.pdf" class="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white transition-all hover:bg-slate-700 active:scale-95">
+                                                <svg class="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                                Download
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
             </section>
 
-                <section x-show="tab === 'hak-kewajiban'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'hak-kewajiban'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -301,7 +360,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'tarif'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'tarif'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="space-y-12">
                     @forelse($tarifs as $tarif)
                         <div class="space-y-4">
@@ -324,7 +383,7 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'sdm'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'sdm'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl space-y-10">
                     <p class="max-w-3xl text-sm leading-relaxed text-slate-600 md:text-base">
                         Auditor Sertifikasi Produk yang kompeten dan berpengalaman untuk menjamin kualitas layanan.
@@ -332,82 +391,82 @@
 
                     <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
                         {{-- Card Ahli Madya --}}
-                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
-                            <!-- Top Accent Gradient line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-indigo-500 to-purple-600"></div>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-500/30 bg-slate-800 text-white">
+                            <!-- Background Decor -->
+                            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-500 group-hover:scale-150"></div>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="relative z-10 flex items-center justify-between">
                                 <!-- Icon Wrapper -->
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 border border-indigo-100/50 text-indigo-600 transition-colors group-hover:bg-indigo-100/50">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                <div class="flex h-14 w-14 items-center justify-center rounded-[16px] bg-white/10 border border-white/20 backdrop-blur-sm text-white shadow-inner">
+                                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <!-- Count Pill -->
-                                <div class="flex items-baseline gap-1 rounded-full bg-indigo-50 border border-indigo-100/30 px-3 py-1 text-xs font-bold text-indigo-700">
-                                    <span class="text-lg font-black leading-none">{{ $countAhliMadya }}</span>
-                                    <span class="text-[9px] uppercase tracking-wider text-indigo-500">Auditor</span>
+                                <!-- Count -->
+                                <div class="flex items-baseline gap-1.5 text-right">
+                                    <span class="text-4xl font-black tracking-tight text-white">{{ $countAhliMadya }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Orang</span>
                                 </div>
                             </div>
 
-                            <div class="mt-8 space-y-1 text-left">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-indigo-500">Kualifikasi AMMI</span>
-                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
-                                    Ahli <span class="font-semibold text-slate-900">Madya</span>
+                            <div class="relative z-10 mt-10 space-y-1 text-left">
+                                <span class="inline-block rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-md">Auditor</span>
+                                <h3 class="mt-4 text-3xl font-light tracking-tight text-slate-50 sm:text-4xl">
+                                    Ahli <span class="font-bold text-white">Madya</span>
                                 </h3>
                             </div>
                         </div>
 
                         {{-- Card Ahli Muda --}}
-                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
-                            <!-- Top Accent Gradient line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-emerald-500 to-teal-600"></div>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-500/30 bg-slate-800 text-white">
+                            <!-- Background Decor -->
+                            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-500 group-hover:scale-150"></div>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="relative z-10 flex items-center justify-between">
                                 <!-- Icon Wrapper -->
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 border border-emerald-100/50 text-emerald-600 transition-colors group-hover:bg-emerald-100/50">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                <div class="flex h-14 w-14 items-center justify-center rounded-[16px] bg-white/10 border border-white/20 backdrop-blur-sm text-white shadow-inner">
+                                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <!-- Count Pill -->
-                                <div class="flex items-baseline gap-1 rounded-full bg-emerald-50 border border-emerald-100/30 px-3 py-1 text-xs font-bold text-emerald-700">
-                                    <span class="text-lg font-black leading-none">{{ $countAhliMuda }}</span>
-                                    <span class="text-[9px] uppercase tracking-wider text-emerald-500">Auditor</span>
+                                <!-- Count -->
+                                <div class="flex items-baseline gap-1.5 text-right">
+                                    <span class="text-4xl font-black tracking-tight text-white">{{ $countAhliMuda }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Orang</span>
                                 </div>
                             </div>
 
-                            <div class="mt-8 space-y-1 text-left">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Kualifikasi AMMI</span>
-                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
-                                    Ahli <span class="font-semibold text-slate-900">Muda</span>
+                            <div class="relative z-10 mt-10 space-y-1 text-left">
+                                <span class="inline-block rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-md">Auditor</span>
+                                <h3 class="mt-4 text-3xl font-light tracking-tight text-slate-50 sm:text-4xl">
+                                    Ahli <span class="font-bold text-white">Muda</span>
                                 </h3>
                             </div>
                         </div>
 
                         {{-- Card Ahli Pertama --}}
-                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-100 bg-[#fbfbfd] p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-slate-200 hover:shadow-md">
-                            <!-- Top Accent Gradient line -->
-                            <div class="absolute top-0 inset-x-0 h-1 bg-linear-to-r from-sky-500 to-blue-600"></div>
+                        <div class="group relative flex flex-col justify-between overflow-hidden rounded-[24px] p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-500/30 bg-slate-800 text-white">
+                            <!-- Background Decor -->
+                            <div class="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10 blur-2xl transition-transform duration-500 group-hover:scale-150"></div>
                             
-                            <div class="flex items-center justify-between">
+                            <div class="relative z-10 flex items-center justify-between">
                                 <!-- Icon Wrapper -->
-                                <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-sky-50 border border-sky-100/50 text-sky-600 transition-colors group-hover:bg-sky-100/50">
-                                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                <div class="flex h-14 w-14 items-center justify-center rounded-[16px] bg-white/10 border border-white/20 backdrop-blur-sm text-white shadow-inner">
+                                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
-                                <!-- Count Pill -->
-                                <div class="flex items-baseline gap-1 rounded-full bg-sky-50 border border-sky-100/30 px-3 py-1 text-xs font-bold text-sky-700">
-                                    <span class="text-lg font-black leading-none">{{ $countAhliPertama }}</span>
-                                    <span class="text-[9px] uppercase tracking-wider text-sky-500">Auditor</span>
+                                <!-- Count -->
+                                <div class="flex items-baseline gap-1.5 text-right">
+                                    <span class="text-4xl font-black tracking-tight text-white">{{ $countAhliPertama }}</span>
+                                    <span class="text-xs font-bold uppercase tracking-widest text-slate-300">Orang</span>
                                 </div>
                             </div>
 
-                            <div class="mt-8 space-y-1 text-left">
-                                <span class="text-[10px] font-bold uppercase tracking-widest text-sky-500">Kualifikasi AMMI</span>
-                                <h3 class="text-2xl font-light tracking-tight text-slate-800 sm:text-3xl">
-                                    Ahli <span class="font-semibold text-slate-900">Pertama</span>
+                            <div class="relative z-10 mt-10 space-y-1 text-left">
+                                <span class="inline-block rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white shadow-sm backdrop-blur-md">Auditor</span>
+                                <h3 class="mt-4 text-3xl font-light tracking-tight text-slate-50 sm:text-4xl">
+                                    Ahli <span class="font-bold text-white">Pertama</span>
                                 </h3>
                             </div>
                         </div>
@@ -415,7 +474,131 @@
                 </div>
             </section>
 
-                <section x-show="tab === 'informasi-publik'" x-transition.opacity.duration.500ms class="col-start-1 row-start-1">
+                <section x-show="tab === 'direktori-pelanggan'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
+                    <div class="border-b border-black/10 bg-white px-4 py-4 sm:px-6">
+                        <form action="{{ route('sertifikasi-produk.index') }}" method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                            <input type="hidden" name="tab" value="direktori-pelanggan">
+
+                            <label class="relative block w-full sm:max-w-md">
+                                <span class="sr-only">Cari direktori pelanggan</span>
+                                <svg class="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-4.35-4.35m1.6-5.15a6.75 6.75 0 1 1-13.5 0 6.75 6.75 0 0 1 13.5 0Z" />
+                                </svg>
+                                <input
+                                    type="search"
+                                    name="direktori_search"
+                                    value="{{ $direktoriSearch }}"
+                                    placeholder="Cari nama perusahaan, merek, tahun, atau alamat"
+                                    class="w-full rounded-xl border border-black/20 bg-white py-2.5 pl-11 pr-4 text-sm font-medium text-slate-700 outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-200"
+                                >
+                            </label>
+
+                            <div class="flex items-center gap-2">
+                                @if($direktoriSearch !== '')
+                                    <a href="{{ route('sertifikasi-produk.index', ['tab' => 'direktori-pelanggan']) }}" class="inline-flex items-center justify-center rounded-xl border border-black/20 px-4 py-2.5 text-xs font-bold text-slate-600 transition hover:bg-slate-50">
+                                        Reset
+                                    </a>
+                                @endif
+                                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-slate-800 px-4 py-2.5 text-xs font-bold text-white transition active:scale-95">
+                                    Cari
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[760px] border-collapse text-left">
+                            <thead>
+                                <tr class="border-b border-black/20 bg-slate-50">
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Nama Perusahaan</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Alamat</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Merek</th>
+                                    <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-800">Status</th>
+                                    <th class="px-6 py-4 text-center text-xs font-bold uppercase tracking-wider text-slate-800">Gambar</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-black/10">
+                                @forelse($direktoriPelanggan as $pelanggan)
+                                    @php
+                                        $detailPelanggan = [
+                                            'namaPerusahaan' => $pelanggan->nama_perusahaan ?: '-',
+                                            'merek' => $pelanggan->merek ?: '-',
+                                            'tahunSertifikasi' => $pelanggan->tahun_sertifikasi ?: '-',
+                                            'alamat' => $pelanggan->alamat ?: 'Alamat belum tersedia.',
+                                            'isActive' => $pelanggan->is_active,
+                                            'statusLabel' => $pelanggan->is_active ? 'Aktif' : 'Tidak Aktif',
+                                            'image' => $pelanggan->gambar ? asset('storage/' . $pelanggan->gambar) : null,
+                                            'imageAlt' => 'Gambar ' . ($pelanggan->nama_perusahaan ?: 'Direktori Pelanggan'),
+                                        ];
+                                    @endphp
+                                    <tr
+                                        tabindex="0"
+                                        role="button"
+                                        aria-label="Buka detail {{ $pelanggan->nama_perusahaan ?: 'direktori pelanggan' }}"
+                                        @click="openCustomerDetail(@js($detailPelanggan))"
+                                        @keydown.enter.prevent="openCustomerDetail(@js($detailPelanggan))"
+                                        @keydown.space.prevent="openCustomerDetail(@js($detailPelanggan))"
+                                        class="cursor-pointer align-middle transition-colors hover:bg-slate-50 focus:outline-none focus-visible:bg-slate-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-slate-400"
+                                    >
+                                        <td class="w-[30%] px-6 py-4 align-middle text-sm font-semibold text-slate-800">
+                                            {{ $pelanggan->nama_perusahaan ?: '-' }}
+                                        </td>
+                                        <td class="w-[25%] px-6 py-4 align-middle text-sm text-slate-600">
+                                            <span class="inline-flex rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
+                                                {{ $pelanggan->alamat_singkat }}
+                                            </span>
+                                        </td>
+                                        <td class="w-[20%] px-6 py-4 align-middle text-sm font-medium text-slate-700">
+                                            {{ $pelanggan->merek ?: '-' }}
+                                        </td>
+                                        <td class="w-[10%] px-6 py-4 align-middle">
+                                            @if($pelanggan->is_active)
+                                                <span class="inline-flex rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-200">
+                                                    Aktif
+                                                </span>
+                                            @else
+                                                <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-500 ring-1 ring-slate-200">
+                                                    Tidak Aktif
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="w-[15%] px-6 py-4 align-middle text-center">
+                                            @if($pelanggan->gambar)
+                                                <div class="mx-auto h-16 w-24 overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                                                    <img
+                                                        src="{{ asset('storage/' . $pelanggan->gambar) }}"
+                                                        alt="Gambar {{ $pelanggan->nama_perusahaan }}"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                        class="h-full w-full object-cover"
+                                                    >
+                                                </div>
+                                            @else
+                                                <span class="mx-auto inline-flex justify-center rounded-full bg-slate-100 px-3 py-1 text-center text-xs font-semibold text-slate-400">
+                                                    Belum ada
+                                                </span>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-16 text-center">
+                                            <p class="font-medium text-slate-400">Direktori pelanggan belum tersedia.</p>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex flex-col gap-4 border-t border-black/10 px-4 py-4 sm:px-6">
+                        {{ $direktoriPelanggan->links() }}
+                    </div>
+                </div>
+                </section>
+
+                <section x-show="tab === 'informasi-publik'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-black/20 bg-white shadow-sm">
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse text-left">
@@ -454,8 +637,88 @@
                     </div>
                 </div>
                 </section>
-            </div>
         </article>
+    </div>
+    <div
+        x-show="customerDetailOpen"
+        x-cloak
+        x-transition.opacity.duration.300ms
+        @click="closeCustomerDetail()"
+        @keydown.escape.window="closeCustomerDetail()"
+        class="fixed inset-0 z-90 flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="customer-detail-title"
+    >
+        <div
+            x-show="customerDetailOpen"
+            x-transition.scale.duration.300ms
+            @click.stop
+            class="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-2xl bg-white shadow-2xl"
+        >
+            <div class="flex items-start justify-between gap-4 border-b border-slate-200 px-5 py-4 sm:px-6">
+                <div class="min-w-0">
+                    <div class="mb-2 flex flex-wrap items-center gap-2">
+                        <span
+                            class="inline-flex rounded-full px-3 py-1 text-xs font-bold ring-1"
+                            :class="selectedCustomer?.isActive ? 'bg-emerald-50 text-emerald-700 ring-emerald-200' : 'bg-slate-100 text-slate-500 ring-slate-200'"
+                            x-text="selectedCustomer?.statusLabel"
+                        ></span>
+                    </div>
+                    <h2 id="customer-detail-title" class="text-xl font-semibold leading-tight text-slate-900 sm:text-2xl" x-text="selectedCustomer?.namaPerusahaan"></h2>
+                </div>
+                <button
+                    type="button"
+                    @click="closeCustomerDetail()"
+                    class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-400"
+                    aria-label="Tutup detail pelanggan"
+                >
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="grid gap-0 md:grid-cols-[minmax(0,1fr)_260px]">
+                <div class="space-y-5 px-5 py-5 sm:px-6">
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Merek</p>
+                            <p class="mt-2 text-sm font-semibold text-slate-900" x-text="selectedCustomer?.merek"></p>
+                        </div>
+                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                            <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Tahun Sertifikasi</p>
+                            <p class="mt-2 text-sm font-semibold text-slate-900" x-text="selectedCustomer?.tahunSertifikasi"></p>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-slate-200 p-4">
+                        <p class="text-xs font-bold uppercase tracking-wider text-slate-500">Alamat</p>
+                        <p class="mt-2 whitespace-pre-line text-sm leading-relaxed text-slate-700" x-text="selectedCustomer?.alamat"></p>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-200 bg-slate-50 p-5 md:border-l md:border-t-0">
+                    <template x-if="selectedCustomer?.image">
+                        <img
+                            :src="selectedCustomer.image"
+                            :alt="selectedCustomer.imageAlt"
+                            class="h-64 w-full rounded-xl border border-slate-200 bg-white object-cover"
+                        >
+                    </template>
+                    <template x-if="! selectedCustomer?.image">
+                        <div class="flex h-64 w-full items-center justify-center rounded-xl border border-dashed border-slate-300 bg-white text-center">
+                            <div class="px-6">
+                                <svg class="mx-auto h-10 w-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m2.25 15.75 5.16-5.16a2.25 2.25 0 0 1 3.18 0l5.16 5.16m-1.5-1.5 1.41-1.41a2.25 2.25 0 0 1 3.18 0l2.91 2.91m-18 3h16.5a1.5 1.5 0 0 0 1.5-1.5V6.75a1.5 1.5 0 0 0-1.5-1.5H3.75a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5Zm14.25-9h.008v.008H18V9.75Z" />
+                                </svg>
+                                <p class="mt-3 text-sm font-semibold text-slate-400">Belum ada gambar</p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
     </div>
     <div
         x-show="lightboxOpen"

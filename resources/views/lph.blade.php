@@ -152,9 +152,34 @@
 
             {{-- Tab SDM --}}
             <div x-show="tab === 'sdm'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                {{-- KODE STATIS SEMENTARA --}}
+                {{-- hapus ini jika sudah tidak diperlukan dan kembali ke dinamis --}}
+                <div class="flex flex-col justify-start gap-8">
+                    <button
+                        type="button"
+                        @click="openLightbox('{{ asset('images/sdm-lph.webp') }}', 'SDM LPH')"
+                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
+                    >
+                        <!-- Ganti path gambar di bawah ini jika berbeda -->
+                        <img
+                            src="{{ asset('images/sdm-lph.webp') }}"
+                            alt="SDM LPH"
+                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                        >
+                        <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                            <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                Klik untuk memperbesar SDM LPH
+                            </span>
+                        </div>
+                    </button>
+                </div>
 
-                    {{-- Auditor Halal --}}
+                {{-- KODE DINAMIS (DISEMBUNYIKAN SEMENTARA MENGGUNAKAN KOMENTAR BLADE) --}}
+                {{--
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+
+                    <!-- Auditor Halal -->
                     <div class="group/card relative bg-white rounded-2xl border border-slate-100 p-6 shadow-sm transition-all duration-300 hover:shadow-md">
                         <!-- Top Accent line (same as slate-800 tab color) -->
                         <div class="absolute top-0 inset-x-0 h-1 bg-slate-800 rounded-t-2xl"></div>
@@ -198,7 +223,7 @@
                         </div>
                     </div>
 
-                    {{-- Dewan Pembina Syariah --}}
+                    <!-- Dewan Pembina Syariah -->
                     <div class="group/card relative bg-white rounded-2xl border border-slate-100 p-6 shadow-sm transition-all duration-300 hover:shadow-md">
                         <!-- Top Accent line (same as slate-800 tab color) -->
                         <div class="absolute top-0 inset-x-0 h-1 bg-slate-800 rounded-t-2xl"></div>
@@ -242,6 +267,7 @@
                         </div>
                     </div>
                 </div>
+                --}}
             </div>
 
             {{-- Tab Alur & Kelengkapan --}}
@@ -306,7 +332,52 @@
 
             {{-- Tab Kebijakan & Sasaran Mutu --}}
             <div x-show="tab === 'mutu'" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
-                <div class="grid grid-cols-1 gap-12">
+                
+                {{-- KODE STATIS SEMENTARA --}}
+                {{-- hapus ini jika sudah tidak diperlukan dan kembali ke dinamis --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {{-- Gambar Kebijakan Mutu --}}
+                    <button
+                        type="button"
+                        @click="openLightbox('{{ asset('images/kebijakan-sementara.webp') }}', 'Kebijakan')"
+                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
+                    >
+                        <!-- Ganti path gambar di bawah ini -->
+                        <img
+                            src="{{ asset('images/kebijakan-sementara.webp') }}"
+                            alt="Kebijakan Mutu"
+                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                        >
+                        <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                            <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                Klik untuk memperbesar Kebijakan
+                            </span>
+                        </div>
+                    </button>
+                    
+                    {{-- Gambar Sasaran Mutu --}}
+                    <button
+                        type="button"
+                        @click="openLightbox('{{ asset('images/sasaran-mutu-sementara.webp') }}', 'Sasaran Mutu')"
+                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
+                    >
+                        <!-- Ganti path gambar di bawah ini -->
+                        <img
+                            src="{{ asset('images/sasaran-mutu-sementara.webp') }}"
+                            alt="Sasaran Mutu"
+                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                        >
+                        <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                            <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                Klik untuk memperbesar Sasaran Mutu
+                            </span>
+                        </div>
+                    </button>
+                </div>
+
+                {{-- KODE DINAMIS (DISEMBUNYIKAN SEMENTARA MENGGUNAKAN KOMENTAR BLADE) --}}
+                {{--
+                <div class="grid grid-cols-1 gap-12 mt-12">
                     @forelse($kebijakanSasaranMutu as $item)
                         <div class="bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border border-gray-100 group p-8">
                             @if($item->kebijakan)
@@ -334,6 +405,7 @@
                         </div>
                     @endforelse
                 </div>
+                --}}
             </div>
 
             {{-- Tab Tarif --}}

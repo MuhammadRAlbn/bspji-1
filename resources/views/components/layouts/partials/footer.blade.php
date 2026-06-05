@@ -116,7 +116,8 @@
                 </ul>
             </div>
 
-            {{-- Right Column: News --}}
+            {{-- Right Column: News (Commented out temporarily) --}}
+            {{--
             <div class="lg:col-span-4">
                 <h4 class="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-white">Berita Terkini</h4>
                 <div class="divide-y divide-white/30">
@@ -143,6 +144,7 @@
                     @endforelse
                 </div>
             </div>
+            --}}
         </div>
 
         <div

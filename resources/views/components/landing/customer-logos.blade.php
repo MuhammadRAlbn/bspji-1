@@ -28,14 +28,14 @@
                                 <div class="logo-marquee-group">
                                     @foreach ($firstLogoGroup as $logo)
                                         <div class="logo-chip border border-slate-400/70">
-                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}">
+                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}" loading="lazy">
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="logo-marquee-group" aria-hidden="true">
                                     @foreach ($firstLogoGroup as $logo)
                                         <div class="logo-chip border border-slate-400/70">
-                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}">
+                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}" loading="lazy">
                                         </div>
                                     @endforeach
                                 </div>
@@ -47,14 +47,14 @@
                                 <div class="logo-marquee-group">
                                     @foreach ($secondLogoGroup as $logo)
                                         <div class="logo-chip border border-slate-400/70">
-                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}">
+                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}" loading="lazy">
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="logo-marquee-group" aria-hidden="true">
                                     @foreach ($secondLogoGroup as $logo)
                                         <div class="logo-chip border border-slate-400/70">
-                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}">
+                                            <img src="{{ $logo['image_url'] }}" alt="{{ $logo['alt'] }}" loading="lazy">
                                         </div>
                                     @endforeach
                                 </div>
@@ -67,7 +67,7 @@
             <div class="order-1 lg:order-2" data-aos="fade-left">
                 <div class="relative">
                     <div class="relative overflow-hidden rounded-2xl">
-                        <img src="{{ $showcaseImage }}" alt="Modern Industrial Facility Showcase"
+                        <img src="{{ $showcaseImage }}" alt="Modern Industrial Facility Showcase" loading="lazy"
                             class="h-[400px] w-full object-cover">
                     </div>
                 </div>

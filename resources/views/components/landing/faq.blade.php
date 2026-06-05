@@ -38,10 +38,10 @@
 
             <div class="sticky top-32 hidden lg:block">
                 <div class="relative aspect-square overflow-hidden rounded-[3rem] border-8 border-gray-50 shadow-2xl">
-                    <img src="{{ $faqDisplayImages[0] }}" x-show="currentImage === 1" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 1">
-                    <img src="{{ $faqDisplayImages[1] }}" x-show="currentImage === 2" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 2">
-                    <img src="{{ $faqDisplayImages[2] }}" x-show="currentImage === 3" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 3">
-                    <img src="{{ $faqDisplayImages[3] }}" x-show="currentImage === 4" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 4">
+                    <img src="{{ $faqDisplayImages[0] }}" x-show="currentImage === 1" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 1" loading="lazy">
+                    <img src="{{ $faqDisplayImages[1] }}" x-show="currentImage === 2" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 2" loading="lazy">
+                    <img src="{{ $faqDisplayImages[2] }}" x-show="currentImage === 3" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 3" loading="lazy">
+                    <img src="{{ $faqDisplayImages[3] }}" x-show="currentImage === 4" class="absolute inset-0 h-full w-full object-cover" alt="FAQ 4" loading="lazy">
                     <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent"></div>
                 </div>
             </div>

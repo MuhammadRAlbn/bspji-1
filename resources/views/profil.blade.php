@@ -211,14 +211,14 @@
 
                     <div class="space-y-6 lg:col-span-7 xl:col-span-8">
                         <article class="rounded-4xl border border-slate-300 bg-white p-8 shadow-md md:p-10">
-                            <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Visi</p>
+                            <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Visi BSPJI Banda Aceh Tahun 2025 - 2029</p>
                             <div class="text-justify text-sm leading-relaxed text-slate-950 md:text-lg md:font-light [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950">
                                 {!! $visiMisi?->visi ?: '<p>Data visi belum tersedia.</p>' !!}
                             </div>
                         </article>
 
                         <article class="rounded-4xl border border-slate-300 bg-white p-8 shadow-md md:p-10">
-                            <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Misi</p>
+                            <p class="mb-4 text-base md:text-lg font-bold uppercase tracking-[0.2em] text-red-600">Misi BSPJI Banda Aceh Tahun 2025 - 2029</p>
                             <div
                                 class="text-justify text-sm leading-relaxed text-slate-950 md:text-lg md:font-light [&_li]:mb-3 [&_li]:text-justify [&_li]:text-slate-950 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_p]:text-justify [&_p]:text-slate-950 [&_ul]:list-disc [&_ul]:pl-5">
                                 {!! $visiMisi?->misi ?: '<p>Data misi belum tersedia.</p>' !!}

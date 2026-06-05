@@ -25,5 +25,9 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('news-comments', function (Request $request) {
             return Limit::perMinute(10, 10)->by($request->ip() ?? 'unknown');
         });
+
+        RateLimiter::for('zona-integritas-pengaduan', function (Request $request) {
+            return Limit::perMinute(5, 10)->by($request->ip() ?? 'unknown');
+        });
     }
 }
