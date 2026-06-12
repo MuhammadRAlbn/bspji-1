@@ -45,12 +45,12 @@
                                 class="aspect-video w-full object-cover transition duration-500 group-hover:scale-105">
                         </a>
 
-                        <div class="flex flex-1 flex-col pt-6">
+                        <div class="flex flex-1 flex-col px-3 pt-5 sm:px-4">
                             <p class="mb-3 text-xs font-bold uppercase tracking-[0.16em] text-[#0038b8]">
                                 {{ $item['published_date'] }}
                             </p>
 
-                            <h3 class="text-xl font-semibold leading-snug text-gray-900 md:text-2xl">
+                            <h3 class="line-clamp-2 text-base font-semibold leading-snug text-gray-900 sm:text-lg md:text-xl">
                                 <a href="{{ $item['url'] }}" class="transition hover:text-[#0038b8]">
                                     {{ $item['title'] }}
                                 </a>

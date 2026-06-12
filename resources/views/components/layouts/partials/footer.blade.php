@@ -116,35 +116,49 @@
                 </ul>
             </div>
 
-            {{-- Right Column: News (Commented out temporarily) --}}
-            {{--
-            <div class="lg:col-span-4">
-                <h4 class="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-white">Berita Terkini</h4>
-                <div class="divide-y divide-white/30">
-                    @forelse ($latestNews as $news)
-                        <a href="{{ $routeOrHash('berita.show', ['news' => $news->slug]) }}" class="group flex gap-4 py-5 first:pt-0 last:pb-0">
-                            @if($news->cover_image)
-                                <div class="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-800">
-                                    <img src="{{ Storage::url($news->cover_image) }}" alt="{{ $news->title }}"
-                                        class="h-full w-full object-cover transition-transform group-hover:scale-110">
-                                </div>
-                            @endif
-                            <div class="space-y-1">
-                                <p class="text-[10px] font-bold uppercase tracking-wider text-blue-400">
-                                    {{ $news->published_at?->translatedFormat('d M Y') }}
-                                </p>
-                                <h5
-                                    class="line-clamp-2 text-[14px] leading-snug font-medium text-slate-300 transition-colors group-hover:text-white">
-                                    {{ $news->title }}
-                                </h5>
+            {{-- Right Column: Video Profil --}}
+            <div class="lg:col-span-4" x-data="{ isPlaying: false }">
+                <h4 class="mb-8 text-xs font-bold uppercase tracking-[0.2em] text-white">Video Profil</h4>
+                
+                <div class="relative aspect-video w-full overflow-hidden rounded-2xl border border-white/10 bg-slate-900 shadow-xl transition-all duration-300 hover:border-red-500/30 group">
+                    {{-- Thumbnail Mode --}}
+                    <template x-if="!isPlaying">
+                        <button 
+                            @click="isPlaying = true" 
+                            class="absolute inset-0 flex h-full w-full flex-col items-center justify-center text-center focus:outline-none cursor-pointer"
+                            aria-label="Putar Video Profil BSPJI Banda Aceh"
+                        >
+                            {{-- Background Thumbnail Image --}}
+                            <img 
+                                src="https://img.youtube.com/vi/1CRk9LeyIGo/hqdefault.jpg" 
+                                alt="Thumbnail Video Profil BSPJI Banda Aceh"
+                                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                loading="lazy"
+                            >
+                            
+                            {{-- Play Button Icon --}}
+                            <div class="relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-red-600 text-white shadow-lg shadow-red-500/30 transition-all duration-300 group-hover:scale-110 group-hover:bg-red-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-6 w-6">
+                                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+                                </svg>
                             </div>
-                        </a>
-                    @empty
-                        <p class="text-[14px] italic text-slate-500">Belum ada berita terbaru.</p>
-                    @endforelse
+                        </button>
+                    </template>
+
+                    {{-- Iframe Mode --}}
+                    <template x-if="isPlaying">
+                        <iframe 
+                            class="absolute inset-0 h-full w-full"
+                            src="https://www.youtube-nocookie.com/embed/1CRk9LeyIGo?autoplay=1" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            allowfullscreen
+                        ></iframe>
+                    </template>
                 </div>
             </div>
-            --}}
         </div>
 
         <div
