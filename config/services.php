@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'tawk' => [
+        'enabled' => env('TAWK_ENABLED', true),
+        'property_id' => env('TAWK_PROPERTY_ID', '63ede925474251287913a52e'),
+        'widget_id' => env('TAWK_WIDGET_ID', '1gpcldf9n'),
+    ],
+
 ];

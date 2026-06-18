@@ -31,6 +31,7 @@ import {
 import { registerCertificateLightbox } from './landing/certificate-lightbox';
 import { initCustomerMap } from './landing/customer-map';
 import { initNumbersCharts } from './landing/numbers-chart';
+import { registerTawkChat } from './landing/tawk-chat';
 import { registerTestimonialsCarousel } from './landing/testimonials-carousel';
 
 const usedIcons = {
@@ -123,11 +124,14 @@ Alpine.data('profilePage', () => ({
 registerCertificateLightbox(Alpine);
 registerTestimonialsCarousel(Alpine);
 
-Livewire.start();
+if (window.livewireScriptConfig !== undefined) {
+    Livewire.start();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     createIcons({ icons: usedIcons });
     AOS.init({ once: true, offset: 200 });
     initCustomerMap();
     initNumbersCharts();
+    registerTawkChat();
 });
