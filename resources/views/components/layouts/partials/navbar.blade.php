@@ -93,7 +93,7 @@
     <div @if ($isTransparent)
         class="mx-auto flex h-28 w-full items-center justify-between gap-6 px-5 transition-all duration-300 sm:px-8 lg:px-10"
     @else class="mx-auto flex h-20 w-full max-w-7xl items-center justify-between gap-4 px-6 lg:gap-16 lg:px-8" @endif>
-        <div class="flex shrink-0 items-center pr-2">
+        <div class="hidden shrink-0 items-center pr-2 sm:flex">
             <a href="{{ url('/') }}"
                 class="{{ $isTransparent ? 'group inline-flex items-center p-0 transition hover:opacity-85' : 'group inline-flex items-center rounded-xl p-1 transition hover:bg-slate-50' }}">
                 @if ($isTransparent)

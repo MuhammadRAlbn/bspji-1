@@ -5,7 +5,7 @@
 <section x-data="testimonialsCarousel"
     x-cloak
     @resize.window.debounce.150ms="measure()"
-    class="relative isolate mb-8 mt-12 overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 md:mb-10 md:mt-16 lg:mt-28 lg:min-h-[560px] lg:py-0"
+    class="relative isolate mb-8 overflow-hidden bg-[#f5f8fc] py-10 sm:py-12 md:mb-10 lg:min-h-[560px] lg:py-0"
     aria-labelledby="testimonials-slider-title">
     <div class="mx-auto grid w-full max-w-[1920px] grid-cols-1 lg:min-h-[560px] lg:grid-cols-[49%_51%]">
         <div class="relative h-[300px] overflow-hidden sm:h-[380px] lg:h-auto">
