@@ -10,6 +10,9 @@
             'cta_url' => '#layanan',
         ],
         [
+            'type' => 'custom_kebijakan_mutu',
+        ],
+        [
             'type' => 'custom_wbk',
         ],
         [
@@ -85,22 +88,20 @@
                     style="opacity: {{ $index === 0 ? '.85' : '0' }};"
                     :style="activeSlide === {{ $index }} ? 'opacity: .85;' : 'opacity: 0;'"
                     @if ($index === 1) fetchpriority="high" @else loading="lazy" @endif>
-            @elseif ($slide['type'] === 'custom_wbk' || $slide['type'] === 'custom_maklumat')
-                <div 
+            @elseif (in_array($slide['type'], ['custom_kebijakan_mutu', 'custom_wbk', 'custom_maklumat'], true))
+                <div
                     class="absolute inset-0 h-full w-full bg-gray-900 transition-opacity duration-700 ease-out overflow-hidden"
                     style="opacity: {{ $index === 0 ? '1' : '0' }};"
                     :style="activeSlide === {{ $index }} ? 'opacity: 1;' : 'opacity: 0;'">
-                    <!-- Decorative blurred blobs for dark bg -->
                     <div class="absolute -top-[20%] -left-[10%] h-[600px] w-[600px] rounded-full bg-red-900/20 blur-[100px]"></div>
                     <div class="absolute top-[20%] -right-[10%] h-[500px] w-[500px] rounded-full bg-blue-900/20 blur-[100px]"></div>
-                    <!-- Subtle grid pattern -->
                     <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]"></div>
                 </div>
             @endif
         @endforeach
 
-        <div class="absolute inset-0 bg-linear-to-t from-black via-black/45 to-black/10 transition-opacity duration-700" :style="(activeSlide === 1 || activeSlide === 2) ? 'opacity: 0;' : 'opacity: 1;'"></div>
-        <div class="absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/70 via-black/20 to-transparent transition-opacity duration-700" :style="(activeSlide === 1 || activeSlide === 2) ? 'opacity: 0;' : 'opacity: 1;'"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black via-black/45 to-black/10 transition-opacity duration-700" :style="activeSlide > 0 ? 'opacity: 0;' : 'opacity: 1;'"></div>
+        <div class="absolute inset-y-0 left-0 w-full bg-linear-to-r from-black/70 via-black/20 to-transparent transition-opacity duration-700" :style="activeSlide > 0 ? 'opacity: 0;' : 'opacity: 1;'"></div>
 
         <div class="relative z-20 mx-auto flex h-full w-full max-w-[1430px] flex-col justify-end px-6 pb-28 lg:px-8 2xl:px-0">
             <div class="grid w-full items-end" data-aos="fade-up" data-aos-duration="1000">
@@ -111,7 +112,37 @@
                     :style="activeSlide === {{ $index }} ? 'opacity: 1; visibility: visible;' : 'opacity: 0; visibility: hidden;'"
                     :class="activeSlide === {{ $index }} ? 'pointer-events-auto' : 'pointer-events-none'"
                     :aria-hidden="activeSlide !== {{ $index }}">
-                    @if ($slide['type'] === 'custom_wbk')
+                    @if ($slide['type'] === 'custom_kebijakan_mutu')
+                        <div class="flex items-center justify-center w-full h-full pb-0 pt-0 md:pb-12 md:pt-16 mt-16 md:mt-0">
+                            <div class="relative w-full max-w-5xl bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-[2rem] shadow-2xl p-6 md:p-12 lg:p-16 border border-white/20 mx-auto transform transition-all duration-700 ease-out"
+                                 :class="activeSlide === {{ $index }} ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'">
+                                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-16">
+                                    <div class="w-full max-w-[240px] md:max-w-[360px] md:w-5/12 flex justify-center md:justify-end">
+                                        <div class="relative group cursor-default">
+                                            <div class="absolute inset-0 bg-amber-100/70 blur-3xl transition-all duration-700 group-hover:bg-amber-200/80"></div>
+                                            <img src="{{ asset('images/hero/kebijakanmutu-1.webp') }}" alt="Kebijakan Mutu BSPJI Banda Aceh" class="relative z-10 w-full h-auto object-contain drop-shadow-2xl transition-transform duration-700 ease-out group-hover:scale-105" loading="lazy" />
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-7/12 flex flex-col justify-center text-center md:text-left">
+                                        <div class="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs font-semibold tracking-wide text-gray-600 shadow-xs mb-3 md:mb-6 mx-auto md:mx-0 w-fit">
+                                            <span class="relative flex h-2 w-2">
+                                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                                            </span>
+                                            Kebijakan Mutu
+                                        </div>
+                                        <h2 class="text-2xl md:text-4xl lg:text-5xl font-extrabold mb-2 md:mb-5 leading-[1.15] tracking-tight text-gray-900">
+                                            Kebijakan Mutu<br>
+                                            BSPJI BANDA ACEH
+                                        </h2>
+                                        <p class="text-xs md:text-lg font-medium text-gray-600 max-w-xl mx-auto md:mx-0 leading-relaxed">
+                                            Menjadi balai yang akuntabel, adaptif, kolaboratif, dan berorientasi pelayanan.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @elseif ($slide['type'] === 'custom_wbk')
                         <div class="flex items-center justify-center w-full h-full pb-0 pt-0 md:pb-12 md:pt-16 mt-16 md:mt-0">
                             <!-- White Card Container -->
                             <div class="relative w-full max-w-5xl bg-white/95 backdrop-blur-xl rounded-2xl md:rounded-[2rem] shadow-2xl p-6 md:p-12 lg:p-16 border border-white/20 mx-auto transform transition-all duration-700 ease-out"
