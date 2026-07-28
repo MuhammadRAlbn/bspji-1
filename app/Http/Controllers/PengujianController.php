@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AlurPengujian;
 use App\Models\RuangLingkup;
 use App\Models\Sertifikasi;
+use App\Models\SpmPengujian;
 use Illuminate\View\View;
 
 class PengujianController extends Controller
@@ -19,8 +20,15 @@ class PengujianController extends Controller
             ->orderedByLab()
             ->get();
         $alurPengujian = AlurPengujian::first();
+        $spmPengujian = SpmPengujian::first();
         $labOptions = RuangLingkup::labOptions();
 
-        return view('pengujian', compact('sertifikasi', 'ruangLingkupan', 'alurPengujian', 'labOptions'));
+        return view('pengujian', compact(
+            'sertifikasi',
+            'ruangLingkupan',
+            'alurPengujian',
+            'spmPengujian',
+            'labOptions',
+        ));
     }
 }

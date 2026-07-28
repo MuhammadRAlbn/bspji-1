@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AlurKalibrasi;
 use App\Models\RuangLingkupKalibrasi;
 use App\Models\SertifikasiKalibrasi;
+use App\Models\SpmKalibrasi;
 use Illuminate\View\View;
 
 class KalibrasiController extends Controller
@@ -17,7 +18,8 @@ class KalibrasiController extends Controller
         $sertifikasis = SertifikasiKalibrasi::all();
         $ruangLingkupan = RuangLingkupKalibrasi::all();
         $alurKalibrasi = AlurKalibrasi::first();
+        $spmKalibrasi = SpmKalibrasi::first();
 
-        return view('kalibrasi', compact('sertifikasis', 'ruangLingkupan', 'alurKalibrasi'));
+        return view('kalibrasi', compact('sertifikasis', 'ruangLingkupan', 'alurKalibrasi', 'spmKalibrasi'));
     }
 }

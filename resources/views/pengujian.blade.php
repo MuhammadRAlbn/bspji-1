@@ -136,6 +136,18 @@
 
             <button
                 type="button"
+                @click="tab = 'spm'"
+                :class="tab === 'spm' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'spm' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M6.75 3.75h10.5A2.25 2.25 0 0 1 19.5 6v12a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 18V6a2.25 2.25 0 0 1 2.25-2.25Z" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">SPM</span>
+            </button>
+
+            <button
+                type="button"
                 @click="tab = 'tarif'"
                 :class="tab === 'tarif' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
                 class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
@@ -328,6 +340,30 @@
                     @endif
                 </div>
             </section>
+                <section x-show="tab === 'spm'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                <div class="mx-auto max-w-7xl space-y-6">
+                    @if($spmPengujian && $spmPengujian->image_path)
+                        <div class="flex justify-center">
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $spmPengujian->image_path) }}', 'Standar Pelayanan Minimal (SPM) Pengujian')"
+                                class="group relative block w-full max-w-4xl cursor-pointer overflow-hidden rounded-[30px] border border-black/15 bg-slate-50 text-left shadow-xl"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $spmPengujian->image_path) }}"
+                                    alt="Standar Pelayanan Minimal (SPM) Pengujian"
+                                    class="h-full w-full object-contain transition-transform duration-700 group-hover:scale-[1.01]"
+                                >
+                            </button>
+                        </div>
+                    @else
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Gambar SPM Pengujian belum tersedia.</p>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
 
                 <section x-show="tab === 'tarif'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-8">
