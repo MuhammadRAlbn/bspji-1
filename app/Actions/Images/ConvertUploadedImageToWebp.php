@@ -18,6 +18,8 @@ class ConvertUploadedImageToWebp
 
     public const string DIRECTORY_KALIBRASI = 'kalibrasi/spm';
 
+    public const string DIRECTORY_SERTIFIKASI_PRODUK = 'sertifikasi-produk/spm';
+
     public const int MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     public const int MAX_DIMENSION = 4096;
@@ -27,6 +29,7 @@ class ConvertUploadedImageToWebp
     private const array ALLOWED_DIRECTORIES = [
         self::DIRECTORY_PENGUJIAN,
         self::DIRECTORY_KALIBRASI,
+        self::DIRECTORY_SERTIFIKASI_PRODUK,
     ];
 
     private const array ALLOWED_EXTENSIONS = [

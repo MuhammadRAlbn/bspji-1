@@ -148,6 +148,18 @@
                 </svg>
                 <span class="text-base font-semibold sm:text-[1.05rem]">Direktori Pelanggan</span>
             </button>
+
+            <button
+                type="button"
+                @click="tab = 'spm'"
+                :class="tab === 'spm' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'spm' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M6.75 3.75h10.5A2.25 2.25 0 0 1 19.5 6v12a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 18V6a2.25 2.25 0 0 1 2.25-2.25Z" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">SPM</span>
+            </button>
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
@@ -634,9 +646,38 @@
                                 @endforelse
                             </tbody>
                         </table>
-                    </div>
+                </div>
                 </div>
                 </section>
+
+                <section x-show="tab === 'spm'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+                <div class="mx-auto max-w-6xl space-y-6 text-center">
+                    @if($spmSertifikasiProduk && $spmSertifikasiProduk->image_path)
+                        <div class="flex justify-start">
+                            <button
+                                type="button"
+                                @click="openLightbox('{{ asset('storage/' . $spmSertifikasiProduk->image_path) }}', 'Standar Pelayanan Minimal (SPM) Sertifikasi Produk')"
+                                class="group relative block w-full max-w-4xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $spmSertifikasiProduk->image_path) }}"
+                                    alt="Standar Pelayanan Minimal (SPM) Sertifikasi Produk"
+                                    class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                                >
+                                <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                    <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                        Klik untuk memperbesar
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+                    @else
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Gambar SPM Sertifikasi Produk belum tersedia.</p>
+                        </div>
+                    @endif
+                </div>
+            </section>
         </article>
     </div>
     <div

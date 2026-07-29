@@ -109,7 +109,17 @@ class ConvertUploadedImageToWebpTest extends TestCase
             '/\Akalibrasi\/spm\/[0-9A-HJKMNP-TV-Z]{26}\.webp\z/',
             $path,
         );
-        Storage::disk('public')->assertExists($path);
+        $uploadSertifikasi = UploadedFile::fake()->image('spm-sertifikasi.jpg', 100, 100);
+        $pathSertifikasi = (new ConvertUploadedImageToWebp)->execute(
+            $uploadSertifikasi,
+            ConvertUploadedImageToWebp::DIRECTORY_SERTIFIKASI_PRODUK,
+        );
+
+        $this->assertMatchesRegularExpression(
+            '/\Asertifikasi-produk\/spm\/[0-9A-HJKMNP-TV-Z]{26}\.webp\z/',
+            $pathSertifikasi,
+        );
+        Storage::disk('public')->assertExists($pathSertifikasi);
 
         $unauthorizedDirectories = [
             '../../secrets',

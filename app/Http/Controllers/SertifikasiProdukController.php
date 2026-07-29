@@ -10,6 +10,7 @@ use App\Models\InformasiPublikProduk;
 use App\Models\RuangLingkupProduk;
 use App\Models\SdmSertifikasiProduk;
 use App\Models\SertifikatProduk;
+use App\Models\SpmSertifikasiProduk;
 use App\Models\TarifProduk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -33,6 +34,7 @@ class SertifikasiProdukController extends Controller
         $sertifikats = SertifikatProduk::all();
         $ruangLingkup = RuangLingkupProduk::all();
         $alurProduk = AlurProduk::first();
+        $spmSertifikasiProduk = SpmSertifikasiProduk::first();
         $dokumens = DokumenProduk::all();
         $informasiPubliks = InformasiPublikProduk::all();
         $tarifs = TarifProduk::all();
@@ -59,6 +61,7 @@ class SertifikasiProdukController extends Controller
             'sertifikats',
             'ruangLingkup',
             'alurProduk',
+            'spmSertifikasiProduk',
             'dokumens',
             'informasiPubliks',
             'tarifs',
