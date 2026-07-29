@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LsihAlur;
 use App\Models\LsihRuangLingkup;
 use App\Models\LsihTarif;
+use App\Models\SpmLsih;
 use Illuminate\View\View;
 
 class LsihController extends Controller
@@ -17,7 +18,8 @@ class LsihController extends Controller
         $ruangLingkup = LsihRuangLingkup::all();
         $alur = LsihAlur::all();
         $tarif = LsihTarif::all();
+        $spmLsih = SpmLsih::first();
 
-        return view('lsih', compact('ruangLingkup', 'alur', 'tarif'));
+        return view('lsih', compact('ruangLingkup', 'alur', 'tarif', 'spmLsih'));
     }
 }

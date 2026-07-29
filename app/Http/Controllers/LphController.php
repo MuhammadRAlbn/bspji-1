@@ -8,6 +8,7 @@ use App\Models\LphKebijakanSasaranMutu;
 use App\Models\LphStrukturVisiMisi;
 use App\Models\RuangLingkupLph;
 use App\Models\SdmLph;
+use App\Models\SpmLph;
 use App\Models\TarifHalal;
 use Illuminate\View\View;
 
@@ -26,7 +27,8 @@ class LphController extends Controller
         $kebijakanSasaranMutu = LphKebijakanSasaranMutu::orderBy('urutan')->get();
         $tarifHalal = TarifHalal::all();
         $infrastruktur = LphInfrastruktur::orderBy('urutan')->get();
+        $spmLph = SpmLph::first();
 
-        return view('lph', compact('ruangLingkup', 'sdmAuditor', 'sdmPembina', 'alurKelengkapan', 'strukturVisiMisi', 'kebijakanSasaranMutu', 'tarifHalal', 'infrastruktur'));
+        return view('lph', compact('ruangLingkup', 'sdmAuditor', 'sdmPembina', 'alurKelengkapan', 'strukturVisiMisi', 'kebijakanSasaranMutu', 'tarifHalal', 'infrastruktur', 'spmLph'));
     }
 }

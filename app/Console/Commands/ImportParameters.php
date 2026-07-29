@@ -210,7 +210,7 @@ class ImportParameters extends Command
     }
 
     /**
-     * @param array<string, mixed> $row
+     * @param  array<string, mixed>  $row
      */
     private function isBlankRow(array $row): bool
     {
@@ -257,7 +257,7 @@ class ImportParameters extends Command
             return;
         }
 
-        $table = (new Parameter())->getTable();
+        $table = (new Parameter)->getTable();
         $nextId = ((int) Parameter::query()->max('id')) + 1;
 
         if (Schema::hasTable($table) && $nextId > 1) {

@@ -121,6 +121,30 @@ class ConvertUploadedImageToWebpTest extends TestCase
         );
         Storage::disk('public')->assertExists($pathSertifikasi);
 
+        $uploadLph = UploadedFile::fake()->image('spm-lph.jpg', 100, 100);
+        $pathLph = (new ConvertUploadedImageToWebp)->execute(
+            $uploadLph,
+            ConvertUploadedImageToWebp::DIRECTORY_LPH,
+        );
+
+        $this->assertMatchesRegularExpression(
+            '/\Alph\/spm\/[0-9A-HJKMNP-TV-Z]{26}\.webp\z/',
+            $pathLph,
+        );
+        Storage::disk('public')->assertExists($pathLph);
+
+        $uploadLsih = UploadedFile::fake()->image('spm-lsih.jpg', 100, 100);
+        $pathLsih = (new ConvertUploadedImageToWebp)->execute(
+            $uploadLsih,
+            ConvertUploadedImageToWebp::DIRECTORY_LSIH,
+        );
+
+        $this->assertMatchesRegularExpression(
+            '/\Alsih\/spm\/[0-9A-HJKMNP-TV-Z]{26}\.webp\z/',
+            $pathLsih,
+        );
+        Storage::disk('public')->assertExists($pathLsih);
+
         $unauthorizedDirectories = [
             '../../secrets',
             'kalibrasi/spm/../other',

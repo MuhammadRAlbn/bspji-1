@@ -62,7 +62,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->renderHook(
                 PanelsRenderHook::HEAD_END,
-                fn(): string => new HtmlString('
+                fn (): string => new HtmlString('
                     <style>
                         .fi-sidebar-nav-groups {
                             gap: 0.25rem !important;

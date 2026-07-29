@@ -4,8 +4,8 @@ namespace App\Filament\Clusters\LembagaPemeriksaHalal;
 
 use BackedEnum;
 use Filament\Clusters\Cluster;
-use Filament\Support\Icons\Heroicon;
 use Filament\Pages\Enums\SubNavigationPosition;
+use Filament\Support\Icons\Heroicon;
 
 class LembagaPemeriksaHalalCluster extends Cluster
 {

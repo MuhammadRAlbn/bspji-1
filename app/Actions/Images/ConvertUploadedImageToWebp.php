@@ -20,6 +20,10 @@ class ConvertUploadedImageToWebp
 
     public const string DIRECTORY_SERTIFIKASI_PRODUK = 'sertifikasi-produk/spm';
 
+    public const string DIRECTORY_LPH = 'lph/spm';
+
+    public const string DIRECTORY_LSIH = 'lsih/spm';
+
     public const int MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     public const int MAX_DIMENSION = 4096;
@@ -30,6 +34,8 @@ class ConvertUploadedImageToWebp
         self::DIRECTORY_PENGUJIAN,
         self::DIRECTORY_KALIBRASI,
         self::DIRECTORY_SERTIFIKASI_PRODUK,
+        self::DIRECTORY_LPH,
+        self::DIRECTORY_LSIH,
     ];
 
     private const array ALLOWED_EXTENSIONS = [
