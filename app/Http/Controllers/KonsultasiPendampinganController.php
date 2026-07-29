@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KonsultasiAlur;
 use App\Models\KonsultasiRuangLingkup;
 use App\Models\KonsultasiTarif;
+use App\Models\SpmKonsultasiPendampingan;
 use Illuminate\View\View;
 
 class KonsultasiPendampinganController extends Controller
@@ -18,7 +19,14 @@ class KonsultasiPendampinganController extends Controller
         $ruangLingkupImages = KonsultasiRuangLingkup::where('type', 'image')->get();
         $alur = KonsultasiAlur::all();
         $tarif = KonsultasiTarif::first();
+        $spmKonsultasiPendampingan = SpmKonsultasiPendampingan::first();
 
-        return view('konsultasi-pendampingan', compact('ruangLingkupParagraf', 'ruangLingkupImages', 'alur', 'tarif'));
+        return view('konsultasi-pendampingan', compact(
+            'ruangLingkupParagraf',
+            'ruangLingkupImages',
+            'alur',
+            'tarif',
+            'spmKonsultasiPendampingan',
+        ));
     }
 }

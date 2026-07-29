@@ -28,6 +28,8 @@ class ConvertUploadedImageToWebp
 
     public const string DIRECTORY_PELATIHAN_TEKNIS = 'pelatihan-teknis/spm';
 
+    public const string DIRECTORY_KONSULTASI_PENDAMPINGAN = 'konsultasi-pendampingan/spm';
+
     public const int MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     public const int MAX_DIMENSION = 4096;
@@ -42,6 +44,7 @@ class ConvertUploadedImageToWebp
         self::DIRECTORY_LSIH,
         self::DIRECTORY_VERIFIKASI_TKDN,
         self::DIRECTORY_PELATIHAN_TEKNIS,
+        self::DIRECTORY_KONSULTASI_PENDAMPINGAN,
     ];
 
     private const array ALLOWED_EXTENSIONS = [
