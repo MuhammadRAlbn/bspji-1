@@ -24,6 +24,10 @@ class ConvertUploadedImageToWebp
 
     public const string DIRECTORY_LSIH = 'lsih/spm';
 
+    public const string DIRECTORY_VERIFIKASI_TKDN = 'verifikasi-tkdn/spm';
+
+    public const string DIRECTORY_PELATIHAN_TEKNIS = 'pelatihan-teknis/spm';
+
     public const int MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     public const int MAX_DIMENSION = 4096;
@@ -36,6 +40,8 @@ class ConvertUploadedImageToWebp
         self::DIRECTORY_SERTIFIKASI_PRODUK,
         self::DIRECTORY_LPH,
         self::DIRECTORY_LSIH,
+        self::DIRECTORY_VERIFIKASI_TKDN,
+        self::DIRECTORY_PELATIHAN_TEKNIS,
     ];
 
     private const array ALLOWED_EXTENSIONS = [

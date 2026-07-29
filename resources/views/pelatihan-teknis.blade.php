@@ -55,6 +55,18 @@
                 </svg>
                 <span class="text-base font-semibold sm:text-[1.05rem]">Alur</span>
             </button>
+
+            <button
+                type="button"
+                @click="tab = 'spm'"
+                :class="tab === 'spm' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
+                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+            >
+                <svg class="h-5 w-5 shrink-0" :class="tab === 'spm' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span class="text-base font-semibold sm:text-[1.05rem]">SPM</span>
+            </button>
         </div>
 
         <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
@@ -114,6 +126,39 @@
                     @endif
                 </div>
             </div>
+
+            {{-- Tab SPM --}}
+            <section x-show="tab === 'spm'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" style="display: none;">
+                <div class="flex flex-col items-start gap-12">
+                    @if($spmPelatihanTeknis && $spmPelatihanTeknis->image_path)
+                        <button
+                            type="button"
+                            @click="openLightbox('{{ asset('storage/' . $spmPelatihanTeknis->image_path) }}', 'Standar Pelayanan Minimal (SPM) Pelatihan Teknis')"
+                            class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl border border-slate-200 text-left"
+                        >
+                            <img
+                                src="{{ asset('storage/' . $spmPelatihanTeknis->image_path) }}"
+                                alt="Standar Pelayanan Minimal (SPM) Pelatihan Teknis"
+                                class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
+                            >
+                            <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                    Klik untuk memperbesar
+                                </span>
+                            </div>
+                        </button>
+                    @else
+                        <div class="w-full rounded-3xl border border-gray-100 bg-white p-24 text-center shadow-xl">
+                            <div class="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100">
+                                <svg class="h-10 w-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                                </svg>
+                            </div>
+                            <p class="font-medium text-slate-400">Gambar SPM Pelatihan Teknis belum tersedia.</p>
+                        </div>
+                    @endif
+                </div>
+            </section>
         </article>
     </main>
     <div
