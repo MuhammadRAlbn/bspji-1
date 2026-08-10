@@ -29,11 +29,11 @@
                 </p>
 
                 <div class="flex flex-wrap gap-3">
-                    <a href="http://pintu.bspjiaceh.id/login"
+                    <a href="https://sipintu-aceh.kemenperin.go.id/" target="_blank"
                         class="flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/35 transition-all hover:bg-blue-700">
                         <i data-lucide="log-in" class="h-4 w-4"></i> Login
                     </a>
-                    <a href="http://pintu.bspjiaceh.id/register"
+                    <a href="https://sipintu-aceh.kemenperin.go.id/sign-up" target="_blank"
                         class="flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:bg-white/20">
                         <i data-lucide="user-plus" class="h-4 w-4"></i> Daftar
                     </a>
