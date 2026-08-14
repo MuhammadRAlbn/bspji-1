@@ -5,7 +5,7 @@
             'src' => asset('video/videocrop.webm'),
             'kicker' => 'BSPJI Banda Aceh',
             'title' => 'Mewujudkan Industri Nasional yang Mandiri dan Berdaya Saing',
-            'description' => 'Mitra layanan teknis untuk standardisasi, pengujian, sertifikasi, konsultasi, dan penguatan daya saing industri.',
+            'description' => 'Mitra layanan teknis untuk standardisasi, pengujian, sertifikasi, konsultansi untuk penguatan daya saing industri.',
             'cta_label' => 'Jelajahi Layanan Kami',
             'cta_url' => '#layanan',
         ],
