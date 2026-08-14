@@ -1,10 +1,10 @@
 User-agent: *
 Disallow: /admin
 Disallow: /livewire
-Disallow: /storage/
+# Disallow: /storage/
 
 # Allow search engines to index all public pages
 Allow: /
 
 # Sitemap (update domain after hosting is live)
-# Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://bspjiaceh.kemenperin.go.id/sitemap.xml
