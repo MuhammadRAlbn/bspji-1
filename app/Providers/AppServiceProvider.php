@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\News;
 use App\Models\NewsComment;
 use App\Models\User;
+use App\Observers\NewsObserver;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        News::observe(NewsObserver::class);
+
         Gate::before(function (User $user, string $ability, array $arguments): bool|Response|null {
             if (! $user->isHumas()) {
                 return null;

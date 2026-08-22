@@ -1,4 +1,4 @@
-<x-layouts.app title="Sertifikasi Produk - BSPJI Pekanbaru" bodyClass="bg-slate-100/90">
+<x-layouts.app title="Sertifikasi Produk - BSPJI Banda Aceh" bodyClass="bg-slate-100/90">
 <div x-data="{
     tab: @js($activeTab),
     lightboxOpen: false,

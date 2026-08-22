@@ -6,5 +6,5 @@ Disallow: /livewire
 # Allow search engines to index all public pages
 Allow: /
 
-# Sitemap (update domain after hosting is live)
+# Canonical sitemap
 Sitemap: https://bspjiaceh.kemenperin.go.id/sitemap.xml

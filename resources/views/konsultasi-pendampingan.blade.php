@@ -1,4 +1,4 @@
-<x-layouts.app title="Konsultansi dan Pendampingan - BSPJI Pekanbaru" bodyClass="bg-slate-100/90">
+<x-layouts.app title="Konsultansi dan Pendampingan - BSPJI Banda Aceh" bodyClass="bg-slate-100/90">
 <div x-data="{
     tab: 'ruang-lingkup',
     lightboxOpen: false,

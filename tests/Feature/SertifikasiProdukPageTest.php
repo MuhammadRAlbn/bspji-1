@@ -14,7 +14,9 @@ class SertifikasiProdukPageTest extends TestCase
     public function test_sertifikasi_produk_page_loads_successfully(): void
     {
         $this->get(route('sertifikasi-produk.index'))
-            ->assertOk();
+            ->assertOk()
+            ->assertSee('<title>Sertifikasi Produk - BSPJI Banda Aceh</title>', false)
+            ->assertDontSee('BSPJI Pekanbaru');
     }
 
     public function test_page_contains_spm_tab_and_empty_placeholder(): void

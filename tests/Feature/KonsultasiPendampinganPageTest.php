@@ -14,7 +14,9 @@ class KonsultasiPendampinganPageTest extends TestCase
     public function test_konsultasi_pendampingan_page_loads_successfully(): void
     {
         $this->get(route('konsultasi-pendampingan.index'))
-            ->assertOk();
+            ->assertOk()
+            ->assertSee('<title>Konsultansi dan Pendampingan - BSPJI Banda Aceh</title>', false)
+            ->assertDontSee('BSPJI Pekanbaru');
     }
 
     public function test_page_contains_spm_tab_and_empty_placeholder(): void

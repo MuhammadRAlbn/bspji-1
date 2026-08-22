@@ -13,6 +13,7 @@ use App\Http\Controllers\PengujianController;
 use App\Http\Controllers\PpidController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\SertifikasiProdukController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TkdnController;
 use App\Http\Controllers\UppController;
 use App\Http\Controllers\ZonaIntegritasController;
@@ -21,7 +22,11 @@ use App\Http\Controllers\ZonaIntegritasPengaduanController;
 use App\Support\LandingPageData;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn (LandingPageData $landingPageData) => view('welcome', $landingPageData->toArray()));
+Route::get('/', fn (LandingPageData $landingPageData) => view('welcome', $landingPageData->toArray()))
+    ->name('home');
+
+Route::get('/sitemap.xml', SitemapController::class)
+    ->name('sitemap');
 
 Route::get('/zona-integritas', [ZonaIntegritasController::class, 'index'])
     ->name('zona-integritas.index');
