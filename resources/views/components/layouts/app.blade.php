@@ -16,12 +16,24 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;600;800&display=swap"
+        rel="stylesheet">
 
     @livewireScriptConfig
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @stack('styles')
+
+    {{-- Script Umami Analytics (Hanya jalan di Production) --}}
+    @production
+        @if(config('services.umami.website_id'))
+            <script defer src="{{ config('services.umami.script_url') }}"
+                data-website-id="{{ config('services.umami.website_id') }}" @if(config('services.umami.domains'))
+                data-domains="{{ config('services.umami.domains') }}" @endif>
+                </script>
+        @endif
+    @endproduction
 </head>
 
 <body {{ $attributes->merge(['class' => $bodyClass . ' text-slate-800 antialiased font-sans' . ($navbarVariant !== 'transparent' ? ' pt-20' : '')]) }}>
