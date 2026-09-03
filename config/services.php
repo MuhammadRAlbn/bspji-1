@@ -41,4 +41,9 @@ return [
         'widget_id' => env('TAWK_WIDGET_ID', '1gpcldf9n'),
     ],
 
+    'umami' => [
+        'script_url' => env('UMAMI_SCRIPT_URL', 'https://cloud.umami.is/script.js'),
+        'website_id' => env('UMAMI_WEBSITE_ID'),
+        'domains' => env('UMAMI_DOMAINS'),
+    ],
 ];
