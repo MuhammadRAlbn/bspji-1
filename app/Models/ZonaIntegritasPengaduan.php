@@ -10,6 +10,8 @@ class ZonaIntegritasPengaduan extends Model
 {
     public const JENIS_PENGADUAN = 'pengaduan';
 
+    public const JENIS_KOMPLAIN = 'komplain';
+
     public const JENIS_WBS = 'wbs';
 
     public const STATUS_DITERIMA = 'pengaduan_diterima';
@@ -21,7 +23,8 @@ class ZonaIntegritasPengaduan extends Model
     public const STATUS_DITOLAK = 'pengaduan_ditolak';
 
     public const JENIS_PENGADUAN_OPTIONS = [
-        self::JENIS_PENGADUAN => 'Pengaduan',
+        self::JENIS_PENGADUAN => 'Pengaduan Pelanggaran',
+        self::JENIS_KOMPLAIN => 'Komplain Layanan',
         self::JENIS_WBS => 'WBS',
     ];
 
@@ -49,6 +52,8 @@ class ZonaIntegritasPengaduan extends Model
         'tahun_pengaduan',
         'sequence',
         'nama',
+        'email',
+        'telepon',
         'jenis_pengaduan',
         'jenis_pelanggan',
         'nama_dilaporkan',
@@ -102,12 +107,16 @@ class ZonaIntegritasPengaduan extends Model
         return self::JENIS_PENGADUAN_OPTIONS[$this->jenis_pengaduan] ?? $this->jenis_pengaduan;
     }
 
-    public function getJenisPelangganLabelAttribute(): string
+    public function getJenisPelangganLabelAttribute(): ?string
     {
+        if (blank($this->jenis_pelanggan)) {
+            return '-';
+        }
+
         return self::JENIS_PELANGGARAN_OPTIONS[$this->jenis_pelanggan] ?? $this->jenis_pelanggan;
     }
 
-    public function getJenisPelanggaranLabelAttribute(): string
+    public function getJenisPelanggaranLabelAttribute(): ?string
     {
         return $this->jenis_pelanggan_label;
     }

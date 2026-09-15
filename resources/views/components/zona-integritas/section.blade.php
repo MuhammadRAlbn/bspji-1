@@ -52,6 +52,7 @@
                 gratifikasiTab: 'gratifikasi',
                 wbsTab: 'wbs',
                 showPengaduanSuccess: {{ Js::from(session()->has('pengaduan_success_nomor')) }},
+                jenisPengaduan: {{ Js::from(old('jenis_pengaduan', '')) }},
                 buktiDukungName: '',
                 buktiDukungError: '',
                 setActive(tab) {
@@ -94,16 +95,16 @@
                                     <i data-lucide="check" class="h-6 w-6"></i>
                                 </div>
                                 <div>
-                                    <h3 class="text-xl font-bold tracking-tight text-slate-950">Pengaduan berhasil dikirim</h3>
+                                    <h3 class="text-xl font-bold tracking-tight text-slate-950">Laporan berhasil dikirim</h3>
                                     <p class="mt-2 text-sm leading-6 text-slate-600">
-                                        Catat nomor pengaduan ini agar memudahkan pelacakan pengaduan Anda.
+                                        Catat nomor registrasi tiket ini agar memudahkan pelacakan tindak lanjut laporan Anda.
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="px-6 py-6">
-                            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Nomor Pengaduan</p>
+                            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Nomor Registrasi / Pengaduan</p>
                             <div class="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 font-mono text-2xl font-bold tracking-wide text-slate-950">
                                 {{ session('pengaduan_success_nomor') }}
                             </div>
@@ -325,7 +326,9 @@
 
                             <div class="grid gap-5 md:grid-cols-2">
                                 <div class="space-y-2">
-                                    <label for="nama_pengadu" class="text-sm font-semibold text-slate-700">Nama</label>
+                                    <label for="nama_pengadu" class="text-sm font-semibold text-slate-700">
+                                        Nama <span class="text-red-500">*</span>
+                                    </label>
                                     <input id="nama_pengadu" type="text" name="nama"
                                         value="{{ old('nama') }}"
                                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
@@ -336,11 +339,14 @@
                                 </div>
 
                                 <div class="space-y-2">
-                                    <label for="jenis_pengaduan" class="text-sm font-semibold text-slate-700">Jenis Pengaduan</label>
-                                    <select id="jenis_pengaduan" name="jenis_pengaduan"
+                                    <label for="jenis_pengaduan" class="text-sm font-semibold text-slate-700">
+                                        Jenis Laporan <span class="text-red-500">*</span>
+                                    </label>
+                                    <select id="jenis_pengaduan" name="jenis_pengaduan" x-model="jenisPengaduan"
                                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100" required>
-                                        <option value="">Pilih jenis pengaduan</option>
-                                        <option value="pengaduan" @selected(old('jenis_pengaduan') === 'pengaduan')>Pengaduan</option>
+                                        <option value="" @selected(!old('jenis_pengaduan'))>Pilih jenis laporan</option>
+                                        <option value="pengaduan" @selected(old('jenis_pengaduan') === 'pengaduan')>Pengaduan Pelanggaran</option>
+                                        <option value="komplain" @selected(old('jenis_pengaduan') === 'komplain')>Komplain Layanan</option>
                                         <option value="wbs" @selected(old('jenis_pengaduan') === 'wbs')>WBS</option>
                                     </select>
                                     @error('jenis_pengaduan')
@@ -348,11 +354,64 @@
                                     @enderror
                                 </div>
 
-                                <div class="space-y-2 md:col-span-2">
-                                    <label for="jenis_pelanggan" class="text-sm font-semibold text-slate-700">Jenis Pelanggaran</label>
+                                <div x-show="jenisPengaduan === 'komplain'" x-cloak x-transition
+                                    class="rounded-xl border border-emerald-200 bg-emerald-50/60 p-4 text-sm text-slate-700 md:col-span-2">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="info" class="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"></i>
+                                        <p class="leading-relaxed">
+                                            <span class="font-semibold text-slate-900">Butuh respon lebih cepat?</span>
+                                            Selain formulir ini, Anda juga dapat menyampaikan komplain layanan secara langsung melalui tombol
+                                            <span class="font-semibold text-slate-900">Live Chat</span> di pojok kanan bawah layar, atau chat via
+                                            <a href="https://api.whatsapp.com/send/?phone=%2B6281349735981&type=phone_number&app_absent=0"
+                                                target="_blank" rel="noopener noreferrer"
+                                                class="font-semibold text-emerald-700 underline decoration-emerald-400 underline-offset-2 transition hover:text-emerald-800">
+                                                WhatsApp (+62 813-4973-5981)
+                                            </a>.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="email_pengadu" class="text-sm font-semibold text-slate-700">
+                                        Email
+                                        <span x-show="jenisPengaduan === 'komplain'" class="text-red-500" title="Wajib untuk Komplain Layanan">*</span>
+                                        <span x-show="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'" class="text-xs font-normal text-slate-400">(Opsional)</span>
+                                    </label>
+                                    <input id="email_pengadu" type="email" name="email"
+                                        value="{{ old('email') }}"
+                                        :required="jenisPengaduan === 'komplain'"
+                                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
+                                        placeholder="nama@email.com">
+                                    @error('email')
+                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label for="telepon_pengadu" class="text-sm font-semibold text-slate-700">
+                                        Nomor Handphone / WhatsApp
+                                        <span x-show="jenisPengaduan === 'komplain'" class="text-red-500" title="Wajib untuk Komplain Layanan">*</span>
+                                        <span x-show="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'" class="text-xs font-normal text-slate-400">(Opsional)</span>
+                                    </label>
+                                    <input id="telepon_pengadu" type="tel" name="telepon"
+                                        value="{{ old('telepon') }}"
+                                        :required="jenisPengaduan === 'komplain'"
+                                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
+                                        placeholder="Contoh: 081234567890">
+                                    @error('telepon')
+                                        <p class="text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div x-show="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'" x-transition class="space-y-2 md:col-span-2">
+                                    <label for="jenis_pelanggan" class="text-sm font-semibold text-slate-700">
+                                        Jenis Pelanggaran <span class="text-red-500">*</span>
+                                    </label>
                                     <select id="jenis_pelanggan" name="jenis_pelanggan"
-                                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100" required>
-                                        <option value="">Pilih kategori pengaduan</option>
+                                        :disabled="jenisPengaduan !== 'pengaduan' && jenisPengaduan !== 'wbs'"
+                                        :required="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'"
+                                        class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100">
+                                        <option value="">Pilih kategori pelanggaran</option>
                                         <option value="pelanggaran-peraturan" @selected(old('jenis_pelanggan') === 'pelanggaran-peraturan')>Pelanggaran terhadap peraturan</option>
                                         <option value="penyalahgunaan-wewenang" @selected(old('jenis_pelanggan') === 'penyalahgunaan-wewenang')>Penyalahgunaan wewenang atau jabatan</option>
                                         <option value="pelanggaran-kode-etik" @selected(old('jenis_pelanggan') === 'pelanggaran-kode-etik')>Pelanggaran kode etik</option>
@@ -365,23 +424,30 @@
                                     @enderror
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label for="nama_dilaporkan" class="text-sm font-semibold text-slate-700">Nama Yang Dilaporkan</label>
+                                <div x-show="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'" x-transition class="space-y-2 md:col-span-2">
+                                    <label for="nama_dilaporkan" class="text-sm font-semibold text-slate-700">
+                                        Nama Yang Dilaporkan <span class="text-red-500">*</span>
+                                    </label>
                                     <input id="nama_dilaporkan" type="text" name="nama_dilaporkan"
                                         value="{{ old('nama_dilaporkan') }}"
+                                        :disabled="jenisPengaduan !== 'pengaduan' && jenisPengaduan !== 'wbs'"
+                                        :required="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'"
                                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
-                                        placeholder="Masukkan nama pihak yang dilaporkan" required>
+                                        placeholder="Masukkan nama pihak yang dilaporkan">
                                     @error('nama_dilaporkan')
                                         <p class="text-sm text-red-600">{{ $message }}</p>
                                     @enderror
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label for="judul_pengaduan" class="text-sm font-semibold text-slate-700">Judul</label>
+                                <div class="space-y-2 md:col-span-2">
+                                    <label for="judul_pengaduan" class="text-sm font-semibold text-slate-700">
+                                        <span x-text="jenisPengaduan === 'komplain' ? 'Judul Komplain Layanan' : (jenisPengaduan ? 'Judul Laporan' : 'Judul')">Judul</span>
+                                        <span class="text-red-500">*</span>
+                                    </label>
                                     <input id="judul_pengaduan" type="text" name="judul"
                                         value="{{ old('judul') }}"
                                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
-                                        placeholder="Ringkasan singkat pengaduan" required>
+                                        :placeholder="jenisPengaduan === 'komplain' ? 'Contoh: Keterlambatan Pengujian Sampel Air' : 'Ringkasan singkat laporan'" required>
                                     @error('judul')
                                         <p class="text-sm text-red-600">{{ $message }}</p>
                                     @enderror
@@ -389,10 +455,13 @@
                             </div>
 
                             <div class="space-y-2">
-                                <label for="uraian_pengaduan" class="text-sm font-semibold text-slate-700">Uraian Pengaduan</label>
+                                <label for="uraian_pengaduan" class="text-sm font-semibold text-slate-700">
+                                    <span x-text="jenisPengaduan === 'komplain' ? 'Uraian Komplain Layanan' : (jenisPengaduan ? 'Uraian Pengaduan' : 'Uraian')">Uraian</span>
+                                    <span class="text-red-500">*</span>
+                                </label>
                                 <textarea id="uraian_pengaduan" name="uraian" rows="6"
                                     class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100"
-                                    placeholder="Tuliskan kronologi, waktu kejadian, lokasi, dan informasi pendukung lainnya" required>{{ old('uraian') }}</textarea>
+                                    :placeholder="jenisPengaduan === 'komplain' ? 'Tuliskan rincian kendala layanan yang dialami, nomor permohonan/sampel (bila ada), tanggal kejadian, serta kronologi permasalahan' : 'Tuliskan kronologi, waktu kejadian, lokasi, dan informasi pendukung lainnya'" required>{{ old('uraian') }}</textarea>
                                 @error('uraian')
                                     <p class="text-sm text-red-600">{{ $message }}</p>
                                 @enderror
@@ -535,7 +604,7 @@
 
                             @if ($benturanFormUrl)
                                 <iframe src="{{ $benturanFormUrl }}" title="Form Benturan Kepentingan"
-                                    class="h-[520px] w-full rounded-lg border border-slate-200 bg-white"></iframe>
+                                    class="h-130 w-full rounded-lg border border-slate-200 bg-white"></iframe>
                             @else
                                 <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-sm font-medium text-slate-500">
                                     Formulir Google Benturan Kepentingan belum dikonfigurasi.
@@ -593,7 +662,7 @@
 
                         @if ($gratifikasiFormUrl)
                             <iframe src="{{ $gratifikasiFormUrl }}" title="Form Gratifikasi"
-                                class="h-[600px] w-full rounded-lg border border-slate-200 bg-white shadow-sm"></iframe>
+                                class="h-150 w-full rounded-lg border border-slate-200 bg-white shadow-sm"></iframe>
                         @else
                             <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center text-sm font-medium text-slate-500">
                                 Formulir Google Gratifikasi belum dikonfigurasi.

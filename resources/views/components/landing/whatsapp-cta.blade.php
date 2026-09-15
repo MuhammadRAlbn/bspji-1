@@ -1,7 +1,7 @@
 <section id="whatsapp-cta" class="relative overflow-hidden bg-white py-14 md:py-20 lg:py-24 border-t border-slate-100">
     <!-- Subtle Background Enhancements -->
-    <div class="absolute -right-20 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-emerald-500/[0.04] blur-3xl pointer-events-none" aria-hidden="true"></div>
-    <div class="absolute -left-20 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-cyan-500/[0.03] blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -right-20 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-emerald-500/4 blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -left-20 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-cyan-500/3 blur-3xl pointer-events-none" aria-hidden="true"></div>
     
     <!-- Modern Dot Matrix Accent -->
     <div class="absolute right-8 top-12 h-32 w-32 opacity-20 pointer-events-none hidden lg:block" aria-hidden="true">

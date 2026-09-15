@@ -54,19 +54,31 @@ class ZonaIntegritasPengaduanResource extends Resource
                 ->label('Nama Pelapor')
                 ->disabled()
                 ->dehydrated(false),
+            TextInput::make('email')
+                ->label('Email Pelapor')
+                ->placeholder('-')
+                ->disabled()
+                ->dehydrated(false),
+            TextInput::make('telepon')
+                ->label('Nomor Handphone / WhatsApp')
+                ->placeholder('-')
+                ->disabled()
+                ->dehydrated(false),
             TextInput::make('jenis_pengaduan')
                 ->label('Jenis Pengaduan')
-                ->formatStateUsing(fn (ZonaIntegritasPengaduan $record): string => $record->jenis_pengaduan_label)
+                ->formatStateUsing(fn (?ZonaIntegritasPengaduan $record): string => $record?->jenis_pengaduan_label ?? '-')
                 ->disabled()
                 ->dehydrated(false),
             TextInput::make('jenis_pelanggaran_label')
                 ->label('Jenis Pelanggaran')
-                ->formatStateUsing(fn (ZonaIntegritasPengaduan $record): string => $record->jenis_pelanggaran_label)
+                ->formatStateUsing(fn (?ZonaIntegritasPengaduan $record): string => $record?->jenis_pelanggaran_label ?? '-')
+                ->visible(fn (?ZonaIntegritasPengaduan $record): bool => $record?->jenis_pengaduan !== ZonaIntegritasPengaduan::JENIS_KOMPLAIN)
                 ->disabled()
                 ->dehydrated(false)
                 ->columnSpanFull(),
             TextInput::make('nama_dilaporkan')
                 ->label('Nama Yang Dilaporkan')
+                ->visible(fn (?ZonaIntegritasPengaduan $record): bool => $record?->jenis_pengaduan !== ZonaIntegritasPengaduan::JENIS_KOMPLAIN)
                 ->disabled()
                 ->dehydrated(false),
             TextInput::make('judul')
@@ -114,7 +126,13 @@ class ZonaIntegritasPengaduanResource extends Resource
                     ->limit(40),
                 TextColumn::make('jenis_pengaduan_label')
                     ->label('Jenis')
-                    ->badge(),
+                    ->badge()
+                    ->color(fn (ZonaIntegritasPengaduan $record): string => match ($record->jenis_pengaduan) {
+                        ZonaIntegritasPengaduan::JENIS_PENGADUAN => 'danger',
+                        ZonaIntegritasPengaduan::JENIS_KOMPLAIN => 'warning',
+                        ZonaIntegritasPengaduan::JENIS_WBS => 'info',
+                        default => 'gray',
+                    }),
                 TextColumn::make('status_label')
                     ->label('Status')
                     ->badge()

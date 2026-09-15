@@ -68,6 +68,131 @@ class ZonaIntegritasPengaduanTest extends TestCase
         $this->assertDatabaseCount('zona_integritas_pengaduans', 0);
     }
 
+    public function test_komplain_submission_success_with_contact_and_without_pelanggaran(): void
+    {
+        Carbon::setTestNow(Carbon::parse('2026-09-14 10:00:00', 'Asia/Jakarta'));
+        Storage::fake('local');
+
+        $this->post(route('zona-integritas.pengaduan.store'), [
+            'nama' => 'Pelanggan Layanan',
+            'email' => 'pelanggan@example.com',
+            'telepon' => '081234567890',
+            'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+            'judul' => 'Keterlambatan Pengujian Sampel Air',
+            'uraian' => 'Hasil pengujian sampel air terlambat lebih dari 7 hari kerja.',
+            'website' => '',
+        ])
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHas('pengaduan_success_nomor', '20260500001');
+
+        $this->assertDatabaseHas('zona_integritas_pengaduans', [
+            'nomor_pengaduan' => '20260500001',
+            'nama' => 'Pelanggan Layanan',
+            'email' => 'pelanggan@example.com',
+            'telepon' => '081234567890',
+            'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+            'jenis_pelanggan' => null,
+            'nama_dilaporkan' => null,
+            'judul' => 'Keterlambatan Pengujian Sampel Air',
+        ]);
+
+        Carbon::setTestNow();
+    }
+
+    public function test_komplain_submission_requires_email_and_telepon(): void
+    {
+        $this->from(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->post(route('zona-integritas.pengaduan.store'), [
+                'nama' => 'Pelanggan Layanan',
+                'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+                'judul' => 'Keterlambatan Sertifikasi',
+                'uraian' => 'Uraian komplain layanan yang cukup panjang.',
+                'website' => '',
+            ])
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHasErrors([
+                'email' => 'Email pelapor wajib diisi untuk komplain layanan.',
+                'telepon' => 'Nomor handphone / WhatsApp wajib diisi untuk komplain layanan.',
+            ]);
+
+        $this->assertDatabaseCount('zona_integritas_pengaduans', 0);
+    }
+
+    public function test_komplain_submission_rejects_uraian_less_than_ten_chars_with_friendly_indonesian_message(): void
+    {
+        $this->from(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->post(route('zona-integritas.pengaduan.store'), [
+                'nama' => 'Pelanggan Layanan',
+                'email' => 'pelanggan@example.com',
+                'telepon' => '081234567890',
+                'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+                'judul' => 'Keterlambatan Layanan',
+                'uraian' => 'singkat',
+                'website' => '',
+            ])
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHasErrors([
+                'uraian' => 'Uraian laporan minimal harus berisi 10 karakter.',
+            ]);
+
+        $this->assertDatabaseCount('zona_integritas_pengaduans', 0);
+    }
+
+    public function test_submission_requires_jenis_pengaduan_selection(): void
+    {
+        $this->from(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->post(route('zona-integritas.pengaduan.store'), [
+                'nama' => 'Pelanggan Layanan',
+                'jenis_pengaduan' => '',
+                'judul' => 'Judul Laporan',
+                'uraian' => 'Uraian laporan yang cukup panjang.',
+                'website' => '',
+            ])
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHasErrors([
+                'jenis_pengaduan' => 'Jenis laporan wajib dipilih.',
+            ]);
+
+        $this->assertDatabaseCount('zona_integritas_pengaduans', 0);
+    }
+
+    public function test_pengaduan_pelanggaran_requires_jenis_pelanggan_and_nama_dilaporkan(): void
+    {
+        $this->from(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->post(route('zona-integritas.pengaduan.store'), [
+                'nama' => 'Pelapor',
+                'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_PENGADUAN,
+                'judul' => 'Laporan Pelanggaran',
+                'uraian' => 'Uraian pengaduan pelanggaran yang cukup panjang.',
+                'website' => '',
+            ])
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHasErrors(['jenis_pelanggan', 'nama_dilaporkan']);
+
+        $this->assertDatabaseCount('zona_integritas_pengaduans', 0);
+    }
+
+    public function test_komplain_sanitizes_and_discards_pelanggaran_and_nama_dilaporkan(): void
+    {
+        $this->post(route('zona-integritas.pengaduan.store'), [
+            'nama' => 'Pelanggan Layanan',
+            'email' => 'pelanggan@example.com',
+            'telepon' => '081234567890',
+            'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+            'jenis_pelanggan' => 'pelanggaran-sop',
+            'nama_dilaporkan' => 'Petugas Loket',
+            'judul' => 'Komplain Layanan UPP',
+            'uraian' => 'Uraian kendala layanan yang dilaporkan.',
+            'website' => '',
+        ])->assertSessionHasNoErrors();
+
+        $this->assertDatabaseHas('zona_integritas_pengaduans', [
+            'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+            'jenis_pelanggan' => null,
+            'nama_dilaporkan' => null,
+        ]);
+    }
+
     public function test_lacak_pengaduan_displays_status_and_result(): void
     {
         $pengaduan = ZonaIntegritasPengaduan::create([

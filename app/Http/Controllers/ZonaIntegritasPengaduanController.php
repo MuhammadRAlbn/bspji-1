@@ -27,12 +27,16 @@ class ZonaIntegritasPengaduanController extends Controller
                 ? $uploadedFile->store('zona-integritas/pengaduan/bukti', 'local')
                 : null;
 
+            $isKomplain = $data['jenis_pengaduan'] === ZonaIntegritasPengaduan::JENIS_KOMPLAIN;
+
             return ZonaIntegritasPengaduan::create([
                 ...$number,
                 'nama' => $data['nama'],
+                'email' => $data['email'] ?? null,
+                'telepon' => $data['telepon'] ?? null,
                 'jenis_pengaduan' => $data['jenis_pengaduan'],
-                'jenis_pelanggan' => $data['jenis_pelanggan'],
-                'nama_dilaporkan' => $data['nama_dilaporkan'],
+                'jenis_pelanggan' => $isKomplain ? null : ($data['jenis_pelanggan'] ?? null),
+                'nama_dilaporkan' => $isKomplain ? null : ($data['nama_dilaporkan'] ?? null),
                 'judul' => $data['judul'],
                 'uraian' => $data['uraian'],
                 'bukti_dukung_path' => $buktiPath,
