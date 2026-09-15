@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreZonaIntegritasPengaduanRequest;
 use App\Models\ZonaIntegritasPengaduan;
+use App\Services\ZonaIntegritasPengaduanNotificationService;
 use App\Services\ZonaIntegritasPengaduanNumberGenerator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ class ZonaIntegritasPengaduanController extends Controller
     public function store(
         StoreZonaIntegritasPengaduanRequest $request,
         ZonaIntegritasPengaduanNumberGenerator $numberGenerator,
+        ZonaIntegritasPengaduanNotificationService $notificationService,
     ): RedirectResponse {
         $data = $request->validated();
         $uploadedFile = $request->file('bukti_dukung');
@@ -44,6 +46,8 @@ class ZonaIntegritasPengaduanController extends Controller
                 'status' => ZonaIntegritasPengaduan::STATUS_DITERIMA,
             ]);
         });
+
+        $notificationService->notifyNewSubmission($pengaduan);
 
         return redirect()
             ->route('zona-integritas.index', ['tab' => 'pengaduan'])

@@ -3,18 +3,30 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\ZonaIntegritasController;
+use App\Jobs\SendWhatsappNotificationJob;
 use App\Models\ZonaIntegritasPengaduan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ZonaIntegritasPengaduanTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Queue::fake();
+        Http::preventStrayRequests();
+    }
 
     public function test_pengaduan_submission_creates_first_number_and_default_status(): void
     {
@@ -218,6 +230,67 @@ class ZonaIntegritasPengaduanTest extends TestCase
         $this->assertSame($pengaduan->nomor_pengaduan, $view->getData()['trackedPengaduan']->nomor_pengaduan);
         $this->assertSame('Pengaduan selesai', $view->getData()['trackedPengaduan']->status_label);
         $this->assertSame('Pengaduan telah ditindaklanjuti.', $view->getData()['trackedPengaduan']->hasil_teks);
+    }
+
+    public function test_pengaduan_submission_dispatches_whatsapp_notification_job_to_all_recipients(): void
+    {
+        Carbon::setTestNow(Carbon::parse('2026-05-22 09:00:00', 'Asia/Jakarta'));
+        Storage::fake('local');
+        Queue::fake();
+
+        Config::set('services.whatsapp.recipients', ['081234567890', '089876543210']);
+
+        $this->post(route('zona-integritas.pengaduan.store'), $this->validPayload())
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHas('pengaduan_success_nomor', '20260500001');
+
+        Queue::assertPushed(SendWhatsappNotificationJob::class, 2);
+
+        Queue::assertPushed(SendWhatsappNotificationJob::class, function (SendWhatsappNotificationJob $job): bool {
+            return $job->phoneNumber === '081234567890'
+                && str_contains($job->message, '#20260500001')
+                && str_contains($job->message, 'Pengaduan Pelanggaran')
+                && str_contains($job->message, '/admin/zona-integritas/zona-integritas-pengaduans/');
+        });
+
+        Queue::assertPushed(SendWhatsappNotificationJob::class, function (SendWhatsappNotificationJob $job): bool {
+            return $job->phoneNumber === '089876543210';
+        });
+
+        Carbon::setTestNow();
+    }
+
+    public function test_komplain_submission_dispatches_whatsapp_notification_with_contact_details(): void
+    {
+        Carbon::setTestNow(Carbon::parse('2026-09-14 10:00:00', 'Asia/Jakarta'));
+        Storage::fake('local');
+        Queue::fake();
+
+        Config::set('services.whatsapp.recipients', ['081234567890']);
+
+        $this->post(route('zona-integritas.pengaduan.store'), [
+            'nama' => 'Pelanggan Layanan',
+            'email' => 'pelanggan@example.com',
+            'telepon' => '081234567890',
+            'jenis_pengaduan' => ZonaIntegritasPengaduan::JENIS_KOMPLAIN,
+            'judul' => 'Keterlambatan Pengujian Sampel Air',
+            'uraian' => 'Hasil pengujian sampel air terlambat lebih dari 7 hari kerja.',
+            'website' => '',
+        ])
+            ->assertRedirect(route('zona-integritas.index', ['tab' => 'pengaduan']))
+            ->assertSessionHas('pengaduan_success_nomor', '20260500001');
+
+        Queue::assertPushed(SendWhatsappNotificationJob::class, 1);
+
+        Queue::assertPushed(SendWhatsappNotificationJob::class, function (SendWhatsappNotificationJob $job): bool {
+            return $job->phoneNumber === '081234567890'
+                && str_contains($job->message, 'Komplain Layanan')
+                && str_contains($job->message, 'Pelanggan Layanan')
+                && str_contains($job->message, 'pelanggan@example.com')
+                && str_contains($job->message, '081234567890');
+        });
+
+        Carbon::setTestNow();
     }
 
     /**

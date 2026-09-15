@@ -46,4 +46,13 @@ return [
         'website_id' => env('UMAMI_WEBSITE_ID'),
         'domains' => env('UMAMI_DOMAINS'),
     ],
+
+    'whatsapp' => [
+        'base_url' => env('WHATSAPP_BASE_URL', 'https://wa2.otomat.web.id'),
+        'api_id' => env('WHATSAPP_API_ID'),
+        'api_key' => env('WHATSAPP_API_KEY'),
+        'timeout' => (int) env('WHATSAPP_TIMEOUT', 20),
+        'enabled' => (bool) env('WHATSAPP_ENABLED', true),
+        'recipients' => array_values(array_filter(array_map('trim', explode(',', (string) env('WHATSAPP_NOTIFICATION_RECIPIENTS', ''))))),
+    ],
 ];
