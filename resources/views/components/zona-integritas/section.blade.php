@@ -34,8 +34,6 @@
         ? route('zona-integritas.index', ['tab' => $tab])
         : url('/zona-integritas?tab=' . $tab);
 
-    $benturanFormUrl = null;
-    $gratifikasiFormUrl = null;
 @endphp
 
 <section id="zona-integritas" class="relative overflow-hidden border-y border-slate-300 bg-slate-50/80 mt-16 py-16 md:mt-24 md:pb-20 md:pt-8">
@@ -53,6 +51,7 @@
                 wbsTab: 'wbs',
                 showPengaduanSuccess: {{ Js::from(session()->has('pengaduan_success_nomor')) }},
                 jenisPengaduan: {{ Js::from(old('jenis_pengaduan', '')) }},
+                jenisPelanggan: {{ Js::from(old('jenis_pelanggan', '')) }},
                 buktiDukungName: '',
                 buktiDukungError: '',
                 setActive(tab) {
@@ -408,6 +407,7 @@
                                         Jenis Pelanggaran <span class="text-red-500">*</span>
                                     </label>
                                     <select id="jenis_pelanggan" name="jenis_pelanggan"
+                                        x-model="jenisPelanggan"
                                         :disabled="jenisPengaduan !== 'pengaduan' && jenisPengaduan !== 'wbs'"
                                         :required="jenisPengaduan === 'pengaduan' || jenisPengaduan === 'wbs'"
                                         class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-800 outline-none transition focus:border-orange-400 focus:ring-4 focus:ring-orange-100">
@@ -415,6 +415,8 @@
                                         <option value="pelanggaran-peraturan" @selected(old('jenis_pelanggan') === 'pelanggaran-peraturan')>Pelanggaran terhadap peraturan</option>
                                         <option value="penyalahgunaan-wewenang" @selected(old('jenis_pelanggan') === 'penyalahgunaan-wewenang')>Penyalahgunaan wewenang atau jabatan</option>
                                         <option value="pelanggaran-kode-etik" @selected(old('jenis_pelanggan') === 'pelanggaran-kode-etik')>Pelanggaran kode etik</option>
+                                        <option value="benturan-kepentingan" @selected(old('jenis_pelanggan') === 'benturan-kepentingan')>Benturan Kepentingan</option>
+                                        <option value="gratifikasi" @selected(old('jenis_pelanggan') === 'gratifikasi')>Gratifikasi</option>
                                         <option value="membahayakan-k3-keamanan-organisasi" @selected(old('jenis_pelanggan') === 'membahayakan-k3-keamanan-organisasi')>Perbuatan yang membahayakan K3 atau keamanan organisasi</option>
                                         <option value="kerugian-kemenperin-bspji" @selected(old('jenis_pelanggan') === 'kerugian-kemenperin-bspji')>Perbuatan yang dapat menimbulkan kerugian Kemenperin/BSPJI Banda Aceh</option>
                                         <option value="pelanggaran-sop" @selected(old('jenis_pelanggan') === 'pelanggaran-sop')>Pelanggaran terhadap SOP</option>
@@ -602,14 +604,11 @@
                                 </p>
                             </div>
 
-                            @if ($benturanFormUrl)
-                                <iframe src="{{ $benturanFormUrl }}" title="Form Benturan Kepentingan"
-                                    class="h-130 w-full rounded-lg border border-slate-200 bg-white"></iframe>
-                            @else
-                                <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-sm font-medium text-slate-500">
-                                    Formulir Google Benturan Kepentingan belum dikonfigurasi.
-                                </div>
-                            @endif
+                            <div class="rounded-lg border border-orange-200 bg-orange-50 p-4">
+                                <p class="text-sm font-bold text-orange-800">
+                                    JIKA ANDA MENEMUKAN INDIKASI BENTURAN KEPENTINGAN, LAPOR MELALUI <a href="{{ $tabUrl('pengaduan') }}" @click.prevent="setActive('pengaduan'); pengaduanTab = 'masyarakat'; jenisPengaduan = 'pengaduan'; jenisPelanggan = 'benturan-kepentingan'" class="text-orange-600 underline transition hover:text-orange-700">LINK INI</a>
+                                </p>
+                            </div>
                         </div>
                         <x-zona-integritas.document-grid
                             layout="list"
@@ -660,20 +659,17 @@
                             </div>
                         </div>
 
-                        @if ($gratifikasiFormUrl)
-                            <iframe src="{{ $gratifikasiFormUrl }}" title="Form Gratifikasi"
-                                class="h-150 w-full rounded-lg border border-slate-200 bg-white shadow-sm"></iframe>
-                        @else
-                            <div class="rounded-lg border border-dashed border-slate-300 bg-slate-50 px-6 py-10 text-center text-sm font-medium text-slate-500">
-                                Formulir Google Gratifikasi belum dikonfigurasi.
-                            </div>
-                        @endif
+                        <div class="rounded-lg border border-orange-200 bg-orange-50 p-4">
+                            <p class="text-sm font-bold text-orange-800">
+                                JIKA ANDA INGIN MELAPORKAN GRATIFIKASI, LAPOR MELALUI <a href="{{ $tabUrl('pengaduan') }}" @click.prevent="setActive('pengaduan'); pengaduanTab = 'masyarakat'; jenisPengaduan = 'pengaduan'; jenisPelanggan = 'gratifikasi'" class="text-orange-600 underline transition hover:text-orange-700">LINK INI</a>
+                            </p>
+                        </div>
                     </div>
                 </div>
 
                 <div x-show="gratifikasiTab === 'laporan'" style="display: none;">
                     <x-zona-integritas.document-table
-                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
+                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_GRATIFIKASI_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan Gratifikasi yang tersedia." />
                 </div>
             </div>
@@ -708,7 +704,7 @@
 
                     <div class="mt-8 rounded-lg border border-orange-200 bg-orange-50 p-4">
                         <p class="text-sm font-bold text-orange-800">
-                            JIKA ANDA MENEMUKAN PELANGGARAN, LAPOR MELALUI <a href="#" class="text-orange-600 underline transition hover:text-orange-700">LINK INI</a>
+                            JIKA ANDA MENEMUKAN PELANGGARAN, LAPOR MELALUI <a href="{{ $tabUrl('pengaduan') }}" @click.prevent="setActive('pengaduan'); pengaduanTab = 'masyarakat'; jenisPengaduan = 'wbs'" class="text-orange-600 underline transition hover:text-orange-700">LINK INI</a>
                         </p>
                     </div>
 
@@ -719,7 +715,7 @@
 
                 <div x-show="wbsTab === 'laporan'" style="display: none;">
                     <x-zona-integritas.document-table
-                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_BENTURAN_LAPORAN)"
+                        :documents="$documentList(ZonaIntegritasJenisDokumen::KODE_WBS_LAPORAN)"
                         empty-message="Belum ada laporan pelaksanaan WBS yang tersedia." />
                 </div>
             </div>

@@ -32,6 +32,8 @@ class ZonaIntegritasPengaduan extends Model
         'pelanggaran-peraturan' => 'Pelanggaran terhadap peraturan',
         'penyalahgunaan-wewenang' => 'Penyalahgunaan wewenang atau jabatan',
         'pelanggaran-kode-etik' => 'Pelanggaran kode etik',
+        'benturan-kepentingan' => 'Benturan Kepentingan',
+        'gratifikasi' => 'Gratifikasi',
         'membahayakan-k3-keamanan-organisasi' => 'Perbuatan yang membahayakan K3 atau keamanan organisasi',
         'kerugian-kemenperin-bspji' => 'Perbuatan yang dapat menimbulkan kerugian Kemenperin/BSPJI Banda Aceh',
         'pelanggaran-sop' => 'Pelanggaran terhadap SOP',
