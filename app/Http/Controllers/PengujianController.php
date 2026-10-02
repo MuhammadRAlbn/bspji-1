@@ -15,7 +15,8 @@ class PengujianController extends Controller
      */
     public function index(): View
     {
-        $sertifikasi = Sertifikasi::first();
+        $sertifikasis = Sertifikasi::latest()->get();
+        $sertifikasi = $sertifikasis->first();
         $ruangLingkupan = RuangLingkup::query()
             ->orderedByLab()
             ->get();
@@ -24,6 +25,7 @@ class PengujianController extends Controller
         $labOptions = RuangLingkup::labOptions();
 
         return view('pengujian', compact(
+            'sertifikasis',
             'sertifikasi',
             'ruangLingkupan',
             'alurPengujian',

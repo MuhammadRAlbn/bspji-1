@@ -96,13 +96,13 @@
         </header>
     </div>
 
-    <div class="mx-auto grid max-w-7xl grid-cols-1 items-start gap-8 px-6 lg:px-8 lg:grid-cols-[280px_1fr] lg:gap-[60px]">
+    <div class="mx-auto grid max-w-7xl grid-cols-1 items-start gap-8 px-6 lg:px-8 lg:grid-cols-[280px_1fr] lg:gap-15">
         <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
             <button
                 type="button"
                 @click="tab = 'sertifikasi'"
                 :class="tab === 'sertifikasi' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-3.75 rounded-xl border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'sertifikasi' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75m5.25 2.814c0 4.285-2.924 8.032-7.087 9.063a1.38 1.38 0 0 1-.326.037 1.38 1.38 0 0 1-.326-.037C8.348 20.596 5.424 16.85 5.424 12.564V7.902c0-.67.423-1.267 1.056-1.491l5.25-1.867a1.37 1.37 0 0 1 .913 0l5.25 1.867c.633.224 1.056.82 1.056 1.49v4.663Z" />
@@ -114,7 +114,7 @@
                 type="button"
                 @click="tab = 'ruang-lingkup'"
                 :class="tab === 'ruang-lingkup' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-3.75 rounded-xl border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'ruang-lingkup' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 3.75h4.5m-7.386 2.25h10.272c.53 0 1.02.28 1.286.736l2.226 3.818a1.5 1.5 0 0 1 0 1.51l-2.226 3.818a1.5 1.5 0 0 1-1.286.736H6.864a1.5 1.5 0 0 1-1.286-.736l-2.226-3.818a1.5 1.5 0 0 1 0-1.51l2.226-3.818A1.5 1.5 0 0 1 6.864 6ZM9 9.75h6m-6 3h3" />
@@ -126,7 +126,7 @@
                 type="button"
                 @click="tab = 'alur'"
                 :class="tab === 'alur' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-3.75 rounded-xl border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'alur' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 15.75 19.5 19.5m0 0-3.75 3.75M19.5 19.5H9A6.75 6.75 0 0 1 2.25 12.75V10.5A6.75 6.75 0 0 1 9 3.75h3" />
@@ -138,7 +138,7 @@
                 type="button"
                 @click="tab = 'spm'"
                 :class="tab === 'spm' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-3.75 rounded-xl border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'spm' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M6.75 3.75h10.5A2.25 2.25 0 0 1 19.5 6v12a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 18V6a2.25 2.25 0 0 1 2.25-2.25Z" />
@@ -150,7 +150,7 @@
                 type="button"
                 @click="tab = 'tarif'"
                 :class="tab === 'tarif' ? 'border-gray-400 bg-slate-800 text-white shadow-[0_8px_20px_rgba(0,0,0,0.06)]' : 'border-black/30 bg-white text-[#1d1d1f]'"
-                class="group flex scale-100 items-center gap-[15px] rounded-[12px] border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
+                class="group flex scale-100 items-center gap-3.75 rounded-xl border px-5 py-4 text-left transition-all duration-300 ease-in-out hover:scale-[1.02]"
             >
                 <svg class="h-5 w-5 shrink-0" :class="tab === 'tarif' ? 'text-white' : 'text-slate-500'" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14.25 6.75 12m0 0L9 9.75M6.75 12h10.5m3.75-6.75v13.5A2.25 2.25 0 0 1 18.75 21H5.25A2.25 2.25 0 0 1 3 18.75V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />
@@ -159,46 +159,50 @@
             </button>
         </div>
 
-        <article class="min-h-[85vh] pb-32 sm:pb-[450px]">
+        <article class="min-h-[85vh] pb-32 sm:pb-112.5">
                 <section x-show="tab === 'sertifikasi'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-8">
-                        @if($sertifikasi && $sertifikasi->image)
-                            <div class="flex justify-start">
-                                <a
-                                    href="{{ asset('storage/' . $sertifikasi->image) }}"
-                                    download
-                                    class="inline-flex items-center gap-2 rounded-xl border border-black/25 px-4 py-2 text-sm font-semibold text-slate-800 transition-all active:scale-95"
-                                >
-                                    <svg class="h-4 w-4 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4m-4 7.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V18" />
-                                    </svg>
-                                    Download Sertifikat Akreditasi
-                                </a>
-                            </div>
-
-                            <div class="flex justify-start">
-                                <button
-                                    type="button"
-                                    @click="openLightbox('{{ asset('storage/' . $sertifikasi->image) }}', 'Sertifikat Akreditasi')"
-                                    class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden rounded-2xl text-left"
-                                >
-                                    <img
-                                        src="{{ asset('storage/' . $sertifikasi->image) }}"
-                                        alt="Sertifikat Akreditasi"
-                                        class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
-                                    >
-                                    <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                                        <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
-                                            Klik untuk memperbesar
-                                        </span>
+                    @if($sertifikasis->isNotEmpty())
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
+                            @foreach($sertifikasis as $sert)
+                                <div class="flex flex-col gap-3 group">
+                                    <div class="flex justify-start">
+                                        <a
+                                            href="{{ asset('storage/' . $sert->image) }}"
+                                            download
+                                            class="inline-flex items-center gap-2 rounded-xl border border-black/25 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-800 transition-all hover:bg-slate-50 active:scale-95 shadow-sm"
+                                        >
+                                            <svg class="h-3.5 w-3.5 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4m-4 7.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V18" />
+                                            </svg>
+                                            Download Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}
+                                        </a>
                                     </div>
-                                </button>
-                            </div>
-                        @else
-                            <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
-                                <p class="font-medium text-slate-400">Gambar sertifikat belum tersedia.</p>
-                            </div>
-                        @endif
+
+                                    <button
+                                        type="button"
+                                        @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}')"
+                                        class="relative block w-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm text-left transition duration-300 hover:shadow-md"
+                                    >
+                                        <img
+                                            src="{{ asset('storage/' . $sert->image) }}"
+                                            alt="Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}"
+                                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                                        >
+                                        <div class="absolute bottom-4 left-4 z-20 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                            <span class="rounded-full bg-slate-800/90 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
+                                                Klik untuk memperbesar
+                                            </span>
+                                        </div>
+                                    </button>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="rounded-[30px] border border-dashed border-black/15 bg-[#fbfbfd] px-6 py-20 text-center">
+                            <p class="font-medium text-slate-400">Gambar sertifikat belum tersedia.</p>
+                        </div>
+                    @endif
                 </div>
             </section>
 
@@ -367,7 +371,7 @@
 
                 <section x-show="tab === 'tarif'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
                 <div class="mx-auto max-w-7xl space-y-8">
-                    <div class="rounded-[24px] border border-black/10 bg-slate-50 p-5 sm:rounded-[30px] sm:p-8">
+                    <div class="rounded-3xl border border-black/10 bg-slate-50 p-5 sm:rounded-[30px] sm:p-8">
                         <p class="text-justify text-sm leading-relaxed text-slate-700 md:text-base">
                             BSPJI Banda Aceh menggunakan standar biaya yang mengacu pada
                             <strong>Peraturan Pemerintah Republik Indonesia Nomor 54 Tahun 2021</strong>
