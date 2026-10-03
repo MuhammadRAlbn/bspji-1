@@ -8,6 +8,7 @@ use App\Services\ZonaIntegritasPengaduanNotificationService;
 use App\Services\ZonaIntegritasPengaduanNumberGenerator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -69,6 +70,8 @@ class ZonaIntegritasPengaduanController extends Controller
 
     public function downloadBukti(ZonaIntegritasPengaduan $pengaduan): BinaryFileResponse
     {
+        Gate::authorize('view', $pengaduan);
+
         abort_unless($pengaduan->bukti_dukung_path, 404);
         abort_unless(Storage::disk('local')->exists($pengaduan->bukti_dukung_path), 404);
 

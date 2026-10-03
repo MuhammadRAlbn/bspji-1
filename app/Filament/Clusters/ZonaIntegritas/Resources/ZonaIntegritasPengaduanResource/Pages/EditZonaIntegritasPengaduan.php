@@ -3,39 +3,23 @@
 namespace App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages;
 
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource;
-use App\Models\ZonaIntegritasPengaduan;
+use App\Filament\Concerns\RechecksPanelAccess;
+use App\Filament\Concerns\ReportsFormValidationErrors;
+use App\Services\ZonaIntegritasPengaduanFollowUpService;
 use Filament\Actions\DeleteAction;
-use Filament\Notifications\Notification;
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
-use Filament\Support\Exceptions\Halt;
+use Illuminate\Database\Eloquent\Model;
 
 class EditZonaIntegritasPengaduan extends EditRecord
 {
+    use RechecksPanelAccess, ReportsFormValidationErrors;
+
     protected static string $resource = ZonaIntegritasPengaduanResource::class;
 
-    /**
-     * @param  array<string, mixed>  $data
-     * @return array<string, mixed>
-     *
-     * @throws Halt
-     */
-    protected function mutateFormDataBeforeSave(array $data): array
+    protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        if (
-            ($data['status'] ?? null) === ZonaIntegritasPengaduan::STATUS_SELESAI
-            && blank($data['hasil_teks'] ?? null)
-            && blank($data['dokumen_hasil_path'] ?? $this->record->dokumen_hasil_path)
-        ) {
-            Notification::make()
-                ->title('Hasil pengaduan belum lengkap')
-                ->body('Isi keterangan hasil atau unggah dokumen hasil sebelum mengubah status menjadi Pengaduan selesai.')
-                ->danger()
-                ->send();
-
-            throw (new Halt)->rollBackDatabaseTransaction();
-        }
-
-        return $data;
+        return $this->withFormValidation(fn (): Model => app(ZonaIntegritasPengaduanFollowUpService::class)->update(Filament::auth()->user(), $record, $data));
     }
 
     protected function getHeaderActions(): array

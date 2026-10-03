@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Http\Middleware\AuthorizePanelUploads;
+use App\Http\Responses\AdminLoginResponse;
 use App\Models\News;
 use App\Models\NewsComment;
 use App\Models\User;
+use App\Models\ZonaIntegritasPengaduan;
 use App\Observers\NewsObserver;
+use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
@@ -21,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(LoginResponse::class, AdminLoginResponse::class);
     }
 
     /**
@@ -31,14 +35,25 @@ class AppServiceProvider extends ServiceProvider
     {
         News::observe(NewsObserver::class);
 
+        $uploadMiddleware = config('livewire.temporary_file_upload.middleware') ?: ['throttle:60,1'];
+        config(['livewire.temporary_file_upload.middleware' => [...(array) $uploadMiddleware, AuthorizePanelUploads::class]]);
+
         Gate::before(function (User $user, string $ability, array $arguments): bool|Response|null {
-            if (! $user->isHumas()) {
-                return null;
+            if (! $user->hasPanelAccess()) {
+                return false;
             }
 
             $model = $this->resolveGateModel($arguments[0] ?? null);
 
             if ($model === null) {
+                return null;
+            }
+
+            if ($user->isPengaduanStaff()) {
+                return $model === ZonaIntegritasPengaduan::class && in_array($ability, ['viewAny', 'view', 'update', 'delete', 'deleteAny'], true) ? null : false;
+            }
+
+            if (! $user->isHumas()) {
                 return null;
             }
 

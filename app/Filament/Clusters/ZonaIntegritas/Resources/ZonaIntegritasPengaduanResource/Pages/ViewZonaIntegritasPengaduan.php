@@ -4,11 +4,19 @@ namespace App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduan
 
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource;
 use App\Filament\Concerns\RechecksPanelAccess;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Actions\EditAction;
+use Filament\Resources\Pages\ViewRecord;
 
-class ListZonaIntegritasPengaduans extends ListRecords
+class ViewZonaIntegritasPengaduan extends ViewRecord
 {
     use RechecksPanelAccess;
 
     protected static string $resource = ZonaIntegritasPengaduanResource::class;
+
+    protected static ?string $title = 'Lihat Pengaduan';
+
+    protected function getHeaderActions(): array
+    {
+        return [EditAction::make()];
+    }
 }
