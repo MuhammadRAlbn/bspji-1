@@ -1,13 +1,14 @@
 # Spesifikasi: Manajemen Akun dan Akses Pengaduan
 
-Tanggal: 2 Oktober 2026 (Asia/Jakarta)  
+Tanggal awal: 2 Oktober 2026; diperbarui 3 Oktober 2026 (Asia/Jakarta)
+
 Status: Disetujui pengguna, termasuk klarifikasi halaman detail internal pada FR-06 dan penambahan hapus akun pada FR-11.
 
-Tahap saat ini: Implementasi termasuk hapus akun selesai diverifikasi; suite terbaru lulus 224 test (1.626 assertion). Dua migration fitur awal telah Ran pada MySQL lokal; hapus akun tidak memerlukan migration tambahan.
+Tahap saat ini: Implementasi termasuk hapus akun telah diverifikasi. Baseline setelah FR-11 ialah 224 test (1.626 assertion). Spec 002 sudah disetujui dan diimplementasikan; suite proyek terbaru lulus 261 test (1.997 assertion) dan dicatat pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md). Dua migration fitur awal telah Ran pada MySQL lokal; hapus akun dan spec 002 tidak menambah migration.
 
 ## 1. Tujuan
 
-Admin dapat membuat akun pribadi untuk tim FAP dan Kepala Balai. Kedua role hanya dapat mengakses Pengaduan pada panel admin. FAP dapat menindaklanjuti pengaduan; Kepala Balai dapat membaca daftar, detail, dan dokumennya.
+Admin dapat membuat akun pribadi untuk tim FAP dan Kepala Balai. Kedua role hanya dapat mengakses fitur bisnis Pengaduan pada panel admin, ditambah Ubah Password milik sendiri sesuai spec 002. FAP dapat menindaklanjuti pengaduan; Kepala Balai dapat membaca daftar, detail, dan dokumennya.
 
 Target menu yang sudah ada: `/admin/zona-integritas/zona-integritas-pengaduans`.
 
@@ -47,6 +48,7 @@ Satu akun memiliki satu role. Nilai role: `admin`, `humas`, `fap`, dan `kepala_b
 | Kemampuan | Admin | Humas | FAP | Kepala Balai |
 | --- | --- | --- | --- | --- |
 | Masuk panel jika akun aktif | Ya | Ya | Ya | Ya |
+| Mengganti password sendiri dengan password saat ini (spec 002) | Ya | Ya | Ya | Ya |
 | Mengelola akun dan menetapkan role | Ya | Tidak | Tidak | Tidak |
 | Menghapus akun lain dengan konfirmasi dan proteksi admin | Ya | Tidak | Tidak | Tidak |
 | Akses berita dan komentar | Perilaku admin yang ada | Perilaku Humas yang ada | Tidak | Tidak |
@@ -66,9 +68,9 @@ Unduhan hasil melalui pelacakan publik merupakan pengecualian dari matriks akses
 
 ### FR-01 — Manajemen akun oleh admin
 
-Menu **Manajemen Akun** hanya tersedia untuk admin aktif. Admin dapat melihat daftar akun, menambah akun, mengubah nama/email/role, mengganti password, mengaktifkan atau menonaktifkan akun, serta menghapus akun lain sesuai FR-11. Form menunjukkan ringkasan izin role yang dipilih agar admin memahami menu yang akan tersedia.
+Menu **Manajemen Akun** hanya tersedia untuk admin aktif. Admin dapat melihat daftar akun, menambah akun, mengubah nama/email/role, mereset password akun lain, mengaktifkan atau menonaktifkan akun, serta menghapus akun lain sesuai FR-11. Form menunjukkan ringkasan izin role yang dipilih agar admin memahami menu yang akan tersedia.
 
-Field akun: nama, email unik, role wajib, status aktif, serta password dan konfirmasi password saat membuat akun. Pada edit, password kosong mempertahankan password lama. Password minimal 12 karakter, disimpan sebagai hash, dan tidak ditampilkan kembali.
+Field akun: nama, email unik, role wajib, status aktif, serta password dan konfirmasi password saat membuat akun. Pada edit, password kosong mempertahankan password lama. Password baru minimal 12 karakter, dibatasi menurut hasher (bcrypt 72 byte), disimpan sebagai hash, dan tidak ditampilkan kembali. Reset akun lain mencabut sesi/remember/reset token target. Password admin sendiri diganti melalui Ubah Password dengan verifikasi password saat ini; payload self-reset di Manajemen Akun ditolak. Rincian mengikuti [spec 002](../002-pergantian-password-mandiri/spec.md).
 
 Akun FAP/Kepala Balai dibuat per orang melalui menu ini. Tidak ada akun bersama, kredensial bawaan, ataupun akun sungguhan yang otomatis dibuat oleh migration/seeder.
 
@@ -88,13 +90,13 @@ Admin tidak dapat menonaktifkan, menurunkan role, atau menghapus akunnya sendiri
 
 Setelah login, FAP/Kepala Balai diarahkan ke daftar Pengaduan. Membuka `/admin` juga mengarah ke daftar tersebut. Navigasi fitur hanya menampilkan Zona Integritas > Pengaduan; fitur Zona Integritas lainnya, cluster lain, Manajemen Akun, dan dashboard umum tidak tersedia bagi kedua role.
 
-URL fitur yang dilarang mengembalikan 403 untuk pengguna terautentikasi. Endpoint awal `/admin` adalah pengecualian yang mengalihkan ke daftar Pengaduan. Menu akun dan logout tetap tersedia.
+URL fitur yang dilarang mengembalikan 403 untuk pengguna terautentikasi. Endpoint awal `/admin` adalah pengecualian yang mengalihkan ke daftar Pengaduan. Menu akun dan logout tetap tersedia. Menu Ubah Password pada `/admin/ubah-password` adalah pengecualian keamanan akun sendiri sesuai spec 002; tidak memberi akses resource akun lain.
 
 ### FR-06 — Daftar dan detail baca saja
 
 Tambahkan halaman **Lihat Pengaduan** yang dapat dibuka oleh admin, FAP, dan Kepala Balai. Halaman menampilkan nomor, jenis laporan, identitas/kontak pelapor yang tersimpan, pihak yang dilaporkan jika relevan, judul, uraian, status, bukti, hasil teks, dokumen hasil, dan waktu yang tersedia. Kondisi tampil field mengikuti jenis laporan.
 
-Kepala Balai tidak mendapatkan form edit, unggah, tombol simpan, delete, bulk delete, maupun aksi perubahan data. Membuka URL edit secara langsung atau mencoba aksi penyimpanan ditolak tanpa perubahan database/file. FAP dan admin dapat membuka detail serta halaman edit sesuai izin.
+Pada resource Pengaduan, Kepala Balai tidak mendapatkan form edit, unggah, tombol simpan, delete, bulk delete, maupun aksi perubahan data. Penggantian password akun sendiri tersedia sesuai spec 002. Membuka URL edit secara langsung atau mencoba aksi penyimpanan ditolak tanpa perubahan database/file. FAP dan admin dapat membuka detail serta halaman edit sesuai izin.
 
 ### FR-07 — Tindak lanjut oleh FAP
 
@@ -112,7 +114,7 @@ Perilaku `selesai_at` mengikuti model saat ini. Tahap ini tidak menambahkan pers
 
 Aturan yang sama berlaku pada menu, halaman, URL langsung, query/global search bila aktif, aksi baris/header, bulk action, dan permintaan Livewire, termasuk endpoint upload sementara. Resource tanpa policy tidak boleh terbuka bagi FAP/Kepala Balai. Custom action dan controller unduhan harus memeriksa izin secara eksplisit.
 
-Humas tetap terbatas pada resource berita/komentar sesuai perilaku yang ada. Akun nonaktif, role tidak valid, serta akun tanpa role valid tidak mendapat akses internal.
+Humas tetap terbatas pada resource bisnis berita/komentar sesuai perilaku yang ada, ditambah Ubah Password akun sendiri. Pemeriksaan fingerprint sesi berlaku persistent pada panel/Livewire, upload sementara, dan bukti internal sesuai spec 002. Akun nonaktif, role tidak valid, serta akun tanpa role valid tidak mendapat akses internal.
 
 ### FR-10 — Unduhan dan jalur publik
 
@@ -132,7 +134,7 @@ Setelah berhasil, akun tidak lagi tercantum pada daftar dan tidak dapat login at
 
 - FAP dan Kepala Balai mengakses seluruh record pada resource Pengaduan, termasuk Pengaduan Pelanggaran, Komplain Layanan, dan WBS. Tidak ada pembagian berdasarkan petugas atau jenis laporan.
 - Kepala Balai dapat membaca identitas pelapor dan dokumen yang sama dengan FAP. Penyembunyian identitas belum diminta.
-- Admin menetapkan password awal atau menggantinya dari panel. Undangan email, lupa password lewat email, dan kewajiban ganti password saat login pertama belum termasuk.
+- Admin menetapkan password awal dan mereset akun lain melalui panel. Semua role aktif dapat mengganti password sendiri secara opsional melalui menu akun sesuai spec 002. Undangan email, lupa password lewat email, dan kewajiban ganti password saat login pertama belum termasuk.
 - Status aktif dan proteksi admin berlaku untuk perubahan maupun penghapusan akun. Penonaktifan tetap tersedia bila akses perlu dicabut dengan kemungkinan aktivasi kembali; penghapusan permanen disetujui melalui D-03.
 
 ## 7. Skenario penerimaan
@@ -172,3 +174,5 @@ Setiap perubahan fitur disertai pembaruan dokumen terkait dalam pekerjaan yang s
 Tahap dianggap selesai setelah seluruh persyaratan dalam cakupan terbukti oleh test dan pemeriksaan UI; selesainya dokumen ini belum berarti fitur aplikasi sudah tersedia.
 
 Hasil implementasi dan batas verifikasi tercatat pada [verification.md](verification.md). Langkah aktivasi database dan pembuatan akun operasional tersedia pada [deployment.md](deployment.md).
+
+Pergantian password mandiri pada [spec 002](../002-pergantian-password-mandiri/spec.md) disetujui pada 3 Oktober 2026 dan sudah diimplementasikan. Aturan reset admin serta pengecualian akses akun sendiri di atas mengikuti perubahan tersebut; bukti dan batas regresi terbaru tersedia pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md).

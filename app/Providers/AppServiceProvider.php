@@ -3,17 +3,21 @@
 namespace App\Providers;
 
 use App\Http\Middleware\AuthorizePanelUploads;
+use App\Http\Middleware\EnsureCurrentAccountSession;
 use App\Http\Responses\AdminLoginResponse;
 use App\Models\News;
 use App\Models\NewsComment;
 use App\Models\User;
 use App\Models\ZonaIntegritasPengaduan;
 use App\Observers\NewsObserver;
+use App\Services\AccountSessionService;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
@@ -35,8 +39,10 @@ class AppServiceProvider extends ServiceProvider
     {
         News::observe(NewsObserver::class);
 
+        Event::listen(Login::class, fn (Login $event) => app(AccountSessionService::class)->initializeFromLogin($event));
+
         $uploadMiddleware = config('livewire.temporary_file_upload.middleware') ?: ['throttle:60,1'];
-        config(['livewire.temporary_file_upload.middleware' => [...(array) $uploadMiddleware, AuthorizePanelUploads::class]]);
+        config(['livewire.temporary_file_upload.middleware' => [...(array) $uploadMiddleware, EnsureCurrentAccountSession::class, AuthorizePanelUploads::class]]);
 
         Gate::before(function (User $user, string $ability, array $arguments): bool|Response|null {
             if (! $user->hasPanelAccess()) {

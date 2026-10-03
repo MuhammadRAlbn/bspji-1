@@ -1,8 +1,8 @@
 # Hasil Verifikasi Implementasi
 
-Tanggal: 2 Oktober 2026 (Asia/Jakarta).
+Tanggal: 3 Oktober 2026 (Asia/Jakarta); verifikasi awal/FR-11 dilakukan pada 2 Oktober 2026.
 
-Status terbaru: implementasi termasuk hapus akun FR-11 selesai diverifikasi. Suite proyek terbaru lulus **224 test (1.626 assertion)**. Hasil implementasi awal dipertahankan dengan label historis di bawah.
+Status terbaru: implementasi termasuk hapus akun FR-11 dan integrasi pergantian password spec 002 selesai diverifikasi. Suite proyek terbaru lulus **261 test (1.997 assertion)**, durasi 405,61 detik. Bukti fitur password dan batas verifikasi ada pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md). Hasil 2 Oktober dipertahankan sebagai riwayat di bawah.
 
 ## 1. Hasil otomatis
 
@@ -15,7 +15,8 @@ Status terbaru: implementasi termasuk hapus akun FR-11 selesai diverifikasi. Sui
 | Suite proyek implementasi awal sebelum FR-11 | 203 test lulus, 1.539 assertion; durasi 208,79 detik. |
 | Test penerimaan hapus akun sebelum implementasi FR-11 | 21 case tambahan gagal saat aksi/service delete belum tersedia; test cleanup diperiksa ulang setelah fixture diperbaiki dan tetap gagal karena service belum tersedia. |
 | Manajemen Akun setelah FR-11 | **35 test lulus, 167 assertion**, termasuk 21 case baru untuk hapus akun; durasi 36,84 detik. |
-| Suite proyek terbaru setelah FR-11 dan Pint | **224 test lulus, 1.626 assertion**, tanpa test gagal; durasi 373,82 detik. |
+| Suite historis 2 Oktober setelah FR-11 dan Pint | **224 test lulus, 1.626 assertion**, tanpa test gagal; durasi 373,82 detik. |
+| Suite terbaru 3 Oktober setelah spec 002 | **261 test lulus, 1.997 assertion**, tanpa test gagal; durasi 405,61 detik. |
 | Laravel Pint | Dijalankan pada seluruh file PHP fitur yang berubah/baru; formatting diperbaiki. |
 
 Test penerimaan utama:
@@ -45,7 +46,7 @@ Bukti tampilan:
 
 ## 3. Batas verifikasi dan aktivasi
 
-Pada verifikasi awal, MySQL lokal tidak menerima koneksi. Pemeriksaan read-only terbaru saat penambahan FR-11 berhasil: `php artisan migrate:status` menunjukkan dua migration akun sudah **Ran**, batch 74. Panduan pada [deployment.md](deployment.md) telah disesuaikan. Pemeriksaan ini tidak mencatat atau mengubah akun operasional.
+Pada verifikasi awal, MySQL lokal tidak menerima koneksi. Pemeriksaan read-only pada 2 Oktober 2026 saat penambahan FR-11 berhasil: `php artisan migrate:status` menunjukkan dua migration akun sudah **Ran**, batch 74. Panduan pada [deployment.md](deployment.md) telah disesuaikan. Pemeriksaan ini tidak mencatat atau mengubah akun operasional.
 
 Test SQLite memverifikasi guard admin dan actor yang role-nya sudah dicabut/terhapus. SQLite tidak memverifikasi penguncian dua transaksi MySQL secara paralel. Implementasi perubahan dan penghapusan akun memakai query lock bersama dalam transaksi dan `lockForUpdate()` dengan urutan ID konsisten serta pemeriksaan ulang actor/target. Uji konkurensi MySQL paralel belum dilakukan; pengujian tersebut perlu database uji terpisah.
 

@@ -19,6 +19,7 @@ use App\Http\Controllers\UppController;
 use App\Http\Controllers\ZonaIntegritasController;
 use App\Http\Controllers\ZonaIntegritasDokumenController;
 use App\Http\Controllers\ZonaIntegritasPengaduanController;
+use App\Http\Middleware\EnsureCurrentAccountSession;
 use App\Support\LandingPageData;
 use Illuminate\Support\Facades\Route;
 
@@ -42,7 +43,7 @@ Route::get('/zona-integritas/pengaduan/{pengaduan:nomor_pengaduan}/hasil/downloa
     ->name('zona-integritas.pengaduan.hasil.download');
 
 Route::get('/zona-integritas/pengaduan/{pengaduan}/bukti/download', [ZonaIntegritasPengaduanController::class, 'downloadBukti'])
-    ->middleware('auth')
+    ->middleware(['auth', EnsureCurrentAccountSession::class])
     ->name('zona-integritas.pengaduan.bukti.download');
 
 Route::get('/sejarah-singkat', [ProfilController::class, 'index'])->defaults('activeTab', 'sejarah')->name('sejarah-singkat.index');

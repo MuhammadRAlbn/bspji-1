@@ -10,12 +10,20 @@ use App\Services\UserManagementService;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\ValidationException;
 
 class EditUser extends EditRecord
 {
     use RechecksPanelAccess, ReportsFormValidationErrors;
 
     protected static string $resource = UserResource::class;
+
+    protected function beforeValidate(): void
+    {
+        if ($this->record->is(Filament::auth()->user()) && filled($this->data['password'] ?? null)) {
+            throw ValidationException::withMessages(['data.password' => 'Gunakan menu Ubah Password untuk mengganti password akun Anda sendiri.']);
+        }
+    }
 
     protected function getHeaderActions(): array
     {

@@ -1,6 +1,6 @@
 # Rencana Teknis: Manajemen Akun dan Akses Pengaduan
 
-Acuan: [spec.md](spec.md). Status: Implementasi termasuk FR-11 selesai diverifikasi; suite terbaru lulus 224 test (1.626 assertion). Hasil pada [verification.md](verification.md).
+Acuan: [spec.md](spec.md). Status: Implementasi termasuk FR-11 selesai diverifikasi; baseline setelah FR-11 lulus 224 test (1.626 assertion). Hasil pada [verification.md](verification.md).
 
 ## 1. Pendekatan
 
@@ -92,3 +92,7 @@ Nama file baru dan rincian API ditentukan saat implementasi berdasarkan Filament
 Filament memisahkan [akses panel](https://filamentphp.com/docs/5.x/users/overview#authorizing-access-to-the-panel) dari [otorisasi operasi resource dan custom action](https://filamentphp.com/docs/5.x/advanced/security#authorization). Laravel menyediakan [policies dan gates](https://laravel.com/framework/docs/13.x/authorization) untuk memusatkan aturan tersebut.
 
 Perilaku fallback resource tanpa policy juga diperiksa pada source lokal `vendor/filament/filament/src/helpers.php`: dalam konfigurasi non-strict, penolakan eksplisit dari Gate dibutuhkan untuk mencegah akses role baru.
+
+## 10. Integrasi spec 002 (3 Oktober 2026)
+
+Pergantian password mandiri sudah disetujui dan diimplementasikan. Manajemen Akun mereset hanya akun lain; admin sendiri memakai Ubah Password. Rule bcrypt 72 byte, revokasi sesi/token reset admin, dan pemeriksaan fingerprint persistent pada panel/Livewire/upload/bukti mengikuti [rencana spec 002](../002-pergantian-password-mandiri/plan.md). Semua role aktif memperoleh halaman password sendiri tanpa memperluas izin bisnis. Hasil regresi terbaru ada pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md).

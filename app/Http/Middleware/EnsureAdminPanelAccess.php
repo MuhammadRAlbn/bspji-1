@@ -20,7 +20,7 @@ class EnsureAdminPanelAccess
 
         $user = $authenticatedUser->fresh();
         if (! $user?->canAccessPanel(Filament::getCurrentOrDefaultPanel())) {
-            Filament::auth()->logout();
+            Filament::auth()->logoutCurrentDevice();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             abort(403);
@@ -37,10 +37,11 @@ class EnsureAdminPanelAccess
                 'filament.admin.zona-integritas.resources.zona-integritas-pengaduans.*',
                 'filament.admin.zona-integritas',
                 'filament.admin.auth.logout',
+                'filament.admin.auth.profile',
             ), 403);
 
             if ($user->role === User::ROLE_KEPALA_BALAI) {
-                abort_if($request->routeIs('*.edit'), 403);
+                abort_if($request->routeIs('filament.admin.zona-integritas.resources.zona-integritas-pengaduans.edit'), 403);
             }
         }
 

@@ -2,7 +2,7 @@
 
 Acuan perilaku: [spec.md](spec.md). Desain: [plan.md](plan.md).
 
-Status: implementasi termasuk hapus akun (D-03/FR-11) selesai diverifikasi. Suite terbaru lulus 224 test (1.626 assertion). Dua migration awal telah Ran pada MySQL lokal; tidak ada migration tambahan untuk hapus akun. Lihat [verification.md](verification.md) dan [deployment.md](deployment.md). Tanda centang menunjukkan pekerjaan yang benar-benar telah dilakukan.
+Status: implementasi termasuk hapus akun (D-03/FR-11) selesai diverifikasi. Baseline FR-11 lulus 224 test (1.626 assertion); regresi terbaru setelah spec 002 lulus 261 test (1.997 assertion). Dua migration awal telah Ran pada MySQL lokal; tidak ada migration tambahan untuk hapus akun. Lihat [verification.md](verification.md) dan [deployment.md](deployment.md). Tanda centang menunjukkan pekerjaan yang benar-benar telah dilakukan.
 
 ## T-00 — Spesifikasi
 
@@ -68,3 +68,9 @@ Status: implementasi termasuk hapus akun (D-03/FR-11) selesai diverifikasi. Suit
 - [x] Tangani sesi/komponen yang aktornya telah dihapus; uji login, hydrate, dan upload lama.
 - [x] Jalankan test terkait, suite proyek, Pint, serta pemeriksaan UI dengan data uji terpisah.
 - [x] Perbarui hasil verifikasi dan panduan penggunaan berdasarkan keadaan akhir, termasuk status database lokal terbaru yang benar-benar diperiksa.
+
+## T-08 — Integrasi pergantian password spec 002
+
+- [x] Perbarui aturan reset admin, batas hasher, dan pengecualian Ubah Password milik sendiri sesuai spesifikasi yang disepakati.
+- [x] Terapkan pemeriksaan fingerprint pada panel/Livewire/upload/bukti dan pertahankan izin bisnis spec 001.
+- [x] Jalankan regresi penuh: 261 test lulus (1.997 assertion) pada 3 Oktober 2026; catat hasil dan batas pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md).

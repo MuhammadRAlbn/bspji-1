@@ -2,7 +2,10 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Filament\Pages\ChangePassword;
 use App\Models\User;
+use App\Rules\PasswordWithinHashLimit;
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -24,12 +27,19 @@ class UserForm
                 ->helperText('Akun nonaktif tidak dapat mengakses panel admin atau bukti pengaduan.'),
             TextEntry::make('izin_akses')->label('Izin Akses')
                 ->state(fn (Get $get): string => User::roleDescription($get('role')))->columnSpanFull(),
+            TextEntry::make('ubah_password_sendiri')->label('Password Akun Anda')
+                ->state('Ubah Password')->url(fn (): string => ChangePassword::getUrl())
+                ->visible(fn (?User $record): bool => $record?->is(Filament::auth()->user()) ?? false)
+                ->helperText('Verifikasi password saat ini melalui menu Ubah Password.'),
             TextInput::make('password')->label('Password')->password()->revealable()
+                ->hidden(fn (?User $record): bool => $record?->is(Filament::auth()->user()) ?? false)
                 ->autocomplete('new-password')->formatStateUsing(fn (): ?string => null)
                 ->required(fn (string $operation): bool => $operation === 'create')->minLength(12)->confirmed()
+                ->rules([new PasswordWithinHashLimit])
                 ->dehydrated(fn (?string $state): bool => filled($state))
-                ->helperText('Minimal 12 karakter. Saat edit, kosongkan untuk mempertahankan password lama.'),
+                ->helperText('Minimal 12 karakter, maksimal 72 byte untuk bcrypt. Saat edit, kosongkan untuk mempertahankan password lama.'),
             TextInput::make('password_confirmation')->label('Konfirmasi Password')->password()->revealable()
+                ->hidden(fn (?User $record): bool => $record?->is(Filament::auth()->user()) ?? false)
                 ->autocomplete('new-password')->required(fn (Get $get): bool => filled($get('password')))
                 ->dehydrated(fn (Get $get): bool => filled($get('password'))),
         ]);
