@@ -2,7 +2,7 @@
 
 Tanggal: 3 Oktober 2026 (Asia/Jakarta); verifikasi awal/FR-11 dilakukan pada 2 Oktober 2026.
 
-Status terbaru: implementasi termasuk hapus akun FR-11 dan integrasi pergantian password spec 002 selesai diverifikasi. Suite proyek terbaru lulus **261 test (1.997 assertion)**, durasi 405,61 detik. Bukti fitur password dan batas verifikasi ada pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md). Hasil 2 Oktober dipertahankan sebagai riwayat di bawah.
+Status terbaru: implementasi termasuk hapus akun FR-11, integrasi pergantian password spec 002, dan histori penghapusan spec 003 selesai diverifikasi. Suite proyek terbaru lulus **306 test (2.248 assertion)**, durasi 508,88 detik; hasil/batasnya pada [verifikasi spec 003](../003-riwayat-penghapusan-pengaduan/verification.md). Hasil setelah spec 002 (261 test, 1.997 assertion, 405,61 detik) tersedia pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md). Hasil 2 Oktober dipertahankan sebagai riwayat di bawah.
 
 ## 1. Hasil otomatis
 

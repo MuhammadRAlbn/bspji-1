@@ -3,10 +3,10 @@
 namespace App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages;
 
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource;
+use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Actions\DeletePengaduanAction;
 use App\Filament\Concerns\RechecksPanelAccess;
 use App\Filament\Concerns\ReportsFormValidationErrors;
 use App\Services\ZonaIntegritasPengaduanFollowUpService;
-use Filament\Actions\DeleteAction;
 use Filament\Facades\Filament;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +25,7 @@ class EditZonaIntegritasPengaduan extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeletePengaduanAction::make(),
         ];
     }
 

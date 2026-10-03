@@ -33,6 +33,7 @@ Tidak ada akun operasional atau password bawaan yang dibuat oleh migration. Peng
 - Tombol **Lihat** membuka detail laporan untuk keduanya.
 - FAP memperoleh **Ubah** untuk status, hasil tindak lanjut, dan dokumen hasil; delete tidak tersedia.
 - Kepala Balai tidak memperoleh form edit/simpan/unggah/delete Pengaduan. Semua role aktif memperoleh menu Ubah Password untuk akun sendiri.
+- Admin dapat menghapus pengaduan Ditolak dengan alasan manual; admin/Kepala Balai mendapat Riwayat Penghapusan baca saja sesuai [spec 003](../003-riwayat-penghapusan-pengaduan/spec.md). Hapus massal pengaduan tidak tersedia.
 - Akun yang dinonaktifkan kehilangan akses pada permintaan berikutnya. Sesi panelnya dibersihkan sehingga halaman login dapat digunakan kembali.
 - Akun yang dihapus hilang dari daftar dan tidak dapat login atau memakai sesi/form/upload lama. Sesi database dan token reset target dibersihkan; konten tetap tersimpan. Setelah hapus dari halaman edit, admin kembali ke daftar akun.
 - Humas mempertahankan menu Berita/Komentar dan tidak mendapat akses Pengaduan atau Manajemen Akun.
@@ -48,3 +49,7 @@ Test memakai SQLite in-memory sesuai `phpunit.xml`. Hasil terakhir dan batas pen
 ## 5. Pergantian password mandiri
 
 Spec 002 disetujui pada 3 Oktober 2026 dan diimplementasikan. Semua role aktif dapat membuka avatar > Ubah Password, mengisi password saat ini/baru/konfirmasi, lalu Simpan Password. Penggantian opsional, minimum 12 karakter, dan tanpa migration baru. Sesi lama tanpa fingerprint perlu login ulang dengan password yang masih berlaku. Panduan lengkap: [penggunaan spec 002](../002-pergantian-password-mandiri/deployment.md); hasil regresi terbaru: [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md).
+
+## 6. Riwayat penghapusan pengaduan
+
+Spec 003 menambah migration metadata/soft delete pengaduan. Migration telah diterapkan pada MySQL development lokal. Panduan lingkungan lain, alur alasan manual, serta akses Kepala Balai ada pada [penggunaan spec 003](../003-riwayat-penghapusan-pengaduan/deployment.md); hasil pengujian pada [verifikasi spec 003](../003-riwayat-penghapusan-pengaduan/verification.md).

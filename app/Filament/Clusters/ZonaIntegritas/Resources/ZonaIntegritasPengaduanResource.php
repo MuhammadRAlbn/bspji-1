@@ -2,6 +2,7 @@
 
 namespace App\Filament\Clusters\ZonaIntegritas\Resources;
 
+use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Actions\DeletePengaduanAction;
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages\EditZonaIntegritasPengaduan;
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages\ListZonaIntegritasPengaduans;
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages\ViewZonaIntegritasPengaduan;
@@ -9,9 +10,6 @@ use App\Filament\Clusters\ZonaIntegritas\ZonaIntegritasCluster;
 use App\Models\ZonaIntegritasPengaduan;
 use BackedEnum;
 use Filament\Actions\Action;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\FileUpload;
@@ -196,13 +194,9 @@ class ZonaIntegritasPengaduanResource extends Resource
                     ->visible(fn (ZonaIntegritasPengaduan $record): bool => filled($record->dokumen_hasil_path)),
                 ViewAction::make()->label('Lihat'),
                 EditAction::make(),
-                DeleteAction::make(),
+                DeletePengaduanAction::make(),
             ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->toolbarActions([]);
     }
 
     public static function getPages(): array
@@ -232,8 +226,10 @@ class ZonaIntegritasPengaduanResource extends Resource
                 TextEntry::make('uraian')->label('Uraian Pengaduan')->columnSpanFull(),
                 Actions::make([
                     Action::make('download_bukti')->label('Unduh Bukti')->icon('heroicon-o-arrow-down-tray')
-                        ->url(fn (ZonaIntegritasPengaduan $record): string => route('zona-integritas.pengaduan.bukti.download', $record))
-                        ->openUrlInNewTab()->authorize('view')
+                        ->url(fn (ZonaIntegritasPengaduan $record): string => $record->trashed()
+                            ? route('zona-integritas.pengaduan.riwayat.download', ['pengaduan' => $record, 'document' => 'bukti'])
+                            : route('zona-integritas.pengaduan.bukti.download', $record))
+                        ->openUrlInNewTab()->authorize(fn (ZonaIntegritasPengaduan $record): bool => Gate::allows($record->trashed() ? 'viewHistory' : 'view', $record))
                         ->visible(fn (ZonaIntegritasPengaduan $record): bool => filled($record->bukti_dukung_path)),
                 ])->columnSpanFull(),
             ])->columns(2)->columnSpanFull(),
@@ -241,8 +237,10 @@ class ZonaIntegritasPengaduanResource extends Resource
                 TextEntry::make('hasil_teks')->label('Hasil Pengaduan')->placeholder('Belum ada hasil tindak lanjut.')->columnSpanFull(),
                 Actions::make([
                     Action::make('download_hasil')->label('Unduh Dokumen Hasil')->icon('heroicon-o-document-arrow-down')
-                        ->url(fn (ZonaIntegritasPengaduan $record): string => route('zona-integritas.pengaduan.hasil.download', $record->nomor_pengaduan))
-                        ->openUrlInNewTab()->authorize('view')
+                        ->url(fn (ZonaIntegritasPengaduan $record): string => $record->trashed()
+                            ? route('zona-integritas.pengaduan.riwayat.download', ['pengaduan' => $record, 'document' => 'hasil'])
+                            : route('zona-integritas.pengaduan.hasil.download', $record->nomor_pengaduan))
+                        ->openUrlInNewTab()->authorize(fn (ZonaIntegritasPengaduan $record): bool => Gate::allows($record->trashed() ? 'viewHistory' : 'view', $record))
                         ->visible(fn (ZonaIntegritasPengaduan $record): bool => filled($record->dokumen_hasil_path)),
                 ])->columnSpanFull(),
                 TextEntry::make('created_at')->label('Dikirim')->dateTime(),

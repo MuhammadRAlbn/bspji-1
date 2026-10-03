@@ -2,6 +2,8 @@
 
 Tanggal: 3 Oktober 2026 (Asia/Jakarta). Status: implementasi dan suite proyek selesai diverifikasi; 261 test lulus (1.997 assertion).
 
+Hasil di bawah adalah baseline saat spec 002 selesai. Regresi proyek setelah histori penghapusan spec 003 lulus 306 test (2.248 assertion); hasil terbaru dan batasnya ada pada [verifikasi spec 003](../003-riwayat-penghapusan-pengaduan/verification.md).
+
 ## 1. Pengujian otomatis
 
 `tests/Feature/Filament/PasswordManagementTest.php` memuat 37 skenario/case data provider, seluruhnya termasuk dalam suite proyek yang lulus. Putaran fokus sebelum tambahan kasus: 34 lulus (356 assertion). Setelah perbaikan setup, dua test tambahan rollback/endpoint Livewire lulus (10 assertion). Hasil final setelah seluruh perubahan: **261 test lulus (1.997 assertion), tanpa kegagalan**, durasi **405,61 detik**. Pint dijalankan pada file PHP baru dan perubahan; `git diff --check` juga lulus.

@@ -33,12 +33,13 @@ class EnsureAdminPanelAccess
                 return redirect()->to(ZonaIntegritasPengaduanResource::getUrl('index'));
             }
 
-            abort_unless($request->routeIs(
+            $allowed = $request->routeIs(
                 'filament.admin.zona-integritas.resources.zona-integritas-pengaduans.*',
                 'filament.admin.zona-integritas',
                 'filament.admin.auth.logout',
                 'filament.admin.auth.profile',
-            ), 403);
+            ) || ($user->role === User::ROLE_KEPALA_BALAI && $request->routeIs('filament.admin.zona-integritas.resources.riwayat-penghapusan-pengaduans.*'));
+            abort_unless($allowed, 403);
 
             if ($user->role === User::ROLE_KEPALA_BALAI) {
                 abort_if($request->routeIs('filament.admin.zona-integritas.resources.zona-integritas-pengaduans.edit'), 403);

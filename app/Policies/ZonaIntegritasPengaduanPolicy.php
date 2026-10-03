@@ -14,7 +14,7 @@ class ZonaIntegritasPengaduanPolicy
 
     public function view(User $user, ZonaIntegritasPengaduan $record): bool
     {
-        return $this->viewAny($user);
+        return ! $record->trashed() && $this->viewAny($user);
     }
 
     public function create(User $user): bool
@@ -24,17 +24,28 @@ class ZonaIntegritasPengaduanPolicy
 
     public function update(User $user, ZonaIntegritasPengaduan $record): bool
     {
-        return $user->hasPanelAccess() && in_array($user->role, [User::ROLE_ADMIN, User::ROLE_FAP], true);
+        return ! $record->trashed() && $user->hasPanelAccess() && in_array($user->role, [User::ROLE_ADMIN, User::ROLE_FAP], true);
     }
 
     public function delete(User $user, ZonaIntegritasPengaduan $record): bool
     {
-        return $this->deleteAny($user);
+        return $user->hasPanelAccess() && $user->isAdmin()
+            && ! $record->trashed() && $record->status === ZonaIntegritasPengaduan::STATUS_DITOLAK;
     }
 
     public function deleteAny(User $user): bool
     {
-        return $user->hasPanelAccess() && $user->isAdmin();
+        return false;
+    }
+
+    public function viewHistoryAny(User $user): bool
+    {
+        return $user->hasPanelAccess() && in_array($user->role, [User::ROLE_ADMIN, User::ROLE_KEPALA_BALAI], true);
+    }
+
+    public function viewHistory(User $user, ZonaIntegritasPengaduan $record): bool
+    {
+        return $record->trashed() && $this->viewHistoryAny($user);
     }
 
     public function replicate(User $user, ZonaIntegritasPengaduan $record): bool
@@ -48,6 +59,16 @@ class ZonaIntegritasPengaduanPolicy
     }
 
     public function forceDelete(User $user, ZonaIntegritasPengaduan $record): bool
+    {
+        return false;
+    }
+
+    public function restoreAny(User $user): bool
+    {
+        return false;
+    }
+
+    public function forceDeleteAny(User $user): bool
     {
         return false;
     }

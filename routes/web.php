@@ -46,6 +46,12 @@ Route::get('/zona-integritas/pengaduan/{pengaduan}/bukti/download', [ZonaIntegri
     ->middleware(['auth', EnsureCurrentAccountSession::class])
     ->name('zona-integritas.pengaduan.bukti.download');
 
+Route::get('/zona-integritas/pengaduan/{pengaduan}/riwayat/{document}/download', [ZonaIntegritasPengaduanController::class, 'downloadHistoryDocument'])
+    ->middleware(['auth', EnsureCurrentAccountSession::class])
+    ->withTrashed()
+    ->whereIn('document', ['bukti', 'hasil'])
+    ->name('zona-integritas.pengaduan.riwayat.download');
+
 Route::get('/sejarah-singkat', [ProfilController::class, 'index'])->defaults('activeTab', 'sejarah')->name('sejarah-singkat.index');
 Route::get('/visi-misi', [ProfilController::class, 'index'])->defaults('activeTab', 'motto')->name('visi-misi.index');
 Route::get('/tugas-fungsi', [ProfilController::class, 'index'])->defaults('activeTab', 'tugas')->name('tugas-fungsi.index');

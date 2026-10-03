@@ -57,28 +57,35 @@ class ZonaIntegritasPengaduanController extends Controller
 
     public function downloadHasil(ZonaIntegritasPengaduan $pengaduan): BinaryFileResponse
     {
-        abort_unless($pengaduan->dokumen_hasil_path, 404);
-        abort_unless(Storage::disk('local')->exists($pengaduan->dokumen_hasil_path), 404);
-
-        $path = Storage::disk('local')->path($pengaduan->dokumen_hasil_path);
-        $extension = pathinfo($path, PATHINFO_EXTENSION) ?: 'pdf';
-        $filename = $pengaduan->dokumen_hasil_nama
-            ?: ((Str::slug('hasil '.$pengaduan->nomor_pengaduan) ?: 'hasil-pengaduan').'.'.$extension);
-
-        return response()->download($path, $filename);
+        return $this->downloadDocument($pengaduan, 'hasil');
     }
 
     public function downloadBukti(ZonaIntegritasPengaduan $pengaduan): BinaryFileResponse
     {
         Gate::authorize('view', $pengaduan);
 
-        abort_unless($pengaduan->bukti_dukung_path, 404);
-        abort_unless(Storage::disk('local')->exists($pengaduan->bukti_dukung_path), 404);
+        return $this->downloadDocument($pengaduan, 'bukti');
+    }
 
-        $path = Storage::disk('local')->path($pengaduan->bukti_dukung_path);
+    public function downloadHistoryDocument(ZonaIntegritasPengaduan $pengaduan, string $document): BinaryFileResponse
+    {
+        abort_unless($pengaduan->trashed() && in_array($document, ['bukti', 'hasil'], true), 404);
+        Gate::authorize('viewHistory', $pengaduan);
+
+        return $this->downloadDocument($pengaduan, $document);
+    }
+
+    private function downloadDocument(ZonaIntegritasPengaduan $pengaduan, string $document): BinaryFileResponse
+    {
+        [$storedPath, $storedName] = $document === 'bukti'
+            ? [$pengaduan->bukti_dukung_path, $pengaduan->bukti_dukung_nama]
+            : [$pengaduan->dokumen_hasil_path, $pengaduan->dokumen_hasil_nama];
+        abort_unless($storedPath && Storage::disk('local')->exists($storedPath), 404);
+
+        $path = Storage::disk('local')->path($storedPath);
         $extension = pathinfo($path, PATHINFO_EXTENSION) ?: 'pdf';
-        $filename = $pengaduan->bukti_dukung_nama
-            ?: ((Str::slug('bukti '.$pengaduan->nomor_pengaduan) ?: 'bukti-pengaduan').'.'.$extension);
+        $filename = $storedName
+            ?: ((Str::slug($document.' '.$pengaduan->nomor_pengaduan) ?: $document.'-pengaduan').'.'.$extension);
 
         return response()->download($path, $filename);
     }

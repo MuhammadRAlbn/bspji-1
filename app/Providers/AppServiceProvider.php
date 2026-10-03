@@ -56,7 +56,12 @@ class AppServiceProvider extends ServiceProvider
             }
 
             if ($user->isPengaduanStaff()) {
-                return $model === ZonaIntegritasPengaduan::class && in_array($ability, ['viewAny', 'view', 'update', 'delete', 'deleteAny'], true) ? null : false;
+                $abilities = ['viewAny', 'view', 'update', 'delete', 'deleteAny'];
+                if ($user->role === User::ROLE_KEPALA_BALAI) {
+                    $abilities = [...$abilities, 'viewHistoryAny', 'viewHistory'];
+                }
+
+                return $model === ZonaIntegritasPengaduan::class && in_array($ability, $abilities, true) ? null : false;
             }
 
             if (! $user->isHumas()) {

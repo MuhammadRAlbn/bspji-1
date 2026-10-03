@@ -2,6 +2,8 @@
 
 Acuan: [spec.md](spec.md). Status: Implementasi termasuk FR-11 selesai diverifikasi; baseline setelah FR-11 lulus 224 test (1.626 assertion). Hasil pada [verification.md](verification.md).
 
+Penyesuaian setelah spec 003: penghapusan pengaduan hanya pada status Ditolak dengan alasan manual; deleteAny false dan bulk delete dilepas. Resource Riwayat Penghapusan serta unduhan internalnya tersedia hanya bagi admin/Kepala Balai. Rincian terbaru: [rencana spec 003](../003-riwayat-penghapusan-pengaduan/plan.md). Bagian di bawah mencatat rancangan awal spec 001.
+
 ## 1. Pendekatan
 
 Pertahankan satu panel Filament `admin` dan kolom `users.role`. Tambahkan konstanta/helper role FAP dan Kepala Balai, status akun aktif, policy Pengaduan, serta policy User. Izin tetap dalam kode sesuai D-01; tahap ini tidak memerlukan tabel role/permission atau paket tambahan.

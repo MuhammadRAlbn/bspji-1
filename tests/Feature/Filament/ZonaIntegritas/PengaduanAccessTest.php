@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Filament\ZonaIntegritas;
 
+use App\Filament\Clusters\ZonaIntegritas\Resources\RiwayatPenghapusanPengaduanResource;
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource as Resource;
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages\EditZonaIntegritasPengaduan;
 use App\Filament\Clusters\ZonaIntegritas\Resources\ZonaIntegritasPengaduanResource\Pages\ListZonaIntegritasPengaduans;
@@ -48,9 +49,14 @@ class PengaduanAccessTest extends TestCase
         $response = app(LoginResponse::class)->toResponse(request());
         $this->assertSame(Resource::getUrl('index'), $response->getTargetUrl());
 
+        $allowedResources = [Resource::class];
+        if ($role === User::ROLE_KEPALA_BALAI) {
+            $allowedResources[] = RiwayatPenghapusanPengaduanResource::class;
+        }
         foreach (Filament::getPanel('admin')->getResources() as $resource) {
-            $this->assertSame($resource === Resource::class, $resource::canAccess(), $resource);
-            if ($resource !== Resource::class) {
+            $allowed = in_array($resource, $allowedResources, true);
+            $this->assertSame($allowed, $resource::canAccess(), $resource);
+            if (! $allowed) {
                 $this->get($resource::getUrl('index'))->assertForbidden();
             }
         }

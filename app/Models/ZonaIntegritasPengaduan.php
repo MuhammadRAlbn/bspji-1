@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Validation\ValidationException;
 
 class ZonaIntegritasPengaduan extends Model
 {
+    use SoftDeletes;
+
     public const JENIS_PENGADUAN = 'pengaduan';
 
     public const JENIS_KOMPLAIN = 'komplain';
@@ -78,6 +82,10 @@ class ZonaIntegritasPengaduan extends Model
     protected static function booted(): void
     {
         static::saving(function (self $pengaduan): void {
+            if ($pengaduan->exists && $pengaduan->getRawOriginal('deleted_at') !== null) {
+                throw new AuthorizationException('Riwayat penghapusan tidak dapat diubah.');
+            }
+
             if (
                 $pengaduan->status === self::STATUS_SELESAI
                 && blank($pengaduan->hasil_teks)
@@ -91,6 +99,30 @@ class ZonaIntegritasPengaduan extends Model
             if ($pengaduan->status === self::STATUS_SELESAI && ! $pengaduan->selesai_at) {
                 $pengaduan->selesai_at = now();
             }
+        });
+
+        static::deleting(function (self $pengaduan): void {
+            if ($pengaduan->trashed() || $pengaduan->isForceDeleting()) {
+                throw new AuthorizationException('Riwayat penghapusan tidak dapat dihapus.');
+            }
+
+            if ($pengaduan->status !== self::STATUS_DITOLAK) {
+                throw new AuthorizationException('Hanya pengaduan Ditolak yang dapat dihapus.');
+            }
+
+            if (blank($pengaduan->deletion_reason) || ! $pengaduan->deleted_by_id || blank($pengaduan->deleted_by_name) || blank($pengaduan->deleted_by_email)) {
+                throw ValidationException::withMessages([
+                    'deletion_reason' => 'Alasan dan identitas admin wajib dicatat sebelum menghapus pengaduan.',
+                ]);
+            }
+        });
+
+        static::restoring(function (): void {
+            throw new AuthorizationException('Pemulihan pengaduan tidak tersedia.');
+        });
+
+        static::forceDeleting(function (): void {
+            throw new AuthorizationException('Penghapusan permanen pengaduan tidak tersedia.');
         });
     }
 
@@ -127,6 +159,7 @@ class ZonaIntegritasPengaduan extends Model
     {
         return [
             'selesai_at' => 'datetime',
+            'deleted_by_id' => 'integer',
         ];
     }
 }

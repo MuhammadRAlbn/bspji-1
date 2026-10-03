@@ -2,7 +2,7 @@
 
 Acuan perilaku: [spec.md](spec.md). Desain: [plan.md](plan.md).
 
-Status: implementasi termasuk hapus akun (D-03/FR-11) selesai diverifikasi. Baseline FR-11 lulus 224 test (1.626 assertion); regresi terbaru setelah spec 002 lulus 261 test (1.997 assertion). Dua migration awal telah Ran pada MySQL lokal; tidak ada migration tambahan untuk hapus akun. Lihat [verification.md](verification.md) dan [deployment.md](deployment.md). Tanda centang menunjukkan pekerjaan yang benar-benar telah dilakukan.
+Status: implementasi termasuk hapus akun (D-03/FR-11) selesai diverifikasi. Baseline FR-11 lulus 224 test (1.626 assertion); setelah spec 002 lulus 261 test (1.997 assertion). Regresi terbaru setelah spec 003 lulus 306 test (2.248 assertion). Dua migration awal serta migration histori spec 003 telah Ran pada MySQL lokal; tidak ada migration tambahan untuk hapus akun. Lihat [verification.md](verification.md) dan [deployment.md](deployment.md). Tanda centang menunjukkan pekerjaan yang benar-benar telah dilakukan; pekerjaan histori dicatat pada [tasks spec 003](../003-riwayat-penghapusan-pengaduan/tasks.md).
 
 ## T-00 — Spesifikasi
 

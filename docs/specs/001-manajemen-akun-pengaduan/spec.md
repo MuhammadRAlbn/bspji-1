@@ -4,7 +4,7 @@ Tanggal awal: 2 Oktober 2026; diperbarui 3 Oktober 2026 (Asia/Jakarta)
 
 Status: Disetujui pengguna, termasuk klarifikasi halaman detail internal pada FR-06 dan penambahan hapus akun pada FR-11.
 
-Tahap saat ini: Implementasi termasuk hapus akun telah diverifikasi. Baseline setelah FR-11 ialah 224 test (1.626 assertion). Spec 002 sudah disetujui dan diimplementasikan; suite proyek terbaru lulus 261 test (1.997 assertion) dan dicatat pada [verifikasi spec 002](../002-pergantian-password-mandiri/verification.md). Dua migration fitur awal telah Ran pada MySQL lokal; hapus akun dan spec 002 tidak menambah migration.
+Tahap saat ini: Implementasi termasuk hapus akun telah diverifikasi. Baseline setelah FR-11 ialah 224 test (1.626 assertion); setelah spec 002 ialah 261 test (1.997 assertion). Spec 003 menambah histori penghapusan pengaduan; suite proyek terbaru lulus 306 test (2.248 assertion), dicatat pada [verifikasi spec 003](../003-riwayat-penghapusan-pengaduan/verification.md). Dua migration fitur awal dan migration spec 003 telah Ran pada MySQL lokal; hapus akun dan spec 002 tidak menambah migration.
 
 ## 1. Tujuan
 
@@ -59,7 +59,8 @@ Satu akun memiliki satu role. Nilai role: `admin`, `humas`, `fap`, dan `kepala_b
 | Mengubah status, hasil teks, dan dokumen hasil | Ya | Tidak | Ya | Tidak |
 | Mengubah laporan asli | Tidak melalui form yang ada | Tidak | Tidak | Tidak |
 | Membuat pengaduan dari panel | Tidak ditambahkan | Tidak | Tidak | Tidak |
-| Menghapus pengaduan / bulk delete | Perilaku admin yang ada | Tidak | Tidak | Tidak |
+| Menghapus pengaduan Ditolak dengan alasan manual (spec 003) | Ya, satu per satu | Tidak | Tidak | Tidak |
+| Membaca riwayat penghapusan dan lampirannya (spec 003) | Ya | Tidak | Tidak | Ya |
 | Dashboard umum | Perilaku admin yang ada | Perilaku Humas yang ada | Dialihkan ke Pengaduan | Dialihkan ke Pengaduan |
 
 Unduhan hasil melalui pelacakan publik merupakan pengecualian dari matriks akses panel: endpoint publik yang sudah ada tetap tersedia dalam tahap ini. Matriks ini tidak menjanjikan bahwa hasil publik hanya dapat diakses oleh tiga role pengaduan.
@@ -88,7 +89,7 @@ Admin tidak dapat menonaktifkan, menurunkan role, atau menghapus akunnya sendiri
 
 ### FR-05 — Navigasi FAP dan Kepala Balai
 
-Setelah login, FAP/Kepala Balai diarahkan ke daftar Pengaduan. Membuka `/admin` juga mengarah ke daftar tersebut. Navigasi fitur hanya menampilkan Zona Integritas > Pengaduan; fitur Zona Integritas lainnya, cluster lain, Manajemen Akun, dan dashboard umum tidak tersedia bagi kedua role.
+Setelah login, FAP/Kepala Balai diarahkan ke daftar Pengaduan. Membuka `/admin` juga mengarah ke daftar tersebut. FAP hanya mendapat Zona Integritas > Pengaduan; Kepala Balai juga mendapat Riwayat Penghapusan baca saja sesuai spec 003. Fitur Zona Integritas lainnya, cluster lain, Manajemen Akun, dan dashboard umum tidak tersedia bagi kedua role.
 
 URL fitur yang dilarang mengembalikan 403 untuk pengguna terautentikasi. Endpoint awal `/admin` adalah pengecualian yang mengalihkan ke daftar Pengaduan. Menu akun dan logout tetap tersedia. Menu Ubah Password pada `/admin/ubah-password` adalah pengecualian keamanan akun sendiri sesuai spec 002; tidak memberi akses resource akun lain.
 
@@ -120,7 +121,7 @@ Humas tetap terbatas pada resource bisnis berita/komentar sesuai perilaku yang a
 
 Unduhan bukti memerlukan akun aktif dengan izin melihat pengaduan: admin, FAP, atau Kepala Balai. Humas/role lain/nonaktif mendapat 403 meskipun mengetahui URL. Pengunjung yang belum login diarahkan ke login panel. File yang tidak ada mengembalikan 404 untuk pengguna yang berizin.
 
-Pengiriman laporan, penomoran, notifikasi laporan baru, pelacakan publik, dan unduhan hasil publik tetap mengikuti perilaku saat ini. Pembatasan publik dengan token/verifikasi identitas merupakan perubahan terpisah yang perlu spesifikasi sendiri.
+Pengiriman laporan, penomoran, notifikasi laporan baru, pelacakan publik, dan unduhan hasil publik tetap mengikuti perilaku saat ini untuk pengaduan aktif. Spec 003 mengecualikan pengaduan terhapus dari pelacakan dan unduhan existing; lampiran riwayat hanya dapat diunduh admin/Kepala Balai melalui endpoint internal terpisah. Pembatasan publik dengan token/verifikasi identitas merupakan perubahan terpisah yang perlu spesifikasi sendiri.
 
 ### FR-11 — Penghapusan akun oleh admin
 
@@ -132,7 +133,7 @@ Setelah berhasil, akun tidak lagi tercantum pada daftar dan tidak dapat login at
 
 ## 6. Asumsi tahap pertama
 
-- FAP dan Kepala Balai mengakses seluruh record pada resource Pengaduan, termasuk Pengaduan Pelanggaran, Komplain Layanan, dan WBS. Tidak ada pembagian berdasarkan petugas atau jenis laporan.
+- FAP dan Kepala Balai mengakses seluruh record aktif pada resource Pengaduan, termasuk Pengaduan Pelanggaran, Komplain Layanan, dan WBS. Tidak ada pembagian berdasarkan petugas atau jenis laporan. Riwayat penghapusan mengikuti izin khusus spec 003.
 - Kepala Balai dapat membaca identitas pelapor dan dokumen yang sama dengan FAP. Penyembunyian identitas belum diminta.
 - Admin menetapkan password awal dan mereset akun lain melalui panel. Semua role aktif dapat mengganti password sendiri secara opsional melalui menu akun sesuai spec 002. Undangan email, lupa password lewat email, dan kewajiban ganti password saat login pertama belum termasuk.
 - Status aktif dan proteksi admin berlaku untuk perubahan maupun penghapusan akun. Penonaktifan tetap tersedia bila akses perlu dicabut dengan kemungkinan aktivasi kembali; penghapusan permanen disetujui melalui D-03.
