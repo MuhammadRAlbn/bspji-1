@@ -165,37 +165,22 @@
                     @if($sertifikasis->isNotEmpty())
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                             @foreach($sertifikasis as $sert)
-                                <div class="flex flex-col gap-3">
-                                    <div class="flex justify-start">
-                                        <a
-                                            href="{{ asset('storage/' . $sert->image) }}"
-                                            download
-                                            class="inline-flex items-center gap-2 rounded-xl border border-black/25 px-4 py-2 text-sm font-semibold text-slate-800 transition-all active:scale-95"
-                                        >
-                                            <svg class="h-4 w-4 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4m-4 7.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V18" />
-                                            </svg>
-                                            Download Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}
-                                        </a>
-                                    </div>
-
-                                    <button
-                                        type="button"
-                                        @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}')"
-                                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden border border-slate-200 text-left"
+                                <button
+                                    type="button"
+                                    @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}')"
+                                    class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden border border-slate-200 text-left"
+                                >
+                                    <img
+                                        src="{{ asset('storage/' . $sert->image) }}"
+                                        alt="Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}"
+                                        class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                                     >
-                                        <img
-                                            src="{{ asset('storage/' . $sert->image) }}"
-                                            alt="Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}"
-                                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
-                                        >
-                                        <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                                            <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
-                                                Klik untuk memperbesar
-                                            </span>
-                                        </div>
-                                    </button>
-                                </div>
+                                    <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                        <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
+                                            Klik untuk memperbesar
+                                        </span>
+                                    </div>
+                                </button>
                             @endforeach
                         </div>
                     @else
