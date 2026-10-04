@@ -161,18 +161,18 @@
 
         <article class="min-h-[85vh] pb-32 sm:pb-112.5">
                 <section x-show="tab === 'sertifikasi'" x-cloak x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
-                <div class="mx-auto max-w-7xl space-y-8">
+                <div class="mx-auto max-w-5xl space-y-8">
                     @if($sertifikasis->isNotEmpty())
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 items-start">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                             @foreach($sertifikasis as $sert)
-                                <div class="flex flex-col gap-3 group">
+                                <div class="flex flex-col gap-3">
                                     <div class="flex justify-start">
                                         <a
                                             href="{{ asset('storage/' . $sert->image) }}"
                                             download
-                                            class="inline-flex items-center gap-2 rounded-xl border border-black/25 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-800 transition-all hover:bg-slate-50 active:scale-95 shadow-sm"
+                                            class="inline-flex items-center gap-2 rounded-xl border border-black/25 px-4 py-2 text-sm font-semibold text-slate-800 transition-all active:scale-95"
                                         >
-                                            <svg class="h-3.5 w-3.5 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                            <svg class="h-4 w-4 text-slate-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0 4-4m-4 4-4-4m-4 7.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V18" />
                                             </svg>
                                             Download Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}
@@ -182,15 +182,15 @@
                                     <button
                                         type="button"
                                         @click="openLightbox('{{ asset('storage/' . $sert->image) }}', 'Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}')"
-                                        class="relative block w-full cursor-pointer overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm text-left transition duration-300 hover:shadow-md"
+                                        class="group relative block w-full max-w-3xl cursor-pointer overflow-hidden border border-slate-200 text-left"
                                     >
                                         <img
                                             src="{{ asset('storage/' . $sert->image) }}"
                                             alt="Sertifikat Akreditasi{{ $sertifikasis->count() > 1 ? ' #' . $loop->iteration : '' }}"
-                                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.02]"
+                                            class="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-[1.03]"
                                         >
-                                        <div class="absolute bottom-4 left-4 z-20 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                                            <span class="rounded-full bg-slate-800/90 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm backdrop-blur-sm">
+                                        <div class="absolute bottom-6 left-6 z-20 translate-y-4 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                                            <span class="rounded-full bg-slate-800 px-4 py-2 text-sm font-bold text-white shadow-sm">
                                                 Klik untuk memperbesar
                                             </span>
                                         </div>
