@@ -166,7 +166,7 @@ class ZonaIntegritasPengaduanResource extends Resource
                     }),
                 TextColumn::make('created_at')
                     ->label('Dikirim')
-                    ->dateTime()
+                    ->dateTime('d/m/Y H:i:s \W\I\B')
                     ->sortable(),
             ])
             ->filters([
@@ -243,9 +243,9 @@ class ZonaIntegritasPengaduanResource extends Resource
                         ->openUrlInNewTab()->authorize(fn (ZonaIntegritasPengaduan $record): bool => Gate::allows($record->trashed() ? 'viewHistory' : 'view', $record))
                         ->visible(fn (ZonaIntegritasPengaduan $record): bool => filled($record->dokumen_hasil_path)),
                 ])->columnSpanFull(),
-                TextEntry::make('created_at')->label('Dikirim')->dateTime(),
-                TextEntry::make('updated_at')->label('Terakhir Diubah')->dateTime(),
-                TextEntry::make('selesai_at')->label('Selesai')->dateTime()->placeholder('-'),
+                TextEntry::make('created_at')->label('Dikirim')->dateTime('d/m/Y H:i:s \W\I\B'),
+                TextEntry::make('updated_at')->label('Terakhir Diubah')->dateTime('d/m/Y H:i:s \W\I\B'),
+                TextEntry::make('selesai_at')->label('Selesai')->dateTime('d/m/Y H:i:s \W\I\B')->placeholder('-'),
             ])->columns(2)->columnSpanFull(),
         ]);
     }

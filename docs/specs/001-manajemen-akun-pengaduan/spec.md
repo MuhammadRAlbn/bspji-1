@@ -4,6 +4,8 @@ Tanggal awal: 2 Oktober 2026; diperbarui 3 Oktober 2026 (Asia/Jakarta)
 
 Status: Disetujui pengguna, termasuk klarifikasi halaman detail internal pada FR-06 dan penambahan hapus akun pada FR-11.
 
+Perubahan akses hapus terbaru, 4 Oktober 2026: [004 — Penghapusan oleh FAP dan Tampilan Waktu WIB](../004-penghapusan-fap-waktu-wib/spec.md) mengizinkan FAP aktif menghapus pengaduan Ditolak dengan alasan wajib dan histori. Larangan hapus FAP dalam baseline di bawah diperbarui oleh spec 004; akses histori tetap khusus admin/Kepala Balai.
+
 Tahap saat ini: Implementasi termasuk hapus akun telah diverifikasi. Baseline setelah FR-11 ialah 224 test (1.626 assertion); setelah spec 002 ialah 261 test (1.997 assertion). Spec 003 menambah histori penghapusan pengaduan; suite proyek terbaru lulus 306 test (2.248 assertion), dicatat pada [verifikasi spec 003](../003-riwayat-penghapusan-pengaduan/verification.md). Dua migration fitur awal dan migration spec 003 telah Ran pada MySQL lokal; hapus akun dan spec 002 tidak menambah migration.
 
 ## 1. Tujuan

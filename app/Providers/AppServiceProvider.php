@@ -12,6 +12,7 @@ use App\Models\ZonaIntegritasPengaduan;
 use App\Observers\NewsObserver;
 use App\Services\AccountSessionService;
 use Filament\Auth\Http\Responses\Contracts\LoginResponse;
+use Filament\Support\Facades\FilamentTimezone;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -37,6 +38,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        FilamentTimezone::set('Asia/Jakarta');
+
         News::observe(NewsObserver::class);
 
         Event::listen(Login::class, fn (Login $event) => app(AccountSessionService::class)->initializeFromLogin($event));

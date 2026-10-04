@@ -57,7 +57,7 @@ class NewsForm
                     ->label('Tanggal Publikasi')
                     ->seconds(false)
                     ->native(false)
-                    ->helperText('Jika status Published dan tanggal kosong, sistem mengisi waktu saat disimpan.'),
+                    ->helperText('Menggunakan WIB. Jika status Published dan tanggal kosong, sistem mengisi waktu saat disimpan.'),
             ]);
     }
 }

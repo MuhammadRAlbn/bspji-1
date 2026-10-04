@@ -81,7 +81,7 @@ class PengaduanAccessTest extends TestCase
         $this->assertModelExists($record);
     }
 
-    public function test_fap_can_update_only_follow_up_fields_and_cannot_delete(): void
+    public function test_fap_can_update_only_follow_up_fields_and_cannot_delete_an_investigating_complaint(): void
     {
         $this->actingAs(User::factory()->create(['role' => 'fap']));
         $record = $this->pengaduan();

@@ -6,6 +6,8 @@ Tanggal: 3 Oktober 2026. Implementasi tersedia dalam working tree; hasil regresi
 
 Spec 002 tidak menambah migration, paket, role, atau akun bawaan. Dua migration spec 001 tetap merupakan prasyarat Manajemen Akun. Password dan status akun operasional tidak diubah oleh pekerjaan pengujian ini.
 
+Klarifikasi 4 Oktober 2026: migration spec 001 juga merupakan prasyarat login panel dengan kode terbaru. Tanpa kolom `users.is_active`, pemeriksaan akses dapat menolak akun dengan password benar. Periksa `php artisan migrate:status` di server dan terapkan migration yang belum dijalankan mengikuti [panduan spec 001](../001-manajemen-akun-pengaduan/deployment.md). Keterangan tanpa migration baru untuk spec 002 tidak berarti migration fitur sebelumnya boleh dilewati.
+
 Pada deployment normal, terapkan perubahan kode beserta proses cache aplikasi yang digunakan proyek. Bila deployment memakai route/config cache, bangun kembali cache tersebut agar route profil dan middleware baru terdaftar. Pastikan cache rate limiter tersedia dan digunakan bersama oleh worker/instance aplikasi; cache array hanya untuk test/preview. Produksi mengikuti konfigurasi HTTPS aplikasi.
 
 Sesi yang dibuat sebelum fitur ini dan belum membawa fingerprint HMAC harus login ulang. Ini bukan kewajiban mengganti password: password existing masih berlaku. Cookie Ingat Saya yang masih sah dapat membentuk sesi baru setelah verifikasi token dan fingerprint. Setelah password diganti atau direset, cookie lama tidak berlaku.

@@ -6,6 +6,8 @@ Status: **Aturan bisnis disetujui pengguna pada 3 Oktober 2026. Spesifikasi dan 
 
 Acuan: [001 — Manajemen Akun dan Akses Pengaduan](../001-manajemen-akun-pengaduan/spec.md), [002 — Pergantian Password Mandiri](../002-pergantian-password-mandiri/spec.md).
 
+Perubahan lanjutan 4 Oktober 2026: [004 — Penghapusan oleh FAP dan Tampilan Waktu WIB](../004-penghapusan-fap-waktu-wib/spec.md) memperluas hak hapus kepada FAP aktif dan memperbarui tampilan waktu. Aturan serta hasil di bawah mencatat baseline implementasi 003.
+
 ## 1. Tujuan
 
 Admin dapat membersihkan daftar pengaduan yang sudah ditolak tanpa menghilangkan laporan, lampiran, maupun bukti siapa yang menghapus dan alasannya. Admin dan Kepala Balai dapat memeriksa Riwayat Penghapusan melalui panel. Fitur tidak menyediakan pemulihan.

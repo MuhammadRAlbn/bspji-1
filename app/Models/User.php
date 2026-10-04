@@ -91,7 +91,7 @@ class User extends Authenticatable implements FilamentUser
         return match ($role) {
             self::ROLE_ADMIN => 'Mengelola akun dan seluruh fitur admin sesuai aturan masing-masing fitur.',
             self::ROLE_HUMAS => 'Mengelola berita dan komentar berita.',
-            self::ROLE_FAP => 'Melihat pengaduan dan mengubah status, hasil tindak lanjut, serta dokumen hasil. Tidak dapat menghapus pengaduan.',
+            self::ROLE_FAP => 'Melihat pengaduan dan mengubah status, hasil tindak lanjut, serta dokumen hasil. Dapat menghapus pengaduan berstatus Ditolak dengan alasan wajib.',
             self::ROLE_KEPALA_BALAI => 'Melihat daftar, detail, dokumen pengaduan, dan riwayat penghapusan. Tidak dapat mengubah atau menghapus data.',
             default => 'Pilih role untuk melihat izin aksesnya.',
         };

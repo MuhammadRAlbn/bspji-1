@@ -29,7 +29,7 @@ class ZonaIntegritasPengaduanPolicy
 
     public function delete(User $user, ZonaIntegritasPengaduan $record): bool
     {
-        return $user->hasPanelAccess() && $user->isAdmin()
+        return $user->hasPanelAccess() && in_array($user->role, [User::ROLE_ADMIN, User::ROLE_FAP], true)
             && ! $record->trashed() && $record->status === ZonaIntegritasPengaduan::STATUS_DITOLAK;
     }
 

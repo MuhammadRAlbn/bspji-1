@@ -30,10 +30,11 @@ class PengaduanDeletionHistoryTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_admin_deletion_preserves_the_report_files_and_server_generated_history(): void
+    #[DataProvider('deletingRoles')]
+    public function test_authorized_deletion_preserves_the_report_files_and_server_generated_history(string $role): void
     {
         $this->freezeTime();
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create(['role' => $role]);
         $record = $this->pengaduan();
         $before = $record->getAttributes();
         $this->assertTrue($this->deleteComplaint($admin, $record, [
@@ -57,9 +58,9 @@ class PengaduanDeletionHistoryTest extends TestCase
     }
 
     #[DataProvider('invalidReasons')]
-    public function test_invalid_manual_reason_cannot_delete_a_complaint(mixed $reason): void
+    public function test_invalid_manual_reason_cannot_delete_a_complaint(string $role, mixed $reason): void
     {
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create(['role' => $role]);
         $record = $this->pengaduan();
         try {
             $this->deleteComplaint($admin, $record, ['deletion_reason' => $reason]);
@@ -73,9 +74,9 @@ class PengaduanDeletionHistoryTest extends TestCase
     }
 
     #[DataProvider('otherStatuses')]
-    public function test_only_rejected_complaints_can_be_deleted(string $status): void
+    public function test_only_rejected_complaints_can_be_deleted(string $role, string $status): void
     {
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create(['role' => $role]);
         $record = $this->pengaduan(['status' => $status]);
         $this->assertFalse(Gate::forUser($admin)->allows('delete', $record));
         $this->expectException(AuthorizationException::class);
@@ -83,7 +84,7 @@ class PengaduanDeletionHistoryTest extends TestCase
     }
 
     #[DataProvider('nonDeletingAccounts')]
-    public function test_only_an_active_admin_can_use_the_deletion_service(string $role, bool $active): void
+    public function test_accounts_without_deletion_access_cannot_use_the_service(string $role, bool $active): void
     {
         $actor = User::factory()->create(['role' => $role, 'is_active' => $active]);
         $record = $this->pengaduan();
@@ -107,13 +108,25 @@ class PengaduanDeletionHistoryTest extends TestCase
             $this->assertNotSoftDeleted($record);
         }
         ZonaIntegritasPengaduan::whereKey($record->id)->update(['status' => ZonaIntegritasPengaduan::STATUS_DITOLAK]);
-        User::whereKey($admin->id)->update(['role' => 'fap']);
+        User::whereKey($admin->id)->update(['role' => 'kepala_balai']);
         try {
             $this->deleteComplaint($admin, $record);
             $this->fail('Role terbaru harus diperiksa.');
         } catch (AuthorizationException) {
             $this->assertNotSoftDeleted($record);
         }
+    }
+
+    public function test_an_admin_changed_to_fap_retains_deletion_access_with_current_identity(): void
+    {
+        $actor = User::factory()->create(['role' => 'admin']);
+        $record = $this->pengaduan();
+        User::whereKey($actor->id)->update(['role' => 'fap', 'name' => 'Tim FAP', 'email' => 'fap@example.test']);
+        $this->assertTrue($this->deleteComplaint($actor, $record));
+        $history = $record->fresh();
+        $this->assertSame($actor->id, $history->deleted_by_id);
+        $this->assertSame('Tim FAP', $history->deleted_by_name);
+        $this->assertSame('fap@example.test', $history->deleted_by_email);
     }
 
     public function test_a_deleted_admin_cannot_complete_an_old_delete_request(): void
@@ -177,9 +190,10 @@ class PengaduanDeletionHistoryTest extends TestCase
     }
 
     #[DataProvider('deletionLocations')]
-    public function test_both_delete_dialogs_require_a_reason_and_preserve_history(string $location): void
+    public function test_both_delete_dialogs_require_a_reason_and_preserve_history(string $role, string $location): void
     {
-        $this->actingAs(User::factory()->create(['role' => 'admin']));
+        $actor = User::factory()->create(['role' => $role]);
+        $this->actingAs($actor);
         $record = $this->pengaduan();
         [$component, $action] = $this->deleteComponent($location, $record);
         $component->mountAction($action)->assertMountedActionModalSee($record->nomor_pengaduan);
@@ -192,14 +206,18 @@ class PengaduanDeletionHistoryTest extends TestCase
             ->assertHasNoActionErrors();
         $this->assertSoftDeleted($record);
         $this->assertSame('Laporan duplikat; sudah ditangani pada nomor lain.', $record->fresh()->deletion_reason);
+        $this->assertSame($actor->id, $record->fresh()->deleted_by_id);
+        $this->assertSame($actor->name, $record->fresh()->deleted_by_name);
+        $this->assertSame($actor->email, $record->fresh()->deleted_by_email);
         if ($location === 'edit') {
             $component->assertRedirect(Resource::getUrl('index'));
         }
     }
 
-    public function test_delete_and_bulk_actions_are_unavailable_for_other_statuses(): void
+    #[DataProvider('deletingRoles')]
+    public function test_delete_and_bulk_actions_are_unavailable_for_other_statuses(string $role): void
     {
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create(['role' => $role]);
         $this->actingAs($admin);
         $record = $this->pengaduan(['status' => ZonaIntegritasPengaduan::STATUS_DITERIMA]);
         $component = Livewire::test(ListZonaIntegritasPengaduans::class)
@@ -209,9 +227,10 @@ class PengaduanDeletionHistoryTest extends TestCase
         $this->assertFalse(Gate::forUser($admin)->allows('deleteAny', ZonaIntegritasPengaduan::class));
     }
 
-    public function test_open_delete_dialog_cannot_delete_after_status_changes(): void
+    #[DataProvider('deletingRoles')]
+    public function test_open_delete_dialog_cannot_delete_after_status_changes(string $role): void
     {
-        $this->actingAs(User::factory()->create(['role' => 'admin']));
+        $this->actingAs(User::factory()->create(['role' => $role]));
         $record = $this->pengaduan();
         $component = Livewire::test(ListZonaIntegritasPengaduans::class)
             ->mountAction(TestAction::make('delete')->table($record))
@@ -222,14 +241,15 @@ class PengaduanDeletionHistoryTest extends TestCase
         $this->assertNull($record->refresh()->deletion_reason);
     }
 
-    public function test_open_delete_dialog_cannot_delete_after_admin_access_is_revoked(): void
+    #[DataProvider('accessRevocations')]
+    public function test_open_delete_dialog_cannot_delete_after_access_is_revoked(string $role, array $change): void
     {
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create(['role' => $role]);
         $this->actingAs($admin);
         $record = $this->pengaduan();
         $component = Livewire::test(EditZonaIntegritasPengaduan::class, ['record' => $record->id])
             ->mountAction('delete')->setActionData(['deletion_reason' => 'Laporan duplikat.']);
-        User::whereKey($admin->id)->update(['is_active' => false]);
+        User::whereKey($admin->id)->update($change);
         $component->callMountedAction()->assertForbidden();
         $this->assertNotSoftDeleted($record);
     }
@@ -237,7 +257,7 @@ class PengaduanDeletionHistoryTest extends TestCase
     #[DataProvider('historyReaders')]
     public function test_authorized_readers_can_search_history_and_read_escaped_details(string $role): void
     {
-        $admin = User::factory()->create(['role' => 'admin']);
+        $admin = User::factory()->create(['role' => 'fap']);
         $record = $this->pengaduan();
         $active = $this->pengaduan(['nomor_pengaduan' => '20260500002', 'sequence' => 500002]);
         $reason = '<script>alert("alasan")</script> Laporan duplikat.';
@@ -247,7 +267,8 @@ class PengaduanDeletionHistoryTest extends TestCase
         $this->get(HistoryResource::getUrl('index'))->assertOk();
         $this->get(HistoryResource::getUrl('view', ['record' => $history]))
             ->assertOk()->assertSee($reason)->assertDontSee($reason, false)
-            ->assertSee($admin->name)->assertSee($admin->email)->assertSee($record->uraian);
+            ->assertSee($admin->name)->assertSee($admin->email)->assertSee($record->uraian)
+            ->assertSee('Email Penghapus Saat Penghapusan')->assertSee('ID Akun Penghapus');
         Livewire::test(ListRiwayatPenghapusanPengaduans::class)
             ->assertCanSeeTableRecords([$history])->assertCanNotSeeTableRecords([$active])
             ->searchTable('Laporan duplikat')->assertCanSeeTableRecords([$history])
@@ -390,17 +411,31 @@ class PengaduanDeletionHistoryTest extends TestCase
 
     public static function invalidReasons(): array
     {
-        return [[null], [''], [" \t\n "], ["\u{00A0}\u{200B}"], [['reason']], [str_repeat('a', 2001)]];
+        $cases = [];
+        foreach (['admin', 'fap'] as $role) {
+            foreach ([null, '', " \t\n ", "\u{00A0}\u{200B}", ['reason'], str_repeat('a', 2001)] as $index => $reason) {
+                $cases[$role.'-'.$index] = [$role, $reason];
+            }
+        }
+
+        return $cases;
     }
 
     public static function otherStatuses(): array
     {
-        return [[ZonaIntegritasPengaduan::STATUS_DITERIMA], [ZonaIntegritasPengaduan::STATUS_INVESTIGASI], [ZonaIntegritasPengaduan::STATUS_SELESAI]];
+        $cases = [];
+        foreach (['admin', 'fap'] as $role) {
+            foreach ([ZonaIntegritasPengaduan::STATUS_DITERIMA, ZonaIntegritasPengaduan::STATUS_INVESTIGASI, ZonaIntegritasPengaduan::STATUS_SELESAI] as $status) {
+                $cases[$role.'-'.$status] = [$role, $status];
+            }
+        }
+
+        return $cases;
     }
 
     public static function nonDeletingAccounts(): array
     {
-        return [['fap', true], ['kepala_balai', true], ['humas', true], ['viewer', true], ['admin', false]];
+        return [['fap', false], ['kepala_balai', true], ['humas', true], ['viewer', true], ['admin', false]];
     }
 
     public static function persistenceFailureEvents(): array
@@ -410,7 +445,17 @@ class PengaduanDeletionHistoryTest extends TestCase
 
     public static function deletionLocations(): array
     {
-        return [['list'], ['edit']];
+        return [['admin', 'list'], ['admin', 'edit'], ['fap', 'list'], ['fap', 'edit']];
+    }
+
+    public static function deletingRoles(): array
+    {
+        return [['admin'], ['fap']];
+    }
+
+    public static function accessRevocations(): array
+    {
+        return [['admin', ['is_active' => false]], ['fap', ['is_active' => false]], ['fap', ['role' => 'kepala_balai']]];
     }
 
     public static function historyReaders(): array

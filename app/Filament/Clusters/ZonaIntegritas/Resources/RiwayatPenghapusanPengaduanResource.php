@@ -53,7 +53,7 @@ class RiwayatPenghapusanPengaduanResource extends ZonaIntegritasPengaduanResourc
                 TextColumn::make('nomor_pengaduan')->label('Nomor')->searchable(),
                 TextColumn::make('judul')->label('Judul')->searchable()->limit(40)->wrap(),
                 TextColumn::make('deleted_by_name')->label('Dihapus Oleh')->searchable()->wrap(),
-                TextColumn::make('deleted_at')->label('Waktu Penghapusan')->dateTime('d/m/Y H:i:s')->sortable(),
+                TextColumn::make('deleted_at')->label('Waktu Penghapusan')->dateTime('d/m/Y H:i:s \W\I\B')->sortable(),
                 TextColumn::make('deletion_reason')->label('Alasan Penghapusan')->searchable()->limit(60)->wrap(),
             ])
             ->recordActions([ViewAction::make()->label('Lihat')])
@@ -66,10 +66,10 @@ class RiwayatPenghapusanPengaduanResource extends ZonaIntegritasPengaduanResourc
 
         return $schema->components([
             Section::make('Catatan Penghapusan')->schema([
-                TextEntry::make('deleted_at')->label('Waktu Penghapusan')->dateTime(),
+                TextEntry::make('deleted_at')->label('Waktu Penghapusan')->dateTime('d/m/Y H:i:s \W\I\B'),
                 TextEntry::make('deleted_by_name')->label('Dihapus Oleh'),
-                TextEntry::make('deleted_by_email')->label('Email Admin Saat Penghapusan'),
-                TextEntry::make('deleted_by_id')->label('ID Akun Admin'),
+                TextEntry::make('deleted_by_email')->label('Email Penghapus Saat Penghapusan'),
+                TextEntry::make('deleted_by_id')->label('ID Akun Penghapus'),
                 TextEntry::make('deletion_reason')->label('Alasan Penghapusan')->columnSpanFull(),
             ])->columns(2)->columnSpanFull(),
             ...$schema->getComponents(),

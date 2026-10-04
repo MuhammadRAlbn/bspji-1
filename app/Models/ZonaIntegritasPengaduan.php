@@ -112,7 +112,7 @@ class ZonaIntegritasPengaduan extends Model
 
             if (blank($pengaduan->deletion_reason) || ! $pengaduan->deleted_by_id || blank($pengaduan->deleted_by_name) || blank($pengaduan->deleted_by_email)) {
                 throw ValidationException::withMessages([
-                    'deletion_reason' => 'Alasan dan identitas admin wajib dicatat sebelum menghapus pengaduan.',
+                    'deletion_reason' => 'Alasan dan identitas penghapus wajib dicatat sebelum menghapus pengaduan.',
                 ]);
             }
         });

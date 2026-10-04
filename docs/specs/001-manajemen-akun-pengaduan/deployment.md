@@ -14,6 +14,14 @@ php artisan migrate --path=database/migrations/2026_10_02_145627_add_is_active_t
 
 Migration menambah status aktif dan mengubah default role akun baru menjadi `unassigned`. Akun existing mempertahankan role/password dan mendapat status aktif. Perintah di atas mengasumsikan migration aplikasi sebelumnya sudah diterapkan.
 
+Prasyarat login panel: schema server harus sudah memuat `users.is_active`. Deploy kode baru tanpa migration ini dapat membuat login ditolak walaupun password benar, karena pemeriksaan akses memerlukan akun aktif dengan role valid. Status migration lokal di atas tidak membuktikan migration sudah diterapkan pada server deployment. Periksa dari direktori aplikasi di server sebelum mencoba login:
+
+```shell
+php artisan migrate:status
+```
+
+Pastikan kedua migration fitur awal berstatus **Ran**. Untuk akun admin existing, nilai `role` harus persis `admin` dan `is_active` bernilai `1`. Perubahan default role tidak mengubah role akun existing.
+
 ## 2. Buat akun FAP dan Kepala Balai
 
 1. Login menggunakan akun admin existing.
@@ -53,3 +61,11 @@ Spec 002 disetujui pada 3 Oktober 2026 dan diimplementasikan. Semua role aktif d
 ## 6. Riwayat penghapusan pengaduan
 
 Spec 003 menambah migration metadata/soft delete pengaduan. Migration telah diterapkan pada MySQL development lokal. Panduan lingkungan lain, alur alasan manual, serta akses Kepala Balai ada pada [penggunaan spec 003](../003-riwayat-penghapusan-pengaduan/deployment.md); hasil pengujian pada [verifikasi spec 003](../003-riwayat-penghapusan-pengaduan/verification.md).
+
+## 7. Pemeriksaan login setelah deploy
+
+Panduan diperjelas pada 4 Oktober 2026 setelah laporan login server dengan migration yang belum diterapkan.
+
+Pesan email/password tidak cocok dari Filament dapat berarti kredensial salah **atau** akun tidak memenuhi izin masuk panel. Periksa status migration, keberadaan akun pada database yang dipakai server, role, dan status aktif sebelum mereset password. Minimum 12 karakter berlaku pada pembuatan/penggantian password baru, bukan login memakai password existing.
+
+Jika login sempat berhasil lalu kembali ke halaman login, periksa persistensi sesi/cookie dan konfigurasi deployment sesuai [panduan spec 002](../002-pergantian-password-mandiri/deployment.md). Sesi sebelum pembaruan dapat memerlukan login ulang; jangan mengganti `APP_KEY` untuk memperbaiki login.

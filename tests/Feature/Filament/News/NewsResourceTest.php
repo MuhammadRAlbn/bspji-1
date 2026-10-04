@@ -5,6 +5,7 @@ namespace Tests\Feature\Filament\News;
 use App\Filament\Clusters\Pengujian\Resources\KomoditiResource;
 use App\Filament\Resources\News\NewsResource;
 use App\Filament\Resources\News\Pages\CreateNews;
+use App\Filament\Resources\News\Pages\EditNews;
 use App\Filament\Resources\NewsComments\NewsCommentResource;
 use App\Models\News;
 use App\Models\NewsComment;
@@ -57,6 +58,19 @@ class NewsResourceTest extends TestCase
 
         $this->get(NewsCommentResource::getUrl('index'))
             ->assertOk();
+    }
+
+    public function test_publication_time_round_trips_between_wib_input_and_utc_storage(): void
+    {
+        $news = News::factory()->published()->create(['published_at' => '2026-12-31 18:30:00']);
+        $component = Livewire::test(EditNews::class, ['record' => $news->getRouteKey()])
+            ->assertSet('data.published_at', '2027-01-01 01:30:00')
+            ->call('save')->assertHasNoFormErrors();
+        $this->assertSame('2026-12-31 18:30:00', $news->refresh()->getRawOriginal('published_at'));
+
+        $component->set('data.published_at', '2027-01-01 02:45:00')
+            ->call('save')->assertHasNoFormErrors();
+        $this->assertSame('2026-12-31 19:45:00', $news->refresh()->getRawOriginal('published_at'));
     }
 
     public function test_admin_can_access_news_comments_and_other_resources(): void
