@@ -6,6 +6,8 @@ Status: **Implementasi selesai. Spesifikasi dan test utama ditulis sebelum perub
 
 Acuan: [003 — Riwayat Penghapusan Pengaduan](../003-riwayat-penghapusan-pengaduan/spec.md). Spesifikasi ini memperbarui akses penghapusan dan tampilan waktu; aturan lainnya tetap mengikuti 003.
 
+Perubahan lanjutan: [005 — Akses Baca Riwayat untuk FAP](../005-akses-riwayat-fap/spec.md) mengizinkan FAP aktif membaca seluruh histori beserta detail/lampiran. Pembatasan histori FAP di bawah merupakan keputusan baseline sebelum permintaan lanjutan tersebut.
+
 ## 1. Tujuan dan keputusan
 
 Tim FAP dapat membersihkan pengaduan yang sudah ditolak tanpa bergantung pada admin. Penghapusan tetap mempertahankan laporan, lampiran, alasan manual, dan identitas penghapus. Tanggal/jam dalam panel mengikuti Waktu Indonesia Barat (Asia/Jakarta, UTC+7).

@@ -59,10 +59,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             if ($user->isPengaduanStaff()) {
-                $abilities = ['viewAny', 'view', 'update', 'delete', 'deleteAny'];
-                if ($user->role === User::ROLE_KEPALA_BALAI) {
-                    $abilities = [...$abilities, 'viewHistoryAny', 'viewHistory'];
-                }
+                $abilities = ['viewAny', 'view', 'update', 'delete', 'deleteAny', 'viewHistoryAny', 'viewHistory'];
 
                 return $model === ZonaIntegritasPengaduan::class && in_array($ability, $abilities, true) ? null : false;
             }

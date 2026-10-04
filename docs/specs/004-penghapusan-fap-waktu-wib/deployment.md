@@ -1,5 +1,7 @@
 # Aktivasi
 
+Pembaruan akses histori: ikuti [aktivasi spec 005](../005-akses-riwayat-fap/deployment.md), yang menambahkan akses baca histori untuk FAP aktif. Pembatasan FAP terhadap histori di bawah menjelaskan baseline spec 004 sebelum pembaruan tersebut.
+
 Perubahan memakai schema riwayat dari spec 003. Tidak ada migration baru, perubahan `.env`, atau perubahan timezone server/MySQL.
 
 Deploy source sesuai prosedur proyek. Bila environment menggunakan cache konfigurasi/view/opcache atau worker yang berjalan lama, perbarui cache/restart proses sesuai prosedur deployment yang sudah digunakan. `config/app.php` tetap UTC; WIB diterapkan pada tampilan Filament melalui AppServiceProvider.

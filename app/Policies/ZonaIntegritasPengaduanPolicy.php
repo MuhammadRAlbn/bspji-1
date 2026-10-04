@@ -40,7 +40,7 @@ class ZonaIntegritasPengaduanPolicy
 
     public function viewHistoryAny(User $user): bool
     {
-        return $user->hasPanelAccess() && in_array($user->role, [User::ROLE_ADMIN, User::ROLE_KEPALA_BALAI], true);
+        return $user->hasPanelAccess() && in_array($user->role, [User::ROLE_ADMIN, User::ROLE_FAP, User::ROLE_KEPALA_BALAI], true);
     }
 
     public function viewHistory(User $user, ZonaIntegritasPengaduan $record): bool

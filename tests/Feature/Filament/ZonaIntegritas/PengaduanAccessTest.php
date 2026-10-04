@@ -49,10 +49,7 @@ class PengaduanAccessTest extends TestCase
         $response = app(LoginResponse::class)->toResponse(request());
         $this->assertSame(Resource::getUrl('index'), $response->getTargetUrl());
 
-        $allowedResources = [Resource::class];
-        if ($role === User::ROLE_KEPALA_BALAI) {
-            $allowedResources[] = RiwayatPenghapusanPengaduanResource::class;
-        }
+        $allowedResources = [Resource::class, RiwayatPenghapusanPengaduanResource::class];
         foreach (Filament::getPanel('admin')->getResources() as $resource) {
             $allowed = in_array($resource, $allowedResources, true);
             $this->assertSame($allowed, $resource::canAccess(), $resource);

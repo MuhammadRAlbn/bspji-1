@@ -35,10 +35,11 @@ class EnsureAdminPanelAccess
 
             $allowed = $request->routeIs(
                 'filament.admin.zona-integritas.resources.zona-integritas-pengaduans.*',
+                'filament.admin.zona-integritas.resources.riwayat-penghapusan-pengaduans.*',
                 'filament.admin.zona-integritas',
                 'filament.admin.auth.logout',
                 'filament.admin.auth.profile',
-            ) || ($user->role === User::ROLE_KEPALA_BALAI && $request->routeIs('filament.admin.zona-integritas.resources.riwayat-penghapusan-pengaduans.*'));
+            );
             abort_unless($allowed, 403);
 
             if ($user->role === User::ROLE_KEPALA_BALAI) {

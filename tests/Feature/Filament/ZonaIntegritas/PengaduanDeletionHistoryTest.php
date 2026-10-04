@@ -293,8 +293,34 @@ class PengaduanDeletionHistoryTest extends TestCase
         $this->assertFalse(HistoryResource::canAccess());
         $this->get(HistoryResource::getUrl('index'))->assertForbidden();
         Livewire::test(ListRiwayatPenghapusanPengaduans::class)->assertForbidden();
+        Livewire::test(ViewRiwayatPenghapusanPengaduan::class, ['record' => $record->id])->assertForbidden();
         $this->get(HistoryResource::getUrl('view', ['record' => $record]))->assertForbidden();
         $this->get($this->historyFileUrl($record))->assertForbidden();
+    }
+
+    public function test_fap_can_read_its_own_history_and_admin_deletions_after_deleting_a_complaint(): void
+    {
+        $fap = User::factory()->create(['role' => 'fap']);
+        $admin = User::factory()->create(['role' => 'admin']);
+        $own = $this->pengaduan();
+        $other = $this->pengaduan(['nomor_pengaduan' => '20260500002', 'sequence' => 500002]);
+        $this->deleteComplaint($admin, $other);
+        $this->actingAs($fap);
+        Livewire::test(ListZonaIntegritasPengaduans::class)
+            ->callAction(TestAction::make('delete')->table($own), data: ['deletion_reason' => 'Duplikat laporan yang telah ditangani.'])
+            ->assertHasNoActionErrors();
+        $this->assertSoftDeleted($own);
+
+        $this->get(HistoryResource::getUrl('index'))->assertOk()
+            ->assertSee($own->nomor_pengaduan)->assertSee($other->nomor_pengaduan);
+        $this->get(Resource::getUrl('index'))->assertOk()->assertSee('Riwayat Penghapusan');
+        $this->get(HistoryResource::getUrl('view', ['record' => $own]))->assertOk()
+            ->assertSee($fap->name)->assertSee($fap->email)->assertSee('Duplikat laporan yang telah ditangani.');
+        Livewire::test(ViewRiwayatPenghapusanPengaduan::class, ['record' => $own->id])->assertSee($fap->email);
+        $this->get(HistoryResource::getUrl('view', ['record' => $other]))->assertOk()
+            ->assertSee($admin->name)->assertSee($admin->email);
+        $this->get($this->historyFileUrl($own))->assertOk()->assertDownload('bukti.pdf');
+        $this->get($this->historyFileUrl($other, 'hasil'))->assertOk()->assertDownload('hasil.pdf');
     }
 
     public function test_history_guests_must_log_in(): void
@@ -369,19 +395,39 @@ class PengaduanDeletionHistoryTest extends TestCase
         app(ZonaIntegritasPengaduanFollowUpService::class)->update($fap, $record, ['status' => ZonaIntegritasPengaduan::STATUS_DITERIMA]);
     }
 
-    public function test_history_pages_recheck_access_after_mounting(): void
+    #[DataProvider('historyAccessRevocations')]
+    public function test_history_pages_recheck_access_after_mounting(string $role, array $change): void
     {
         $admin = User::factory()->create(['role' => 'admin']);
         $record = $this->pengaduan();
         $this->deleteComplaint($admin, $record);
+        $reader = User::factory()->create(['role' => $role]);
+        $this->actingAs($reader);
+        $list = Livewire::test(ListRiwayatPenghapusanPengaduans::class);
+        $view = Livewire::test(ViewRiwayatPenghapusanPengaduan::class, ['record' => $record->id]);
+        User::whereKey($reader->id)->update($change);
+        $list->call('$refresh')->assertForbidden();
+        $this->actingAs($reader);
+        $view->call('$refresh')->assertForbidden();
+        foreach (['bukti', 'hasil'] as $document) {
+            $this->actingAs($reader);
+            $this->get($this->historyFileUrl($record, $document))->assertForbidden();
+        }
+    }
+
+    public function test_history_access_is_retained_when_kepala_balai_becomes_fap(): void
+    {
+        $record = $this->pengaduan();
+        $this->deleteComplaint(User::factory()->create(['role' => 'admin']), $record);
         $reader = User::factory()->create(['role' => 'kepala_balai']);
         $this->actingAs($reader);
         $list = Livewire::test(ListRiwayatPenghapusanPengaduans::class);
         $view = Livewire::test(ViewRiwayatPenghapusanPengaduan::class, ['record' => $record->id]);
         User::whereKey($reader->id)->update(['role' => 'fap']);
-        $list->call('$refresh')->assertForbidden();
-        $view->call('$refresh')->assertForbidden();
-        $this->get($this->historyFileUrl($record))->assertForbidden();
+        $list->call('$refresh')->assertCanSeeTableRecords([$record]);
+        $view->call('$refresh')->assertSee($record->uraian);
+        $this->get($this->historyFileUrl($record))->assertOk()->assertDownload('bukti.pdf');
+        $this->get($this->historyFileUrl($record, 'hasil'))->assertOk()->assertDownload('hasil.pdf');
     }
 
     #[DataProvider('historyReaders')]
@@ -460,12 +506,17 @@ class PengaduanDeletionHistoryTest extends TestCase
 
     public static function historyReaders(): array
     {
-        return [['admin'], ['kepala_balai']];
+        return [['admin'], ['kepala_balai'], ['fap']];
     }
 
     public static function historyDeniedAccounts(): array
     {
-        return [['fap', true], ['humas', true], ['viewer', true], ['admin', false], ['kepala_balai', false]];
+        return [['fap', false], ['humas', true], ['viewer', true], ['admin', false], ['kepala_balai', false]];
+    }
+
+    public static function historyAccessRevocations(): array
+    {
+        return [['kepala_balai', ['role' => 'humas']], ['fap', ['role' => 'humas']], ['fap', ['is_active' => false]]];
     }
 
     public static function historyMutations(): array
