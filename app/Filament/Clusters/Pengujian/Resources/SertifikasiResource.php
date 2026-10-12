@@ -5,6 +5,7 @@ namespace App\Filament\Clusters\Pengujian\Resources;
 use App\Filament\Clusters\Pengujian\PengujianCluster;
 use App\Filament\Clusters\Pengujian\Resources\SertifikasiResource\Pages;
 use App\Models\Sertifikasi;
+use Filament\Actions\Action;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\FileUpload;
@@ -40,6 +41,13 @@ class SertifikasiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('urutan')
+            ->reorderable('urutan')
+            ->reorderRecordsTriggerAction(
+                fn (Action $action, bool $isReordering): Action => $action
+                    ->button()
+                    ->label($isReordering ? 'Selesai' : 'Atur Urutan'),
+            )
             ->columns([
                 ImageColumn::make('image')
                     ->disk('public')

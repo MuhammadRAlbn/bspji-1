@@ -15,7 +15,7 @@ class PengujianController extends Controller
      */
     public function index(): View
     {
-        $sertifikasis = Sertifikasi::latest()->get();
+        $sertifikasis = Sertifikasi::query()->ordered()->get();
         $sertifikasi = $sertifikasis->first();
         $ruangLingkupan = RuangLingkup::query()
             ->orderedByLab()

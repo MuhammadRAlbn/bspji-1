@@ -8,4 +8,6 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateSertifikasi extends CreateRecord
 {
     protected static string $resource = SertifikasiResource::class;
+
+    protected static ?string $title = 'Unggah Sertifikat';
 }
