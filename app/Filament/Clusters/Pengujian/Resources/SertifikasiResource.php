@@ -73,6 +73,6 @@ class SertifikasiResource extends Resource
 
     public static function canCreate(): bool
     {
-        return Sertifikasi::count() < 4;
+        return Sertifikasi::count() < 7;
     }
 }
